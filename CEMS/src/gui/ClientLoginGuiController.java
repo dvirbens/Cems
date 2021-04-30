@@ -24,7 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Test;
 
-public class ClientLoginGuiController {
+public class ClientLoginGuiController implements Initializable {
 
 	private static ClientController clientController;
 
@@ -33,12 +33,14 @@ public class ClientLoginGuiController {
 
 	@FXML
 	private Button btnConnect;
+	
 
 	public void start(Stage primaryStage) {
 		try {
 			VBox root = (VBox) FXMLLoader.load(getClass().getResource("ClientLoginGui.fxml"));
 			Scene scene = new Scene(root, 300, 400);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("CEMS");
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,5 +58,11 @@ public class ClientLoginGuiController {
 		Stage stage = new Stage();
 		
 		clientMainGuiController.start(stage, clientController);
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		tfPort.setText("5555");
+		
 	}
 }

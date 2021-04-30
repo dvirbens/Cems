@@ -52,6 +52,7 @@ public class ServerGuiController implements Initializable, LogEventListener {
 			Scene scene = new Scene(root, 650, 550);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			primaryStage.setTitle("CEMS-Server");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

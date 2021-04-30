@@ -42,8 +42,9 @@ public class ClientMainGuiController {
 		this.clientController = clientController;
 		try {
 			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("ClientMainGui.fxml"));
-			Scene scene = new Scene(mainPane, 600, 400);
+			Scene scene = new Scene(mainPane, 850, 500);
 			stage.setScene(scene);
+			stage.setTitle("CEMS");
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
