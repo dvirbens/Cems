@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import client.Client;
 import client.ClientController;
+import common.ModelWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -35,6 +37,9 @@ public class ClientMainGuiController {
 
 	@FXML
 	private Button btnSearch;
+
+	@FXML
+	private TextField tfId;
 
 	private List<Test> testList;
 
@@ -53,11 +58,24 @@ public class ClientMainGuiController {
 
 	@FXML
 	void onSearchClick(ActionEvent event) {
-		clientController.sendClientUIRequest(DatabaseController.LOAD_TEST_LIST);
+
+		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, ModelWrapper.LOAD_TEST_LIST);
+		clientController.sendClientUIRequest(modelWrapper);
 		List<Test> tests = new ArrayList<>();
 		tests.addAll(Client.getTests());
 		TableGuiController tableGuiController = new TableGuiController(tests);
 		tableGuiController.DisplayTable(mainPane);
+
+	}
+
+	@FXML
+	void onClickEditTest(ActionEvent event) {
+		String id = tfId.getText();
+		ModelWrapper<String> modelWrapper = new ModelWrapper(id, ModelWrapper.LOAD_TEST);
+		clientController.sendClientUIRequest(modelWrapper);
+
+		UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(Client.getEditTest());
+		updateTestGuiController.DisplayTable(mainPane);
 	}
 
 }

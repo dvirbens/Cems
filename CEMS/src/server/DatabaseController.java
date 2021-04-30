@@ -18,11 +18,6 @@ public class DatabaseController {
 	private Database database;
 	private LogEventListener logListener;
 
-	public static final int LOAD_TEST = 0;
-	public static final int LOAD_QUESTION = 1;
-	public static final int LOAD_TEST_LIST = 2;
-	public static final int LOAD_QUESTION_LIST = 3;
-
 	public DatabaseController(Database database, LogEventListener logListener) {
 		super();
 		this.database = database;
@@ -75,7 +70,7 @@ public class DatabaseController {
 		return false;
 	}
 
-	public List<Test> getTests() {
+	public List<Test> getTestList() {
 		List<Test> tests = new ArrayList<>();
 		try {
 			Statement st = conn.createStatement();
@@ -96,7 +91,28 @@ public class DatabaseController {
 		}
 
 		return tests;
+	}
 
+	public Test getTest(String givenId) {
+		try {
+			Statement st = conn.createStatement();
+			String sql = ("SELECT * FROM Test WHERE id=" + givenId + ";");
+			ResultSet rs;
+			rs = st.executeQuery(sql);
+			if (rs.next()) {
+				String id = rs.getString("Id");
+				String subject = rs.getString("Subject");
+				String course = rs.getString("Course");
+				String duration = rs.getString("Duration");
+				String pointPerQuestion = rs.getString("PointPerQuestion");
+				Test test = new Test(id, subject, course, duration, pointPerQuestion);
+				return test;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

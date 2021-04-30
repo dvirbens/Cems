@@ -13,12 +13,12 @@
       <Pane prefHeight="283.0" prefWidth="212.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnSearch" layoutX="53.0" layoutY="22.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Show Tests" textFill="WHITE" />
-            <Button layoutX="53.0" layoutY="124.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Test" textFill="WHITE">
+            <Button fx:id="btnEditTest" layoutX="53.0" layoutY="124.0" mnemonicParsing="false" onAction="#onClickEditTest" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Test" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <TextField layoutX="30.0" layoutY="81.0" prefHeight="31.0" prefWidth="153.0" promptText="TestID to edit" />
+            <TextField fx:id="tfId" layoutX="30.0" layoutY="81.0" prefHeight="31.0" prefWidth="153.0" promptText="TestID to edit" />
          </children>
       </Pane>
    </left>

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.ModelWrapper;
 import models.Database;
 import models.Test;
 import ocsf.server.AbstractServer;
@@ -29,25 +30,37 @@ public class Server extends AbstractServer {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		int operation = (int) msg;
-		switch (operation) {
 
-		case DatabaseController.LOAD_TEST:
-			break;
+		ModelWrapper<?> modelWrapperFromClient = (ModelWrapper<?>) msg;
+		ModelWrapper<?> modelWrapperToClient;
 
-		case DatabaseController.LOAD_QUESTION:
-			break;
+		switch (modelWrapperFromClient.getOperation()) {
 
-		case DatabaseController.LOAD_TEST_LIST:
-			List<Test> testArray = databseController.getTests();
+		case ModelWrapper.LOAD_TEST:
+			String id = (String) modelWrapperFromClient.getElement();
+			Test test = databseController.getTest(id);
+			modelWrapperToClient = new ModelWrapper<Test>(test, ModelWrapper.LOAD_TEST);
 			try {
-				client.sendToClient(testArray);
+				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			break;
 
-		case DatabaseController.LOAD_QUESTION_LIST:
+		case ModelWrapper.LOAD_QUESTION:
+			break;
+
+		case ModelWrapper.LOAD_TEST_LIST:
+			List<Test> testArray = databseController.getTestList();
+			modelWrapperToClient = new ModelWrapper<Test>(testArray, ModelWrapper.LOAD_TEST_LIST);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
+		case ModelWrapper.LOAD_QUESTION_LIST:
 			break;
 		}
 
@@ -65,7 +78,6 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 		}
-		databseController.getTests();
 
 	}
 
