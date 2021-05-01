@@ -16,9 +16,9 @@ import models.Test;
 public class DatabaseController {
 	private Connection conn;
 	private Database database;
-	private LogEventListener logListener;
+	private ServerEventListener logListener;
 
-	public DatabaseController(Database database, LogEventListener logListener) {
+	public DatabaseController(Database database, ServerEventListener logListener) {
 		super();
 		this.database = database;
 		this.logListener = logListener;

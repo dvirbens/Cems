@@ -14,17 +14,17 @@ import ocsf.server.ConnectionToClient;
 
 public class Server extends AbstractServer {
 
-	private LogEventListener logListener;
+	private ServerEventListener serverListener;
 	private DatabaseController databseController;
-	private boolean isConnected = false;
+	private static boolean isConnected = false;
 
 	public Server(int port) {
 		super(port);
 	}
 
-	public Server(LogEventListener logListener, Database database, String serverPort) {
+	public Server(ServerEventListener logListener, Database database, String serverPort) {
 		super(Integer.parseInt(serverPort));
-		this.logListener = logListener;
+		this.serverListener = logListener;
 		databseController = new DatabaseController(database, logListener);
 	}
 
@@ -69,24 +69,28 @@ public class Server extends AbstractServer {
 	protected void serverStarted() {
 		try {
 			databseController.connectToDatabase();
-			logListener.printToLog("Server listening for connections on port " + getPort());
+			isConnected = true;
+			serverListener.printToLog("Server listening for connections on port " + getPort());
+			serverListener.changeButtonStatus(isConnected);
 		} catch (SQLException ex) {
 			try {
 				this.close();
-				logListener.printToLog("Disconnected");
+				serverListener.printToLog("Disconnected");
+				serverListener.changeButtonStatus(!isConnected);
 			} catch (IOException e) {
+				System.out.println("MEOW");
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	protected void serverStopped() {
 		isConnected = false;
-		logListener.printToLog("Server has stopped listening for connections");
+		serverListener.printToLog("Server has stopped listening for connections");
+		serverListener.changeButtonStatus(isConnected);
 	}
 
-	public boolean isConnected() {
+	public static boolean isConnected() {
 		return isConnected;
 	}
 
