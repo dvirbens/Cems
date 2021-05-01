@@ -11,13 +11,9 @@ public class ClientController {
 	private ClientMainGuiController clientMainGuiController;
 	private Client client;
 
-	public ClientController(String ip, int port, ClientMainGuiController clientMainGuiController) {
+	public ClientController(String ip, int port, ClientMainGuiController clientMainGuiController) throws IOException {
 		this.clientMainGuiController = clientMainGuiController;
-		try {
-			client = new Client(ip, port, this);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		client = new Client(ip, port, this);
 	}
 
 	public void sendClientUIRequest(Object msg) {

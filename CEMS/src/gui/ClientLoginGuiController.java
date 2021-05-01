@@ -33,7 +33,6 @@ public class ClientLoginGuiController implements Initializable {
 
 	@FXML
 	private Button btnConnect;
-	
 
 	public void start(Stage primaryStage) {
 		try {
@@ -50,19 +49,24 @@ public class ClientLoginGuiController implements Initializable {
 	@FXML
 	void onConnect(ActionEvent event) {
 		ClientMainGuiController clientMainGuiController = new ClientMainGuiController();
-		
+
 		int port = Integer.parseInt(tfPort.getText());
-		clientController = new ClientController("localhost", port,clientMainGuiController);
-		
-		((Node) event.getSource()).getScene().getWindow().hide();
-		Stage stage = new Stage();
-		
-		clientMainGuiController.start(stage, clientController);
+		try {
+			clientController = new ClientController("localhost", port, clientMainGuiController);
+			((Node) event.getSource()).getScene().getWindow().hide();
+			Stage stage = new Stage();
+
+			clientMainGuiController.start(stage, clientController);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Cannot connect to server");
+		}
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfPort.setText("5555");
-		
+
 	}
 }

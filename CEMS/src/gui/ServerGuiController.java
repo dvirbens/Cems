@@ -21,7 +21,6 @@ import models.Database;
 import server.ServerEventListener;
 import server.Server;
 
-//
 public class ServerGuiController implements Initializable, ServerEventListener {
 
 	@FXML
