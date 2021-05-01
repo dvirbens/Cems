@@ -115,4 +115,27 @@ public class DatabaseController {
 		return null;
 	}
 
+	public boolean updateTest(Test testToEdit) {
+		PreparedStatement pstmt;
+		try {
+			String id = testToEdit.getId();
+			String subject = testToEdit.getSubject();
+			String course = testToEdit.getCourse();
+			String duration = testToEdit.getDuration();
+			String ppq = testToEdit.getPointsPerQuestion();
+			String query = "UPDATE test SET Subject=?,Course=?,Duration=?,PointPerQuestion=? WHERE id=?;";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, subject);
+			pstmt.setString(2, course);
+			pstmt.setString(3, duration);
+			pstmt.setString(4, ppq);
+			pstmt.setString(5, id);
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

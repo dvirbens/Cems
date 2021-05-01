@@ -23,30 +23,34 @@ public class Client extends AbstractClient {
 
 	@Override
 	protected void handleMessageFromServer(Object msg) {
-		ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
+		if (msg != null) {
+			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
 
-		switch (modelWrapperToClient.getOperation()) {
-		case ModelWrapper.LOAD_TEST:
-			editTest = (Test) modelWrapperToClient.getElement();
-			break;
+			switch (modelWrapperToClient.getOperation()) {
+			case ModelWrapper.LOAD_TEST:
+				editTest = (Test) modelWrapperToClient.getElement();
+				break;
 
-		case ModelWrapper.LOAD_QUESTION:
-			break;
+			case ModelWrapper.LOAD_QUESTION:
+				break;
 
-		case ModelWrapper.LOAD_TEST_LIST:
-			tests = (List<Test>) modelWrapperToClient.getElements();
-			break;
+			case ModelWrapper.LOAD_TEST_LIST:
+				tests = (List<Test>) modelWrapperToClient.getElements();
+				break;
 
-		case ModelWrapper.LOAD_QUESTION_LIST:
-			break;
+			case ModelWrapper.LOAD_QUESTION_LIST:
+				break;
+
+			case ModelWrapper.UPDATE_TEST:
+				break;
+			}
 		}
-		
+
 		awaitResponse = false;
 
 	}
 
 	public void handleMessageFromClientUI(Object msg) {
-
 		try {
 			openConnection();
 			awaitResponse = true;

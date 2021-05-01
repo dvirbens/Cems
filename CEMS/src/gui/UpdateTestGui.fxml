@@ -42,6 +42,6 @@
             </Pane>
          </children>
       </VBox>
-      <Button fx:id="btnUpdate" layoutX="266.0" layoutY="308.0" mnemonicParsing="false" text="Update" />
+      <Button fx:id="btnUpdate" layoutX="266.0" layoutY="308.0" mnemonicParsing="false" onAction="#onUpdateClicked" text="Update" />
    </children>
 </Pane>

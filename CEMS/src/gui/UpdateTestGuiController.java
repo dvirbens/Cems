@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import client.ClientController;
+import common.ModelWrapper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,13 +39,15 @@ public class UpdateTestGuiController implements Initializable {
 
 	private static Test testToEdit;
 
+	private static ClientController clientController;
+
 	public UpdateTestGuiController() {
 	}
 
-	public UpdateTestGuiController(Test testToEdit) {
+	public UpdateTestGuiController(Test testToEdit, ClientController clientController) {
 		super();
 		this.testToEdit = testToEdit;
-		
+		this.clientController = clientController;
 	}
 
 	public void DisplayTable(BorderPane mainPane) {
@@ -63,9 +68,19 @@ public class UpdateTestGuiController implements Initializable {
 		tfCourse.setText(testToEdit.getCourse());
 		tfDuration.setText(testToEdit.getDuration());
 		tfPointsPerQuestion.setText(testToEdit.getPointsPerQuestion());
-		
 	}
-	
-	
+
+	@FXML
+	public void onUpdateClicked(ActionEvent event) {
+		String id = tfId.getText();
+		String subject = tfSubject.getText();
+		String course = tfCourse.getText();
+		String duration = tfDuration.getText();
+		String ppq = tfPointsPerQuestion.getText();
+
+		Test test = new Test(id, subject, course, duration, ppq);
+		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(test, ModelWrapper.UPDATE_TEST);
+		clientController.sendClientUIRequest(modelWrapper);
+	}
 
 }

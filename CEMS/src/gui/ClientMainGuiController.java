@@ -74,7 +74,8 @@ public class ClientMainGuiController {
 		ModelWrapper<String> modelWrapper = new ModelWrapper(id, ModelWrapper.LOAD_TEST);
 		clientController.sendClientUIRequest(modelWrapper);
 
-		UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(Client.getEditTest());
+		UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(Client.getEditTest(),
+				clientController);
 		updateTestGuiController.DisplayTable(mainPane);
 	}
 

@@ -62,6 +62,15 @@ public class Server extends AbstractServer {
 
 		case ModelWrapper.LOAD_QUESTION_LIST:
 			break;
+		case ModelWrapper.UPDATE_TEST:
+			Test testToEdit = (Test) modelWrapperFromClient.getElement();
+			databseController.updateTest(testToEdit);
+			try {
+				client.sendToClient(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
 		}
 
 	}

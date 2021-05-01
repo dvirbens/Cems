@@ -9,8 +9,9 @@ public class ModelWrapper<E> implements Serializable {
 	private List<E> elements;
 	private int operation;
 
-	public static final int ERROR = 0;
-	public static final int LOAD_TEST = 1;
+	public static final int ERROR = -1;
+	public static final int LOAD_TEST = 0;
+	public static final int UPDATE_TEST = 1;
 	public static final int LOAD_QUESTION = 2;
 	public static final int LOAD_TEST_LIST = 3;
 	public static final int LOAD_QUESTION_LIST = 4;
