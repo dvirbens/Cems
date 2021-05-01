@@ -11,13 +11,12 @@ import ocsf.client.AbstractClient;
 public class Client extends AbstractClient {
 
 	public static boolean awaitResponse = false;
-	private static ClientController clientController;
 	private static List<Test> tests;
 	private static Test editTest;
+	private static String errorMessage;
 
-	public Client(String host, int port, ClientController clientController) throws IOException {
+	public Client(String host, int port) throws IOException {
 		super(host, port);
-		this.clientController = clientController;
 		tests = new ArrayList<>();
 	}
 
@@ -25,7 +24,6 @@ public class Client extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 		if (msg != null) {
 			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
-
 			switch (modelWrapperToClient.getOperation()) {
 			case ModelWrapper.LOAD_TEST:
 				editTest = (Test) modelWrapperToClient.getElement();
@@ -43,6 +41,12 @@ public class Client extends AbstractClient {
 
 			case ModelWrapper.UPDATE_TEST:
 				break;
+
+			case ModelWrapper.ENTERED_WRONG_ID:
+				setErrorMessage("You entered wrong id number");
+				editTest = null;
+				break;
+
 			}
 		}
 
@@ -92,6 +96,14 @@ public class Client extends AbstractClient {
 
 	public static void setEditTest(Test editTest) {
 		Client.editTest = editTest;
+	}
+
+	public static String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public static void setErrorMessage(String errorMessage) {
+		Client.errorMessage = errorMessage;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import models.Database;
 import server.ServerEventListener;
 import server.Server;
@@ -47,7 +49,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 	@FXML
 	private TextArea taLogs;
 
-	private Server server = null;
+	private Server server;
 
 	public void start(Stage primaryStage) {
 		try {

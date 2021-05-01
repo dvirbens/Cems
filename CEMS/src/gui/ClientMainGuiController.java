@@ -18,9 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -73,10 +76,23 @@ public class ClientMainGuiController {
 		String id = tfId.getText();
 		ModelWrapper<String> modelWrapper = new ModelWrapper(id, ModelWrapper.LOAD_TEST);
 		clientController.sendClientUIRequest(modelWrapper);
-
-		UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(Client.getEditTest(),
-				clientController);
-		updateTestGuiController.DisplayTable(mainPane);
+		Test editTest = Client.getEditTest();
+		if (editTest != null) {
+			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(editTest, clientController);
+			updateTestGuiController.DisplayTable(mainPane);
+		} else {
+			String errorMessage = Client.getErrorMessage();
+			openDialog("Wrong id",errorMessage);
+		}
+	}
+	
+	public static void openDialog(String title, String message) {
+		Dialog<String> dialog = new Dialog<String>();
+		dialog.setTitle(title);
+		dialog.setContentText(message);
+		ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().add(type);
+		dialog.showAndWait();
 	}
 
 }

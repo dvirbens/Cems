@@ -30,7 +30,7 @@ public class Server extends AbstractServer {
 
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-
+	
 		ModelWrapper<?> modelWrapperFromClient = (ModelWrapper<?>) msg;
 		ModelWrapper<?> modelWrapperToClient;
 
@@ -39,7 +39,10 @@ public class Server extends AbstractServer {
 		case ModelWrapper.LOAD_TEST:
 			String id = (String) modelWrapperFromClient.getElement();
 			Test test = databseController.getTest(id);
-			modelWrapperToClient = new ModelWrapper<Test>(test, ModelWrapper.LOAD_TEST);
+			if (test != null)
+				modelWrapperToClient = new ModelWrapper<Test>(test, ModelWrapper.LOAD_TEST);
+			else
+				modelWrapperToClient = new ModelWrapper<>(null, ModelWrapper.ENTERED_WRONG_ID);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -66,7 +69,7 @@ public class Server extends AbstractServer {
 			Test testToEdit = (Test) modelWrapperFromClient.getElement();
 			databseController.updateTest(testToEdit);
 			try {
-				client.sendToClient(null);
+				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -103,4 +106,7 @@ public class Server extends AbstractServer {
 		return isConnected;
 	}
 
+	protected void clientConnected(ConnectionToClient client) {
+		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
+	}
 }

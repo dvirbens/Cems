@@ -62,12 +62,14 @@ public class UpdateTestGuiController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		tfId.setText(testToEdit.getId());
-		tfId.setEditable(false);
-		tfSubject.setText(testToEdit.getSubject());
-		tfCourse.setText(testToEdit.getCourse());
-		tfDuration.setText(testToEdit.getDuration());
-		tfPointsPerQuestion.setText(testToEdit.getPointsPerQuestion());
+		if (testToEdit != null) {
+			tfId.setText(testToEdit.getId());
+			tfId.setEditable(false);
+			tfSubject.setText(testToEdit.getSubject());
+			tfCourse.setText(testToEdit.getCourse());
+			tfDuration.setText(testToEdit.getDuration());
+			tfPointsPerQuestion.setText(testToEdit.getPointsPerQuestion());
+		}
 	}
 
 	@FXML

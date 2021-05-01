@@ -9,7 +9,9 @@ public class ModelWrapper<E> implements Serializable {
 	private List<E> elements;
 	private int operation;
 
+	public static final int ENTERED_WRONG_ID = -2;
 	public static final int ERROR = -1;
+
 	public static final int LOAD_TEST = 0;
 	public static final int UPDATE_TEST = 1;
 	public static final int LOAD_QUESTION = 2;
@@ -30,7 +32,7 @@ public class ModelWrapper<E> implements Serializable {
 		return element;
 	}
 
-	public void setObject(E element) {
+	public void setElement(E element) {
 		this.element = element;
 	}
 

@@ -13,7 +13,8 @@ public class ClientController {
 
 	public ClientController(String ip, int port, ClientMainGuiController clientMainGuiController) throws IOException {
 		this.clientMainGuiController = clientMainGuiController;
-		client = new Client(ip, port, this);
+		client = new Client(ip, port);
+		client.openConnection();
 	}
 
 	public void sendClientUIRequest(Object msg) {
