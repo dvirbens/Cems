@@ -43,7 +43,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case ModelWrapper.ENTERED_WRONG_ID:
-				setErrorMessage("You entered wrong id number");
+				setErrorMessage("Test dont found ");
 				editTest = null;
 				break;
 

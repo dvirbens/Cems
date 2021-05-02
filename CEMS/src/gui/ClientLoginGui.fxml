@@ -30,9 +30,10 @@
             <TextField fx:id="tfPort" layoutX="73.0" layoutY="-5.0" />
          </children>
       </Pane>
-      <Pane>
+      <Pane prefHeight="99.0" prefWidth="300.0">
          <children>
             <Button fx:id="btnConnect" layoutX="111.0" layoutY="14.0" mnemonicParsing="false" onAction="#onConnect" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Connect" textFill="WHITE" />
+            <Label fx:id="labelStatus" layoutX="1.0" layoutY="50.0" prefHeight="21.0" prefWidth="300.0" textAlignment="CENTER" />
          </children>
       </Pane>
    </children>

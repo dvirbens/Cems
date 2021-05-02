@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Test;
 import server.DatabaseController;
@@ -43,6 +45,10 @@ public class ClientMainGuiController {
 
 	@FXML
 	private TextField tfId;
+	
+
+    @FXML
+    private Label labelStatus;
 
 	private List<Test> testList;
 
@@ -78,11 +84,17 @@ public class ClientMainGuiController {
 		clientController.sendClientUIRequest(modelWrapper);
 		Test editTest = Client.getEditTest();
 		if (editTest != null) {
+			labelStatus.setText("");
 			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(editTest, clientController);
 			updateTestGuiController.DisplayTable(mainPane);
 		} else {
+			
+			labelStatus.setText("test dont found ");
+			labelStatus.setTextFill(Color.color(1, 0, 0));
+			
+			/*
 			String errorMessage = Client.getErrorMessage();
-			openDialog("Wrong id",errorMessage);
+			openDialog("Test dont found",errorMessage);*/
 		}
 	}
 	

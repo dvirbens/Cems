@@ -72,7 +72,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 			try {
 				server.listen();
 			} catch (Exception ex) {
-				printToLog("ERROR - Could not listen for clients!");
+				printToLog("ERROR - Could not listen to clients!");
 			}
 		} else {
 			btnStart.setText("Disconnecting..");
