@@ -3,27 +3,60 @@ package client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import common.ModelWrapper;
 import models.Test;
 import ocsf.client.AbstractClient;
 
+/**
+ * Class that's handle server-client communication. Date :
+ * 
+ * @author Arikz
+ */
 public class Client extends AbstractClient {
 
+	/**
+	 * Value that's indicating if the server answer back to client, in order to stop
+	 * listening on "HandleMessageFromClientUI method.
+	 */
 	public static boolean awaitResponse = false;
+	/**
+	 * Value the holds the list of test that will be shown on table user interface.
+	 */
 	private static List<Test> tests;
+	/**
+	 * Value that hold the test the will be shown on editTest user interface.
+	 */
 	private static Test editTest;
+	/**
+	 * Value that hold the error message causing by server side.
+	 */
 	private static String errorMessage;
 
+	/**
+	 * Constructor creating new client connection.
+	 * 
+	 * @param host: Server host/ip info connection {default: 127.0.0.1}.
+	 * @param port: Server port info connection.
+	 * @throws IOException handle connection problem by enter wrong server details.
+	 */
 	public Client(String host, int port) throws IOException {
 		super(host, port);
 		tests = new ArrayList<>();
 	}
 
+	/**
+	 * Function start when server send message, the server send messages throw this
+	 * function.
+	 * 
+	 * @param msg: get the returning message from server
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void handleMessageFromServer(Object msg) {
+
 		if (msg != null) {
 			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
+
 			switch (modelWrapperToClient.getOperation()) {
 			case ModelWrapper.LOAD_TEST:
 				editTest = (Test) modelWrapperToClient.getElement();
@@ -54,6 +87,12 @@ public class Client extends AbstractClient {
 
 	}
 
+	/**
+	 * Function that starting when the client user interface send message to the
+	 * server in order to get services back.
+	 * 
+	 * @param msg: object that client send to server in order to get message back.
+	 */
 	public void handleMessageFromClientUI(Object msg) {
 		try {
 			openConnection();
@@ -74,6 +113,10 @@ public class Client extends AbstractClient {
 
 	}
 
+	/**
+	 * Function that's close all server communications and terminate the client
+	 * application.
+	 */
 	public void quit() {
 		try {
 			closeConnection();
