@@ -20,8 +20,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * FXML controller class for login screen in javaFX graphic user interface, let
+ * the user enter the main application displaying main graphic user interface,
+ * and store the new client on client controller.
+ * 
+ * @author Arikz
+ *
+ */
 public class ClientLoginGuiController implements Initializable {
 
+	/**
+	 * Creating one instance of client controller, handles client-server
+	 * communication.
+	 */
 	private static ClientController clientController;
 
 	@FXML
@@ -33,6 +45,12 @@ public class ClientLoginGuiController implements Initializable {
 	@FXML
 	private Label labelStatus;
 
+	/**
+	 * Getting the application primary stage and set new login screen scene, with
+	 * port text field and enter button by FXML.
+	 * 
+	 * @param primaryStage of javaFX application
+	 */
 	public void start(Stage primaryStage) {
 		try {
 			VBox root = (VBox) FXMLLoader.load(getClass().getResource("ClientLoginGui.fxml"));
@@ -45,6 +63,12 @@ public class ClientLoginGuiController implements Initializable {
 		}
 	}
 
+	/**
+	 * Handle "Connect" button, by creating new main application graphic user
+	 * interface and connect to server by creating new instance of client and
+	 * connect to port given by text field
+	 * 
+	 */
 	@FXML
 	void onConnect(ActionEvent event) {
 		ClientMainGuiController clientMainGuiController = new ClientMainGuiController();
@@ -52,10 +76,10 @@ public class ClientLoginGuiController implements Initializable {
 		int port = Integer.parseInt(tfPort.getText());
 		try {
 			labelStatus.setText("");
-			clientController = new ClientController("localhost", port);
+			setClientController(new ClientController("localhost", port));
 			((Node) event.getSource()).getScene().getWindow().hide();
 			Stage stage = new Stage();
-			clientMainGuiController.start(stage, clientController);
+			clientMainGuiController.start(stage);
 		} catch (IOException e) {
 			e.printStackTrace();
 			labelStatus.setText("ERROR--Worng Port");
@@ -65,8 +89,19 @@ public class ClientLoginGuiController implements Initializable {
 
 	}
 
+	/**
+	 * Setting default port to "5555"
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfPort.setText("5555");
+	}
+
+	public static ClientController getClientController() {
+		return clientController;
+	}
+
+	public static void setClientController(ClientController clientController) {
+		ClientLoginGuiController.clientController = clientController;
 	}
 }
