@@ -1,22 +1,36 @@
 package client;
 
 import java.io.IOException;
-import java.util.List;
 
-import gui.ClientMainGuiController;
-import models.Test;
-
+/**
+ * Class that's creating new client-server communication and handle all client
+ * user interface requests.
+ * 
+ * @author Arikz
+ *
+ */
 public class ClientController {
 
-	private ClientMainGuiController clientMainGuiController;
+	/**
+	 * Store client that's handling server-client communication.
+	 */
 	private Client client;
 
-	public ClientController(String ip, int port, ClientMainGuiController clientMainGuiController) throws IOException {
-		this.clientMainGuiController = clientMainGuiController;
+	/**
+	 * @param host: Server host/ip info connection {default: 127.0.0.1}.
+	 * @param port: Server port info connection.
+	 * @throws IOException handle connection problem by enter wrong server details.
+	 */
+	public ClientController(String ip, int port) throws IOException {
+
 		client = new Client(ip, port);
 		client.openConnection();
 	}
 
+	/**
+	 * @param msg object that client controller send to client in order to ask for
+	 *            server request.
+	 */
 	public void sendClientUIRequest(Object msg) {
 		client.handleMessageFromClientUI(msg);
 	}

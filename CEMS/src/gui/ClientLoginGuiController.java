@@ -4,33 +4,21 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import client.Client;
+
 import client.ClientController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import models.Test;
 
 public class ClientLoginGuiController implements Initializable {
 
@@ -41,10 +29,9 @@ public class ClientLoginGuiController implements Initializable {
 
 	@FXML
 	private Button btnConnect;
-	
-	
-    @FXML
-    private Label labelStatus;
+
+	@FXML
+	private Label labelStatus;
 
 	public void start(Stage primaryStage) {
 		try {
@@ -65,7 +52,7 @@ public class ClientLoginGuiController implements Initializable {
 		int port = Integer.parseInt(tfPort.getText());
 		try {
 			labelStatus.setText("");
-			clientController = new ClientController("localhost", port, clientMainGuiController);
+			clientController = new ClientController("localhost", port);
 			((Node) event.getSource()).getScene().getWindow().hide();
 			Stage stage = new Stage();
 			clientMainGuiController.start(stage, clientController);
@@ -74,8 +61,6 @@ public class ClientLoginGuiController implements Initializable {
 			labelStatus.setText("ERROR--Worng Port");
 			labelStatus.setTextFill(Color.color(1, 0, 0));
 			labelStatus.setAlignment(Pos.CENTER);
-			
-			//ClientMainGuiController.openDialog("Enable to connect", "Cannot connect to server");
 		}
 
 	}

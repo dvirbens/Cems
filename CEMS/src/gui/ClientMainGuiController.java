@@ -45,10 +45,9 @@ public class ClientMainGuiController {
 
 	@FXML
 	private TextField tfId;
-	
 
-    @FXML
-    private Label labelStatus;
+	@FXML
+	private Label labelStatus;
 
 	private List<Test> testList;
 
@@ -88,16 +87,12 @@ public class ClientMainGuiController {
 			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(editTest, clientController);
 			updateTestGuiController.DisplayTable(mainPane);
 		} else {
-			
+
 			labelStatus.setText("test dont found ");
 			labelStatus.setTextFill(Color.color(1, 0, 0));
-			
-			/*
-			String errorMessage = Client.getErrorMessage();
-			openDialog("Test dont found",errorMessage);*/
 		}
 	}
-	
+
 	public static void openDialog(String title, String message) {
 		Dialog<String> dialog = new Dialog<String>();
 		dialog.setTitle(title);

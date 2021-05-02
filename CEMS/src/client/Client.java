@@ -8,7 +8,7 @@ import models.Test;
 import ocsf.client.AbstractClient;
 
 /**
- * Class that's handle server-client communication. Date :
+ * Class that's handle server-client communication.
  * 
  * @author Arikz
  */
