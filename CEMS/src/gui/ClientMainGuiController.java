@@ -51,7 +51,7 @@ public class ClientMainGuiController {
 	void onSearchClick(ActionEvent event) {
 
 		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, ModelWrapper.LOAD_TEST_LIST);
-		clientController.sendClientUIRequest(modelWrapper);
+		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 		List<Test> tests = new ArrayList<>();
 		tests.addAll(Client.getTests());
 		TableGuiController tableGuiController = new TableGuiController(tests);
@@ -63,7 +63,7 @@ public class ClientMainGuiController {
 	void onClickEditTest(ActionEvent event) {
 		String id = tfId.getText();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(id, ModelWrapper.LOAD_TEST);
-		clientController.sendClientUIRequest(modelWrapper);
+		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 		Test editTest = Client.getEditTest();
 		if (editTest != null) {
 			labelStatus.setText("");

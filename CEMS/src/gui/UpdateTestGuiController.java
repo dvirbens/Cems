@@ -82,7 +82,7 @@ public class UpdateTestGuiController implements Initializable {
 
 		Test test = new Test(id, subject, course, duration, ppq);
 		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(test, ModelWrapper.UPDATE_TEST);
-		clientController.sendClientUIRequest(modelWrapper);
+		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 	}
 
 }
