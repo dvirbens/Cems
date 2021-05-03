@@ -2,8 +2,16 @@ package models;
 
 import java.io.Serializable;
 
-//
+/**
+ * Class that describe test on project system, store all necessary attributes
+ * inside this model.
+ * 
+ * @author Arikz
+ *
+ */
 public class Test implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String subject;
 	private String course;

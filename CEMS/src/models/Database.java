@@ -2,8 +2,15 @@ package models;
 
 import java.io.Serializable;
 
-//
+/**
+ * Class that demonstrate database, store on that object all database attribute.
+ * 
+ * @author Arikz
+ *
+ */
 public class Database implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String ip;
 	private String port;
 	private String scheme;

@@ -1,6 +1,5 @@
 package server;
 
-//
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,17 +12,43 @@ import java.util.List;
 import models.Database;
 import models.Test;
 
+/**
+ * Class that handles all of operation sent by client, database controller
+ * communicate with server side, and send queries to database.
+ * 
+ * @author Arikz
+ *
+ */
 public class DatabaseController {
+	
+	/**
+	 * 
+	 */
 	private Connection conn;
+	
+	/**
+	 * 
+	 */
 	private Database database;
+	
+	/**
+	 * 
+	 */
 	private ServerEventListener logListener;
 
+	/**
+	 * @param database
+	 * @param logListener
+	 */
 	public DatabaseController(Database database, ServerEventListener logListener) {
 		super();
 		this.database = database;
 		this.logListener = logListener;
 	}
 
+	/**
+	 * @throws SQLException
+	 */
 	public void connectToDatabase() throws SQLException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
@@ -46,6 +71,10 @@ public class DatabaseController {
 
 	}
 
+	/**
+	 * @param test
+	 * @return
+	 */
 	public boolean saveTest(Test test) {
 		PreparedStatement pstmt;
 
@@ -70,6 +99,9 @@ public class DatabaseController {
 		return false;
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Test> getTestList() {
 		List<Test> tests = new ArrayList<>();
 		try {
@@ -93,6 +125,10 @@ public class DatabaseController {
 		return tests;
 	}
 
+	/**
+	 * @param givenId
+	 * @return
+	 */
 	public Test getTest(String givenId) {
 		try {
 			Statement st = conn.createStatement();
@@ -115,6 +151,10 @@ public class DatabaseController {
 		return null;
 	}
 
+	/**
+	 * @param testToEdit
+	 * @return
+	 */
 	public boolean updateTest(Test testToEdit) {
 		PreparedStatement pstmt;
 		try {
