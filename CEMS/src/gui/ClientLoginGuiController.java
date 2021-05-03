@@ -66,7 +66,7 @@ public class ClientLoginGuiController implements Initializable {
 	/**
 	 * Handle "Connect" button, by creating new main application graphic user
 	 * interface and connect to server by creating new instance of client and
-	 * connect to port given by text field
+	 * connect to port given by text field, if succeed close login window.
 	 * 
 	 */
 	@FXML

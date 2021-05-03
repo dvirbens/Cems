@@ -21,10 +21,20 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Test;
 
+/**
+ * FXML controller class for main screen in javaFX graphic user interface, let
+ * the user interact with the main application graphic user interface.
+ * 
+ * @author Arikz
+ *
+ */
 public class ClientMainGuiController {
 
+	/**
+	 * Value for storing the main layout of the application, in order to change the
+	 * sub layout inside it.
+	 */
 	private static BorderPane mainPane;
-	private static ClientController clientController;
 
 	@FXML
 	private Button btnSearch;
@@ -35,6 +45,11 @@ public class ClientMainGuiController {
 	@FXML
 	private Label labelStatus;
 
+	/**
+	 * Getting the application current stage and set new main screen scene.
+	 * 
+	 * @param stage of javaFX application
+	 */
 	public void start(Stage stage) {
 		try {
 			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("ClientMainGui.fxml"));
@@ -47,9 +62,11 @@ public class ClientMainGuiController {
 		}
 	}
 
+	/**
+	 * @param event
+	 */
 	@FXML
 	void onSearchClick(ActionEvent event) {
-
 		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, ModelWrapper.LOAD_TEST_LIST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 		List<Test> tests = new ArrayList<>();
@@ -59,6 +76,14 @@ public class ClientMainGuiController {
 
 	}
 
+	/**
+	 * Handle "Edit test" button, by save test id value, sending user interface
+	 * request from client to server and create new scene with all details about
+	 * particular test given by test id.If the test id isn't exit display error to
+	 * screen.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onClickEditTest(ActionEvent event) {
 		String id = tfId.getText();
@@ -67,22 +92,12 @@ public class ClientMainGuiController {
 		Test editTest = Client.getEditTest();
 		if (editTest != null) {
 			labelStatus.setText("");
-			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(editTest, clientController);
+			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(editTest);
 			updateTestGuiController.DisplayTable(mainPane);
 		} else {
-
 			labelStatus.setText("test dont found ");
 			labelStatus.setTextFill(Color.color(1, 0, 0));
 		}
-	}
-
-	public static void openDialog(String title, String message) {
-		Dialog<String> dialog = new Dialog<String>();
-		dialog.setTitle(title);
-		dialog.setContentText(message);
-		ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-		dialog.getDialogPane().getButtonTypes().add(type);
-		dialog.showAndWait();
 	}
 
 }

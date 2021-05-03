@@ -39,15 +39,12 @@ public class UpdateTestGuiController implements Initializable {
 
 	private static Test testToEdit;
 
-	private static ClientController clientController;
-
 	public UpdateTestGuiController() {
 	}
 
-	public UpdateTestGuiController(Test testToEdit, ClientController clientController) {
+	public UpdateTestGuiController(Test testToEdit) {
 		super();
-		this.testToEdit = testToEdit;
-		this.clientController = clientController;
+		UpdateTestGuiController.testToEdit = testToEdit;
 	}
 
 	public void DisplayTable(BorderPane mainPane) {
