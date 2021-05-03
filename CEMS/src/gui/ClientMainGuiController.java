@@ -65,9 +65,7 @@ public class ClientMainGuiController {
 	void onSearchClick(ActionEvent event) {
 		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, ModelWrapper.LOAD_TEST_LIST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
-		List<Test> tests = new ArrayList<>();
-		tests.addAll(Client.getTests());
-		TableGuiController tableGuiController = new TableGuiController(tests);
+		TableGuiController tableGuiController = new TableGuiController();
 		tableGuiController.DisplayTable(mainPane);
 
 	}
@@ -88,8 +86,8 @@ public class ClientMainGuiController {
 		Test editTest = Client.getEditTest();
 		if (editTest != null) {
 			labelStatus.setText("");
-			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController(editTest);
-			updateTestGuiController.DisplayTable(mainPane);
+			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController();
+			updateTestGuiController.DisplayTest(mainPane);
 		} else {
 			labelStatus.setText("test dont found ");
 			labelStatus.setTextFill(Color.color(1, 0, 0));

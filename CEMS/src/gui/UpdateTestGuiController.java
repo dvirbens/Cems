@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import client.Client;
 import client.ClientController;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
@@ -17,6 +18,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import models.Test;
 
+/**
+ * FXML controller class for update test layout graphic user interface, display
+ * test given by called method,let the user see and update(change data fields)
+ * test that's exist on database.
+ * 
+ * @author Arikz
+ *
+ */
 public class UpdateTestGuiController implements Initializable {
 
 	@FXML
@@ -37,17 +46,10 @@ public class UpdateTestGuiController implements Initializable {
 	@FXML
 	private Button btnUpdate;
 
-	private static Test testToEdit;
-
-	public UpdateTestGuiController() {
-	}
-
-	public UpdateTestGuiController(Test testToEdit) {
-		super();
-		UpdateTestGuiController.testToEdit = testToEdit;
-	}
-
-	public void DisplayTable(BorderPane mainPane) {
+	/**
+	 * @param mainPane
+	 */
+	public void DisplayTest(BorderPane mainPane) {
 		Pane editTestPane;
 		try {
 			editTestPane = (Pane) FXMLLoader.load(getClass().getResource("UpdateTestGui.fxml"));
@@ -59,6 +61,7 @@ public class UpdateTestGuiController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Test testToEdit = Client.getEditTest();
 		if (testToEdit != null) {
 			tfId.setText(testToEdit.getId());
 			tfId.setEditable(false);
@@ -67,6 +70,7 @@ public class UpdateTestGuiController implements Initializable {
 			tfDuration.setText(testToEdit.getDuration());
 			tfPointsPerQuestion.setText(testToEdit.getPointsPerQuestion());
 		}
+
 	}
 
 	@FXML

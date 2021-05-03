@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import client.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import models.Test;
 
+/**
+ * FXML controller class for table layout graphic user interface, display table
+ * with test list collected from client class.
+ * 
+ * @author Arikz
+ *
+ */
 public class TableGuiController implements Initializable {
 
 	@FXML
@@ -37,16 +45,12 @@ public class TableGuiController implements Initializable {
 	@FXML
 	private TableColumn<Test, Integer> tcPointsPerQuestion;
 
-	private static List<Test> testsList;
-
-	public TableGuiController() {
-	}
-
-	public TableGuiController(List<Test> testsList) {
-		super();
-		this.testsList = testsList;
-	}
-
+	/**
+	 * Method that's displaying new table layout scene inside center on borderPane
+	 * from main layout.
+	 * 
+	 * @param mainPane primary main layout
+	 */
 	public void DisplayTable(BorderPane mainPane) {
 		Pane talbePane;
 		try {
@@ -57,6 +61,10 @@ public class TableGuiController implements Initializable {
 		}
 	}
 
+	/**
+	 * Setting all table column and creating new data set from client request that has been
+	 * sent to database.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tcId.setCellValueFactory(new PropertyValueFactory<Test, String>("Id"));
@@ -65,11 +73,9 @@ public class TableGuiController implements Initializable {
 		tcDuration.setCellValueFactory(new PropertyValueFactory<Test, Integer>("Duration"));
 		tcPointsPerQuestion.setCellValueFactory(new PropertyValueFactory<Test, Integer>("pointsPerQuestion"));
 
-		if (testsList != null) {
-			ObservableList<Test> tests = FXCollections.observableArrayList();
-			tests.addAll(testsList);
-			tvTest.setItems(tests);
-		}
+		ObservableList<Test> tests = FXCollections.observableArrayList();
+		tests.addAll(Client.getTests());
+		tvTest.setItems(tests);
 
 	}
 
