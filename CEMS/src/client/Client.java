@@ -45,7 +45,7 @@ public class Client extends AbstractClient {
 	}
 
 	/**
-	 * Function start when server send message, the server send messages throw this
+	 * Function calls when server send message, the server send messages throw this
 	 * function.
 	 * 
 	 * @param msg: get the returning message from server

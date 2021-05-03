@@ -19,30 +19,35 @@ import ocsf.server.ConnectionToClient;
 public class Server extends AbstractServer {
 
 	/**
-	 * 
+	 * Server event listener in order to handle events that occurred by server, send
+	 * to server user interface log.
 	 */
 	private ServerEventListener serverListener;
 
 	/**
-	 * 
+	 * Store database controller instance created by the constructor, in order to
+	 * make transaction with database.
 	 */
 	private DatabaseController databseController;
 
 	/**
-	 * 
+	 * Indicate if the server is connected
 	 */
 	private static boolean isConnected = false;
 
 	/**
-	 * @param port
+	 * Creating new server connection with port given by constructor
+	 * 
+	 * @param port number
 	 */
 	public Server(int port) {
 		super(port);
 	}
 
 	/**
-	 * @param logListener
-	 * @param database
+	 * @param logListener server event listener, in order to handle event and update
+	 *                    the log
+	 * @param database    details instance to create database instance
 	 * @param serverPort
 	 */
 	public Server(ServerEventListener logListener, Database database, String serverPort) {
@@ -52,7 +57,10 @@ public class Server extends AbstractServer {
 	}
 
 	/**
-	 *
+	 * Function calls when client send message, the client send messages throw this
+	 * function.
+	 * 
+	 * @param msg: get the returning message from client
 	 */
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
@@ -105,7 +113,9 @@ public class Server extends AbstractServer {
 	}
 
 	/**
-	 *
+	 * Method the being called when server has been started, when the server started
+	 * there is link between SQL database, indicate the server is connected and
+	 * print to log.
 	 */
 	protected void serverStarted() {
 		try {
@@ -126,7 +136,8 @@ public class Server extends AbstractServer {
 	}
 
 	/**
-	 *
+	 * Method the being called when server has been stopped, when the server stopped
+	 * indicate the server is connected and print to log.
 	 */
 	protected void serverStopped() {
 		isConnected = false;
@@ -135,7 +146,7 @@ public class Server extends AbstractServer {
 	}
 
 	/**
-	 *
+	 * Print to log when new client is entered the server.
 	 */
 	protected void clientConnected(ConnectionToClient client) {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
