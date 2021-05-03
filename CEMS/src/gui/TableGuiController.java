@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -55,6 +56,7 @@ public class TableGuiController implements Initializable {
 		try {
 			talbePane = (Pane) FXMLLoader.load(getClass().getResource("TableGui.fxml"));
 			mainPane.setCenter(talbePane);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

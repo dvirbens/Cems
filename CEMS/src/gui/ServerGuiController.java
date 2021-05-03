@@ -27,7 +27,7 @@ import server.ServerEventListener;
  * class handle creating new server instance that's listening for clients
  * requests. every event that occurred on server displayed on server log.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon	
  *
  */
 public class ServerGuiController implements Initializable, ServerEventListener {
