@@ -12,28 +12,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="500.0" prefWidth="642.0"
-	style="-fx-background-color: #ffffff;" stylesheets="@ServerStyle.css"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="gui.ServerGuiController">
+<Pane prefHeight="500.0" prefWidth="716.0" style="-fx-background-color: #ffffff;" stylesheets="@ServerStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerGuiController">
 	<children>
 		<Pane prefHeight="131.0" prefWidth="622.0">
 			<children>
-				<ImageView fitHeight="183.0" fitWidth="334.0"
-					layoutX="168.0" layoutY="-14.0" pickOnBounds="true">
+				<ImageView fitHeight="183.0" fitWidth="334.0" layoutX="168.0" layoutY="-14.0" pickOnBounds="true">
 					<image>
 						<Image url="@logo.png" />
 					</image>
 				</ImageView>
 			</children>
 		</Pane>
-		<VBox layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity"
-			minHeight="-Infinity" minWidth="-Infinity" prefHeight="242.0"
-			prefWidth="295.0" style="-fx-background-color: #ffffff;">
+		<VBox layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="242.0" prefWidth="295.0" style="-fx-background-color: #ffffff;">
 			<children>
-				<Label alignment="CENTER" prefHeight="21.0" prefWidth="302.0"
-					text="Database connection">
+				<Label alignment="CENTER" prefHeight="21.0" prefWidth="302.0" text="Database connection">
 					<VBox.margin>
 						<Insets bottom="5.0" />
 					</VBox.margin>
@@ -43,12 +35,8 @@
 				</Label>
 				<HBox prefHeight="36.0" prefWidth="438.0">
 					<children>
-						<Label alignment="CENTER" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							prefHeight="21.0" prefWidth="86.0" text="Ip"
-							textAlignment="RIGHT" />
-						<TextField fx:id="tfIp" prefHeight="31.0"
-							prefWidth="173.0">
+						<Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="86.0" text="Ip" textAlignment="RIGHT" />
+						<TextField fx:id="tfIp" prefHeight="31.0" prefWidth="173.0">
 							<HBox.margin>
 								<Insets bottom="5.0" left="10.0" />
 							</HBox.margin>
@@ -57,12 +45,8 @@
 				</HBox>
 				<HBox prefHeight="30.0" prefWidth="300.0">
 					<children>
-						<Label alignment="CENTER" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							prefHeight="21.0" prefWidth="86.0" text="Port"
-							textAlignment="RIGHT" />
-						<TextField fx:id="tfPort" prefHeight="31.0"
-							prefWidth="173.0">
+						<Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="86.0" text="Port" textAlignment="RIGHT" />
+						<TextField fx:id="tfPort" prefHeight="31.0" prefWidth="173.0">
 							<HBox.margin>
 								<Insets bottom="5.0" left="10.0" />
 							</HBox.margin>
@@ -71,12 +55,8 @@
 				</HBox>
 				<HBox prefHeight="30.0" prefWidth="300.0">
 					<children>
-						<Label alignment="CENTER" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							prefHeight="21.0" prefWidth="86.0" text="Scheme"
-							textAlignment="RIGHT" />
-						<TextField fx:id="tfScheme" prefHeight="31.0"
-							prefWidth="173.0">
+						<Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="86.0" text="Scheme" textAlignment="RIGHT" />
+						<TextField fx:id="tfScheme" prefHeight="31.0" prefWidth="173.0">
 							<HBox.margin>
 								<Insets bottom="5.0" left="10.0" />
 							</HBox.margin>
@@ -85,12 +65,8 @@
 				</HBox>
 				<HBox prefHeight="36.0" prefWidth="296.0">
 					<children>
-						<Label alignment="CENTER" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							prefHeight="21.0" prefWidth="86.0" text="User name"
-							textAlignment="RIGHT" />
-						<TextField fx:id="tfUserName" prefHeight="31.0"
-							prefWidth="174.0">
+						<Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="86.0" text="User name" textAlignment="RIGHT" />
+						<TextField fx:id="tfUserName" prefHeight="31.0" prefWidth="174.0">
 							<HBox.margin>
 								<Insets bottom="5.0" left="10.0" />
 							</HBox.margin>
@@ -99,12 +75,8 @@
 				</HBox>
 				<HBox prefHeight="30.0" prefWidth="300.0">
 					<children>
-						<Label alignment="CENTER" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							prefHeight="21.0" prefWidth="86.0" text="Password"
-							textAlignment="RIGHT" />
-						<PasswordField fx:id="tfPassword" prefHeight="31.0"
-							prefWidth="174.0">
+						<Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="86.0" text="Password" textAlignment="RIGHT" />
+						<PasswordField fx:id="tfPassword" prefHeight="31.0" prefWidth="174.0">
 							<HBox.margin>
 								<Insets bottom="5.0" left="10.0" />
 							</HBox.margin>
@@ -113,11 +85,9 @@
 				</HBox>
 			</children>
 		</VBox>
-		<VBox layoutX="319.0" layoutY="150.0" prefHeight="221.0"
-			prefWidth="302.0">
+		<VBox layoutX="319.0" layoutY="150.0" prefHeight="221.0" prefWidth="302.0">
 			<children>
-				<Label alignment="CENTER" prefHeight="38.0" prefWidth="302.0"
-					text="Server connection" textAlignment="CENTER">
+				<Label alignment="CENTER" prefHeight="38.0" prefWidth="302.0" text="Server connection" textAlignment="CENTER">
 					<VBox.margin>
 						<Insets />
 					</VBox.margin>
@@ -127,12 +97,8 @@
 				</Label>
 				<HBox prefHeight="36.0" prefWidth="438.0">
 					<children>
-						<Label alignment="CENTER" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							prefHeight="21.0" prefWidth="69.0" text="Port"
-							textAlignment="RIGHT" />
-						<TextField fx:id="tfPortServer" prefHeight="31.0"
-							prefWidth="186.0">
+						<Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="69.0" text="Port" textAlignment="RIGHT" />
+						<TextField fx:id="tfPortServer" prefHeight="31.0" prefWidth="186.0">
 							<HBox.margin>
 								<Insets bottom="5.0" left="10.0" />
 							</HBox.margin>
@@ -143,20 +109,13 @@
 					<children>
 						<Pane prefHeight="52.0" prefWidth="252.0">
 							<children>
-								<Button fx:id="btnStart" alignment="CENTER"
-									contentDisplay="CENTER" layoutX="87.0" layoutY="10.0"
-									mnemonicParsing="false" onAction="#onClickStartServer"
-									prefHeight="31.0" prefWidth="141.0"
-									style="-fx-background-color: #48a832; -fx-background-radius: 10;"
-									text="Start" textAlignment="CENTER" textFill="WHITE"
-									textOverrun="CENTER_ELLIPSIS" />
+								<Button fx:id="btnStart" alignment="CENTER" contentDisplay="CENTER" layoutX="87.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickStartServer" prefHeight="31.0" prefWidth="141.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Start" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" />
 							</children>
 						</Pane>
 					</children>
 				</HBox>
 			</children>
 		</VBox>
-		<TextArea fx:id="taLogs" layoutX="306.0" layoutY="285.0"
-			prefHeight="197.0" prefWidth="323.0" />
+		<TextArea fx:id="taLogs" layoutX="298.0" layoutY="283.0" prefHeight="195.0" prefWidth="384.0" />
 	</children>
 </Pane>

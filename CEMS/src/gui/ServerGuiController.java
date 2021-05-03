@@ -71,7 +71,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 	public void start(Stage primaryStage) {
 		try {
 			Pane root = (Pane) FXMLLoader.load(getClass().getResource("ServerGui.fxml"));
-			Scene scene = new Scene(root, 650, 550);
+			Scene scene = new Scene(root, 700, 550);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("CEMS-Server");
