@@ -1,6 +1,11 @@
 package server;
 
-//
+/**
+ * Interface that demonstrate Server event listener in order to handle events
+ * that occurred by server.
+ * 
+ * @author Arikz
+ */
 public interface ServerEventListener {
 	void printToLog(String logs);
 

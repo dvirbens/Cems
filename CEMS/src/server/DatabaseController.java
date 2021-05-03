@@ -14,31 +14,32 @@ import models.Test;
 
 /**
  * Class that handles all of operation sent by client, database controller
- * communicate with server side, and send queries to database.
+ * communicate with server side, and send queries to SQL database.
  * 
  * @author Arikz
  *
  */
 public class DatabaseController {
-	
+
 	/**
-	 * 
+	 * Create connection instance to SQL Database
 	 */
 	private Connection conn;
-	
+
 	/**
-	 * 
+	 * Database details instance, in order to store all SQL connection details
 	 */
 	private Database database;
-	
+
 	/**
-	 * 
+	 * Server event listener in order to handle events that occurred by database,
+	 * send it back to server log.
 	 */
 	private ServerEventListener logListener;
 
 	/**
-	 * @param database
-	 * @param logListener
+	 * @param database    store database details instance{ip,port,etc..} on class
+	 * @param logListener store event listener on class
 	 */
 	public DatabaseController(Database database, ServerEventListener logListener) {
 		super();
@@ -47,14 +48,16 @@ public class DatabaseController {
 	}
 
 	/**
-	 * @throws SQLException
+	 * Creating new connection to SQL database driver by using database details
+	 * instance. In case of connection problem terminate the connection.
+	 * 
+	 * @throws SQLException in case of connectivity problem.
 	 */
 	public void connectToDatabase() throws SQLException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			logListener.printToLog("Driver definition succeed");
 		} catch (Exception ex) {
-			/* handle the error */
 			logListener.printToLog("Driver definition failed");
 		}
 
@@ -62,7 +65,7 @@ public class DatabaseController {
 			conn = DriverManager.getConnection("jdbc:mysql://" + database.getIp() + ":" + database.getPort() + "/"
 					+ database.getScheme() + "?serverTimezone=IST", database.getUserName(), database.getPassword());
 			logListener.printToLog("SQL connection succeed");
-		} catch (SQLException ex) {/* handle any errors */
+		} catch (SQLException ex) {
 			logListener.printToLog("SQLException: " + ex.getMessage());
 			logListener.printToLog("SQLState: " + ex.getSQLState());
 			logListener.printToLog("VendorError: " + ex.getErrorCode());
@@ -72,22 +75,24 @@ public class DatabaseController {
 	}
 
 	/**
-	 * @param test
-	 * @return
+	 * Saving new test on database using appropriate query by prepared statement.
+	 * 
+	 * @param test that's needed to be save on database
+	 * @return boolean value{true = test saved successfully,false = can't save test}
 	 */
 	public boolean saveTest(Test test) {
-		PreparedStatement pstmt;
+		PreparedStatement prepareStatement;
 
 		try {
-			pstmt = conn.prepareStatement(
+			prepareStatement = conn.prepareStatement(
 					"INSERT INTO Test (ID,Subject,Course,DurationTime,PointPerQuestion) VALUES (?,?,?,?,?);");
-			pstmt.setString(1, test.getId());
-			pstmt.setString(2, test.getSubject());
-			pstmt.setString(3, test.getCourse());
-			pstmt.setString(4, test.getDuration());
-			pstmt.setString(5, test.getPointsPerQuestion());
-			int rs = pstmt.executeUpdate();
-			if (rs == 1) {
+			prepareStatement.setString(1, test.getId());
+			prepareStatement.setString(2, test.getSubject());
+			prepareStatement.setString(3, test.getCourse());
+			prepareStatement.setString(4, test.getDuration());
+			prepareStatement.setString(5, test.getPointsPerQuestion());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
 				System.out.print("Test Saved Succuessfully");
 				return true;
 			}
@@ -100,21 +105,23 @@ public class DatabaseController {
 	}
 
 	/**
-	 * @return
+	 * Get all of test list from database test table, using appropriate query and
+	 * SQL statement variable.
+	 * 
+	 * @return list of all test on database
 	 */
 	public List<Test> getTestList() {
 		List<Test> tests = new ArrayList<>();
 		try {
-			Statement st = conn.createStatement();
-			String sql = ("SELECT * FROM Test;");
-			ResultSet rs;
-			rs = st.executeQuery(sql);
-			while (rs.next()) {
-				String id = rs.getString("Id");
-				String subject = rs.getString("Subject");
-				String course = rs.getString("Course");
-				String duration = rs.getString("Duration");
-				String pointPerQuestion = rs.getString("PointPerQuestion");
+			Statement statement = conn.createStatement();
+			String query = ("SELECT * FROM Test;");
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				String id = resultSet.getString("Id");
+				String subject = resultSet.getString("Subject");
+				String course = resultSet.getString("Course");
+				String duration = resultSet.getString("Duration");
+				String pointPerQuestion = resultSet.getString("PointPerQuestion");
 				Test test = new Test(id, subject, course, duration, pointPerQuestion);
 				tests.add(test);
 			}
@@ -126,21 +133,23 @@ public class DatabaseController {
 	}
 
 	/**
-	 * @param givenId
-	 * @return
+	 * Get specific test by given id key from database test table, using appropriate
+	 * query and SQL statement.
+	 * 
+	 * @param givenId specific test id that's store on database
+	 * @return test requested
 	 */
 	public Test getTest(String givenId) {
 		try {
-			Statement st = conn.createStatement();
+			Statement statement = conn.createStatement();
 			String sql = ("SELECT * FROM Test WHERE id=" + givenId + ";");
-			ResultSet rs;
-			rs = st.executeQuery(sql);
-			if (rs.next()) {
-				String id = rs.getString("Id");
-				String subject = rs.getString("Subject");
-				String course = rs.getString("Course");
-				String duration = rs.getString("Duration");
-				String pointPerQuestion = rs.getString("PointPerQuestion");
+			ResultSet resultSet = statement.executeQuery(sql);
+			if (resultSet.next()) {
+				String id = resultSet.getString("Id");
+				String subject = resultSet.getString("Subject");
+				String course = resultSet.getString("Course");
+				String duration = resultSet.getString("Duration");
+				String pointPerQuestion = resultSet.getString("PointPerQuestion");
 				Test test = new Test(id, subject, course, duration, pointPerQuestion);
 				return test;
 			}
@@ -152,8 +161,12 @@ public class DatabaseController {
 	}
 
 	/**
-	 * @param testToEdit
-	 * @return
+	 * Updating test on test database table, using SQL statement with appropriate
+	 * query, and given test to edit.
+	 * 
+	 * @param testToEdit new test details to replace on database
+	 * @return boolean value{true = test replaced successfully,false = can't edit
+	 *         test}
 	 */
 	public boolean updateTest(Test testToEdit) {
 		PreparedStatement pstmt;

@@ -1,9 +1,7 @@
 package server;
 
-//
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import common.ModelWrapper;
@@ -12,25 +10,53 @@ import models.Test;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
+/**
+ * Server class that's handle server-client communication
+ * 
+ * @author Arikz
+ *
+ */
 public class Server extends AbstractServer {
 
+	/**
+	 * 
+	 */
 	private ServerEventListener serverListener;
+
+	/**
+	 * 
+	 */
 	private DatabaseController databseController;
+
+	/**
+	 * 
+	 */
 	private static boolean isConnected = false;
 
+	/**
+	 * @param port
+	 */
 	public Server(int port) {
 		super(port);
 	}
 
+	/**
+	 * @param logListener
+	 * @param database
+	 * @param serverPort
+	 */
 	public Server(ServerEventListener logListener, Database database, String serverPort) {
 		super(Integer.parseInt(serverPort));
 		this.serverListener = logListener;
 		databseController = new DatabaseController(database, logListener);
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-	
+
 		ModelWrapper<?> modelWrapperFromClient = (ModelWrapper<?>) msg;
 		ModelWrapper<?> modelWrapperToClient;
 
@@ -78,6 +104,9 @@ public class Server extends AbstractServer {
 
 	}
 
+	/**
+	 *
+	 */
 	protected void serverStarted() {
 		try {
 			databseController.connectToDatabase();
@@ -96,17 +125,23 @@ public class Server extends AbstractServer {
 		}
 	}
 
+	/**
+	 *
+	 */
 	protected void serverStopped() {
 		isConnected = false;
 		serverListener.printToLog("Server has stopped listening for connections");
 		serverListener.changeButtonStatus(isConnected);
 	}
 
-	public static boolean isConnected() {
-		return isConnected;
-	}
-
+	/**
+	 *
+	 */
 	protected void clientConnected(ConnectionToClient client) {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
+	}
+
+	public static boolean isConnected() {
+		return isConnected;
 	}
 }
