@@ -1,8 +1,5 @@
 package gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import client.Client;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;

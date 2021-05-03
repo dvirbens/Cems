@@ -2,11 +2,9 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import client.Client;
-import client.ClientController;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +45,9 @@ public class UpdateTestGuiController implements Initializable {
 	private Button btnUpdate;
 
 	/**
+	 * Method that's displaying new update test layout scene inside center on
+	 * borderPane from main layout,
+	 * 
 	 * @param mainPane
 	 */
 	public void DisplayTest(BorderPane mainPane) {
@@ -59,6 +60,10 @@ public class UpdateTestGuiController implements Initializable {
 		}
 	}
 
+	/**
+	 * Setting all test fields and creating new data set from client request that
+	 * has been sent to database.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Test testToEdit = Client.getEditTest();
@@ -73,6 +78,13 @@ public class UpdateTestGuiController implements Initializable {
 
 	}
 
+	/**
+	 * Handle "update" button, by saving all fields that the user entered, sending
+	 * user interface request to client, client handle the request send to server
+	 * data related and save the appropriate values inside database.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void onUpdateClicked(ActionEvent event) {
 		String id = tfId.getText();

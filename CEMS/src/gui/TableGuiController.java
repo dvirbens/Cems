@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import client.Client;
