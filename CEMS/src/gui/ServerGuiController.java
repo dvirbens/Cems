@@ -176,7 +176,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 				}
 				Platform.runLater(() -> {
 					if (status)
-						btnStart.setText("Dissconnect");
+						btnStart.setText("Disconnect");
 					else
 						btnStart.setText("Connect");
 				});
