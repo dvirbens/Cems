@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,11 +17,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import models.Database;
-import server.ServerEventListener;
 import server.Server;
+import server.ServerEventListener;
 
+/**
+ * FXML controller class for server screen in javaFX graphic user interface, let
+ * the user start new server by enter correct server and database details, this
+ * class handle creating new server instance that's listening for clients
+ * requests. every event that occurred on server displayed on server log.
+ * 
+ * @author Arikz
+ *
+ */
 public class ServerGuiController implements Initializable, ServerEventListener {
 
 	@FXML
@@ -49,8 +56,18 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 	@FXML
 	private TextArea taLogs;
 
+	/**
+	 * Server instance for client-server communication
+	 */
 	private Server server;
 
+	/**
+	 * Getting the application primary stage and set new server screen graphic
+	 * interface scene, with database,port details fields and button in order to
+	 * create the server and start listening.
+	 * 
+	 * @param primaryStage of javaFX application
+	 */
 	public void start(Stage primaryStage) {
 		try {
 			Pane root = (Pane) FXMLLoader.load(getClass().getResource("ServerGui.fxml"));
@@ -63,6 +80,12 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 		}
 	}
 
+	/**
+	 * Handle "Start" button, by creating new server instance and start listening,if
+	 * server already connected call method to disconnect from server.
+	 * 
+	 * @param event window event handler
+	 */
 	@FXML
 	void onClickStartServer(ActionEvent event) {
 
@@ -81,12 +104,20 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 
 	}
 
+	/**
+	 * Called by javaFX controller system, initialize all appropriate variable this
+	 * in case fill all text fields in default value.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		fillDefaultDetails();
-		createServer();
 	}
 
+	/**
+	 * Method to collect all server and database information, create new server
+	 * instance to implement server-client communication and transfer database
+	 * details into server in order to create database controller.
+	 */
 	private void createServer() {
 		String ip = tfIp.getText();
 		String port = tfPort.getText();
@@ -98,6 +129,10 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 		server = new Server(this, database, serverPort);
 	}
 
+	/**
+	 * Called when disconnect button has been clicked, close server and stop
+	 * listening.
+	 */
 	public void disconnectFromServer() {
 		try {
 			server.close();
@@ -108,6 +143,9 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 		}
 	}
 
+	/**
+	 * Change all text fields to default values
+	 */
 	private void fillDefaultDetails() {
 		tfIp.setText("127.0.0.1");
 		tfPort.setText("3306");
@@ -122,6 +160,10 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 		taLogs.appendText(logs + "\n");
 	}
 
+	/**
+	 * Method to handle button clicking events, change the button status
+	 * {"connect","disconnect"} when server has been connected/disconnected.
+	 */
 	@Override
 	public void changeButtonStatus(boolean status) {
 		Thread btnChangeToDisconnect = new Thread(new Runnable() {

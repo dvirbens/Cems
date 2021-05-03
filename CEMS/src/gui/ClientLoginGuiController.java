@@ -68,6 +68,7 @@ public class ClientLoginGuiController implements Initializable {
 	 * interface and connect to server by creating new instance of client and
 	 * connect to port given by text field, if succeed close login window.
 	 * 
+	 * @param event window event handler
 	 */
 	@FXML
 	void onConnect(ActionEvent event) {
