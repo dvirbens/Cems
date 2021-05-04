@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -57,6 +58,7 @@ public class ClientLoginGuiController implements Initializable {
 			Scene scene = new Scene(root, 300, 400);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("CEMS");
+			primaryStage.getIcons().add(new Image("/gui/icon.png"));
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

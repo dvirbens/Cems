@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import models.Database;
@@ -75,6 +76,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("CEMS-Server");
+			primaryStage.getIcons().add(new Image("/gui/icon.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

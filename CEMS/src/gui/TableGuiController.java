@@ -22,7 +22,7 @@ import models.Test;
  * FXML controller class for table layout graphic user interface, display table
  * with test list collected from client class.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class TableGuiController implements Initializable {

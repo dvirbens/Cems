@@ -9,7 +9,7 @@ import javafx.stage.Stage;
  * Main user interface class that's starting the client application, and all of
  * the graphic user interface component.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class ClientUI extends Application {

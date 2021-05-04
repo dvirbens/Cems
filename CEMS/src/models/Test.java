@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Class that describe test on project system, store all necessary attributes
  * inside this model.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class Test implements Serializable {

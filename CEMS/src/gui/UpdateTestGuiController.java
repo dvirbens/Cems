@@ -21,7 +21,7 @@ import models.Test;
  * test given by called method,let the user see and update(change data fields)
  * test that's exist on database.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class UpdateTestGuiController implements Initializable {

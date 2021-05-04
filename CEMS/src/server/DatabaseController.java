@@ -16,7 +16,7 @@ import models.Test;
  * Class that handles all of operation sent by client, database controller
  * communicate with server side, and send queries to SQL database.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class DatabaseController {

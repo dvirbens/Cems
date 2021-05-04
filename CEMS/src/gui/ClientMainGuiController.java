@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -18,7 +19,7 @@ import models.Test;
  * FXML controller class for main screen in javaFX graphic user interface, let
  * the user interact with the main application graphic user interface.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class ClientMainGuiController {
@@ -49,6 +50,7 @@ public class ClientMainGuiController {
 			Scene scene = new Scene(mainPane, 850, 500);
 			stage.setScene(scene);
 			stage.setTitle("CEMS");
+			stage.getIcons().add(new Image("/gui/icon.png"));
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Class that demonstrate database, store on that object all database attribute.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class Database implements Serializable {

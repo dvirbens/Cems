@@ -6,7 +6,7 @@ import java.io.IOException;
  * Class that's creating new client-server communication and handle all client
  * user interface requests.
  * 
- * @author Arikz
+  * @author Arikz ,Dvir ben simon
  *
  */
 public class ClientController {

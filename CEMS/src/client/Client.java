@@ -10,7 +10,7 @@ import ocsf.client.AbstractClient;
 /**
  * Class that's handle server-client communication.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  */
 public class Client extends AbstractClient {
 

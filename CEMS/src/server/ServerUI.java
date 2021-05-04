@@ -10,7 +10,7 @@ import javafx.stage.WindowEvent;
  * Main user interface class that's starting the server application, and all of
  * the graphic user interface component.
  * 
- * @author Arikz
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class ServerUI extends Application {
