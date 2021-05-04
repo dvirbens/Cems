@@ -80,6 +80,12 @@ public class ClientMainGuiController {
 	@FXML
 	void onClickEditTest(ActionEvent event) {
 		String id = tfId.getText();
+		if(id.equals("")){
+			labelStatus.setText("enter test id");
+			labelStatus.setTextFill(Color.color(1, 0, 0));
+			return;
+		}
+
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(id, ModelWrapper.LOAD_TEST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 		Test editTest = Client.getEditTest();
