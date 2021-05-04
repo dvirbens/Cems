@@ -80,6 +80,7 @@ public class ClientMainGuiController {
 	@FXML
 	void onClickEditTest(ActionEvent event) {
 		String id = tfId.getText();
+		
 		if(id.equals("")){
 			labelStatus.setText("enter test id");
 			labelStatus.setTextFill(Color.color(1, 0, 0));
