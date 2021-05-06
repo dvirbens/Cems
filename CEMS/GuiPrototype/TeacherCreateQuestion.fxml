@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="btnCreateQuestion" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
@@ -71,14 +72,17 @@
             <ScrollPane layoutX="20.0" layoutY="274.0" prefHeight="52.0" prefWidth="532.0" />
             <ScrollPane layoutX="22.0" layoutY="111.0" prefHeight="119.0" prefWidth="527.0" />
             <Label layoutX="25.0" layoutY="249.0" text="answer 1:" />
-            <JFXButton layoutX="418.0" layoutY="719.0" prefHeight="34.0" prefWidth="118.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create question" textFill="WHITE" />
+            <JFXButton layoutX="205.0" layoutY="716.0" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create question" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font></JFXButton>
             <Label layoutX="25.0" layoutY="341.0" text="answer 2:" />
             <ScrollPane layoutX="21.0" layoutY="365.0" prefHeight="52.0" prefWidth="533.0" />
             <Label layoutX="25.0" layoutY="431.0" text="answer 3:" />
             <ScrollPane layoutX="22.0" layoutY="459.0" prefHeight="52.0" prefWidth="535.0" />
             <Text layoutX="62.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select:" wrappingWidth="39.0" />
             <Text layoutX="25.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question:" wrappingWidth="75.0" />
-            <JFXComboBox focusColor="#48a832" layoutX="226.0" layoutY="658.0" prefHeight="28.0" prefWidth="150.0" promptText="Choose correct answer" />
+            <JFXComboBox focusColor="#48a832" layoutX="80.0" layoutY="654.0" prefHeight="28.0" prefWidth="150.0" promptText="Choose correct answer" />
             <ScrollPane layoutX="22.0" layoutY="566.0" prefHeight="52.0" prefWidth="535.0" />
             <Label layoutX="25.0" layoutY="533.0" text="answer 4:" />
          </children>
