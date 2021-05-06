@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -51,23 +53,72 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="54.0" layoutY="66.0" prefHeight="20.0" prefWidth="108.0" text="Statistics by:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <JFXRadioButton layoutX="156.0" layoutY="68.0" text="Teacher" />
-            <JFXRadioButton layoutX="275.0" layoutY="68.0" text="Course" />
-            <JFXRadioButton layoutX="386.0" layoutY="68.0" text="Student" />
-            <JFXButton layoutX="454.0" layoutY="179.0" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Display" textFill="WHITE" />
-            <JFXComboBox layoutX="275.0" layoutY="131.0" prefHeight="25.0" prefWidth="145.0" promptText="Course" />
-            <JFXComboBox layoutX="92.0" layoutY="131.0" prefHeight="25.0" prefWidth="141.0" promptText="Subject" />
-            <Label layoutX="54.0" layoutY="175.0" prefHeight="27.0" prefWidth="96.0" text="Statistics Type:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <BarChart layoutX="46.0" layoutY="229.0" prefHeight="350.0" prefWidth="471.0">
+            <HBox layoutX="107.0" layoutY="61.0" prefHeight="27.0" prefWidth="350.0">
+               <children>
+                  <Label text="Statistics by:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <JFXRadioButton text="Teacher">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </JFXRadioButton>
+                  <JFXRadioButton text="Course">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </JFXRadioButton>
+                  <JFXRadioButton text="Student" />
+               </children>
+            </HBox>
+            <HBox layoutX="144.0" layoutY="103.0" prefHeight="38.0" prefWidth="282.0">
+               <children>
+                  <JFXComboBox prefHeight="25.0" prefWidth="145.0" promptText="Course">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </JFXComboBox>
+                  <JFXComboBox prefHeight="25.0" prefWidth="141.0" promptText="Subject" />
+               </children>
+            </HBox>
+            <HBox layoutX="41.0" layoutY="157.0" prefHeight="38.0" prefWidth="489.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="96.0" text="Statistics Type:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="5.0" top="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <JFXRadioButton text="Average">
+                     <HBox.margin>
+                        <Insets right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </JFXRadioButton>
+                  <JFXRadioButton text="Median">
+                     <HBox.margin>
+                        <Insets right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </JFXRadioButton>
+                  <JFXRadioButton text="Distribution">
+                     <HBox.margin>
+                        <Insets right="10.0" top="5.0" />
+                     </HBox.margin>
+                  </JFXRadioButton>
+                  <JFXButton style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Display" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <BarChart layoutX="26.0" layoutY="201.0" prefHeight="378.0" prefWidth="503.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -75,9 +126,6 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <JFXRadioButton layoutX="156.0" layoutY="183.0" text="Average" />
-            <JFXRadioButton layoutX="252.0" layoutY="183.0" text="Median" />
-            <JFXRadioButton layoutX="341.0" layoutY="183.0" text="Distribution" />
          </children>
       </Pane>
    </center>
