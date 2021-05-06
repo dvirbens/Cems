@@ -16,7 +16,7 @@
 			<children>
 				<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="74.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@logo3.jpeg" />
+						<Image url="@../logo3.jpeg" />
 					</image>
 				</ImageView>
 				<VBox layoutY="218.0" prefHeight="134.0" prefWidth="227.0">
@@ -25,7 +25,7 @@
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
-										<Image url="@test.png" />
+										<Image url="@../test.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -34,7 +34,7 @@
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
-										<Image url="@start.png" />
+										<Image url="@../start.png" />
 									</image>
 								</ImageView>
 							</graphic>
