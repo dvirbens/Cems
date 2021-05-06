@@ -9,43 +9,29 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="SampleController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SampleController">
 	<bottom>
-		<Pane prefHeight="106.0" prefWidth="369.0"
-			BorderPane.alignment="CENTER">
+		<Pane prefHeight="106.0" prefWidth="369.0" BorderPane.alignment="CENTER">
 			<children>
-				<HBox layoutX="119.0" layoutY="63.0" prefHeight="36.0"
-					prefWidth="212.0">
+				<HBox layoutX="119.0" layoutY="63.0" prefHeight="36.0" prefWidth="212.0">
 					<children>
-						<JFXButton alignment="CENTER" prefHeight="500.0"
-							prefWidth="500.0"
-							style="-fx-background-color: red; -fx-background-radius: 10;"
-							text="Reject" textFill="WHITE">
+						<JFXButton alignment="CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: red; -fx-background-radius: 10;" text="Reject" textFill="WHITE">
 							<HBox.margin>
 								<Insets right="20.0" />
 							</HBox.margin>
 						</JFXButton>
-						<JFXButton alignment="CENTER" prefHeight="500.0"
-							prefWidth="500.0"
-							style="-fx-background-color: #48a832; -fx-background-radius: 10;"
-							text="Accept" textFill="WHITE" />
+						<JFXButton alignment="CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Accept" textFill="WHITE" />
 					</children>
 				</HBox>
 			</children>
 		</Pane>
 	</bottom>
 	<top>
-		<Pane prefHeight="250.0" prefWidth="450.0"
-			BorderPane.alignment="CENTER">
+		<Pane prefHeight="250.0" prefWidth="450.0" BorderPane.alignment="CENTER">
 			<children>
-				<Label layoutX="23.0" layoutY="115.0"
-					text="Description for request:" />
+				<Label layoutX="23.0" layoutY="115.0" text="Description for request:" />
 				<Label layoutX="76.0" layoutY="14.0" text="010101" />
-				<TextArea layoutX="21.0" layoutY="136.0" prefHeight="164.0"
-					prefWidth="408.0"
-					style="-fx-selection-bar: #48a832; -fx-border-color: #48a832; -fx-focus-color: #48a832;"
-					text="Many students, hasn't finished answer all the question&#10;on the exam.&#10;" />
+				<TextArea layoutX="21.0" layoutY="136.0" prefHeight="164.0" prefWidth="408.0" style="-fx-selection-bar: #48a832; -fx-border-color: #48a832; -fx-focus-color: #48a832;" text="Many students, hasn't finished answer all the question&#10;on the exam.&#10;" />
 				<Label layoutX="23.0" layoutY="78.0" text="Course: ">
 					<font>
 						<Font name="System Bold" size="15.0" />
@@ -66,8 +52,7 @@
 						<Font name="System Bold" size="15.0" />
 					</font>
 				</Label>
-				<Label layoutX="270.0" layoutY="78.0"
-					text="Updated Duration: ">
+				<Label layoutX="270.0" layoutY="78.0" text="Updated Duration: ">
 					<font>
 						<Font name="System Bold" size="15.0" />
 					</font>
