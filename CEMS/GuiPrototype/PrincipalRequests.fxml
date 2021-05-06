@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SampleController">
 	<left>
 		<Pane prefHeight="600.0" prefWidth="230.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
 			<children>
@@ -42,11 +42,11 @@
 			</children>
 		</Pane>
 	</left>
-   <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <JFXListView layoutX="75.0" layoutY="100.0" prefHeight="400.0" prefWidth="420.0" />
-         </children>
-      </Pane>
-   </center>
+	<center>
+		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<JFXListView fx:id="lvRequest" layoutX="75.0" layoutY="100.0" prefHeight="400.0" prefWidth="420.0" style="-fx-selection-bar: #48a832; -fx-border-color: #48a832;" />
+			</children>
+		</Pane>
+	</center>
 </BorderPane>

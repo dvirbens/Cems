@@ -1,4 +1,3 @@
-package application;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -10,8 +9,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("TeacherTestStatistic.fxml"));
-			Scene scene = new Scene(root, 370, 300);
+			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("PrincipalRequests.fxml"));
+			Scene scene = new Scene(root, 800, 600);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {
