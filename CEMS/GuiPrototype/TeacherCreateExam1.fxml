@@ -17,7 +17,7 @@
 			<children>
 				<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="74.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/logo3.jpeg" />
+						<Image url="@logo3.jpeg" />
 					</image>
 				</ImageView>
 				<VBox layoutY="205.0" prefHeight="247.0" prefWidth="227.0" style="-fx-background-color: #333333;">
@@ -26,7 +26,7 @@
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
-										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/test.png" />
+										<Image url="@test.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -35,7 +35,7 @@
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
 									<image>
-										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/question.png" />
+										<Image url="@question.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -44,7 +44,7 @@
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
-										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/start.png" />
+										<Image url="@start.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -53,7 +53,7 @@
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
-										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/statistic.png" />
+										<Image url="@statistic.png" />
 									</image>
 								</ImageView>
 							</graphic>
