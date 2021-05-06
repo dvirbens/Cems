@@ -81,6 +81,24 @@ public class Client extends AbstractClient {
 				editTest = null;
 				break;
 				
+			case TEST_STATISTICS:
+				break;
+				
+			case START_EXAM:
+				break;
+				
+			case CREATE_QUESTION:
+				break;
+				
+			case EXAM_EXECUTE:
+				break;
+				
+			case EXAM_EXTENSION_REQUEST:
+				break;
+				
+			case OVERALL_STATISTICS:
+				break;
+				
 			default:
 				break;
 
