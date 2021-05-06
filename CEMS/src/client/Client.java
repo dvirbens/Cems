@@ -58,26 +58,30 @@ public class Client extends AbstractClient {
 			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
 
 			switch (modelWrapperToClient.getOperation()) {
-			case ModelWrapper.LOAD_TEST:
+			case UPDATE_TEST:
 				editTest = (Test) modelWrapperToClient.getElement();
 				break;
 
-			case ModelWrapper.LOAD_QUESTION:
+			case LOAD_TEST:
+				editTest = (Test) modelWrapperToClient.getElement();
 				break;
 
-			case ModelWrapper.LOAD_TEST_LIST:
+			case LOAD_QUESTION:
+				break;
+
+			case LOAD_TEST_LIST:
 				tests = (List<Test>) modelWrapperToClient.getElements();
 				break;
 
-			case ModelWrapper.LOAD_QUESTION_LIST:
+			case LOAD_QUESTION_LIST:
 				break;
 
-			case ModelWrapper.UPDATE_TEST:
-				break;
-
-			case ModelWrapper.ENTERED_WRONG_ID:
+			case ENTERED_WRONG_ID:
 				setErrorMessage("Test dont found ");
 				editTest = null;
+				break;
+				
+			default:
 				break;
 
 			}

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import models.Database;
 import models.Test;
 import ocsf.server.AbstractServer;
@@ -70,13 +71,13 @@ public class Server extends AbstractServer {
 
 		switch (modelWrapperFromClient.getOperation()) {
 
-		case ModelWrapper.LOAD_TEST:
+		case LOAD_TEST:
 			String id = (String) modelWrapperFromClient.getElement();
 			Test test = databseController.getTest(id);
 			if (test != null)
-				modelWrapperToClient = new ModelWrapper<Test>(test, ModelWrapper.LOAD_TEST);
+				modelWrapperToClient = new ModelWrapper<Test>(test, LOAD_TEST);
 			else
-				modelWrapperToClient = new ModelWrapper<>(null, ModelWrapper.ENTERED_WRONG_ID);
+				modelWrapperToClient = new ModelWrapper<>(null, ENTERED_WRONG_ID);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -84,12 +85,12 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case ModelWrapper.LOAD_QUESTION:
+		case LOAD_QUESTION:
 			break;
 
-		case ModelWrapper.LOAD_TEST_LIST:
+		case LOAD_TEST_LIST:
 			List<Test> testArray = databseController.getTestList();
-			modelWrapperToClient = new ModelWrapper<Test>(testArray, ModelWrapper.LOAD_TEST_LIST);
+			modelWrapperToClient = new ModelWrapper<Test>(testArray, LOAD_TEST_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -97,9 +98,10 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case ModelWrapper.LOAD_QUESTION_LIST:
+		case LOAD_QUESTION_LIST:
 			break;
-		case ModelWrapper.UPDATE_TEST:
+
+		case UPDATE_TEST:
 			Test testToEdit = (Test) modelWrapperFromClient.getElement();
 			databseController.updateTest(testToEdit);
 			try {
@@ -108,6 +110,9 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+		default:
+			break;
+
 		}
 
 	}
@@ -154,5 +159,9 @@ public class Server extends AbstractServer {
 
 	public static boolean isConnected() {
 		return isConnected;
+	}
+	
+	synchronized protected void clientDisconnected(ConnectionToClient client) {
+		serverListener.printToLog("client ip address: " + client.getInetAddress() + "has disconnected from the server");
 	}
 }

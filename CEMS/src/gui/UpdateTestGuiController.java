@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import client.Client;
 import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -94,7 +95,7 @@ public class UpdateTestGuiController implements Initializable {
 		String ppq = tfPointsPerQuestion.getText();
 
 		Test test = new Test(id, subject, course, duration, ppq);
-		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(test, ModelWrapper.UPDATE_TEST);
+		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(test, UPDATE_TEST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 	}
 

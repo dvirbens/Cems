@@ -2,7 +2,9 @@ package gui;
 
 import client.Client;
 import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import models.Test;
 
 /**
@@ -45,6 +48,12 @@ public class ClientMainGuiController {
 	 * @param stage of javaFX application
 	 */
 	public void start(Stage stage) {
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent arg0) {
+				System.exit(0);
+			}
+		});
 		try {
 			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("ClientMainGui.fxml"));
 			Scene scene = new Scene(mainPane, 850, 500);
@@ -62,7 +71,7 @@ public class ClientMainGuiController {
 	 */
 	@FXML
 	void onSearchClick(ActionEvent event) {
-		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, ModelWrapper.LOAD_TEST_LIST);
+		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, LOAD_TEST_LIST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 		TableGuiController tableGuiController = new TableGuiController();
 		tableGuiController.DisplayTable(mainPane);
@@ -80,14 +89,14 @@ public class ClientMainGuiController {
 	@FXML
 	void onClickEditTest(ActionEvent event) {
 		String id = tfId.getText();
-		
-		if(id.equals("")){
+
+		if (id.equals("")) {
 			labelStatus.setText("enter test id");
 			labelStatus.setTextFill(Color.color(1, 0, 0));
 			return;
 		}
 
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(id, ModelWrapper.LOAD_TEST);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(id, LOAD_TEST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 		Test editTest = Client.getEditTest();
 		if (editTest != null) {

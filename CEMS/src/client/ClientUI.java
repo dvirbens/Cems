@@ -3,7 +3,9 @@ package client;
 //
 import gui.ClientLoginGuiController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Main user interface class that's starting the client application, and all of
