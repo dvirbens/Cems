@@ -41,4 +41,11 @@
 			</children>
 		</Pane>
 	</left>
+   <center>
+      <ImageView fitHeight="324.0" fitWidth="420.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../logo.png" />
+         </image>
+      </ImageView>
+   </center>
 </BorderPane>
