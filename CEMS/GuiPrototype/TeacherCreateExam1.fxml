@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+	<left>
+		<Pane prefHeight="600.0" prefWidth="230.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
+			<children>
+				<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="74.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/logo3.jpeg" />
+					</image>
+				</ImageView>
+				<VBox layoutY="205.0" prefHeight="247.0" prefWidth="227.0" style="-fx-background-color: #333333;">
+					<children>
+						<JFXButton fx:id="btnCreateTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #48a832;" text="Create Exam" textFill="WHITE">
+							<graphic>
+								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/test.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="btnCreateQuestion" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Question" textFill="WHITE">
+							<graphic>
+								<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/question.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="btnStartTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Start Exam" textFill="WHITE">
+							<graphic>
+								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/start.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+						<JFXButton fx:id="btnStatistic" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Test Statistic" textFill="WHITE">
+							<graphic>
+								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/statistic.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</VBox>
+			</children>
+		</Pane>
+	</left>
+	<center>
+		<Pane prefHeight="600.0" prefWidth="570.0" BorderPane.alignment="CENTER">
+			<children>
+				<Label layoutX="14.0" layoutY="72.0" text="Question pull:" />
+            <JFXButton layoutX="385.0" layoutY="28.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
+				<JFXComboBox focusColor="#48a832" layoutX="24.0" layoutY="27.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
+				<JFXComboBox focusColor="#48a832" layoutX="213.0" layoutY="28.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
+				<ScrollPane layoutX="10.0" layoutY="334.0" prefHeight="205.0" prefWidth="550.0" />
+				<ScrollPane layoutX="10.0" layoutY="100.0" prefHeight="205.0" prefWidth="550.0" />
+				<Label layoutX="10.0" layoutY="307.0" text="Selected question:" />
+            <JFXTextField focusColor="#48a832" layoutX="21.0" layoutY="555.0" text="Exam Duration" />
+            <JFXButton layoutX="474.0" layoutY="555.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
+			</children>
+		</Pane>
+	</center>
+</BorderPane>

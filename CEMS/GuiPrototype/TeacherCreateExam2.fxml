@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+	<bottom>
+		<Pane prefHeight="106.0" prefWidth="369.0" BorderPane.alignment="CENTER">
+			<children>
+				<JFXButton alignment="CENTER" layoutX="220.0" layoutY="38.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Add Question" textFill="WHITE" />
+				<JFXTextField alignment="BOTTOM_LEFT" focusColor="#48a832" labelFloat="true" layoutX="31.0" layoutY="57.0" promptText="Question Points" />
+				<JFXComboBox focusColor="#48a832" layoutX="32.0" layoutY="-1.0" prefHeight="31.0" prefWidth="166.0" promptText="Displayed for" />
+			</children>
+		</Pane>
+	</bottom>
+	<top>
+		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<Label layoutX="19.0" layoutY="14.0" text="Notes" />
+				<TextArea layoutX="19.0" layoutY="35.0" prefHeight="161.0" prefWidth="328.0" />
+			</children>
+		</Pane>
+	</top>
+</BorderPane>
