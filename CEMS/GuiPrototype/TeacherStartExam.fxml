@@ -72,7 +72,7 @@
          <children>
             <JFXComboBox focusColor="#48a832" layoutX="156.0" layoutY="27.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
             <JFXComboBox focusColor="#48a832" layoutX="363.0" layoutY="27.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
-            <JFXButton layoutX="230.0" layoutY="501.0" prefHeight="64.0" prefWidth="143.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="         START" textFill="WHITE">
+            <JFXButton layoutX="230.0" layoutY="501.0" prefHeight="56.0" prefWidth="144.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="         START" textFill="WHITE">
                <font>
                   <Font name="HP Simplified" size="24.0" />
                </font></JFXButton>
@@ -97,7 +97,7 @@
                   <Font name="HP Simplified" size="14.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="238.0" layoutY="516.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="33.0" fitWidth="33.0" layoutX="251.0" layoutY="513.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@start.png" />
                </image>
