@@ -20,7 +20,7 @@
 	<center>
 		<ImageView fitHeight="257.0" fitWidth="381.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
 			<image>
-				<Image url="@../../../../OneDrive/לימודים/סמסטר%206/שיטות%20הנדסיות/UIPrototype/logo.png" />
+				<Image url="@../logo.png" />
 			</image>
 		</ImageView>
 	</center>
