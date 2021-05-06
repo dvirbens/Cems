@@ -18,7 +18,7 @@
 				</ImageView>
 				<VBox layoutY="205.0" prefHeight="118.0" prefWidth="227.0" style="-fx-background-color: #333333;">
 					<children>
-						<JFXButton fx:id="btnCreateTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #48a832;" text="Overall Statistics" textFill="WHITE">
+						<JFXButton fx:id="btnCreateTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" text="Overall Statistics" textFill="WHITE">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
@@ -27,7 +27,7 @@
 								</ImageView>
 							</graphic>
 						</JFXButton>
-						<JFXButton fx:id="btnCreateQuestion" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #48a832;" text="Time Extension Requests" textFill="WHITE">
+						<JFXButton fx:id="btnCreateQuestion" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" text="Time Extension Requests" textFill="WHITE">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
 									<image>
