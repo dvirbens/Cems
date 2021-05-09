@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -14,18 +12,9 @@
 	<center>
 		<Pane prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffff;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="41.0" layoutY="36.0" text="Executed exams" />
-            <TableView layoutX="31.0" layoutY="64.0" prefHeight="442.0" prefWidth="508.0">
-              <columns>
-                <TableColumn prefWidth="89.0" text="Test ID" />
-                  <TableColumn prefWidth="76.0" text="Date" />
-                <TableColumn prefWidth="75.0" text="Subject" />
-                  <TableColumn prefWidth="84.0" text="Course" />
-                  <TableColumn prefWidth="79.0" text="Grade" />
-                  <TableColumn prefWidth="103.0" text="View" />
-              </columns>
-            </TableView>
-            <Label layoutX="28.0" layoutY="531.0" text="Student Average" />
+            <JFXTextField layoutX="204.0" layoutY="285.0" prefHeight="31.0" prefWidth="129.0" promptText="Code" />
+            <JFXButton layoutX="126.0" layoutY="339.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Computerized exam" textFill="WHITE" />
+            <JFXButton layoutX="294.0" layoutY="339.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Manual exam" textFill="WHITE" />
          </children></Pane>
 	</center>
 	<left>
@@ -38,7 +27,7 @@
 				</ImageView>
 				<VBox layoutY="218.0" prefHeight="134.0" prefWidth="227.0">
 					<children>
-						<JFXButton fx:id="btnCreateTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #48a832;" text="Executed Exams" textFill="WHITE">
+						<JFXButton fx:id="btnCreateTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #33333;" text="Executed Exams" textFill="WHITE">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>
@@ -47,7 +36,7 @@
 								</ImageView>
 							</graphic>
 						</JFXButton>
-						<JFXButton fx:id="btnStartTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #3333;" text="Enter Exam" textFill="WHITE">
+						<JFXButton fx:id="btnStartTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #48a832;" text="Enter Exam" textFill="WHITE">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 									<image>

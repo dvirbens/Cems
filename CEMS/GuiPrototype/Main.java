@@ -9,7 +9,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("PrincipalRequests2.fxml"));
+			BorderPane root = (BorderPane) FXMLLoader.load(getClass().getResource("LoginForm.fxml"));
 			Scene scene = new Scene(root, 800, 600);
 			primaryStage.setScene(scene);
 			primaryStage.show();
