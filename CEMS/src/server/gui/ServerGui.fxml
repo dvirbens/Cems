@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="500.0" prefWidth="716.0" style="-fx-background-color: #ffffff;" stylesheets="@ServerStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServerGuiController">
+<Pane prefHeight="500.0" prefWidth="716.0" style="-fx-background-color: #ffffff;" stylesheets="@ServerStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.gui.ServerGuiController">
 	<children>
 		<Pane prefHeight="131.0" prefWidth="622.0">
 			<children>

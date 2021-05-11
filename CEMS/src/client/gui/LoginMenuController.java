@@ -1,4 +1,4 @@
-package gui;
+package client.gui;
 
 import static common.ModelWrapper.Operation.GET_USER;
 

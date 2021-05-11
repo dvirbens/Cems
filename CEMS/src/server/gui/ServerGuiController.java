@@ -1,4 +1,4 @@
-package gui;
+package server.gui;
 
 import java.io.IOException;
 //
@@ -76,7 +76,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("CEMS-Server");
-			primaryStage.getIcons().add(new Image("/gui/icon.png"));
+			primaryStage.getIcons().add(new Image("server/gui/icon.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

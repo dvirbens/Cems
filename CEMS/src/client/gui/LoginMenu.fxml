@@ -4,7 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="600.0" prefWidth="230.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginMenuController">
+<Pane prefHeight="600.0" prefWidth="230.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.LoginMenuController">
 	<children>
 		<JFXTextField fx:id="tfUserName" focusColor="#48a832" labelFloat="true" layoutX="31.0" layoutY="207.0" promptText="User name" style="-fx-prompt-text-fill: white; -fx-text-fill: white;" unFocusColor="GREY" />
 		<JFXTextField fx:id="tfPassword" focusColor="#48a832" labelFloat="true" layoutX="31.0" layoutY="263.0" promptText="Password" style="-fx-prompt-text-fill: white; -fx-text-fill: white;" unFocusColor="GREY" />

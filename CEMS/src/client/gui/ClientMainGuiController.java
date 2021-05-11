@@ -1,4 +1,4 @@
-package gui;
+package client.gui;
 
 import java.io.IOException;
 
@@ -66,7 +66,7 @@ public class ClientMainGuiController {
 			Scene scene = new Scene(mainPane, 850, 500);
 			stage.setScene(scene);
 			stage.setTitle("CEMS");
-			stage.getIcons().add(new Image("/gui/icon.png"));
+			stage.getIcons().add(new Image("client/gui/icon.png"));
 			stage.show();
 			LoginMenuController loginMenuController = new LoginMenuController();
 			loginMenuController.start(mainPane);

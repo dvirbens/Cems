@@ -1,10 +1,10 @@
 package server;
 
-import gui.ServerGuiController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import server.gui.ServerGuiController;
 
 /**
  * Main user interface class that's starting the server application, and all of
