@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
  * @author Arikz ,Dvir ben simon
  *
  */
-public class ClientMainGuiController {
+public class MainGuiController {
 
 	/**
 	 * Value for storing the main layout of the application, in order to change the
@@ -62,14 +62,14 @@ public class ClientMainGuiController {
 			}
 		});
 		try {
-			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("ClientMainGui.fxml"));
+			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("MainGui.fxml"));
 			Scene scene = new Scene(mainPane, 850, 500);
 			stage.setScene(scene);
 			stage.setTitle("CEMS");
 			stage.getIcons().add(new Image("client/gui/icon.png"));
 			stage.show();
 			LoginMenuController loginMenuController = new LoginMenuController();
-			loginMenuController.start(mainPane);
+			loginMenuController.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,7 +80,17 @@ public class ClientMainGuiController {
 	}
 
 	public static void setClientController(ClientController clientController) {
-		ClientMainGuiController.clientController = clientController;
+		MainGuiController.clientController = clientController;
 	}
+
+	public static BorderPane getMainPane() {
+		return mainPane;
+	}
+
+	public static void setMainPane(BorderPane mainPane) {
+		MainGuiController.mainPane = mainPane;
+	}
+	
+	
 
 }

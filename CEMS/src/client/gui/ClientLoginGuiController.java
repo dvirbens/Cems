@@ -74,7 +74,7 @@ public class ClientLoginGuiController implements Initializable {
 	 */
 	@FXML
 	void onConnect(ActionEvent event) {
-		ClientMainGuiController clientMainGuiController = new ClientMainGuiController();
+		MainGuiController clientMainGuiController = new MainGuiController();
 
 		int port = Integer.parseInt(tfPort.getText());
 		try {

@@ -29,13 +29,14 @@ public class LoginMenuController {
 	@FXML
 	private JFXButton btnLogin;
 
-	public void start(BorderPane mainPane) {
+	public void start() {
+		
 		Pane loginMenuPane, loginLogoPane;
 		try {
 			loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("LoginMenu.fxml"));
 			loginLogoPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
-			mainPane.setLeft(loginMenuPane);
-			mainPane.setCenter(loginLogoPane);
+			MainGuiController.getMainPane().setLeft(loginMenuPane);
+			MainGuiController.getMainPane().setCenter(loginLogoPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -52,7 +53,7 @@ public class LoginMenuController {
 		userInfo.add(password);
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
-		ClientMainGuiController.getClientController().sendClientUIRequest(modelWrapper);
+		MainGuiController.getClientController().sendClientUIRequest(modelWrapper);
 
 		User user = Client.getUser();
 
@@ -62,7 +63,12 @@ public class LoginMenuController {
 			break;
 
 		case Teacher:
-			System.out.println("teacher menu");
+			try {
+				Pane teacherMenu = (Pane) FXMLLoader.load(getClass().getResource("TeacherMenu.fxml"));
+				MainGuiController.getMainPane().setLeft(teacherMenu);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		case Principal:

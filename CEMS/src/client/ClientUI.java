@@ -1,6 +1,6 @@
 package client;
 
-import client.gui.ClientMainGuiController;
+import client.gui.MainGuiController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -25,7 +25,7 @@ public class ClientUI extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		ClientMainGuiController clientMainGuiController = new ClientMainGuiController();
+		MainGuiController clientMainGuiController = new MainGuiController();
 		clientMainGuiController.start(primaryStage);
 	}
 
