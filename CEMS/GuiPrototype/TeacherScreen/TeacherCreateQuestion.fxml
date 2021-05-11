@@ -12,16 +12,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="btnCreateQuestion" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<BorderPane fx:id="btnCreateQuestion" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
 	<left>
-		<Pane prefHeight="600.0" prefWidth="230.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
+		<Pane prefHeight="600.0" prefWidth="270.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER">
 			<children>
-				<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="74.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+				<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
 					<image>
 						<Image url="@../logo3.jpeg" />
 					</image>
 				</ImageView>
-				<VBox layoutY="205.0" prefHeight="247.0" prefWidth="227.0" style="-fx-background-color: #333333;">
+				<VBox layoutY="205.0" prefHeight="300.0" prefWidth="270.0" style="-fx-background-color: #333333;">
 					<children>
 						<JFXButton fx:id="btnCreateTest" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Exam" textFill="WHITE">
 							<graphic>
@@ -65,26 +65,26 @@
 		</Pane>
 	</left>
    <center>
-      <Pane prefHeight="600.0" prefWidth="570.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="800.0" prefWidth="570.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXComboBox focusColor="#48a832" layoutX="156.0" layoutY="27.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
-            <JFXComboBox focusColor="#48a832" layoutX="363.0" layoutY="27.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
-            <ScrollPane layoutX="20.0" layoutY="274.0" prefHeight="52.0" prefWidth="532.0" />
-            <ScrollPane layoutX="22.0" layoutY="111.0" prefHeight="119.0" prefWidth="527.0" />
-            <Label layoutX="25.0" layoutY="249.0" text="answer 1:" />
-            <JFXButton layoutX="205.0" layoutY="716.0" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create question" textFill="WHITE">
+            <JFXComboBox focusColor="#48a832" layoutX="265.0" layoutY="19.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
+            <JFXComboBox focusColor="#48a832" layoutX="472.0" layoutY="19.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
+            <ScrollPane layoutX="129.0" layoutY="266.0" prefHeight="52.0" prefWidth="532.0" />
+            <ScrollPane layoutX="131.0" layoutY="103.0" prefHeight="119.0" prefWidth="527.0" />
+            <Label layoutX="134.0" layoutY="241.0" text="answer 1:" />
+            <JFXButton layoutX="314.0" layoutY="708.0" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create question" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font></JFXButton>
-            <Label layoutX="25.0" layoutY="341.0" text="answer 2:" />
-            <ScrollPane layoutX="21.0" layoutY="365.0" prefHeight="52.0" prefWidth="533.0" />
-            <Label layoutX="25.0" layoutY="431.0" text="answer 3:" />
-            <ScrollPane layoutX="22.0" layoutY="459.0" prefHeight="52.0" prefWidth="535.0" />
-            <Text layoutX="56.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select:" wrappingWidth="47.0" />
-            <Text layoutX="25.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question:" wrappingWidth="75.0" />
-            <JFXComboBox focusColor="#48a832" layoutX="25.0" layoutY="648.0" prefHeight="31.0" prefWidth="193.0" promptText="Choose correct answer" />
-            <ScrollPane layoutX="22.0" layoutY="566.0" prefHeight="52.0" prefWidth="535.0" />
-            <Label layoutX="25.0" layoutY="533.0" text="answer 4:" />
+            <Label layoutX="134.0" layoutY="333.0" text="answer 2:" />
+            <ScrollPane layoutX="130.0" layoutY="357.0" prefHeight="52.0" prefWidth="533.0" />
+            <Label layoutX="134.0" layoutY="423.0" text="answer 3:" />
+            <ScrollPane layoutX="131.0" layoutY="451.0" prefHeight="52.0" prefWidth="535.0" />
+            <Text layoutX="165.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select:" wrappingWidth="47.0" />
+            <Text layoutX="134.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question:" wrappingWidth="75.0" />
+            <JFXComboBox focusColor="#48a832" layoutX="134.0" layoutY="640.0" prefHeight="31.0" prefWidth="193.0" promptText="Choose correct answer" />
+            <ScrollPane layoutX="131.0" layoutY="558.0" prefHeight="52.0" prefWidth="535.0" />
+            <Label layoutX="134.0" layoutY="525.0" text="answer 4:" />
          </children>
       </Pane>
    </center>

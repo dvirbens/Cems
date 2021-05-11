@@ -63,7 +63,7 @@ public class MainGuiController {
 		});
 		try {
 			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("MainGui.fxml"));
-			Scene scene = new Scene(mainPane, 800, 600);
+			Scene scene = new Scene(mainPane, 1024, 768);
 			stage.setScene(scene);
 			stage.setTitle("CEMS");
 			stage.getIcons().add(new Image("client/gui/icon.png"));
@@ -90,7 +90,5 @@ public class MainGuiController {
 	public static void setMainPane(BorderPane mainPane) {
 		MainGuiController.mainPane = mainPane;
 	}
-	
-	
 
 }

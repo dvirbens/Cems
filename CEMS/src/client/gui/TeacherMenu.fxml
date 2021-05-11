@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane prefHeight="600.0" prefWidth="230.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.TeacherMenuController">
+<Pane prefHeight="600.0" prefWidth="270.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.TeacherMenuController">
 	<children>
-		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="84.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
 			<image>
 				<Image url="@../../../GuiPrototype/logo3.jpeg" />
 			</image>
 		</ImageView>
-		<VBox layoutX="2.0" layoutY="215.0" prefHeight="247.0" prefWidth="227.0" style="-fx-background-color: #333333;">
+		<VBox layoutY="150.0" prefHeight="300.0" prefWidth="270.0" style="-fx-background-color: #333333;">
 			<children>
-				<JFXButton fx:id="btnCreateExam" onAction="#onClickCreateExam" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Exam" textFill="WHITE">
+				<JFXButton fx:id="btnCreateExam" onAction="#onClickCreateExam" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Exam" textFill="WHITE">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -24,7 +24,7 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
-				<JFXButton fx:id="btnCreateQuestion" onAction="#onClickCreateQuestion" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Question" textFill="WHITE">
+				<JFXButton fx:id="btnCreateQuestion" onAction="#onClickCreateQuestion" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Question" textFill="WHITE">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -33,7 +33,7 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
-				<JFXButton fx:id="btnStartExam" onAction="#onClickStartExam" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Start Exam" textFill="WHITE">
+				<JFXButton fx:id="btnStartExam" onAction="#onClickStartExam" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Start Exam" textFill="WHITE">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
@@ -42,7 +42,7 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
-				<JFXButton fx:id="btnStatistic" onAction="#onClickExamStatistic" prefHeight="300.0" prefWidth="500.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Exam Statistic" textFill="WHITE">
+				<JFXButton fx:id="btnStatistic" onAction="#onClickExamStatistic" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Exam Statistic" textFill="WHITE">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>

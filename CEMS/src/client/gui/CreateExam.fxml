@@ -7,30 +7,16 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane prefHeight="600.0" prefWidth="570.0"
-	xmlns:fx="http://javafx.com/fxml/1"
-	xmlns="http://javafx.com/javafx/8.0.171">
+<Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Label layoutX="14.0" layoutY="91.0" text="Question pull:" />
-		<JFXButton layoutX="395.0" layoutY="38.0"
-			style="-fx-background-color: #48a832; -fx-background-radius: 10;"
-			text="Search" textFill="WHITE" />
-		<JFXComboBox focusColor="#48a832" layoutX="34.0"
-			layoutY="37.0" prefHeight="28.0" prefWidth="145.0"
-			promptText="Subject" />
-		<JFXComboBox focusColor="#48a832" layoutX="223.0"
-			layoutY="38.0" prefHeight="28.0" prefWidth="145.0"
-			promptText="Course" />
-		<ScrollPane layoutX="10.0" layoutY="346.0"
-			prefHeight="200.0" prefWidth="550.0" />
-		<ScrollPane layoutX="10.0" layoutY="112.0"
-			prefHeight="200.0" prefWidth="550.0" />
-		<Label layoutX="14.0" layoutY="325.0" text="Selected question:" />
-		<JFXTextField focusColor="#48a832" layoutX="22.0"
-			layoutY="555.0" text="Exam Duration" />
-		<JFXButton layoutX="470.0" layoutY="555.0"
-			style="-fx-background-color: #48a832; -fx-background-radius: 10;"
-			text="Continute" textFill="WHITE" />
+		<Label layoutX="106.0" layoutY="164.0" text="Question pull:" />
+		<JFXButton layoutX="487.0" layoutY="111.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
+		<JFXComboBox focusColor="#48a832" layoutX="126.0" layoutY="110.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
+		<JFXComboBox focusColor="#48a832" layoutX="315.0" layoutY="111.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
+		<ScrollPane layoutX="102.0" layoutY="419.0" prefHeight="200.0" prefWidth="550.0" />
+		<ScrollPane layoutX="102.0" layoutY="185.0" prefHeight="200.0" prefWidth="550.0" />
+		<Label layoutX="106.0" layoutY="398.0" text="Selected question:" />
+		<JFXTextField focusColor="#48a832" layoutX="114.0" layoutY="628.0" text="Exam Duration" />
+		<JFXButton layoutX="562.0" layoutY="628.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
 	</children>
 </Pane>

@@ -45,7 +45,7 @@ public class TeacherMenuController {
 		paintSelectedButton(Buttons.CREATE_QUESTION);
 		Pane createQuestion;
 		try {
-			createQuestion = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
+			createQuestion = (Pane) FXMLLoader.load(getClass().getResource("CreateQuestion.fxml"));
 			MainGuiController.getMainPane().setCenter(createQuestion);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class TeacherMenuController {
 		paintSelectedButton(Buttons.EXAM_STATISTIC);
 		Pane examStatistic;
 		try {
-			examStatistic = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
+			examStatistic = (Pane) FXMLLoader.load(getClass().getResource("ExamStatistic.fxml"));
 			MainGuiController.getMainPane().setCenter(examStatistic);
 		} catch (IOException e) {
 			e.printStackTrace();

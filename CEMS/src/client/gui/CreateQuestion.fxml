@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane prefHeight="800.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+   <children>
+      <JFXComboBox focusColor="#48a832" layoutX="275.0" layoutY="29.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
+      <JFXComboBox focusColor="#48a832" layoutX="482.0" layoutY="29.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
+      <ScrollPane layoutX="139.0" layoutY="276.0" prefHeight="52.0" prefWidth="532.0" />
+      <ScrollPane layoutX="141.0" layoutY="113.0" prefHeight="119.0" prefWidth="527.0" />
+      <Label layoutX="144.0" layoutY="251.0" text="answer 1:" />
+      <JFXButton layoutX="324.0" layoutY="718.0" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create question" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="144.0" layoutY="343.0" text="answer 2:" />
+      <ScrollPane layoutX="140.0" layoutY="367.0" prefHeight="52.0" prefWidth="533.0" />
+      <Label layoutX="144.0" layoutY="433.0" text="answer 3:" />
+      <ScrollPane layoutX="141.0" layoutY="461.0" prefHeight="52.0" prefWidth="535.0" />
+      <Text layoutX="175.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="select:" wrappingWidth="47.0" />
+      <Text layoutX="144.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Question:" wrappingWidth="75.0" />
+      <JFXComboBox focusColor="#48a832" layoutX="144.0" layoutY="650.0" prefHeight="31.0" prefWidth="193.0" promptText="Choose correct answer" />
+      <ScrollPane layoutX="141.0" layoutY="568.0" prefHeight="52.0" prefWidth="535.0" />
+      <Label layoutX="144.0" layoutY="535.0" text="answer 4:" />
+   </children>
+</Pane>

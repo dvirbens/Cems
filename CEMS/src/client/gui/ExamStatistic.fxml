@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane prefHeight="768.0" prefWidth="754.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+   <children>
+      <BarChart layoutX="118.0" layoutY="392.0" prefHeight="278.0" prefWidth="519.0">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </BarChart>
+      <Label layoutX="200.0" layoutY="362.0" text="Average: " />
+      <Label layoutX="458.0" layoutY="362.0" text="Median: " />
+      <Label layoutX="261.0" layoutY="362.0" text="61.53" />
+      <Label layoutX="515.0" layoutY="362.0" text="66" />
+      <JFXButton layoutX="495.0" layoutY="99.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
+      <JFXComboBox focusColor="#48a832" layoutX="134.0" layoutY="98.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
+      <JFXComboBox focusColor="#48a832" layoutX="323.0" layoutY="99.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
+      <ScrollPane layoutX="134.0" layoutY="172.0" prefHeight="180.0" prefWidth="486.0" />
+      <Label layoutX="134.0" layoutY="143.0" text="Executed Tests" />
+   </children>
+</Pane>
