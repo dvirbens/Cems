@@ -38,5 +38,6 @@ public class ClientController {
 	public Client getClient() {
 		return client;
 	}
+	
 
 }

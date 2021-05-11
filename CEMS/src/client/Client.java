@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import common.ModelWrapper;
 import models.Test;
+import models.User;
 import ocsf.client.AbstractClient;
 
 /**
@@ -32,6 +33,8 @@ public class Client extends AbstractClient {
 	 */
 	private static String errorMessage;
 
+	private static User user;
+
 	/**
 	 * Constructor creating new client connection.
 	 * 
@@ -56,7 +59,6 @@ public class Client extends AbstractClient {
 
 		if (msg != null) {
 			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
-
 			switch (modelWrapperToClient.getOperation()) {
 			case UPDATE_TEST:
 				editTest = (Test) modelWrapperToClient.getElement();
@@ -80,25 +82,30 @@ public class Client extends AbstractClient {
 				setErrorMessage("Test dont found ");
 				editTest = null;
 				break;
-				
+
 			case TEST_STATISTICS:
 				break;
-				
+
 			case START_EXAM:
 				break;
-				
+
 			case CREATE_QUESTION:
 				break;
-				
+
 			case EXAM_EXECUTE:
 				break;
-				
+
 			case EXAM_EXTENSION_REQUEST:
 				break;
-				
+
 			case OVERALL_STATISTICS:
 				break;
-				
+
+			case GET_USER:
+				User user = (User) modelWrapperToClient.getElement();
+				setUser(user);
+				break;
+
 			default:
 				break;
 
@@ -169,6 +176,14 @@ public class Client extends AbstractClient {
 
 	public static void setErrorMessage(String errorMessage) {
 		Client.errorMessage = errorMessage;
+	}
+
+	public static User getUser() {
+		return user;
+	}
+
+	public static void setUser(User user) {
+		Client.user = user;
 	}
 
 }

@@ -29,12 +29,21 @@ public class ModelWrapper<E> implements Serializable {
 
 	public enum Operation {
 		UPDATE_TEST, ENTERED_WRONG_ID, ERROR, LOAD_TEST, LOAD_QUESTION, LOAD_TEST_LIST, LOAD_QUESTION_LIST,
-		OVERALL_STATISTICS, EXAM_EXTENSION_REQUEST, EXAM_EXECUTE, CREATE_QUESTION, START_EXAM, TEST_STATISTICS
+		OVERALL_STATISTICS, EXAM_EXTENSION_REQUEST, EXAM_EXECUTE, CREATE_QUESTION, START_EXAM, TEST_STATISTICS, GET_USER
 	};
 
 	/**
 	 * All of server/client operation
 	 */
+
+	/**
+	 * Constructor of creating model wrapper with one element
+	 * 
+	 * @param operation project operation that's need to be executed
+	 */
+	public ModelWrapper(Operation operation) {
+		this.operation = operation;
+	}
 
 	/**
 	 * Constructor of creating model wrapper with one element
@@ -45,11 +54,6 @@ public class ModelWrapper<E> implements Serializable {
 	public ModelWrapper(E element, Operation operation) {
 		this.element = element;
 		this.operation = operation;
-
-		switch (operation) {
-		case UPDATE_TEST:
-			break;
-		}
 	}
 
 	/**

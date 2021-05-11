@@ -8,6 +8,7 @@ import common.ModelWrapper;
 import static common.ModelWrapper.Operation.*;
 import models.Database;
 import models.Test;
+import models.User;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -110,25 +111,36 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case TEST_STATISTICS:
 			break;
-			
+
 		case START_EXAM:
 			break;
-			
+
 		case CREATE_QUESTION:
 			break;
-			
+
 		case EXAM_EXECUTE:
 			break;
-			
+
 		case EXAM_EXTENSION_REQUEST:
 			break;
-			
+
 		case OVERALL_STATISTICS:
 			break;
-			
+
+		case GET_USER:
+			List<String> userInfo = (List<String>) modelWrapperFromClient.getElements();
+			User user = databseController.getUser(userInfo.get(0), userInfo.get(1));
+			modelWrapperToClient = new ModelWrapper<>(user, GET_USER);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		default:
 			break;
 
@@ -179,7 +191,7 @@ public class Server extends AbstractServer {
 	public static boolean isConnected() {
 		return isConnected;
 	}
-	
+
 	synchronized protected void clientDisconnected(ConnectionToClient client) {
 		serverListener.printToLog("client ip address: " + client.getInetAddress() + "has disconnected from the server");
 	}

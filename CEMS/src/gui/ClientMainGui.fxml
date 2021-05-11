@@ -1,45 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 
-<BorderPane prefHeight="476.0" prefWidth="765.0" style="-fx-background-color: #ffff;" stylesheets="@ClientMainStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ClientMainGuiController">
-   <left>
-      <Pane prefHeight="368.0" prefWidth="174.0" style="-fx-background-color: #dcf4d7;" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="btnSearch" layoutX="14.0" layoutY="58.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Show Tests" textFill="WHITE" />
-            <Button fx:id="btnEditTest" layoutX="14.0" layoutY="169.0" mnemonicParsing="false" onAction="#onClickEditTest" prefHeight="31.0" prefWidth="107.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Test" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Button>
-            <TextField fx:id="tfId" layoutX="14.0" layoutY="131.0" prefHeight="31.0" prefWidth="140.0" promptText="TestID to edit">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor></TextField>
-            <Label fx:id="labelStatus" layoutX="14.0" layoutY="208.0" prefHeight="21.0" prefWidth="150.0" />
-         </children>
-      </Pane>
-   </left>
-   <top>
-      <Pane prefHeight="108.0" prefWidth="765.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="135.0" fitWidth="220.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@logo.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
-   </top>
-</BorderPane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+	prefWidth="800.0" style="-fx-background-color: #ffff;"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="gui.ClientMainGuiController" />

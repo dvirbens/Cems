@@ -11,6 +11,9 @@ import java.util.List;
 
 import models.Database;
 import models.Test;
+import models.User;
+import models.User.ErrorType;
+import models.User.UserType;
 
 /**
  * Class that handles all of operation sent by client, database controller
@@ -71,7 +74,7 @@ public class DatabaseController {
 			logListener.printToLog("VendorError: " + ex.getErrorCode());
 			throw new SQLException();
 		}
-
+		
 	}
 
 	/**
@@ -158,6 +161,42 @@ public class DatabaseController {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get specific user by given user name and password from database test table,
+	 * using appropriate query and SQL statement.
+	 * 
+	 * @param userName specific test id that's store on database
+	 * @return password requested
+	 */
+	public User getUser(String userID, String password) {
+		User user = null;
+		try {
+			Statement statement = conn.createStatement();
+			String sql = ("SELECT * FROM User WHERE userID=" + userID + ";");
+			ResultSet resultSet = statement.executeQuery(sql);
+			if (resultSet.next()) {
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				String email = resultSet.getString("email");
+				String passwordDB = resultSet.getString("password");
+				UserType type = UserType.valueOf(resultSet.getString("type"));
+
+				if (password.equals(passwordDB))
+					user = new User(userID, password, firstName, lastName, email, type);
+				else
+					user = new User(ErrorType.WRONG_PASSWORD);
+
+			} else
+				user = new User(ErrorType.WRONG_ID);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return user;
+		}
+
+		return user;
 	}
 
 	/**

@@ -2,6 +2,7 @@ package client;
 
 //
 import gui.ClientLoginGuiController;
+import gui.ClientMainGuiController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -28,8 +29,8 @@ public class ClientUI extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		ClientLoginGuiController clientLoginGuiController = new ClientLoginGuiController();
-		clientLoginGuiController.start(primaryStage);
+		ClientMainGuiController clientMainGuiController = new ClientMainGuiController();
+		clientMainGuiController.start(primaryStage);
 	}
 
 }

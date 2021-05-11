@@ -1,9 +1,8 @@
 package gui;
 
-import client.Client;
-import common.ModelWrapper;
-import static common.ModelWrapper.Operation.*;
-import javafx.event.ActionEvent;
+import java.io.IOException;
+
+import client.ClientController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import models.Test;
 
 /**
  * FXML controller class for main screen in javaFX graphic user interface, let
@@ -33,6 +30,8 @@ public class ClientMainGuiController {
 	 */
 	private static BorderPane mainPane;
 
+	public static ClientController clientController;
+
 	@FXML
 	private Button btnSearch;
 
@@ -48,6 +47,14 @@ public class ClientMainGuiController {
 	 * @param stage of javaFX application
 	 */
 	public void start(Stage stage) {
+		try {
+			setClientController(new ClientController("localhost", 5555));
+			System.out.println("Connected to server");
+		} catch (IOException e1) {
+			System.out.println("Cant connect to server");
+			e1.printStackTrace();
+		}
+
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
@@ -61,52 +68,19 @@ public class ClientMainGuiController {
 			stage.setTitle("CEMS");
 			stage.getIcons().add(new Image("/gui/icon.png"));
 			stage.show();
+			LoginMenuController loginMenuController = new LoginMenuController();
+			loginMenuController.start(mainPane);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * @param event
-	 */
-	@FXML
-	void onSearchClick(ActionEvent event) {
-		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(null, LOAD_TEST_LIST);
-		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
-		TableGuiController tableGuiController = new TableGuiController();
-		tableGuiController.DisplayTable(mainPane);
-
+	public static ClientController getClientController() {
+		return clientController;
 	}
 
-	/**
-	 * Handle "Edit test" button, by save test id value, sending user interface
-	 * request from client to server and create new scene with all details about
-	 * particular test given by test id.If the test id isn't exit display error to
-	 * screen.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void onClickEditTest(ActionEvent event) {
-		String id = tfId.getText();
-
-		if (id.equals("")) {
-			labelStatus.setText("enter test id");
-			labelStatus.setTextFill(Color.color(1, 0, 0));
-			return;
-		}
-
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(id, LOAD_TEST);
-		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
-		Test editTest = Client.getEditTest();
-		if (editTest != null) {
-			labelStatus.setText("");
-			UpdateTestGuiController updateTestGuiController = new UpdateTestGuiController();
-			updateTestGuiController.DisplayTest(mainPane);
-		} else {
-			labelStatus.setText("test dont found ");
-			labelStatus.setTextFill(Color.color(1, 0, 0));
-		}
+	public static void setClientController(ClientController clientController) {
+		ClientMainGuiController.clientController = clientController;
 	}
 
 }
