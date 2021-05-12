@@ -74,7 +74,7 @@ public class LoginMenuController {
 						lWrongInput.setVisible(true);
 					}
 				}
-			}else {
+			} else {
 				lWrongInput.setText("User not found");
 				lWrongInput.setVisible(true);
 			}

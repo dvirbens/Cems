@@ -72,7 +72,6 @@ public class MainGuiController {
 			stage.setTitle("CEMS");
 			//stage.getIcons().add(new Image("images/icon.png"));
 			stage.show();
-
 			menuHandler = new MenuHandler(mainPane);
 			menuHandler.setLoginMenu();
 		} catch (Exception e) {

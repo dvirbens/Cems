@@ -1,9 +1,11 @@
 package client;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import common.ModelWrapper;
+import models.Question;
 import models.Test;
 import models.User;
 import ocsf.client.AbstractClient;
@@ -33,8 +35,13 @@ public class Client extends AbstractClient {
 	 */
 	private static String errorMessage;
 
+	private static String[] subjectList = { "Mathematics", "Social Studies", "Language", "Science" };
+
+	private static String[] courseList = { "Algebra", "Geometry", "Algebra II", "Trigonometry", "Geography",
+			"History" };
+
 	/**
-	 * Value that hold the user, use to login and and open appropirate menu
+	 * Value that hold the user, use to login and and open appropriate menu
 	 */
 	private static User user;
 
@@ -47,7 +54,6 @@ public class Client extends AbstractClient {
 	 */
 	public Client(String host, int port) throws IOException {
 		super(host, port);
-		tests = new ArrayList<>();
 	}
 
 	/**
@@ -91,6 +97,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case CREATE_QUESTION:
+				System.out.println("Question has been saved suucessfully");
 				break;
 
 			case EXAM_EXECUTE:

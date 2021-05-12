@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Database;
+import models.Question;
 import models.Test;
 import models.User;
 import models.User.ErrorType;
@@ -102,6 +103,40 @@ public class DatabaseController {
 
 		} catch (SQLException e) {
 			System.err.print("Error occurred, test has not been saved ");
+		}
+		return false;
+	}
+
+	/**
+	 * Saving new question on database using appropriate query by prepared statement.
+	 * 
+	 * @param question that's needed to be save on database
+	 * @return boolean value{true = question saved successfully,false = can't save test}
+	 */
+	public boolean saveQuestion(Question question) {
+		PreparedStatement prepareStatement;
+
+		try {
+			prepareStatement = conn.prepareStatement(
+					"INSERT INTO Question (questionID,Subject,Course,Details,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,TeacherName) VALUES (?,?,?,?,?,?,?,?,?,?);");
+			prepareStatement.setString(1, question.getQuestionID());
+			prepareStatement.setString(2, question.getSubject());
+			prepareStatement.setString(3, question.getCourse());
+			prepareStatement.setString(4, question.getDetails());
+			prepareStatement.setString(5, question.getAnswer1());
+			prepareStatement.setString(6, question.getAnswer2());
+			prepareStatement.setString(7, question.getAnswer3());
+			prepareStatement.setString(8, question.getAnswer4());
+			prepareStatement.setInt(9, question.getCorrectAnswer());
+			prepareStatement.setString(10, question.getTeacherName());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
+				System.out.print("Question Saved Succuessfully");
+				return true;
+			}
+
+		} catch (SQLException e) {
+			System.err.print("Error occurred, Question has not been saved ");
 		}
 		return false;
 	}

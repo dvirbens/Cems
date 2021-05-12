@@ -7,6 +7,7 @@ import java.util.List;
 import common.ModelWrapper;
 import static common.ModelWrapper.Operation.*;
 import models.Database;
+import models.Question;
 import models.Test;
 import models.User;
 import ocsf.server.AbstractServer;
@@ -119,6 +120,15 @@ public class Server extends AbstractServer {
 			break;
 
 		case CREATE_QUESTION:
+			Question question = (Question) modelWrapperFromClient.getElement();
+			
+			//databseController.updateTest(testToEdit);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 			break;
 
 		case EXAM_EXECUTE:
