@@ -74,7 +74,7 @@ public class DatabaseController {
 			logListener.printToLog("VendorError: " + ex.getErrorCode());
 			throw new SQLException();
 		}
-		
+
 	}
 
 	/**
@@ -101,8 +101,7 @@ public class DatabaseController {
 			}
 
 		} catch (SQLException e) {
-			System.out.print("Error occurred, test has not been saved ");
-			e.printStackTrace();
+			System.err.print("Error occurred, test has not been saved ");
 		}
 		return false;
 	}
@@ -129,7 +128,7 @@ public class DatabaseController {
 				tests.add(test);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Test list not found");
 		}
 
 		return tests;
@@ -157,7 +156,7 @@ public class DatabaseController {
 				return test;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Test not found");
 		}
 
 		return null;
@@ -192,7 +191,7 @@ public class DatabaseController {
 				user = new User(ErrorType.WRONG_ID);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("User not found");
 			return user;
 		}
 
@@ -225,7 +224,7 @@ public class DatabaseController {
 			pstmt.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.print("Error occurred, test has not been updated ");
 			return false;
 		}
 	}

@@ -2,7 +2,6 @@ package client.gui;
 
 import static common.ModelWrapper.Operation.GET_USER;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +12,9 @@ import client.Client;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
 import models.User;
+import models.User.ErrorType;
 
 public class LoginMenuController {
 
@@ -30,34 +28,57 @@ public class LoginMenuController {
 	private JFXButton btnLogin;
 
 	@FXML
+	private Label lWrongInput;
+
+	@FXML
 	void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
 		String password = tfPassword.getText();
 
-		List<String> userInfo = new ArrayList<>();
-		userInfo.add(userID);
-		userInfo.add(password);
+		if (userID.isEmpty() || password.isEmpty()) {
+			lWrongInput.setText("Empty fields");
+			lWrongInput.setVisible(true);
+		} else {
+			lWrongInput.setVisible(false);
+			List<String> userInfo = new ArrayList<>();
+			userInfo.add(userID);
+			userInfo.add(password);
 
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
-		MainGuiController.getClientController().sendClientUIRequest(modelWrapper);
+			ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
+			MainGuiController.getClientController().sendClientUIRequest(modelWrapper);
 
-		User user = Client.getUser();
+			User user = Client.getUser();
+			if (user != null) {
+				if (user.getUserID() != null) {
+					switch (user.getType()) {
+					case Student:
+						MainGuiController.getMenuHandler().setStudentlMenu();
+						break;
 
-		switch (user.getType()) {
-		case Student:
-			MainGuiController.getMenuHandler().setStudentlMenu();
-			break;
+					case Teacher:
+						MainGuiController.getMenuHandler().setTeacherMenu();
+						break;
 
-		case Teacher:
-			MainGuiController.getMenuHandler().setTeacherMenu();
-			break;
+					case Principal:
+						MainGuiController.getMenuHandler().setPrincipalMenu();
+						break;
+					}
+				} else {
+					if (user.getError() == ErrorType.WRONG_ID) {
+						lWrongInput.setText("User not found");
+						lWrongInput.setVisible(true);
+					}
 
-		case Principal:
-			MainGuiController.getMenuHandler().setPrincipalMenu();
-			break;
-
+					if (user.getError() == ErrorType.WRONG_PASSWORD) {
+						lWrongInput.setText("Wrong password");
+						lWrongInput.setVisible(true);
+					}
+				}
+			}else {
+				lWrongInput.setText("User not found");
+				lWrongInput.setVisible(true);
+			}
 		}
-
 	}
 
 }

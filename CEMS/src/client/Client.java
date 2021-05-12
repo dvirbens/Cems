@@ -33,6 +33,9 @@ public class Client extends AbstractClient {
 	 */
 	private static String errorMessage;
 
+	/**
+	 * Value that hold the user, use to login and and open appropirate menu
+	 */
 	private static User user;
 
 	/**
@@ -79,8 +82,6 @@ public class Client extends AbstractClient {
 				break;
 
 			case ENTERED_WRONG_ID:
-				setErrorMessage("Test dont found ");
-				editTest = null;
 				break;
 
 			case TEST_STATISTICS:
