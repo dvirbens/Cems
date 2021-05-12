@@ -29,20 +29,6 @@ public class LoginMenuController {
 	@FXML
 	private JFXButton btnLogin;
 
-	public void start() {
-		
-		Pane loginMenuPane, loginLogoPane;
-		try {
-			loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("LoginMenu.fxml"));
-			loginLogoPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
-			MainGuiController.getMainPane().setLeft(loginMenuPane);
-			MainGuiController.getMainPane().setCenter(loginLogoPane);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	@FXML
 	void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
@@ -63,12 +49,7 @@ public class LoginMenuController {
 			break;
 
 		case Teacher:
-			try {
-				Pane teacherMenu = (Pane) FXMLLoader.load(getClass().getResource("TeacherMenu.fxml"));
-				MainGuiController.getMainPane().setLeft(teacherMenu);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			MainGuiController.getMenuHandler().setTeacherMenu();
 			break;
 
 		case Principal:

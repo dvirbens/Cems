@@ -30,50 +30,27 @@ public class TeacherMenuController {
 	@FXML
 	void onClickCreateExam(ActionEvent event) {
 		paintSelectedButton(Buttons.CREATE_EXAM);
-		Pane createExam;
-		try {
-			createExam = (Pane) FXMLLoader.load(getClass().getResource("CreateExam.fxml"));
-			MainGuiController.getMainPane().setCenter(createExam);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		MainGuiController.getMenuHandler().setCreateExamScreen();
 
 	}
 
 	@FXML
 	void onClickCreateQuestion(ActionEvent event) {
 		paintSelectedButton(Buttons.CREATE_QUESTION);
-		Pane createQuestion;
-		try {
-			createQuestion = (Pane) FXMLLoader.load(getClass().getResource("CreateQuestion.fxml"));
-			MainGuiController.getMainPane().setCenter(createQuestion);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	void onClickExamStatistic(ActionEvent event) {
-		paintSelectedButton(Buttons.EXAM_STATISTIC);
-		Pane examStatistic;
-		try {
-			examStatistic = (Pane) FXMLLoader.load(getClass().getResource("ExamStatistic.fxml"));
-			MainGuiController.getMainPane().setCenter(examStatistic);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		MainGuiController.getMenuHandler().setCreateQuestionScreen();
 	}
 
 	@FXML
 	void onClickStartExam(ActionEvent event) {
 		paintSelectedButton(Buttons.START_EXAM);
-		Pane startExam;
-		try {
-			startExam = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
-			MainGuiController.getMainPane().setCenter(startExam);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		MainGuiController.getMenuHandler().setStartExamScreen();
+	}
+
+	@FXML
+	void onClickExamStatistic(ActionEvent event) {
+		paintSelectedButton(Buttons.EXAM_STATISTIC);
+		MainGuiController.getMenuHandler().setExamStatisticScreen();
 	}
 
 	private void paintSelectedButton(Buttons button) {

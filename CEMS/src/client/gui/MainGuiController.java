@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -29,6 +30,8 @@ public class MainGuiController {
 	 * sub layout inside it.
 	 */
 	private static BorderPane mainPane;
+
+	private static MenuHandler menuHandler;
 
 	public static ClientController clientController;
 
@@ -61,6 +64,7 @@ public class MainGuiController {
 				System.exit(0);
 			}
 		});
+
 		try {
 			mainPane = (BorderPane) FXMLLoader.load(getClass().getResource("MainGui.fxml"));
 			Scene scene = new Scene(mainPane, 1024, 768);
@@ -68,8 +72,9 @@ public class MainGuiController {
 			stage.setTitle("CEMS");
 			stage.getIcons().add(new Image("client/gui/icon.png"));
 			stage.show();
-			LoginMenuController loginMenuController = new LoginMenuController();
-			loginMenuController.start();
+
+			menuHandler = new MenuHandler(mainPane);
+			menuHandler.setLoginMenu();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,12 +88,14 @@ public class MainGuiController {
 		MainGuiController.clientController = clientController;
 	}
 
-	public static BorderPane getMainPane() {
-		return mainPane;
+	public static MenuHandler getMenuHandler() {
+		return menuHandler;
 	}
 
-	public static void setMainPane(BorderPane mainPane) {
-		MainGuiController.mainPane = mainPane;
+	public static void setMenuHandler(MenuHandler menuHandler) {
+		MainGuiController.menuHandler = menuHandler;
 	}
+	
+	
 
 }
