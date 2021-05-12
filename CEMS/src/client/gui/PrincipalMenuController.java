@@ -13,6 +13,9 @@ public class PrincipalMenuController {
 	@FXML
 	private JFXButton btnTimeExtensionRequest;
 
+	@FXML
+	private JFXButton btnLogout;
+
 	enum Buttons {
 		OVERALL_STATISTICS, TIME_EXTENSION_REQUEST
 	}
@@ -27,6 +30,11 @@ public class PrincipalMenuController {
 	void onClickTimeExtensionRequest(ActionEvent event) {
 		paintSelectedButton(Buttons.TIME_EXTENSION_REQUEST);
 		MainGuiController.getMenuHandler().setTimeExtensionRequestsScreen();
+	}
+
+	@FXML
+	void onClickLogout(ActionEvent event) {
+		MainGuiController.getMenuHandler().setLoginMenu();
 	}
 
 	private void paintSelectedButton(Buttons button) {

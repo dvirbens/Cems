@@ -13,7 +13,7 @@
 				<Image url="@../../../GuiPrototype/logo3.jpeg" />
 			</image>
 		</ImageView>
-		<VBox layoutY="150.0" prefHeight="300.0" prefWidth="270.0" style="-fx-background-color: #333333;">
+		<VBox layoutY="150.0" prefHeight="450.0" prefWidth="270.0" style="-fx-background-color: #333333;">
 			<children>
 				<JFXButton fx:id="btnCreateExam" onAction="#onClickCreateExam" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Exam" textFill="WHITE">
 					<graphic>
@@ -51,6 +51,24 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
+            <JFXButton fx:id="btnGradeApproval" onAction="#onClickGradeApproval" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Grade Approval" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/approval.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnLogout" onAction="#onClickLogout" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Logout" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/logout.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
 			</children>
 		</VBox>
 	</children>

@@ -72,7 +72,7 @@ public class MenuHandler {
 
 	public void setStartExamScreen() {
 		try {
-			Pane startExamPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
+			Pane startExamPane = (Pane) FXMLLoader.load(getClass().getResource("StartExam.fxml"));
 			mainFrame.setCenter(startExamPane);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -83,6 +83,15 @@ public class MenuHandler {
 		try {
 			Pane examStatisticPane = (Pane) FXMLLoader.load(getClass().getResource("ExamStatistic.fxml"));
 			mainFrame.setCenter(examStatisticPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setGradeApprovalScreen() {
+		try {
+			Pane gradeApprovalPane = (Pane) FXMLLoader.load(getClass().getResource("GradeApproval.fxml"));
+			mainFrame.setCenter(gradeApprovalPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

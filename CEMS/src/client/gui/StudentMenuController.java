@@ -13,6 +13,9 @@ public class StudentMenuController {
 	@FXML
 	private JFXButton btnEnterExam;
 
+	@FXML
+	private JFXButton btnLogout;
+
 	enum Buttons {
 		EXECUTED_EXAMS, ENTER_EXAM
 	}
@@ -27,6 +30,11 @@ public class StudentMenuController {
 	void onClickEnterExam(ActionEvent event) {
 		paintSelectedButton(Buttons.ENTER_EXAM);
 		MainGuiController.getMenuHandler().setEnterExamScreen();
+	}
+
+	@FXML
+	void onClickLogout(ActionEvent event) {
+		MainGuiController.getMenuHandler().setLoginMenu();
 	}
 
 	private void paintSelectedButton(Buttons button) {

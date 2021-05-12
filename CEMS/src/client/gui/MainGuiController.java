@@ -70,7 +70,7 @@ public class MainGuiController {
 			Scene scene = new Scene(mainPane, 1024, 768);
 			stage.setScene(scene);
 			stage.setTitle("CEMS");
-			stage.getIcons().add(new Image("client/gui/icon.png"));
+			//stage.getIcons().add(new Image("images/icon.png"));
 			stage.show();
 
 			menuHandler = new MenuHandler(mainPane);
