@@ -75,7 +75,6 @@ public class DatabaseController {
 			logListener.printToLog("VendorError: " + ex.getErrorCode());
 			throw new SQLException();
 		}
-
 	}
 
 	/**
@@ -108,18 +107,27 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Saving new question on database using appropriate query by prepared statement.
+	 * Saving new question on database using appropriate query by prepared
+	 * statement.
 	 * 
 	 * @param question that's needed to be save on database
-	 * @return boolean value{true = question saved successfully,false = can't save test}
+	 * @return boolean value{true = question saved successfully,false = can't save
+	 *         test}
 	 */
 	public boolean saveQuestion(Question question) {
+		int questionID;
+		String courseID = Question.getSubjectMap().get(question.getSubject());
+		String questionLastID = getQuestionLastId(question.getSubject());
+		if (questionLastID == null) {
+			questionID = 0;
+		} else {
+			questionID = Integer.valueOf(questionLastID);
+		}
+		String finalID = courseID + String.format("%03d", ++questionID);
 		PreparedStatement prepareStatement;
-
 		try {
-			prepareStatement = conn.prepareStatement(
-					"INSERT INTO Question (questionID,Subject,Course,Details,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,TeacherName) VALUES (?,?,?,?,?,?,?,?,?,?);");
-			prepareStatement.setString(1, question.getQuestionID());
+			prepareStatement = conn.prepareStatement("INSERT INTO Question VALUES (?,?,?,?,?,?,?,?,?,?);");
+			prepareStatement.setString(1, finalID);
 			prepareStatement.setString(2, question.getSubject());
 			prepareStatement.setString(3, question.getCourse());
 			prepareStatement.setString(4, question.getDetails());
@@ -139,6 +147,23 @@ public class DatabaseController {
 			System.err.print("Error occurred, Question has not been saved ");
 		}
 		return false;
+	}
+
+	private String getQuestionLastId(String subject) {
+		try {
+			Statement statement = conn.createStatement();
+			String sql = ("SELECT SUBSTRING(questionID, 3, 5) questionID FROM question WHERE Subject=\"" + subject
+					+ "\" ORDER BY questionID DESC LIMIT 1;");
+			ResultSet resultSet = statement.executeQuery(sql);
+			if (resultSet.next()) {
+				String id = resultSet.getString("questionID");
+				return id;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
+		return null;
 	}
 
 	/**

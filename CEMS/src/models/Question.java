@@ -146,4 +146,14 @@ public class Question implements Serializable {
 				+ ", answer3=" + answer3 + ", answer4=" + answer4 + ", correctAnswer=" + correctAnswer + "]";
 	}
 
+	public static Map<String, String> getSubjectMap() {
+		return subjectMap;
+	}
+
+	public static void setSubjectMap(Map<String, String> subjectMap) {
+		Question.subjectMap = subjectMap;
+	}
+	
+	
+
 }

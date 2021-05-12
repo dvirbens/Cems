@@ -72,7 +72,12 @@ public class CreateQuestionController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		cbSubject.getItems().addAll(Client.getSubjectList());
+		cbCourse.getItems().addAll(Client.getCourseList());
+		cbCorrectAnswer.getItems().add(1);
+		cbCorrectAnswer.getItems().add(2);
+		cbCorrectAnswer.getItems().add(3);
+		cbCorrectAnswer.getItems().add(4);
 	}
 
 }

@@ -121,14 +121,13 @@ public class Server extends AbstractServer {
 
 		case CREATE_QUESTION:
 			Question question = (Question) modelWrapperFromClient.getElement();
-			
-			//databseController.updateTest(testToEdit);
+			databseController.saveQuestion(question);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			break;
 
 		case EXAM_EXECUTE:

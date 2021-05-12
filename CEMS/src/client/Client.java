@@ -194,4 +194,22 @@ public class Client extends AbstractClient {
 		Client.user = user;
 	}
 
+	public static String[] getSubjectList() {
+		return subjectList;
+	}
+
+	public static void setSubjectList(String[] subjectList) {
+		Client.subjectList = subjectList;
+	}
+
+	public static String[] getCourseList() {
+		return courseList;
+	}
+
+	public static void setCourseList(String[] courseList) {
+		Client.courseList = courseList;
+	}
+	
+	
+
 }
