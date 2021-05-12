@@ -45,7 +45,7 @@ public class LoginMenuController {
 
 		switch (user.getType()) {
 		case Student:
-			System.out.println("student menu");
+			MainGuiController.getMenuHandler().setStudentlMenu();
 			break;
 
 		case Teacher:
@@ -53,7 +53,7 @@ public class LoginMenuController {
 			break;
 
 		case Principal:
-			System.out.println("principal menu");
+			MainGuiController.getMenuHandler().setPrincipalMenu();
 			break;
 
 		}

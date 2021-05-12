@@ -23,13 +23,12 @@ public class MenuHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void setTeacherMenu() {
 		try {
-			Pane loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherMenu.fxml"));
-			mainFrame.setLeft(loginMenuPane);
+			Pane teacherMenuPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherMenu.fxml"));
+			mainFrame.setLeft(teacherMenuPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -37,8 +36,17 @@ public class MenuHandler {
 
 	public void setPrincipalMenu() {
 		try {
-			Pane loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("LoginMenu.fxml"));
-			mainFrame.setLeft(loginMenuPane);
+			Pane principalMenuPane = (Pane) FXMLLoader.load(getClass().getResource("PrincipalMenu.fxml"));
+			mainFrame.setLeft(principalMenuPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setStudentlMenu() {
+		try {
+			Pane sutdentMenuPane = (Pane) FXMLLoader.load(getClass().getResource("StudentMenu.fxml"));
+			mainFrame.setLeft(sutdentMenuPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,8 +54,8 @@ public class MenuHandler {
 
 	public void setCreateExamScreen() {
 		try {
-			Pane loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("CreateExam.fxml"));
-			mainFrame.setCenter(loginMenuPane);
+			Pane createExamPane = (Pane) FXMLLoader.load(getClass().getResource("CreateExam.fxml"));
+			mainFrame.setCenter(createExamPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -55,8 +63,8 @@ public class MenuHandler {
 
 	public void setCreateQuestionScreen() {
 		try {
-			Pane loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("CreateQuestion.fxml"));
-			mainFrame.setCenter(loginMenuPane);
+			Pane createQuestionPane = (Pane) FXMLLoader.load(getClass().getResource("CreateQuestion.fxml"));
+			mainFrame.setCenter(createQuestionPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,8 +72,8 @@ public class MenuHandler {
 
 	public void setStartExamScreen() {
 		try {
-			Pane loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
-			mainFrame.setCenter(loginMenuPane);
+			Pane startExamPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
+			mainFrame.setCenter(startExamPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,8 +81,45 @@ public class MenuHandler {
 
 	public void setExamStatisticScreen() {
 		try {
-			Pane loginMenuPane = (Pane) FXMLLoader.load(getClass().getResource("ExamStatistic.fxml"));
-			mainFrame.setCenter(loginMenuPane);
+			Pane examStatisticPane = (Pane) FXMLLoader.load(getClass().getResource("ExamStatistic.fxml"));
+			mainFrame.setCenter(examStatisticPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setExecutedExamsScreen() {
+		try {
+			Pane executedExamsPane = (Pane) FXMLLoader.load(getClass().getResource("ExecutedExams.fxml"));
+			mainFrame.setCenter(executedExamsPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setEnterExamScreen() {
+		try {
+			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("EnterExam.fxml"));
+			mainFrame.setCenter(enterExamPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setOverallStatisticsScreen() {
+		try {
+			Pane overallStatisticsPane = (Pane) FXMLLoader.load(getClass().getResource("OverallStatistics.fxml"));
+			mainFrame.setCenter(overallStatisticsPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setTimeExtensionRequestsScreen() {
+		try {
+			Pane timeExtensionRequestsPane = (Pane) FXMLLoader
+					.load(getClass().getResource("TimeExtensionRequests.fxml"));
+			mainFrame.setCenter(timeExtensionRequestsPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

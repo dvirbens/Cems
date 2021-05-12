@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXTextField layoutX="317.0" layoutY="299.0" prefHeight="31.0" prefWidth="129.0" promptText="Code" />
+      <JFXButton layoutX="239.0" layoutY="353.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Computerized exam" textFill="WHITE" />
+      <JFXButton layoutX="407.0" layoutY="353.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Manual exam" textFill="WHITE" />
+   </children>
+</Pane>
