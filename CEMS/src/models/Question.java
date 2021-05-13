@@ -1,10 +1,8 @@
 package models;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
-import client.Client;
+import javafx.scene.control.Button;
 
 public class Question implements Serializable {
 
@@ -22,6 +20,7 @@ public class Question implements Serializable {
 	private String answer3;
 	private String answer4;
 	private int correctAnswer;
+	private Button view;
 
 	public Question(String teacherName, String subject, String course, String details, String answer1, String answer2,
 			String answer3, String answer4, int correctAnswer) {

@@ -7,7 +7,7 @@ import java.util.Map;
 import common.ModelWrapper;
 import common.SubjectCollection;
 import models.Question;
-import models.Test;
+import models.Exam;
 import models.User;
 import ocsf.client.AbstractClient;
 
@@ -26,11 +26,11 @@ public class Client extends AbstractClient {
 	/**
 	 * Value the holds the list of test that will be shown on table user interface.
 	 */
-	private static List<Test> tests;
+	private static List<Exam> tests;
 	/**
 	 * Value that hold the test the will be shown on editTest user interface.
 	 */
-	private static Test editTest;
+	private static Exam editTest;
 	/**
 	 * Value that hold the error message causing by server side.
 	 */
@@ -71,18 +71,18 @@ public class Client extends AbstractClient {
 			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
 			switch (modelWrapperToClient.getOperation()) {
 			case UPDATE_TEST:
-				editTest = (Test) modelWrapperToClient.getElement();
+				editTest = (Exam) modelWrapperToClient.getElement();
 				break;
 
 			case LOAD_TEST:
-				editTest = (Test) modelWrapperToClient.getElement();
+				editTest = (Exam) modelWrapperToClient.getElement();
 				break;
 
 			case LOAD_QUESTION:
 				break;
 
 			case LOAD_TEST_LIST:
-				tests = (List<Test>) modelWrapperToClient.getElements();
+				tests = (List<Exam>) modelWrapperToClient.getElements();
 				break;
 
 			case LOAD_QUESTION_LIST:
@@ -167,19 +167,19 @@ public class Client extends AbstractClient {
 		System.exit(0);
 	}
 
-	public static List<Test> getTests() {
+	public static List<Exam> getTests() {
 		return tests;
 	}
 
-	public static void setTests(List<Test> tests) {
+	public static void setTests(List<Exam> tests) {
 		Client.tests = tests;
 	}
 
-	public static Test getEditTest() {
+	public static Exam getEditTest() {
 		return editTest;
 	}
 
-	public static void setEditTest(Test editTest) {
+	public static void setEditTest(Exam editTest) {
 		Client.editTest = editTest;
 	}
 

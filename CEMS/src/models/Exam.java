@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Arikz ,Dvir ben simon
  *
  */
-public class Test implements Serializable {
+public class Exam implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String id;
@@ -18,7 +18,7 @@ public class Test implements Serializable {
 	private String duration;
 	private String pointsPerQuestion;
 
-	public Test(String id, String subject, String course, String duration, String pointsPerQuestion) {
+	public Exam(String id, String subject, String course, String duration, String pointsPerQuestion) {
 		super();
 		this.id = id;
 		this.subject = subject;

@@ -4,19 +4,36 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.CreateExamController">
 	<children>
-		<Label layoutX="106.0" layoutY="164.0" text="Question pull:" />
-		<JFXButton layoutX="487.0" layoutY="111.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
-		<JFXComboBox focusColor="#48a832" layoutX="126.0" layoutY="110.0" prefHeight="28.0" prefWidth="145.0" promptText="Subject" />
-		<JFXComboBox focusColor="#48a832" layoutX="315.0" layoutY="111.0" prefHeight="28.0" prefWidth="145.0" promptText="Course" />
-		<ScrollPane layoutX="102.0" layoutY="419.0" prefHeight="200.0" prefWidth="550.0" />
-		<ScrollPane layoutX="102.0" layoutY="185.0" prefHeight="200.0" prefWidth="550.0" />
-		<Label layoutX="106.0" layoutY="398.0" text="Selected question:" />
-		<JFXTextField focusColor="#48a832" layoutX="114.0" layoutY="628.0" text="Exam Duration" />
-		<JFXButton layoutX="562.0" layoutY="628.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
+      <TableView fx:id="tvQuestionPull" layoutX="27.0" layoutY="74.0" prefHeight="300.0" prefWidth="700.0">
+        <columns>
+          <TableColumn fx:id="tcIdPull" prefWidth="125.0" text="ID" />
+          <TableColumn fx:id="tcSubjectPull" prefWidth="118.0" text="Subject" />
+            <TableColumn fx:id="tcCoursePull" prefWidth="177.0" text="Course" />
+            <TableColumn fx:id="tcTeacherPull" prefWidth="153.0" text="Teacher" />
+            <TableColumn fx:id="tcViewPull" prefWidth="126.0" text="View" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvSelectedQuestion" layoutX="27.0" layoutY="411.0" prefHeight="300.0" prefWidth="700.0">
+         <columns>
+            <TableColumn fx:id="tcIdSelected" prefWidth="128.0" text="ID" />
+            <TableColumn fx:id="tcSubjectSelected" prefWidth="127.0" text="Subject" />
+            <TableColumn fx:id="tcCourseSelected" minWidth="0.0" prefWidth="176.0" text="Course" />
+            <TableColumn fx:id="tcTeacherSelected" prefWidth="141.0" text="Teacher" />
+            <TableColumn fx:id="tcViewSelected" prefWidth="127.0" text="View" />
+         </columns>
+      </TableView>
+		<Label layoutX="37.0" layoutY="45.0" text="Question pull:" />
+		<JFXButton fx:id="btnSearch" layoutX="517.0" layoutY="14.0" onAction="#onClickSearch" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Search" textFill="WHITE" />
+		<Label layoutX="37.0" layoutY="384.0" text="Selected question:" />
+		<JFXTextField fx:id="cbDuration" focusColor="#48a832" layoutX="237.0" layoutY="723.0" promptText="Exam Duration" />
+		<JFXButton fx:id="btnContinue" layoutX="432.0" layoutY="723.0" onAction="#onClickContinue" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
+      <JFXComboBox fx:id="cbSubject" focusColor="#48a832" layoutX="164.0" layoutY="14.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Exam Subject" />
+      <JFXComboBox fx:id="cbCourse" focusColor="#48a832" layoutX="345.0" layoutY="14.0" prefHeight="28.0" prefWidth="145.0" promptText="Exam Course" />
 	</children>
 </Pane>

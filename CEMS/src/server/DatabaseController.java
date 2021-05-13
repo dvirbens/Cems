@@ -14,7 +14,7 @@ import java.util.Map;
 import common.SubjectCollection;
 import models.Database;
 import models.Question;
-import models.Test;
+import models.Exam;
 import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
@@ -87,7 +87,7 @@ public class DatabaseController {
 	 * @param test that's needed to be save on database
 	 * @return boolean value{true = test saved successfully,false = can't save test}
 	 */
-	public boolean saveTest(Test test) {
+	public boolean saveTest(Exam test) {
 		PreparedStatement prepareStatement;
 
 		try {
@@ -176,8 +176,8 @@ public class DatabaseController {
 	 * 
 	 * @return list of all test on database
 	 */
-	public List<Test> getTestList() {
-		List<Test> tests = new ArrayList<>();
+	public List<Exam> getTestList() {
+		List<Exam> tests = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
 			String query = ("SELECT * FROM Test;");
@@ -188,7 +188,7 @@ public class DatabaseController {
 				String course = resultSet.getString("Course");
 				String duration = resultSet.getString("Duration");
 				String pointPerQuestion = resultSet.getString("PointPerQuestion");
-				Test test = new Test(id, subject, course, duration, pointPerQuestion);
+				Exam test = new Exam(id, subject, course, duration, pointPerQuestion);
 				tests.add(test);
 			}
 		} catch (SQLException e) {
@@ -205,7 +205,7 @@ public class DatabaseController {
 	 * @param givenId specific test id that's store on database
 	 * @return test requested
 	 */
-	public Test getTest(String givenId) {
+	public Exam getTest(String givenId) {
 		try {
 			Statement statement = conn.createStatement();
 			String sql = ("SELECT * FROM Test WHERE id=" + givenId + ";");
@@ -216,7 +216,7 @@ public class DatabaseController {
 				String course = resultSet.getString("Course");
 				String duration = resultSet.getString("Duration");
 				String pointPerQuestion = resultSet.getString("PointPerQuestion");
-				Test test = new Test(id, subject, course, duration, pointPerQuestion);
+				Exam test = new Exam(id, subject, course, duration, pointPerQuestion);
 				return test;
 			}
 		} catch (SQLException e) {
@@ -270,7 +270,7 @@ public class DatabaseController {
 	 * @return boolean value{true = test replaced successfully,false = can't edit
 	 *         test}
 	 */
-	public boolean updateTest(Test testToEdit) {
+	public boolean updateTest(Exam testToEdit) {
 		PreparedStatement pstmt;
 		try {
 			String id = testToEdit.getId();
@@ -300,6 +300,7 @@ public class DatabaseController {
 		List<String> subjectList = new ArrayList<>();
 		List<String> courseList = new ArrayList<>();
 		subjectList.add("All Subject");
+		courseList.add("All Courses");
 		try {
 			Statement statement = conn.createStatement();
 			String subjectSQL = "SELECT * FROM Subject";

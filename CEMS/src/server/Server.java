@@ -10,7 +10,7 @@ import common.SubjectCollection;
 import static common.ModelWrapper.Operation.*;
 import models.Database;
 import models.Question;
-import models.Test;
+import models.Exam;
 import models.User;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -82,9 +82,9 @@ public class Server extends AbstractServer {
 
 		case LOAD_TEST:
 			String id = (String) modelWrapperFromClient.getElement();
-			Test test = databseController.getTest(id);
+			Exam test = databseController.getTest(id);
 			if (test != null)
-				modelWrapperToClient = new ModelWrapper<Test>(test, LOAD_TEST);
+				modelWrapperToClient = new ModelWrapper<Exam>(test, LOAD_TEST);
 			else
 				modelWrapperToClient = new ModelWrapper<>(null, ENTERED_WRONG_ID);
 			try {
@@ -98,8 +98,8 @@ public class Server extends AbstractServer {
 			break;
 
 		case LOAD_TEST_LIST:
-			List<Test> testArray = databseController.getTestList();
-			modelWrapperToClient = new ModelWrapper<Test>(testArray, LOAD_TEST_LIST);
+			List<Exam> testArray = databseController.getTestList();
+			modelWrapperToClient = new ModelWrapper<Exam>(testArray, LOAD_TEST_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -111,7 +111,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case UPDATE_TEST:
-			Test testToEdit = (Test) modelWrapperFromClient.getElement();
+			Exam testToEdit = (Exam) modelWrapperFromClient.getElement();
 			databseController.updateTest(testToEdit);
 			try {
 				client.sendToClient(modelWrapperFromClient);

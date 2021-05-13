@@ -15,7 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import models.Test;
+import models.Exam;
 
 /**
  * FXML controller class for update test layout graphic user interface, display
@@ -67,7 +67,7 @@ public class UpdateTestGuiController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Test testToEdit = Client.getEditTest();
+		Exam testToEdit = Client.getEditTest();
 		if (testToEdit != null) {
 			tfId.setText(testToEdit.getId());
 			tfId.setEditable(false);
@@ -94,8 +94,8 @@ public class UpdateTestGuiController implements Initializable {
 		String duration = tfDuration.getText();
 		String ppq = tfPointsPerQuestion.getText();
 
-		Test test = new Test(id, subject, course, duration, ppq);
-		ModelWrapper<Test> modelWrapper = new ModelWrapper<>(test, UPDATE_TEST);
+		Exam test = new Exam(id, subject, course, duration, ppq);
+		ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(test, UPDATE_TEST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 	}
 
