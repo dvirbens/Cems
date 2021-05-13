@@ -7,17 +7,23 @@ import java.util.Map;
 public class SubjectCollection implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private List<String> subjects;
-	
+
 	private List<String> courses;
 
 	private Map<String, List<String>> courseListMap;
 
 	private Map<String, String> subjectMap;
 
+	private Map<String, String> courseMap;
+
 	public String pasrseCourseCode(String course) {
 		return subjectMap.get(course);
+	}
+
+	public List<String> getCourseListBySubject(String subjcet) {
+		return courseListMap.get(subjcet);
 	}
 
 	public Map<String, List<String>> getCourseListMap() {
@@ -51,9 +57,13 @@ public class SubjectCollection implements Serializable {
 	public void setCourses(List<String> courses) {
 		this.courses = courses;
 	}
-	
-	
-	
-	
+
+	public Map<String, String> getCourseMap() {
+		return courseMap;
+	}
+
+	public void setCourseMap(Map<String, String> courseMap) {
+		this.courseMap = courseMap;
+	}
 
 }

@@ -299,11 +299,12 @@ public class DatabaseController {
 		Map<String, List<String>> courseListMap = new HashMap<>();
 		List<String> subjectList = new ArrayList<>();
 		List<String> courseList = new ArrayList<>();
-
+		subjectList.add("All Subject");
 		try {
 			Statement statement = conn.createStatement();
 			String subjectSQL = "SELECT * FROM Subject";
 			ResultSet resultSetSubject = statement.executeQuery(subjectSQL);
+
 			while (resultSetSubject.next()) {
 				String id = resultSetSubject.getString("subjectID");
 				String subject = resultSetSubject.getString("subjectName");
@@ -321,7 +322,7 @@ public class DatabaseController {
 				}
 				courseListMap.put(subject, subjectCourseList);
 			}
-
+			courseListMap.put("All Subject", courseList);
 			subjectCollection.setSubjects(subjectList);
 			subjectCollection.setCourses(courseList);
 			subjectCollection.setCourseListMap(courseListMap);

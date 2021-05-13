@@ -3,6 +3,7 @@ package client.gui;
 import static common.ModelWrapper.Operation.CREATE_QUESTION;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -80,6 +81,14 @@ public class CreateQuestionController implements Initializable {
 		cbCorrectAnswer.getItems().add(2);
 		cbCorrectAnswer.getItems().add(3);
 		cbCorrectAnswer.getItems().add(4);
+	}
+
+	@FXML
+	void onSubjectSelected(ActionEvent event) {
+		String subjectSelected = cbSubject.getSelectionModel().getSelectedItem();
+		List<String> courseList = Client.getSubjectCollection().getCourseListBySubject(subjectSelected);
+		cbCourse.getItems().clear();
+		cbCourse.getItems().addAll(courseList);
 	}
 
 }

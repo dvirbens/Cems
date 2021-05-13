@@ -117,8 +117,6 @@ public class Client extends AbstractClient {
 
 			case GET_SUBJECT_COURSE_LIST:
 				subjectCollection = (SubjectCollection) modelWrapperToClient.getElement();
-				System.out.println(subjectCollection.getSubjectMap());
-				System.out.println(subjectCollection.getCourseListMap());
 				break;
 
 			default:
