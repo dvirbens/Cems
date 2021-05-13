@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import common.ModelWrapper;
+import common.SubjectCollection;
 import models.Question;
 import models.Test;
 import models.User;
@@ -35,15 +36,15 @@ public class Client extends AbstractClient {
 	 */
 	private static String errorMessage;
 
-	private static String[] subjectList = { "Mathematics", "Social Studies", "Language", "Science" };
-
-	private static String[] courseList = { "Algebra", "Geometry", "Algebra II", "Trigonometry", "Geography",
-			"History" };
-
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
 	 */
 	private static User user;
+
+	/**
+	 * Value that hold the user, use to login and and open appropriate menu
+	 */
+	private static SubjectCollection subjectCollection;
 
 	/**
 	 * Constructor creating new client connection.
@@ -112,6 +113,12 @@ public class Client extends AbstractClient {
 			case GET_USER:
 				User user = (User) modelWrapperToClient.getElement();
 				setUser(user);
+				break;
+
+			case GET_SUBJECT_COURSE_LIST:
+				subjectCollection = (SubjectCollection) modelWrapperToClient.getElement();
+				System.out.println(subjectCollection.getSubjectMap());
+				System.out.println(subjectCollection.getCourseListMap());
 				break;
 
 			default:
@@ -194,22 +201,12 @@ public class Client extends AbstractClient {
 		Client.user = user;
 	}
 
-	public static String[] getSubjectList() {
-		return subjectList;
+	public static SubjectCollection getSubjectCollection() {
+		return subjectCollection;
 	}
 
-	public static void setSubjectList(String[] subjectList) {
-		Client.subjectList = subjectList;
+	public static void setSubjectCollection(SubjectCollection subjectCollection) {
+		Client.subjectCollection = subjectCollection;
 	}
-
-	public static String[] getCourseList() {
-		return courseList;
-	}
-
-	public static void setCourseList(String[] courseList) {
-		Client.courseList = courseList;
-	}
-	
-	
 
 }

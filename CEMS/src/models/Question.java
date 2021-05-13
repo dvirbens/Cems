@@ -23,31 +23,9 @@ public class Question implements Serializable {
 	private String answer4;
 	private int correctAnswer;
 
-	private static Map<String, String> subjectMap = new HashMap<String, String>() {
-		{
-			put("Social Studies", "01");
-			put("Mathematics", "02");
-			put("Language", "03");
-			put("Science", "04");
-		}
-	};
-
-	private static Map<String, Integer> questionCounter = new HashMap<String, Integer>() {
-		{
-			put("Social Studies", NUMBER_OF_QUESTION);
-			put("Mathematics", NUMBER_OF_QUESTION);
-			put("Language", NUMBER_OF_QUESTION);
-			put("Science", NUMBER_OF_QUESTION);
-		}
-	};
-
 	public Question(String teacherName, String subject, String course, String details, String answer1, String answer2,
 			String answer3, String answer4, int correctAnswer) {
 		super();
-		
-		this.questionID = subjectMap.get(subject)
-				+ String.format("%03d", NUMBER_OF_QUESTION - questionCounter.get(subject));
-		questionCounter.put(subject, questionCounter.get(subject) - 1);
 		this.teacherName = teacherName;
 		this.subject = subject;
 		this.course = course;
@@ -145,15 +123,5 @@ public class Question implements Serializable {
 				+ ", course=" + course + ", details=" + details + ", answer1=" + answer1 + ", answer2=" + answer2
 				+ ", answer3=" + answer3 + ", answer4=" + answer4 + ", correctAnswer=" + correctAnswer + "]";
 	}
-
-	public static Map<String, String> getSubjectMap() {
-		return subjectMap;
-	}
-
-	public static void setSubjectMap(Map<String, String> subjectMap) {
-		Question.subjectMap = subjectMap;
-	}
-	
-	
 
 }

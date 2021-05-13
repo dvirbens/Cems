@@ -1,5 +1,7 @@
 package client.gui;
 
+import static common.ModelWrapper.Operation.CREATE_QUESTION;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -7,8 +9,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
 import client.Client;
+import client.ClientUI;
 import common.ModelWrapper;
-import static common.ModelWrapper.Operation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -66,14 +68,14 @@ public class CreateQuestionController implements Initializable {
 				correctAnswer);
 
 		ModelWrapper<Question> modelWrapper = new ModelWrapper<>(question, CREATE_QUESTION);
-		MainGuiController.getClientController().sendClientUIRequest(modelWrapper);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		cbSubject.getItems().addAll(Client.getSubjectList());
-		cbCourse.getItems().addAll(Client.getCourseList());
+		cbSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
+		cbCourse.getItems().addAll(Client.getSubjectCollection().getCourses());
 		cbCorrectAnswer.getItems().add(1);
 		cbCorrectAnswer.getItems().add(2);
 		cbCorrectAnswer.getItems().add(3);

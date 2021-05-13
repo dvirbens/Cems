@@ -1,6 +1,11 @@
 package client;
 
+import java.io.IOException;
+
 import client.gui.MainGuiController;
+import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
+import common.SubjectCollection;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -13,6 +18,8 @@ import javafx.stage.Stage;
  */
 public class ClientUI extends Application {
 
+	public static ClientController clientController;
+
 	/**
 	 * @param args main arguments
 	 */
@@ -21,12 +28,27 @@ public class ClientUI extends Application {
 	}
 
 	/**
-	 *	Function that's starting when all of javaFX component is ready
+	 * Function that's starting when all of javaFX component is ready
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		try {
+			setClientController(new ClientController("localhost", 5555));
+			System.out.println("Connected to server");
+		} catch (IOException e1) {
+			System.out.println("Cant connect to server");
+			e1.printStackTrace();
+		}
 		MainGuiController clientMainGuiController = new MainGuiController();
 		clientMainGuiController.start(primaryStage);
+	}
+
+	public static ClientController getClientController() {
+		return clientController;
+	}
+
+	public static void setClientController(ClientController clientController) {
+		ClientUI.clientController = clientController;
 	}
 
 }

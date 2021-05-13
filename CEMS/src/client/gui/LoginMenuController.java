@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,7 +47,7 @@ public class LoginMenuController {
 			userInfo.add(password);
 
 			ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
-			MainGuiController.getClientController().sendClientUIRequest(modelWrapper);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 			User user = Client.getUser();
 			if (user != null) {

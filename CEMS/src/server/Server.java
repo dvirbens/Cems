@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.ModelWrapper;
+import common.SubjectCollection;
+
 import static common.ModelWrapper.Operation.*;
 import models.Database;
 import models.Question;
@@ -32,6 +34,11 @@ public class Server extends AbstractServer {
 	 * make transaction with database.
 	 */
 	private DatabaseController databseController;
+
+	/**
+	 * Value that hold the user, use to login and and open appropriate menu
+	 */
+	private static SubjectCollection subjectCollection;
 
 	/**
 	 * Indicate if the server is connected
@@ -127,7 +134,6 @@ public class Server extends AbstractServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			break;
 
 		case EXAM_EXECUTE:
@@ -148,6 +154,10 @@ public class Server extends AbstractServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			break;
+
+		case GET_SUBJECT_COURSE_LIST:
+
 			break;
 
 		default:
@@ -195,6 +205,16 @@ public class Server extends AbstractServer {
 	 */
 	protected void clientConnected(ConnectionToClient client) {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
+
+		subjectCollection = databseController.updateSubjectCollection(subjectCollection);
+		ModelWrapper<SubjectCollection> modelWrapperToClient = new ModelWrapper<>(subjectCollection,
+				GET_SUBJECT_COURSE_LIST);
+		try {
+			client.sendToClient(modelWrapperToClient);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static boolean isConnected() {
@@ -204,4 +224,13 @@ public class Server extends AbstractServer {
 	synchronized protected void clientDisconnected(ConnectionToClient client) {
 		serverListener.printToLog("client ip address: " + client.getInetAddress() + "has disconnected from the server");
 	}
+
+	public static SubjectCollection getSubjectCollection() {
+		return subjectCollection;
+	}
+
+	public static void setSubjectCollection(SubjectCollection subjectCollection) {
+		Server.subjectCollection = subjectCollection;
+	}
+
 }

@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import common.SubjectCollection;
 import models.Database;
 import models.Question;
 import models.Test;
@@ -75,6 +78,7 @@ public class DatabaseController {
 			logListener.printToLog("VendorError: " + ex.getErrorCode());
 			throw new SQLException();
 		}
+
 	}
 
 	/**
@@ -116,7 +120,7 @@ public class DatabaseController {
 	 */
 	public boolean saveQuestion(Question question) {
 		int questionID;
-		String courseID = Question.getSubjectMap().get(question.getSubject());
+		String courseID = Server.getSubjectCollection().getSubjectMap().get(question.getSubject());
 		String questionLastID = getQuestionLastId(question.getSubject());
 		if (questionLastID == null) {
 			questionID = 0;
@@ -287,6 +291,48 @@ public class DatabaseController {
 			System.err.print("Error occurred, test has not been updated ");
 			return false;
 		}
+	}
+
+	public SubjectCollection updateSubjectCollection(SubjectCollection subjectCollection) {
+		subjectCollection = new SubjectCollection();
+		Map<String, String> subjectCodeMap = new HashMap<>();
+		Map<String, List<String>> courseListMap = new HashMap<>();
+		List<String> subjectList = new ArrayList<>();
+		List<String> courseList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String subjectSQL = "SELECT * FROM Subject";
+			ResultSet resultSetSubject = statement.executeQuery(subjectSQL);
+			while (resultSetSubject.next()) {
+				String id = resultSetSubject.getString("subjectID");
+				String subject = resultSetSubject.getString("subjectName");
+				subjectCodeMap.put(subject, id);
+				subjectList.add(subject);
+				String courseSQL = "SELECT (courseName) FROM Course WHERE subjectID=" + id + ";";
+				Statement statement2 = conn.createStatement();
+				ResultSet resultSetCourse = statement2.executeQuery(courseSQL);
+				List<String> subjectCourseList = new ArrayList<>();
+
+				while (resultSetCourse.next()) {
+					String course = resultSetCourse.getString("courseName");
+					subjectCourseList.add(course);
+					courseList.add(course);
+				}
+				courseListMap.put(subject, subjectCourseList);
+			}
+
+			subjectCollection.setSubjects(subjectList);
+			subjectCollection.setCourses(courseList);
+			subjectCollection.setCourseListMap(courseListMap);
+			subjectCollection.setSubjectMap(subjectCodeMap);
+
+		} catch (SQLException e) {
+			System.err.println("Can't collect list");
+			return subjectCollection;
+		}
+
+		return subjectCollection;
 	}
 
 }
