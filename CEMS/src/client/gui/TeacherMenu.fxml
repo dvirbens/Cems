@@ -11,7 +11,7 @@
 	<children>
 		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
 			<image>
-				<Image url="@../../../GuiPrototype/logo3.jpeg" />
+				<Image url="@../../../images/logo3.jpeg" />
 			</image>
 		</ImageView>
 		<VBox layoutY="150.0" prefHeight="450.0" prefWidth="270.0" style="-fx-background-color: #333333;">
@@ -20,7 +20,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../../GuiPrototype/test.png" />
+								<Image url="@../../../images/test.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -29,7 +29,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../../GuiPrototype/question.png" />
+								<Image url="@../../../images/question.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -38,7 +38,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../../GuiPrototype/start.png" />
+								<Image url="@../../../images/start.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -47,7 +47,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../../GuiPrototype/statistic.png" />
+								<Image url="@../../../images/statistic.png" />
 							</image>
 						</ImageView>
 					</graphic>

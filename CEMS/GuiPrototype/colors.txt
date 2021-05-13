@@ -1,3 +1,0 @@
-buttons - #48a832
-unfocused textfield - #48464b
-focused textfileds - #81d06b
