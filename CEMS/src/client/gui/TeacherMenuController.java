@@ -1,15 +1,20 @@
 package client.gui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class TeacherMenuController {
+public class TeacherMenuController implements Initializable{
 
 	@FXML
 	private JFXButton btnCreateExam;
@@ -28,6 +33,12 @@ public class TeacherMenuController {
 
 	@FXML
 	private JFXButton btnLogout;
+	
+	
+    @FXML
+    private Label labelWelcome;
+    
+    
 
 	enum Buttons {
 		CREATE_EXAM, CREATE_QUESTION, EXAM_STATISTIC, START_EXAM, GRADE_APPROVAL
@@ -112,6 +123,16 @@ public class TeacherMenuController {
 			btnGradeApproval.setStyle("-fx-background-color:#48a832");
 			break;
 		}
+	}
+	
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		String name = Client.getUser().getFirstName()+" "+Client.getUser().getLastName();
+		String LabelPrint="Welcome, "+name;
+		labelWelcome.setText(LabelPrint);
+
+	
 	}
 
 }

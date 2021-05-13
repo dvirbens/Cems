@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
@@ -22,7 +23,7 @@ public class LoginMenuController {
 	private JFXTextField tfUserName;
 
 	@FXML
-	private JFXTextField tfPassword;
+    private JFXPasswordField tfPassword;
 
 	@FXML
 	private JFXButton btnLogin;

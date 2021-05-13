@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -71,5 +72,6 @@
             </JFXButton>
 			</children>
 		</VBox>
+      <Label fx:id="labelWelcome" layoutX="52.0" layoutY="129.0" prefHeight="21.0" prefWidth="166.0" textAlignment="CENTER" textFill="#48a832" />
 	</children>
 </Pane>
