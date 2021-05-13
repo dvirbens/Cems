@@ -1,6 +1,7 @@
 package client.gui;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -9,6 +10,9 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientUI;
+import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,12 +89,15 @@ public class CreateExamController implements Initializable {
 	void onClickSearch(ActionEvent event) {
 		String subjectSelected = cbSubject.getSelectionModel().getSelectedItem();
 		String courseSelected = cbCourse.getSelectionModel().getSelectedItem();
-		
-		
-		
-		
-		
-		
+		List<String> sortByList = new ArrayList<>();
+		sortByList.add(subjectSelected);
+		sortByList.add(courseSelected);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(sortByList, GET_QUESTION_LIST);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+
+		ObservableList<Question> questions = FXCollections.observableArrayList();
+		questions.addAll(Client.getQuestions());
+		tvQuestionPull.setItems(questions);
 		
 	}
 
@@ -120,10 +127,6 @@ public class CreateExamController implements Initializable {
 		tcCourseSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("course"));
 		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
 		tcViewSelected.setCellValueFactory(new PropertyValueFactory<Question, Button>("view"));
-
-		ObservableList<Question> questions = FXCollections.observableArrayList();
-		// questions.addAll();
-		tvQuestionPull.setItems(questions);
 
 	}
 

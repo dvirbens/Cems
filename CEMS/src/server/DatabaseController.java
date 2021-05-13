@@ -337,4 +337,15 @@ public class DatabaseController {
 		return subjectCollection;
 	}
 
+	public List<Question> getQuestionList(String subject, String course) {
+		List<Question> questionList = new ArrayList<>();
+		Question question1 = new Question("02001", "Beny Monitz", "Mathematics", "Probability", "LALALALA", "LA",
+				"LALA", "LALALA", "LALALALA", 2);
+		Question question2 = new Question("02002", "Dvora Toledano", "Mathematics", "Algebra", "LALALALA", "LA", "LALA",
+				"LALALA", "LALALALA", 1);
+		questionList.add(question1);
+		questionList.add(question2);
+		return questionList;
+	}
+
 }

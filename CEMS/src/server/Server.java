@@ -33,7 +33,7 @@ public class Server extends AbstractServer {
 	 * Store database controller instance created by the constructor, in order to
 	 * make transaction with database.
 	 */
-	private DatabaseController databseController;
+	private DatabaseController databaseController;
 
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
@@ -63,7 +63,7 @@ public class Server extends AbstractServer {
 	public Server(ServerEventListener logListener, Database database, String serverPort) {
 		super(Integer.parseInt(serverPort));
 		this.serverListener = logListener;
-		databseController = new DatabaseController(database, logListener);
+		databaseController = new DatabaseController(database, logListener);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Server extends AbstractServer {
 
 		case LOAD_TEST:
 			String id = (String) modelWrapperFromClient.getElement();
-			Exam test = databseController.getTest(id);
+			Exam test = databaseController.getTest(id);
 			if (test != null)
 				modelWrapperToClient = new ModelWrapper<Exam>(test, LOAD_TEST);
 			else
@@ -98,7 +98,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case LOAD_TEST_LIST:
-			List<Exam> testArray = databseController.getTestList();
+			List<Exam> testArray = databaseController.getTestList();
 			modelWrapperToClient = new ModelWrapper<Exam>(testArray, LOAD_TEST_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -112,7 +112,7 @@ public class Server extends AbstractServer {
 
 		case UPDATE_TEST:
 			Exam testToEdit = (Exam) modelWrapperFromClient.getElement();
-			databseController.updateTest(testToEdit);
+			databaseController.updateTest(testToEdit);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -128,7 +128,7 @@ public class Server extends AbstractServer {
 
 		case CREATE_QUESTION:
 			Question question = (Question) modelWrapperFromClient.getElement();
-			databseController.saveQuestion(question);
+			databaseController.saveQuestion(question);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -147,7 +147,7 @@ public class Server extends AbstractServer {
 
 		case GET_USER:
 			List<String> userInfo = (List<String>) modelWrapperFromClient.getElements();
-			User user = databseController.getUser(userInfo.get(0), userInfo.get(1));
+			User user = databaseController.getUser(userInfo.get(0), userInfo.get(1));
 			modelWrapperToClient = new ModelWrapper<>(user, GET_USER);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -156,8 +156,17 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case GET_SUBJECT_COURSE_LIST:
-
+		case GET_QUESTION_LIST:
+			List<String> sortByList = (List<String>) modelWrapperFromClient.getElements();
+			String subject = sortByList.get(0);
+			String course = sortByList.get(1);
+			List<Question> questionList = databaseController.getQuestionList(subject, course);
+			modelWrapperToClient = new ModelWrapper<>(questionList, GET_QUESTION_LIST);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		default:
@@ -174,7 +183,7 @@ public class Server extends AbstractServer {
 	 */
 	protected void serverStarted() {
 		try {
-			databseController.connectToDatabase();
+			databaseController.connectToDatabase();
 			isConnected = true;
 			serverListener.printToLog("Server listening for connections on port " + getPort());
 			serverListener.changeButtonStatus(isConnected);
@@ -206,7 +215,7 @@ public class Server extends AbstractServer {
 	protected void clientConnected(ConnectionToClient client) {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
 
-		subjectCollection = databseController.updateSubjectCollection(subjectCollection);
+		subjectCollection = databaseController.updateSubjectCollection(subjectCollection);
 		ModelWrapper<SubjectCollection> modelWrapperToClient = new ModelWrapper<>(subjectCollection,
 				GET_SUBJECT_COURSE_LIST);
 		try {

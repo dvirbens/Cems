@@ -28,6 +28,12 @@ public class Client extends AbstractClient {
 	 */
 	private static List<Exam> tests;
 	/**
+	 * Value the holds the list of question that will be shown on table user
+	 * interface.
+	 */
+	private static List<Question> questions;
+
+	/**
 	 * Value that hold the test the will be shown on editTest user interface.
 	 */
 	private static Exam editTest;
@@ -68,21 +74,21 @@ public class Client extends AbstractClient {
 	protected void handleMessageFromServer(Object msg) {
 
 		if (msg != null) {
-			ModelWrapper<?> modelWrapperToClient = (ModelWrapper<?>) msg;
-			switch (modelWrapperToClient.getOperation()) {
+			ModelWrapper<?> modelWrapperFromServer = (ModelWrapper<?>) msg;
+			switch (modelWrapperFromServer.getOperation()) {
 			case UPDATE_TEST:
-				editTest = (Exam) modelWrapperToClient.getElement();
+				editTest = (Exam) modelWrapperFromServer.getElement();
 				break;
 
 			case LOAD_TEST:
-				editTest = (Exam) modelWrapperToClient.getElement();
+				editTest = (Exam) modelWrapperFromServer.getElement();
 				break;
 
 			case LOAD_QUESTION:
 				break;
 
 			case LOAD_TEST_LIST:
-				tests = (List<Exam>) modelWrapperToClient.getElements();
+				tests = (List<Exam>) modelWrapperFromServer.getElements();
 				break;
 
 			case LOAD_QUESTION_LIST:
@@ -111,12 +117,16 @@ public class Client extends AbstractClient {
 				break;
 
 			case GET_USER:
-				User user = (User) modelWrapperToClient.getElement();
+				User user = (User) modelWrapperFromServer.getElement();
 				setUser(user);
 				break;
 
 			case GET_SUBJECT_COURSE_LIST:
-				subjectCollection = (SubjectCollection) modelWrapperToClient.getElement();
+				subjectCollection = (SubjectCollection) modelWrapperFromServer.getElement();
+				break;
+
+			case GET_QUESTION_LIST:
+				questions = (List<Question>) modelWrapperFromServer.getElements();
 				break;
 
 			default:
@@ -206,5 +216,15 @@ public class Client extends AbstractClient {
 	public static void setSubjectCollection(SubjectCollection subjectCollection) {
 		Client.subjectCollection = subjectCollection;
 	}
+
+	public static List<Question> getQuestions() {
+		return questions;
+	}
+
+	public static void setQuestions(List<Question> questions) {
+		Client.questions = questions;
+	}
+	
+	
 
 }
