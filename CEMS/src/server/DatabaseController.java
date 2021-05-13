@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import common.SubjectCollection;
+import common.SubjectCourseCollection;
 import models.Database;
 import models.Question;
 import models.Exam;
@@ -293,8 +293,8 @@ public class DatabaseController {
 		}
 	}
 
-	public SubjectCollection updateSubjectCollection(SubjectCollection subjectCollection) {
-		subjectCollection = new SubjectCollection();
+	public SubjectCourseCollection updateSubjectCollection(SubjectCourseCollection subjectCollection) {
+		subjectCollection = new SubjectCourseCollection();
 		Map<String, String> subjectCodeMap = new HashMap<>();
 		Map<String, List<String>> courseListMap = new HashMap<>();
 		List<String> subjectList = new ArrayList<>();

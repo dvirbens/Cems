@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import common.ModelWrapper;
-import common.SubjectCollection;
+import common.SubjectCourseCollection;
 import models.Question;
 import models.Exam;
 import models.User;
@@ -50,7 +50,7 @@ public class Client extends AbstractClient {
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
 	 */
-	private static SubjectCollection subjectCollection;
+	private static SubjectCourseCollection subjectCollection;
 
 	/**
 	 * Constructor creating new client connection.
@@ -122,7 +122,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case GET_SUBJECT_COURSE_LIST:
-				subjectCollection = (SubjectCollection) modelWrapperFromServer.getElement();
+				subjectCollection = (SubjectCourseCollection) modelWrapperFromServer.getElement();
 				break;
 
 			case GET_QUESTION_LIST:
@@ -209,11 +209,11 @@ public class Client extends AbstractClient {
 		Client.user = user;
 	}
 
-	public static SubjectCollection getSubjectCollection() {
+	public static SubjectCourseCollection getSubjectCollection() {
 		return subjectCollection;
 	}
 
-	public static void setSubjectCollection(SubjectCollection subjectCollection) {
+	public static void setSubjectCollection(SubjectCourseCollection subjectCollection) {
 		Client.subjectCollection = subjectCollection;
 	}
 

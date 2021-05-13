@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import common.ModelWrapper;
-import common.SubjectCollection;
+import common.SubjectCourseCollection;
 
 import static common.ModelWrapper.Operation.*;
 import models.Database;
@@ -38,7 +38,7 @@ public class Server extends AbstractServer {
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
 	 */
-	private static SubjectCollection subjectCollection;
+	private static SubjectCourseCollection subjectCollection;
 
 	/**
 	 * Indicate if the server is connected
@@ -216,7 +216,7 @@ public class Server extends AbstractServer {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
 
 		subjectCollection = databaseController.updateSubjectCollection(subjectCollection);
-		ModelWrapper<SubjectCollection> modelWrapperToClient = new ModelWrapper<>(subjectCollection,
+		ModelWrapper<SubjectCourseCollection> modelWrapperToClient = new ModelWrapper<>(subjectCollection,
 				GET_SUBJECT_COURSE_LIST);
 		try {
 			client.sendToClient(modelWrapperToClient);
@@ -234,11 +234,11 @@ public class Server extends AbstractServer {
 		serverListener.printToLog("client ip address: " + client.getInetAddress() + "has disconnected from the server");
 	}
 
-	public static SubjectCollection getSubjectCollection() {
+	public static SubjectCourseCollection getSubjectCollection() {
 		return subjectCollection;
 	}
 
-	public static void setSubjectCollection(SubjectCollection subjectCollection) {
+	public static void setSubjectCollection(SubjectCourseCollection subjectCollection) {
 		Server.subjectCollection = subjectCollection;
 	}
 

@@ -2,6 +2,8 @@ package models;
 
 import java.io.Serializable;
 
+import com.jfoenix.controls.JFXButton;
+
 import javafx.scene.control.Button;
 
 public class Question implements Serializable {
@@ -20,7 +22,8 @@ public class Question implements Serializable {
 	private String answer3;
 	private String answer4;
 	private int correctAnswer;
-	private Button view;
+	private JFXButton detailsButton;
+	private JFXButton addButton;
 
 	public Question(String teacherName, String subject, String course, String details, String answer1, String answer2,
 			String answer3, String answer4, int correctAnswer) {
@@ -129,6 +132,22 @@ public class Question implements Serializable {
 
 	public void setCorrectAnswer(int correctAnswer) {
 		this.correctAnswer = correctAnswer;
+	}
+
+	public JFXButton getDetailsButton() {
+		return detailsButton;
+	}
+
+	public void setDetailsButton(JFXButton detailsButton) {
+		this.detailsButton = detailsButton;
+	}
+
+	public JFXButton getAddButton() {
+		return addButton;
+	}
+
+	public void setAddButton(JFXButton addButton) {
+		this.addButton = addButton;
 	}
 
 	@Override

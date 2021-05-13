@@ -12,20 +12,21 @@
 	<children>
       <TableView fx:id="tvQuestionPull" layoutX="27.0" layoutY="74.0" prefHeight="300.0" prefWidth="700.0">
         <columns>
-          <TableColumn fx:id="tcIdPull" prefWidth="125.0" text="ID" />
-          <TableColumn fx:id="tcSubjectPull" prefWidth="118.0" text="Subject" />
-            <TableColumn fx:id="tcCoursePull" prefWidth="177.0" text="Course" />
-            <TableColumn fx:id="tcTeacherPull" prefWidth="153.0" text="Teacher" />
-            <TableColumn fx:id="tcViewPull" prefWidth="126.0" text="View" />
+          <TableColumn fx:id="tcIdPull" prefWidth="87.0" text="ID" />
+          <TableColumn fx:id="tcSubjectPull" prefWidth="129.0" text="Subject" />
+            <TableColumn fx:id="tcCoursePull" prefWidth="157.0" text="Course" />
+            <TableColumn fx:id="tcTeacherPull" prefWidth="163.0" text="Teacher" />
+            <TableColumn fx:id="tcAddPull" text="Add" />
+            <TableColumn fx:id="tcDetailsPull" prefWidth="83.0" text="Details" />
         </columns>
       </TableView>
       <TableView fx:id="tvSelectedQuestion" layoutX="27.0" layoutY="411.0" prefHeight="300.0" prefWidth="700.0">
          <columns>
-            <TableColumn fx:id="tcIdSelected" prefWidth="128.0" text="ID" />
-            <TableColumn fx:id="tcSubjectSelected" prefWidth="127.0" text="Subject" />
-            <TableColumn fx:id="tcCourseSelected" minWidth="0.0" prefWidth="176.0" text="Course" />
-            <TableColumn fx:id="tcTeacherSelected" prefWidth="141.0" text="Teacher" />
-            <TableColumn fx:id="tcViewSelected" prefWidth="127.0" text="View" />
+            <TableColumn fx:id="tcIdSelected" prefWidth="89.0" text="ID" />
+            <TableColumn fx:id="tcSubjectSelected" prefWidth="135.0" text="Subject" />
+            <TableColumn fx:id="tcCourseSelected" minWidth="0.0" prefWidth="170.0" text="Course" />
+            <TableColumn fx:id="tcTeacherSelected" prefWidth="163.0" text="Teacher" />
+            <TableColumn fx:id="tcDetailsSelected" prefWidth="142.0" text="Details" />
          </columns>
       </TableView>
 		<Label layoutX="37.0" layoutY="45.0" text="Question pull:" />

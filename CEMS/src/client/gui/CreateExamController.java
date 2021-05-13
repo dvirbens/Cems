@@ -16,6 +16,7 @@ import static common.ModelWrapper.Operation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -42,10 +43,13 @@ public class CreateExamController implements Initializable {
 	private TableColumn<Question, String> tcTeacherPull;
 
 	@FXML
-	private TableColumn<Question, Button> tcViewPull;
+	private TableColumn<Question, JFXButton> tcDetailsPull;
 
 	@FXML
 	private TableView<Question> tvSelectedQuestion;
+
+	@FXML
+	private TableColumn<Question, JFXButton> tcAddPull;
 
 	@FXML
 	private TableColumn<Question, String> tcIdSelected;
@@ -60,7 +64,7 @@ public class CreateExamController implements Initializable {
 	private TableColumn<Question, String> tcTeacherSelected;
 
 	@FXML
-	private TableColumn<Question, Button> tcViewSelected;
+	private TableColumn<Question, JFXButton> tcDetailsSelected;
 
 	@FXML
 	private JFXButton btnSearch;
@@ -98,7 +102,38 @@ public class CreateExamController implements Initializable {
 		ObservableList<Question> questions = FXCollections.observableArrayList();
 		questions.addAll(Client.getQuestions());
 		tvQuestionPull.setItems(questions);
-		
+
+		for (Question question : Client.getQuestions()) {
+			JFXButton detailsButton = new JFXButton();
+			detailsButton.setPrefSize(90, 15);
+			detailsButton
+					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			detailsButton.setText("Details");
+			detailsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					System.out.println(question);
+				}
+
+			});
+			question.setDetailsButton(detailsButton);
+			JFXButton addButton = new JFXButton();
+			addButton.setPrefSize(70, 15);
+			addButton.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			addButton.setText("Add");
+			addButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					tvQuestionPull.getItems().remove(question);
+					tvSelectedQuestion.getItems().add(question);
+				}
+			});
+
+			question.setAddButton(addButton);
+		}
+
 	}
 
 	@FXML
@@ -120,13 +155,14 @@ public class CreateExamController implements Initializable {
 		tcSubjectPull.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
 		tcCoursePull.setCellValueFactory(new PropertyValueFactory<Question, String>("course"));
 		tcTeacherPull.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
-		tcViewPull.setCellValueFactory(new PropertyValueFactory<Question, Button>("view"));
+		tcAddPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addButton"));
+		tcDetailsPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
 		tcIdSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
 		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
 		tcCourseSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("course"));
 		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
-		tcViewSelected.setCellValueFactory(new PropertyValueFactory<Question, Button>("view"));
+		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
 	}
 
