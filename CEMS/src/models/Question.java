@@ -25,6 +25,23 @@ public class Question implements Serializable {
 	private JFXButton detailsButton;
 	private JFXButton addButton;
 
+	public Question(String questionID, String teacherName, String subject, String course, String details,
+			String answer1, String answer2, String answer3, String answer4, int correctAnswer,
+			JFXButton detailsButton) {
+		super();
+		this.questionID = questionID;
+		this.teacherName = teacherName;
+		this.subject = subject;
+		this.course = course;
+		this.details = details;
+		this.answer1 = answer1;
+		this.answer2 = answer2;
+		this.answer3 = answer3;
+		this.answer4 = answer4;
+		this.correctAnswer = correctAnswer;
+		this.detailsButton = detailsButton;
+	}
+
 	public Question(String teacherName, String subject, String course, String details, String answer1, String answer2,
 			String answer3, String answer4, int correctAnswer) {
 		super();

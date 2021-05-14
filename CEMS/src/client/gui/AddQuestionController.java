@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.Question;
+import models.QuestionInExam;
 
 public class AddQuestionController implements EventHandler<WindowEvent> {
 
@@ -37,7 +38,7 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 
 	private static TableView<Question> tvQuestionPull;
 
-	private static TableView<Question> tvSelectedQuestion;
+	private static TableView<QuestionInExam> tvSelectedQuestion;
 
 	private static boolean isWindowOpend;
 
@@ -61,7 +62,8 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 	@FXML
 	void onClickAddQuestion(ActionEvent event) {
 		getTvQuestionPull().getItems().remove(getQuestion());
-		getTvSelectedQuestion().getItems().add(getQuestion());
+		QuestionInExam newQuestion = new QuestionInExam(getQuestion(), "meow", 50);
+		getTvSelectedQuestion().getItems().add(newQuestion);
 		Node node = (Node) event.getSource();
 		Stage stage = (Stage) node.getScene().getWindow();
 		stage.close();
@@ -84,11 +86,11 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 		AddQuestionController.tvQuestionPull = tvQuestionPull;
 	}
 
-	public static TableView<Question> getTvSelectedQuestion() {
+	public static TableView<QuestionInExam> getTvSelectedQuestion() {
 		return tvSelectedQuestion;
 	}
 
-	public static void setTvSelectedQuestion(TableView<Question> tvSelectedQuestion) {
+	public static void setTvSelectedQuestion(TableView<QuestionInExam> tvSelectedQuestion) {
 		AddQuestionController.tvSelectedQuestion = tvSelectedQuestion;
 	}
 
