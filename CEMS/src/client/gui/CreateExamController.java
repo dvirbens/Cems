@@ -20,15 +20,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import models.Question;
 
 public class CreateExamController implements Initializable {
 
 	@FXML
-	private TableView<Question> tvQuestionPull;
+	public TableView<Question> tvQuestionPull;
 
 	@FXML
 	private TableColumn<Question, String> tcIdPull;
@@ -126,13 +128,14 @@ public class CreateExamController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					tvQuestionPull.getItems().remove(question);
-					tvSelectedQuestion.getItems().add(question);
+					if (!AddQuestionController.isWindowOpend()) {
+						AddQuestionController addQuestionController = new AddQuestionController();
+						AddQuestionController.setQuestion(question);
+						AddQuestionController.setTvQuestionPull(tvQuestionPull);
+						AddQuestionController.setTvSelectedQuestion(tvSelectedQuestion);
+						addQuestionController.start();
+					}
 
-					/*
-					 * AddQuestionController addQuestionController = new
-					 * AddQuestionController(question); addQuestionController.start();
-					 */
 				}
 			});
 
