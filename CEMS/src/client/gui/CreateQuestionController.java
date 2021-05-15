@@ -64,7 +64,7 @@ public class CreateQuestionController implements Initializable {
 		String teacherName = teacherUser.getFirstName() + " " + teacherUser.getLastName();
 		String subject = cbSubject.getSelectionModel().getSelectedItem();
 		String course = cbCourse.getSelectionModel().getSelectedItem();
-		int correctAnswer = cbCorrectAnswer.getSelectionModel().getSelectedIndex();
+		int correctAnswer = cbCorrectAnswer.getSelectionModel().getSelectedItem();
 		Question question = new Question(teacherName, subject, course, details, answer1, answer2, answer3, answer4,
 				correctAnswer);
 
