@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -55,7 +56,7 @@ public class MainGuiController {
 			Scene scene = new Scene(mainPane, 1024, 768);
 			stage.setScene(scene);
 			stage.setTitle("CEMS");
-			//stage.getIcons().add(new Image("images/icon.png"));
+			stage.getIcons().add(new Image("server/gui/icon.png"));
 			stage.show();
 			menuHandler = new MenuHandler(mainPane);
 			menuHandler.setLoginMenu();
