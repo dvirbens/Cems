@@ -337,14 +337,34 @@ public class DatabaseController {
 		return subjectCollection;
 	}
 
-	public List<Question> getQuestionList(String subject, String course) {
+	public List<Question> getQuestionList(String course) {
 		List<Question> questionList = new ArrayList<>();
-		Question question1 = new Question("02001", "Beny Monitz", "Mathematics", "Probability", "LALALALA", "LA",
-				"LALA", "LALALA", "LALALALA", 2);
-		Question question2 = new Question("02002", "Dvora Toledano", "Mathematics", "Algebra", "LALALALA", "LA", "LALA",
-				"LALALA", "LALALALA", 1);
-		questionList.add(question1);
-		questionList.add(question2);
+		
+		try {
+			Statement statement = conn.createStatement();
+			String courseQuery= "SELECT * FROM Question WHERE Course=\""+course+"\";";
+			ResultSet rsQuestionOfCourse=statement.executeQuery(courseQuery);
+			while(rsQuestionOfCourse.next())
+			{
+				String questionID=rsQuestionOfCourse.getString("questionID");
+				String teacherName=rsQuestionOfCourse.getString("TeacherName");
+				String subjectRet=rsQuestionOfCourse.getString("Subject");
+				String courseRet=rsQuestionOfCourse.getString("Course");
+				String details=rsQuestionOfCourse.getString("Details");
+				String answer1=rsQuestionOfCourse.getString("Answer1");
+				String answer2=rsQuestionOfCourse.getString("Answer2");
+				String answer3=rsQuestionOfCourse.getString("Answer3");
+				String answer4=rsQuestionOfCourse.getString("Answer4");
+				int correctAnswer=rsQuestionOfCourse.getInt("CorrectAnswer");
+				Question q=new Question(questionID, teacherName, subjectRet, courseRet, details, answer1, answer2, answer3, answer4, correctAnswer);
+				questionList.add(q);
+				System.out.println(questionList);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("ERROR #22132 - ERROR LOADING QUSETION FROM DATABASE");
+		}
+
 		return questionList;
 	}
 

@@ -157,10 +157,9 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_QUESTION_LIST:
-			List<String> sortByList = (List<String>) modelWrapperFromClient.getElements();
-			String subject = sortByList.get(0);
-			String course = sortByList.get(1);
-			List<Question> questionList = databaseController.getQuestionList(subject, course);
+			String course  = (String) modelWrapperFromClient.getElement();
+			
+			List<Question> questionList = databaseController.getQuestionList(course);
 			modelWrapperToClient = new ModelWrapper<>(questionList, GET_QUESTION_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);

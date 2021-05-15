@@ -92,12 +92,9 @@ public class CreateExamController implements Initializable {
 
 	@FXML
 	void onClickSearch(ActionEvent event) {
-		String subjectSelected = cbSubject.getSelectionModel().getSelectedItem();
 		String courseSelected = cbCourse.getSelectionModel().getSelectedItem();
-		List<String> sortByList = new ArrayList<>();
-		sortByList.add(subjectSelected);
-		sortByList.add(courseSelected);
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(sortByList, GET_QUESTION_LIST);
+		
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(courseSelected, GET_QUESTION_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		ObservableList<Question> questions = FXCollections.observableArrayList();
@@ -114,7 +111,11 @@ public class CreateExamController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					System.out.println(question);
+					if (!QuestionDetailsController.isWindowOpend()) {
+						QuestionDetailsController questionDetailsController = new QuestionDetailsController();
+						QuestionDetailsController.setQuestion(question);
+						questionDetailsController.start();
+					}
 				}
 
 			});
