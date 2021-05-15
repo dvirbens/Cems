@@ -25,9 +25,6 @@ public class CreateQuestionController implements Initializable {
 	private JFXComboBox<String> cbSubject;
 
 	@FXML
-	private JFXComboBox<String> cbCourse;
-
-	@FXML
 	private JFXComboBox<Integer> cbCorrectAnswer;
 
 	@FXML
@@ -63,9 +60,9 @@ public class CreateQuestionController implements Initializable {
 		String answer4 = taAnswer4.getText();
 		String teacherName = teacherUser.getFirstName() + " " + teacherUser.getLastName();
 		String subject = cbSubject.getSelectionModel().getSelectedItem();
-		String course = cbCourse.getSelectionModel().getSelectedItem();
 		int correctAnswer = cbCorrectAnswer.getSelectionModel().getSelectedItem();
-		Question question = new Question(teacherName, subject, course, details, answer1, answer2, answer3, answer4,
+
+		Question question = new Question(teacherName, subject, details, answer1, answer2, answer3, answer4,
 				correctAnswer);
 
 		ModelWrapper<Question> modelWrapper = new ModelWrapper<>(question, CREATE_QUESTION);
@@ -76,19 +73,10 @@ public class CreateQuestionController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		cbSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
-		cbCourse.getItems().addAll(Client.getSubjectCollection().getCourses());
 		cbCorrectAnswer.getItems().add(1);
 		cbCorrectAnswer.getItems().add(2);
 		cbCorrectAnswer.getItems().add(3);
 		cbCorrectAnswer.getItems().add(4);
-	}
-
-	@FXML
-	void onSubjectSelected(ActionEvent event) {
-		String subjectSelected = cbSubject.getSelectionModel().getSelectedItem();
-		List<String> courseList = Client.getSubjectCollection().getCourseListBySubject(subjectSelected);
-		cbCourse.getItems().clear();
-		cbCourse.getItems().addAll(courseList);
 	}
 
 }

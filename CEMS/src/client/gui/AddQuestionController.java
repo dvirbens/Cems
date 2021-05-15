@@ -61,6 +61,9 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 
 	@FXML
 	void onClickAddQuestion(ActionEvent event) {
+		String note = taNotes.getText();
+		String points = tfQuestionPoints.getText();
+		
 		getTvQuestionPull().getItems().remove(getQuestion());
 		QuestionInExam newQuestion = new QuestionInExam(getQuestion(), "meow", 50);
 		getTvSelectedQuestion().getItems().add(newQuestion);

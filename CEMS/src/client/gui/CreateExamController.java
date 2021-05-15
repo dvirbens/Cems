@@ -38,9 +38,6 @@ public class CreateExamController implements Initializable {
 	private TableColumn<Question, String> tcSubjectPull;
 
 	@FXML
-	private TableColumn<Question, String> tcCoursePull;
-
-	@FXML
 	private TableColumn<Question, String> tcTeacherPull;
 
 	@FXML
@@ -59,9 +56,6 @@ public class CreateExamController implements Initializable {
 	private TableColumn<QuestionInExam, String> tcSubjectSelected;
 
 	@FXML
-	private TableColumn<QuestionInExam, String> tcCourseSelected;
-
-	@FXML
 	private TableColumn<QuestionInExam, String> tcTeacherSelected;
 
 	@FXML
@@ -77,24 +71,19 @@ public class CreateExamController implements Initializable {
 	private JFXButton btnContinue;
 
 	@FXML
-	private JFXComboBox<String> cbSubject;
+	private JFXComboBox<String> cbQuestionSubject;
 
 	@FXML
-	private JFXComboBox<String> cbCourse;
+	private JFXComboBox<String> cbExamCourse;
+
+	@FXML
+	private JFXComboBox<String> cbExamSubject;
 
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
-		String subjectSelected = cbSubject.getSelectionModel().getSelectedItem();
-		List<String> courseList = Client.getSubjectCollection().getCourseListBySubject(subjectSelected);
-		cbCourse.getItems().clear();
-		cbCourse.getItems().addAll(courseList);
-	}
+		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
 
-	@FXML
-	void onClickSearch(ActionEvent event) {
-		String courseSelected = cbCourse.getSelectionModel().getSelectedItem();
-		
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(courseSelected, GET_QUESTION_LIST);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		ObservableList<Question> questions = FXCollections.observableArrayList();
@@ -149,26 +138,30 @@ public class CreateExamController implements Initializable {
 
 	}
 
+	@FXML
+	void onClickExamSubject(ActionEvent event) {
+		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
+		cbExamCourse.getItems().addAll(Client.getSubjectCollection().getCourseListBySubject(subject));
+		
+	}
+
 	/**
 	 * Setting all table column and creating new data set from client request that
 	 * has been sent to database.
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		cbSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
-		cbCourse.getItems().addAll(Client.getSubjectCollection().getCourses());
+		cbQuestionSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
+		cbExamSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 
 		tcIdPull.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
 		tcSubjectPull.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
-		tcCoursePull.setCellValueFactory(new PropertyValueFactory<Question, String>("course"));
 		tcTeacherPull.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
 		tcAddPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addButton"));
 		tcDetailsPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
 		tcIdSelected.setCellValueFactory(new PropertyValueFactory<QuestionInExam, String>("questionID"));
 		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<QuestionInExam, String>("subject"));
-		tcCourseSelected.setCellValueFactory(new PropertyValueFactory<QuestionInExam, String>("course"));
 		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<QuestionInExam, String>("teacherName"));
 		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<QuestionInExam, JFXButton>("detailsButton"));
 

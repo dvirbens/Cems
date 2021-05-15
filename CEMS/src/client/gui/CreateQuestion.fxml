@@ -10,8 +10,7 @@
 
 <Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.CreateQuestionController">
    <children>
-      <JFXComboBox fx:id="cbSubject" focusColor="#48a832" layoutX="182.0" layoutY="14.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" />
-      <JFXComboBox fx:id="cbCourse" focusColor="#48a832" layoutX="402.0" layoutY="14.0" prefHeight="28.0" prefWidth="145.0" promptText="Question Course" />
+      <JFXComboBox fx:id="cbSubject" focusColor="#48a832" layoutX="305.0" layoutY="14.0" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" />
       <TextArea fx:id="taQuestion" layoutX="102.0" layoutY="82.0" prefHeight="160.0" prefWidth="550.0" />
       <Label layoutX="107.0" layoutY="249.0" text="answer 1:" />
       <JFXButton fx:id="btnCreateQuestion" layoutX="400.0" layoutY="678.0" onAction="#onClickCreateQuestion" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create question" textFill="WHITE">

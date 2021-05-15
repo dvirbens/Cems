@@ -15,7 +15,6 @@ public class Question implements Serializable {
 	private String questionID;
 	private String teacherName;
 	private String subject;
-	private String course;
 	private String details;
 	private String answer1;
 	private String answer2;
@@ -25,14 +24,13 @@ public class Question implements Serializable {
 	private JFXButton detailsButton;
 	private JFXButton addButton;
 
-	public Question(String questionID, String teacherName, String subject, String course, String details,
+	public Question(String questionID, String teacherName, String subject, String details,
 			String answer1, String answer2, String answer3, String answer4, int correctAnswer,
 			JFXButton detailsButton) {
 		super();
 		this.questionID = questionID;
 		this.teacherName = teacherName;
 		this.subject = subject;
-		this.course = course;
 		this.details = details;
 		this.answer1 = answer1;
 		this.answer2 = answer2;
@@ -42,12 +40,11 @@ public class Question implements Serializable {
 		this.detailsButton = detailsButton;
 	}
 
-	public Question(String teacherName, String subject, String course, String details, String answer1, String answer2,
-			String answer3, String answer4, int correctAnswer) {
+	public Question(String teacherName, String subject, String details, String answer1, String answer2, String answer3,
+			String answer4, int correctAnswer) {
 		super();
 		this.teacherName = teacherName;
 		this.subject = subject;
-		this.course = course;
 		this.details = details;
 		this.answer1 = answer1;
 		this.answer2 = answer2;
@@ -56,13 +53,12 @@ public class Question implements Serializable {
 		this.correctAnswer = correctAnswer;
 	}
 
-	public Question(String questionID, String teacherName, String subject, String course, String details,
-			String answer1, String answer2, String answer3, String answer4, int correctAnswer) {
+	public Question(String questionID, String teacherName, String subject, String details, String answer1,
+			String answer2, String answer3, String answer4, int correctAnswer) {
 		super();
 		this.questionID = questionID;
 		this.teacherName = teacherName;
 		this.subject = subject;
-		this.course = course;
 		this.details = details;
 		this.answer1 = answer1;
 		this.answer2 = answer2;
@@ -93,14 +89,6 @@ public class Question implements Serializable {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
-	}
-
-	public String getCourse() {
-		return course;
-	}
-
-	public void setCourse(String course) {
-		this.course = course;
 	}
 
 	public String getDetails() {
@@ -170,8 +158,8 @@ public class Question implements Serializable {
 	@Override
 	public String toString() {
 		return "Question [questionID=" + questionID + ", teacherName=" + teacherName + ", subject=" + subject
-				+ ", course=" + course + ", details=" + details + ", answer1=" + answer1 + ", answer2=" + answer2
-				+ ", answer3=" + answer3 + ", answer4=" + answer4 + ", correctAnswer=" + correctAnswer + "]";
+				+ ", details=" + details + ", answer1=" + answer1 + ", answer2=" + answer2 + ", answer3=" + answer3
+				+ ", answer4=" + answer4 + ", correctAnswer=" + correctAnswer + "]";
 	}
 
 }

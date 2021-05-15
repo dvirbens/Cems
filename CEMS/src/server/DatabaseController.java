@@ -120,27 +120,26 @@ public class DatabaseController {
 	 */
 	public boolean saveQuestion(Question question) {
 		int questionID;
-		String courseID = Server.getSubjectCollection().getSubjectMap().get(question.getSubject());
+		String subjectID = Server.getSubjectCollection().getSubjectMap().get(question.getSubject());
 		String questionLastID = getQuestionLastId(question.getSubject());
 		if (questionLastID == null) {
 			questionID = 0;
 		} else {
 			questionID = Integer.valueOf(questionLastID);
 		}
-		String finalID = courseID + String.format("%03d", ++questionID);
+		String finalID = subjectID + String.format("%03d", ++questionID);
 		PreparedStatement prepareStatement;
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO Question VALUES (?,?,?,?,?,?,?,?,?,?);");
+			prepareStatement = conn.prepareStatement("INSERT INTO Question VALUES (?,?,?,?,?,?,?,?,?);");
 			prepareStatement.setString(1, finalID);
 			prepareStatement.setString(2, question.getSubject());
-			prepareStatement.setString(3, question.getCourse());
-			prepareStatement.setString(4, question.getDetails());
-			prepareStatement.setString(5, question.getAnswer1());
-			prepareStatement.setString(6, question.getAnswer2());
-			prepareStatement.setString(7, question.getAnswer3());
-			prepareStatement.setString(8, question.getAnswer4());
-			prepareStatement.setInt(9, question.getCorrectAnswer());
-			prepareStatement.setString(10, question.getTeacherName());
+			prepareStatement.setString(3, question.getDetails());
+			prepareStatement.setString(4, question.getAnswer1());
+			prepareStatement.setString(5, question.getAnswer2());
+			prepareStatement.setString(6, question.getAnswer3());
+			prepareStatement.setString(7, question.getAnswer4());
+			prepareStatement.setInt(8, question.getCorrectAnswer());
+			prepareStatement.setString(9, question.getTeacherName());
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				System.out.print("Question Saved Succuessfully");
@@ -299,8 +298,6 @@ public class DatabaseController {
 		Map<String, List<String>> courseListMap = new HashMap<>();
 		List<String> subjectList = new ArrayList<>();
 		List<String> courseList = new ArrayList<>();
-		subjectList.add("All Subject");
-		courseList.add("All Courses");
 		try {
 			Statement statement = conn.createStatement();
 			String subjectSQL = "SELECT * FROM Subject";
@@ -323,7 +320,6 @@ public class DatabaseController {
 				}
 				courseListMap.put(subject, subjectCourseList);
 			}
-			courseListMap.put("All Subject", courseList);
 			subjectCollection.setSubjects(subjectList);
 			subjectCollection.setCourses(courseList);
 			subjectCollection.setCourseListMap(courseListMap);
@@ -337,30 +333,28 @@ public class DatabaseController {
 		return subjectCollection;
 	}
 
-	public List<Question> getQuestionList(String course) {
+	public List<Question> getQuestionList(String subject) {
 		List<Question> questionList = new ArrayList<>();
-		
+
 		try {
 			Statement statement = conn.createStatement();
-			String courseQuery= "SELECT * FROM Question WHERE Course=\""+course+"\";";
-			ResultSet rsQuestionOfCourse=statement.executeQuery(courseQuery);
-			while(rsQuestionOfCourse.next())
-			{
-				String questionID=rsQuestionOfCourse.getString("questionID");
-				String teacherName=rsQuestionOfCourse.getString("TeacherName");
-				String subjectRet=rsQuestionOfCourse.getString("Subject");
-				String courseRet=rsQuestionOfCourse.getString("Course");
-				String details=rsQuestionOfCourse.getString("Details");
-				String answer1=rsQuestionOfCourse.getString("Answer1");
-				String answer2=rsQuestionOfCourse.getString("Answer2");
-				String answer3=rsQuestionOfCourse.getString("Answer3");
-				String answer4=rsQuestionOfCourse.getString("Answer4");
-				int correctAnswer=rsQuestionOfCourse.getInt("CorrectAnswer");
-				Question q=new Question(questionID, teacherName, subjectRet, courseRet, details, answer1, answer2, answer3, answer4, correctAnswer);
+			String courseQuery = "SELECT * FROM Question WHERE Subject=\"" + subject + "\";";
+			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
+			while (rsQuestionOfCourse.next()) {
+				String questionID = rsQuestionOfCourse.getString("questionID");
+				String teacherName = rsQuestionOfCourse.getString("TeacherName");
+				String subjectRet = rsQuestionOfCourse.getString("Subject");
+				String details = rsQuestionOfCourse.getString("Details");
+				String answer1 = rsQuestionOfCourse.getString("Answer1");
+				String answer2 = rsQuestionOfCourse.getString("Answer2");
+				String answer3 = rsQuestionOfCourse.getString("Answer3");
+				String answer4 = rsQuestionOfCourse.getString("Answer4");
+				int correctAnswer = rsQuestionOfCourse.getInt("CorrectAnswer");
+				Question q = new Question(questionID, teacherName, subjectRet, details, answer1, answer2, answer3,
+						answer4, correctAnswer);
 				questionList.add(q);
-				System.out.println(questionList);
 			}
-			
+
 		} catch (SQLException e) {
 			System.err.println("ERROR #22132 - ERROR LOADING QUSETION FROM DATABASE");
 		}
