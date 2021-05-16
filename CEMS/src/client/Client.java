@@ -129,6 +129,10 @@ public class Client extends AbstractClient {
 				questions = (List<Question>) modelWrapperFromServer.getElements();
 				break;
 
+			case CREATE_EXAM:
+				System.out.println("Exam has been saved successfully");
+				break;
+
 			default:
 				break;
 
@@ -224,7 +228,5 @@ public class Client extends AbstractClient {
 	public static void setQuestions(List<Question> questions) {
 		Client.questions = questions;
 	}
-	
-	
 
 }

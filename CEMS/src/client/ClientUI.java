@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  */
 public class ClientUI extends Application {
 
-	public static ClientController clientController;
+	private static ClientController clientController;
 
 	/**
 	 * @param args main arguments

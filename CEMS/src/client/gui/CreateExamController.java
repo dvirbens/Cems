@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,8 +24,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.Question;
+import models.Exam;
 import models.ExamQuestion;
+import models.Question;
 
 public class CreateExamController implements Initializable {
 
@@ -44,28 +46,28 @@ public class CreateExamController implements Initializable {
 	private TableColumn<Question, JFXButton> tcDetailsPull;
 
 	@FXML
-	private TableView<ExamQuestion> tvSelectedQuestion;
+	private TableView<Question> tvSelectedQuestion;
 
 	@FXML
 	private TableColumn<Question, JFXButton> tcAddPull;
 
 	@FXML
-	private TableColumn<ExamQuestion, String> tcIdSelected;
+	private TableColumn<Question, String> tcIdSelected;
 
 	@FXML
-	private TableColumn<ExamQuestion, String> tcSubjectSelected;
+	private TableColumn<Question, String> tcSubjectSelected;
 
 	@FXML
-	private TableColumn<ExamQuestion, String> tcTeacherSelected;
+	private TableColumn<Question, String> tcTeacherSelected;
 
 	@FXML
-	private TableColumn<ExamQuestion, JFXButton> tcDetailsSelected;
+	private TableColumn<Question, JFXButton> tcDetailsSelected;
 
 	@FXML
 	private JFXButton btnSearch;
 
 	@FXML
-	private JFXTextField cbDuration;
+	private JFXTextField tfDuration;
 
 	@FXML
 	private JFXButton btnContinue;
@@ -78,6 +80,8 @@ public class CreateExamController implements Initializable {
 
 	@FXML
 	private JFXComboBox<String> cbExamSubject;
+
+	private static List<ExamQuestion> examQuestionList;
 
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
@@ -135,12 +139,22 @@ public class CreateExamController implements Initializable {
 
 	@FXML
 	void onClickContinue(ActionEvent event) {
+		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
+		String course = cbExamCourse.getSelectionModel().getSelectedItem();
+		String duration = tfDuration.getText();
+		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty()) {
+			List<ExamQuestion> examQuestion = getExamQuestionList();
+			Exam newExam = new Exam(subject, course, duration, examQuestion);
+			ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(newExam, CREATE_EXAM);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		}
 
 	}
 
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
 		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
+		cbExamCourse.getItems().clear();
 		cbExamCourse.getItems().addAll(Client.getSubjectCollection().getCourseListBySubject(subject));
 
 	}
@@ -151,6 +165,8 @@ public class CreateExamController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		examQuestionList = new ArrayList<>();
+
 		cbQuestionSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 		cbExamSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 
@@ -160,11 +176,19 @@ public class CreateExamController implements Initializable {
 		tcAddPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addButton"));
 		tcDetailsPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
-		tcIdSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));
-		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("subject"));
-		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
-		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
+		tcIdSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
+		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
+		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
+		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
+	}
+
+	public static List<ExamQuestion> getExamQuestionList() {
+		return examQuestionList;
+	}
+
+	public static void setExamQuestionList(List<ExamQuestion> examQuestionList) {
+		CreateExamController.examQuestionList = examQuestionList;
 	}
 
 }

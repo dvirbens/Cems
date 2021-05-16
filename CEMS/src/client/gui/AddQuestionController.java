@@ -1,6 +1,8 @@
 package client.gui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -10,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
@@ -17,10 +20,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import models.Question;
 import models.ExamQuestion;
+import models.ExamQuestion.NoteType;
+import models.Question;
 
-public class AddQuestionController implements EventHandler<WindowEvent> {
+public class AddQuestionController implements EventHandler<WindowEvent>, Initializable {
 
 	@FXML
 	private JFXButton btnAddQuestion;
@@ -38,7 +42,7 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 
 	private static TableView<Question> tvQuestionPull;
 
-	private static TableView<ExamQuestion> tvSelectedQuestion;
+	private static TableView<Question> tvSelectedQuestion;
 
 	private static boolean isWindowOpend;
 
@@ -63,10 +67,17 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 	void onClickAddQuestion(ActionEvent event) {
 		String note = taNotes.getText();
 		String points = tfQuestionPoints.getText();
-		
+		NoteType type = NoteType.None;
+
+		if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Students"))
+			type = NoteType.Students;
+		else
+			type = NoteType.Teachers;
+
 		getTvQuestionPull().getItems().remove(getQuestion());
-		ExamQuestion newQuestion = new ExamQuestion(getQuestion(), "meow", 50);
-		getTvSelectedQuestion().getItems().add(newQuestion);
+		ExamQuestion newQuestion = new ExamQuestion(getQuestion().getQuestionID(), note, Integer.valueOf(points), type);
+		getTvSelectedQuestion().getItems().add(getQuestion());
+		CreateExamController.getExamQuestionList().add(newQuestion);
 		Node node = (Node) event.getSource();
 		Stage stage = (Stage) node.getScene().getWindow();
 		stage.close();
@@ -89,11 +100,11 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 		AddQuestionController.tvQuestionPull = tvQuestionPull;
 	}
 
-	public static TableView<ExamQuestion> getTvSelectedQuestion() {
+	public static TableView<Question> getTvSelectedQuestion() {
 		return tvSelectedQuestion;
 	}
 
-	public static void setTvSelectedQuestion(TableView<ExamQuestion> tvSelectedQuestion) {
+	public static void setTvSelectedQuestion(TableView<Question> tvSelectedQuestion) {
 		AddQuestionController.tvSelectedQuestion = tvSelectedQuestion;
 	}
 
@@ -108,6 +119,12 @@ public class AddQuestionController implements EventHandler<WindowEvent> {
 	@Override
 	public void handle(WindowEvent arg0) {
 		setWindowOpend(false);
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		cbDisplayedFor.getItems().add("Students");
+		cbDisplayedFor.getItems().add("Teachers");
 	}
 
 }

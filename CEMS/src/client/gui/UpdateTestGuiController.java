@@ -74,7 +74,7 @@ public class UpdateTestGuiController implements Initializable {
 			tfSubject.setText(testToEdit.getSubject());
 			tfCourse.setText(testToEdit.getCourse());
 			tfDuration.setText(testToEdit.getDuration());
-			tfPointsPerQuestion.setText(testToEdit.getPointsPerQuestion());
+			//tfPointsPerQuestion.setText(testToEdit.getPointsPerQuestion());
 		}
 
 	}
@@ -94,9 +94,9 @@ public class UpdateTestGuiController implements Initializable {
 		String duration = tfDuration.getText();
 		String ppq = tfPointsPerQuestion.getText();
 
-		Exam test = new Exam(id, subject, course, duration, ppq,null);
-		ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(test, UPDATE_TEST);
-		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
+		//Exam test = new Exam(id, subject, course, duration, ppq,null);
+		//ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(test, UPDATE_TEST);
+		//ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 	}
 
 }

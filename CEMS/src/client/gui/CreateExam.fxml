@@ -29,7 +29,7 @@
 		</TableView>
 		<Label layoutX="37.0" layoutY="45.0" text="Question pull:" />
 		<Label layoutX="37.0" layoutY="384.0" text="Selected question:" />
-		<JFXTextField fx:id="cbDuration" focusColor="#48a832" layoutX="400.0" layoutY="723.0" promptText="Exam Duration" />
+		<JFXTextField fx:id="tfDuration" focusColor="#48a832" layoutX="400.0" layoutY="723.0" promptText="Exam Duration" />
 		<JFXButton fx:id="btnContinue" layoutX="595.0" layoutY="723.0" onAction="#onClickContinue" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
 		<JFXComboBox fx:id="cbQuestionSubject" focusColor="#48a832" layoutX="305.0" layoutY="14.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" />
 		<JFXComboBox fx:id="cbExamCourse" focusColor="#48a832" layoutX="221.0" layoutY="723.0" prefHeight="28.0" prefWidth="145.0" promptText="Exam Course" />

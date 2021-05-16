@@ -15,7 +15,9 @@ import common.SubjectCourseCollection;
 import models.Database;
 import models.Question;
 import models.Exam;
+import models.ExamQuestion;
 import models.User;
+import models.ExamQuestion.NoteType;
 import models.User.ErrorType;
 import models.User.UserType;
 
@@ -87,27 +89,65 @@ public class DatabaseController {
 	 * @param test that's needed to be save on database
 	 * @return boolean value{true = test saved successfully,false = can't save test}
 	 */
-	public boolean saveTest(Exam test) {
+	public boolean saveExam(Exam exam) {
 		PreparedStatement prepareStatement;
+		int examID;
+		String subjectID = Server.getSubjectCollection().getSubjectMap().get(exam.getSubject());
+		String courseID = Server.getSubjectCollection().getCourseMap().get(exam.getCourse());
+		System.out.println(subjectID);
+		System.out.println(courseID);
+
+		String examLastID = getExamLastId(exam.getSubject(), exam.getCourse());
+
+		if (examLastID == null) {
+			examID = 0;
+		} else {
+			examID = Integer.valueOf(examLastID);
+		}
+		String finalExamID = subjectID + courseID + String.format("%02d", ++examID);
+		System.out.println(finalExamID);
 
 		try {
-			prepareStatement = conn.prepareStatement(
-					"INSERT INTO Test (ID,Subject,Course,DurationTime,PointPerQuestion) VALUES (?,?,?,?,?);");
-			prepareStatement.setString(1, test.getId());
-			prepareStatement.setString(2, test.getSubject());
-			prepareStatement.setString(3, test.getCourse());
-			prepareStatement.setString(4, test.getDuration());
-			prepareStatement.setString(5, test.getPointsPerQuestion());
+			prepareStatement = conn.prepareStatement("INSERT INTO Exam VALUES (?,?,?,?);");
+			prepareStatement.setString(1, finalExamID);
+			prepareStatement.setString(2, exam.getSubject());
+			prepareStatement.setString(3, exam.getCourse());
+			prepareStatement.setString(4, exam.getDuration());
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
-				System.out.print("Test Saved Succuessfully");
+				for (ExamQuestion question : exam.getExamQuestions()) {
+					saveExamQuestion(question, finalExamID);
+				}
+				System.out.print("Exam Saved Succuessfully");
 				return true;
 			}
 
 		} catch (SQLException e) {
-			System.err.print("Error occurred, test has not been saved ");
+			System.err.print("Error occurred, Exam has not been saved ");
+			return false;
 		}
-		return false;
+
+		return true;
+	}
+
+	private void saveExamQuestion(ExamQuestion examQuestion, String examID) {
+		PreparedStatement prepareStatement;
+		try {
+			prepareStatement = conn.prepareStatement("INSERT INTO ExamQuestion VALUES (?,?,?,?,?);");
+			prepareStatement.setString(1, examQuestion.getQuestionID());
+			prepareStatement.setString(2, examQuestion.getNote());
+			prepareStatement.setInt(3, examQuestion.getPoints());
+			prepareStatement.setString(4, examID);
+			prepareStatement.setString(5, examQuestion.getNoteType().toString());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
+				System.out.print("Question Saved Succuessfully");
+			}
+
+		} catch (SQLException e) {
+			System.err.print("Error occurred, Question has not been saved ");
+		}
+
 	}
 
 	/**
@@ -169,33 +209,44 @@ public class DatabaseController {
 		return null;
 	}
 
+	private String getExamLastId(String subject, String course) {
+		try {
+			Statement statement = conn.createStatement();
+			String sql = ("SELECT SUBSTRING(examID, 5, 6) examID FROM exam WHERE Subject=" + subject + " AND Course="
+					+ course + " ORDER BY examID DESC LIMIT 1;");
+			ResultSet resultSet = statement.executeQuery(sql);
+			if (resultSet.next()) {
+				String id = resultSet.getString("examID");
+				return id;
+			}
+		} catch (SQLException e) {
+			return null;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Get all of test list from database test table, using appropriate query and
 	 * SQL statement variable.
 	 * 
 	 * @return list of all test on database
+	 * 
+	 *         public List<Exam> getTestList() { List<Exam> tests = new
+	 *         ArrayList<>(); try { Statement statement = conn.createStatement();
+	 *         String query = ("SELECT * FROM Test;"); ResultSet resultSet =
+	 *         statement.executeQuery(query); while (resultSet.next()) { String id =
+	 *         resultSet.getString("Id"); String subject =
+	 *         resultSet.getString("Subject"); String course =
+	 *         resultSet.getString("Course"); String duration =
+	 *         resultSet.getString("Duration"); String pointPerQuestion =
+	 *         resultSet.getString("PointPerQuestion"); Exam test = new Exam(id,
+	 *         subject, course, duration, pointPerQuestion, null); tests.add(test);
+	 *         } } catch (SQLException e) { System.err.println("Test list not
+	 *         found"); }
+	 * 
+	 *         return tests; }
 	 */
-	public List<Exam> getTestList() {
-		List<Exam> tests = new ArrayList<>();
-		try {
-			Statement statement = conn.createStatement();
-			String query = ("SELECT * FROM Test;");
-			ResultSet resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
-				String id = resultSet.getString("Id");
-				String subject = resultSet.getString("Subject");
-				String course = resultSet.getString("Course");
-				String duration = resultSet.getString("Duration");
-				String pointPerQuestion = resultSet.getString("PointPerQuestion");
-				Exam test = new Exam(id, subject, course, duration, pointPerQuestion, null);
-				tests.add(test);
-			}
-		} catch (SQLException e) {
-			System.err.println("Test list not found");
-		}
-
-		return tests;
-	}
 
 	/**
 	 * Get specific test by given id key from database test table, using appropriate
@@ -203,27 +254,21 @@ public class DatabaseController {
 	 * 
 	 * @param givenId specific test id that's store on database
 	 * @return test requested
+	 * 
+	 *         public Exam getTest(String givenId) { try { Statement statement =
+	 *         conn.createStatement(); String sql = ("SELECT * FROM Test WHERE id="
+	 *         + givenId + ";"); ResultSet resultSet = statement.executeQuery(sql);
+	 *         if (resultSet.next()) { String id = resultSet.getString("Id"); String
+	 *         subject = resultSet.getString("Subject"); String course =
+	 *         resultSet.getString("Course"); String duration =
+	 *         resultSet.getString("Duration"); String pointPerQuestion =
+	 *         resultSet.getString("PointPerQuestion"); Exam test = new Exam(id,
+	 *         subject, course, duration, pointPerQuestion, null); return test; } }
+	 *         catch (SQLException e) { System.err.println("Test not found"); }
+	 * 
+	 *         return null; }
+	 * 
 	 */
-	public Exam getTest(String givenId) {
-		try {
-			Statement statement = conn.createStatement();
-			String sql = ("SELECT * FROM Test WHERE id=" + givenId + ";");
-			ResultSet resultSet = statement.executeQuery(sql);
-			if (resultSet.next()) {
-				String id = resultSet.getString("Id");
-				String subject = resultSet.getString("Subject");
-				String course = resultSet.getString("Course");
-				String duration = resultSet.getString("Duration");
-				String pointPerQuestion = resultSet.getString("PointPerQuestion");
-				Exam test = new Exam(id, subject, course, duration, pointPerQuestion, null);
-				return test;
-			}
-		} catch (SQLException e) {
-			System.err.println("Test not found");
-		}
-
-		return null;
-	}
 
 	/**
 	 * Get specific user by given user name and password from database test table,
@@ -268,33 +313,25 @@ public class DatabaseController {
 	 * @param testToEdit new test details to replace on database
 	 * @return boolean value{true = test replaced successfully,false = can't edit
 	 *         test}
+	 * 
+	 *         public boolean updateTest(Exam testToEdit) { PreparedStatement pstmt;
+	 *         try { String id = testToEdit.getId(); String subject =
+	 *         testToEdit.getSubject(); String course = testToEdit.getCourse();
+	 *         String duration = testToEdit.getDuration(); String ppq =
+	 *         testToEdit.getPointsPerQuestion(); String query = "UPDATE test SET
+	 *         Subject=?,Course=?,Duration=?,PointPerQuestion=? WHERE id=?;"; pstmt
+	 *         = conn.prepareStatement(query); pstmt.setString(1, subject);
+	 *         pstmt.setString(2, course); pstmt.setString(3, duration);
+	 *         pstmt.setString(4, ppq); pstmt.setString(5, id);
+	 *         pstmt.executeUpdate(); return true; } catch (SQLException e) {
+	 *         System.err.print("Error occurred, test has not been updated ");
+	 *         return false; } }
 	 */
-	public boolean updateTest(Exam testToEdit) {
-		PreparedStatement pstmt;
-		try {
-			String id = testToEdit.getId();
-			String subject = testToEdit.getSubject();
-			String course = testToEdit.getCourse();
-			String duration = testToEdit.getDuration();
-			String ppq = testToEdit.getPointsPerQuestion();
-			String query = "UPDATE test SET Subject=?,Course=?,Duration=?,PointPerQuestion=? WHERE id=?;";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, subject);
-			pstmt.setString(2, course);
-			pstmt.setString(3, duration);
-			pstmt.setString(4, ppq);
-			pstmt.setString(5, id);
-			pstmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			System.err.print("Error occurred, test has not been updated ");
-			return false;
-		}
-	}
 
 	public SubjectCourseCollection updateSubjectCollection(SubjectCourseCollection subjectCollection) {
 		subjectCollection = new SubjectCourseCollection();
 		Map<String, String> subjectCodeMap = new HashMap<>();
+		Map<String, String> courseCodeMap = new HashMap<>();
 		Map<String, List<String>> courseListMap = new HashMap<>();
 		List<String> subjectList = new ArrayList<>();
 		List<String> courseList = new ArrayList<>();
@@ -304,17 +341,19 @@ public class DatabaseController {
 			ResultSet resultSetSubject = statement.executeQuery(subjectSQL);
 
 			while (resultSetSubject.next()) {
-				String id = resultSetSubject.getString("subjectID");
+				String subjectID = resultSetSubject.getString("subjectID");
 				String subject = resultSetSubject.getString("subjectName");
-				subjectCodeMap.put(subject, id);
+				subjectCodeMap.put(subject, subjectID);
 				subjectList.add(subject);
-				String courseSQL = "SELECT (courseName) FROM Course WHERE subjectID=" + id + ";";
+				String courseSQL = "SELECT * FROM Course WHERE subjectID=" + subjectID + ";";
 				Statement statement2 = conn.createStatement();
 				ResultSet resultSetCourse = statement2.executeQuery(courseSQL);
 				List<String> subjectCourseList = new ArrayList<>();
 
 				while (resultSetCourse.next()) {
+					String courseID = resultSetCourse.getString("courseID");
 					String course = resultSetCourse.getString("courseName");
+					courseCodeMap.put(course, courseID);
 					subjectCourseList.add(course);
 					courseList.add(course);
 				}
@@ -324,6 +363,7 @@ public class DatabaseController {
 			subjectCollection.setCourses(courseList);
 			subjectCollection.setCourseListMap(courseListMap);
 			subjectCollection.setSubjectMap(subjectCodeMap);
+			subjectCollection.setCourseMap(courseCodeMap);
 
 		} catch (SQLException e) {
 			System.err.println("Can't collect list");

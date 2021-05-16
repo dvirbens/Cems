@@ -1,24 +1,24 @@
 package models;
 
-public class ExamQuestion extends Question {
+import java.io.Serializable;
 
-	/**
-	 * 
-	 */
+public class ExamQuestion implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+	private String questionID;
 	private String note;
 	private int points;
+	private NoteType noteType;
 
-	enum NoteType {
-		STUDENTS, TEACHERS
+	public enum NoteType {
+		Students, Teachers, None
 	}
 
-	public ExamQuestion(Question question, String note, int points) {
-		super(question.getQuestionID(), question.getTeacherName(), question.getSubject(), question.getDetails(),
-				question.getAnswer1(), question.getAnswer2(), question.getAnswer3(), question.getAnswer4(),
-				question.getCorrectAnswer(), question.getDetailsButton());
+	public ExamQuestion(String questionID, String note, int points, NoteType noteType) {
+		this.questionID = questionID;
 		this.note = note;
 		this.points = points;
+		this.noteType = noteType;
 	}
 
 	public String getNote() {
@@ -37,13 +37,20 @@ public class ExamQuestion extends Question {
 		this.points = points;
 	}
 
-	@Override
-	public String toString() {
-		return "QuestionInExam [note=" + note + ", points=" + points + ", getQuestionID()=" + getQuestionID()
-				+ ", getTeacherName()=" + getTeacherName() + ", getSubject()=" + getSubject() + ", getDetails()="
-				+ getDetails() + ", getAnswer1()=" + getAnswer1() + ", getAnswer2()=" + getAnswer2() + ", getAnswer3()="
-				+ getAnswer3() + ", getAnswer4()=" + getAnswer4() + ", getCorrectAnswer()=" + getCorrectAnswer()
-				+ ", getDetailsButton()=" + getDetailsButton() + ", getAddButton()=" + getAddButton() + ", toString()="
-				+ super.toString() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+	public String getQuestionID() {
+		return questionID;
 	}
+
+	public void setQuestionID(String questionID) {
+		this.questionID = questionID;
+	}
+
+	public NoteType getNoteType() {
+		return noteType;
+	}
+
+	public void setNoteType(NoteType noteType) {
+		this.noteType = noteType;
+	}
+
 }
