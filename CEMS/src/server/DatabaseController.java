@@ -187,7 +187,7 @@ public class DatabaseController {
 				String course = resultSet.getString("Course");
 				String duration = resultSet.getString("Duration");
 				String pointPerQuestion = resultSet.getString("PointPerQuestion");
-				Exam test = new Exam(id, subject, course, duration, pointPerQuestion);
+				Exam test = new Exam(id, subject, course, duration, pointPerQuestion, null);
 				tests.add(test);
 			}
 		} catch (SQLException e) {
@@ -215,7 +215,7 @@ public class DatabaseController {
 				String course = resultSet.getString("Course");
 				String duration = resultSet.getString("Duration");
 				String pointPerQuestion = resultSet.getString("PointPerQuestion");
-				Exam test = new Exam(id, subject, course, duration, pointPerQuestion);
+				Exam test = new Exam(id, subject, course, duration, pointPerQuestion, null);
 				return test;
 			}
 		} catch (SQLException e) {

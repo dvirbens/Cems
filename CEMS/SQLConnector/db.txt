@@ -4,7 +4,7 @@ CREATE TABLE Exam (
     Course varchar(255),
     Duration varchar(255),
     PointPerQuestion varchar(255),
-    PRIMARY KEY(testID)
+    PRIMARY KEY(examID)
 );
 
 CREATE TABLE User (
@@ -20,7 +20,6 @@ CREATE TABLE User (
 CREATE TABLE Question (
 	questionID varchar(255),
 	Subject varchar(255),
-    Course varchar(255),
     Details varchar(255),
     Answer1 varchar(255),
     Answer2 varchar(255),
@@ -31,12 +30,12 @@ CREATE TABLE Question (
     PRIMARY KEY(questionID)
 );
 
-CREATE TABLE QuestionInExam (
-	questionInExamID varchar(255),
+CREATE TABLE ExamQuestion (
+	ExamQuestionID varchar(255),
 	note varchar(255),
 	point int,
-	questionID varchar(255),
-    FOREIGN KEY(questionID) REFERENCES Exam(examID)
+	examID varchar(255),
+    FOREIGN KEY(examID) REFERENCES Exam(examID)
 );
 
 CREATE TABLE Subject (

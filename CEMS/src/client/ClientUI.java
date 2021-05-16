@@ -3,9 +3,6 @@ package client;
 import java.io.IOException;
 
 import client.gui.MainGuiController;
-import common.ModelWrapper;
-import static common.ModelWrapper.Operation.*;
-import common.SubjectCourseCollection;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

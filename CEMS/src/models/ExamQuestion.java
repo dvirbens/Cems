@@ -1,6 +1,6 @@
 package models;
 
-public class QuestionInExam extends Question {
+public class ExamQuestion extends Question {
 
 	/**
 	 * 
@@ -13,7 +13,7 @@ public class QuestionInExam extends Question {
 		STUDENTS, TEACHERS
 	}
 
-	public QuestionInExam(Question question, String note, int points) {
+	public ExamQuestion(Question question, String note, int points) {
 		super(question.getQuestionID(), question.getTeacherName(), question.getSubject(), question.getDetails(),
 				question.getAnswer1(), question.getAnswer2(), question.getAnswer3(), question.getAnswer4(),
 				question.getCorrectAnswer(), question.getDetailsButton());

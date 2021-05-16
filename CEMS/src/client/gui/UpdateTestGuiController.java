@@ -94,7 +94,7 @@ public class UpdateTestGuiController implements Initializable {
 		String duration = tfDuration.getText();
 		String ppq = tfPointsPerQuestion.getText();
 
-		Exam test = new Exam(id, subject, course, duration, ppq);
+		Exam test = new Exam(id, subject, course, duration, ppq,null);
 		ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(test, UPDATE_TEST);
 		ClientLoginGuiController.getClientController().sendClientUIRequest(modelWrapper);
 	}
