@@ -171,6 +171,16 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+			
+		case GET_EXAMS_LIST:
+			List<Exam> examList = databaseController.getExamList();
+			modelWrapperToClient = new ModelWrapper<>(examList, GET_EXAMS_LIST);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
 
 		case GET_EXAMS_LIST_BY_SUBJECT:
 			String subject = (String) modelWrapperFromClient.getElement();

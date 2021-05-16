@@ -3,6 +3,7 @@ package client.gui;
 import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -15,6 +16,7 @@ import common.ModelWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -66,6 +68,29 @@ public class StartExamController implements Initializable {
 		ObservableList<Exam> exams = FXCollections.observableArrayList();
 		exams.addAll(Client.getExams());
 		tvExamPool.setItems(exams);
+		setExamQuestioListButtons(Client.getExams());
+
+	}
+
+	private void setExamQuestioListButtons(List<Exam> exams) {
+
+		for (Exam exam : exams) {
+			JFXButton questionListButton = new JFXButton();
+			questionListButton.setPrefSize(90, 15);
+			questionListButton
+					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			questionListButton.setText("List");
+			questionListButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					System.out.println(exam.getExamQuestions());
+				}
+
+			});
+
+			exam.setQuestionListButton(questionListButton);
+		}
 	}
 
 	@FXML
@@ -78,11 +103,18 @@ public class StartExamController implements Initializable {
 		ObservableList<Exam> exams = FXCollections.observableArrayList();
 		exams.addAll(Client.getExams());
 		tvExamPool.setItems(exams);
+		setExamQuestioListButtons(Client.getExams());
 
 	}
 
 	@FXML
 	void onClickStartExam(ActionEvent event) {
+		String code = tfCode.getText();
+		if (!code.isEmpty()) {
+			String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
+			System.out.println("execute exam:" + focusedExamID);
+			System.out.println("code: " + code);
+		}
 
 	}
 
@@ -100,6 +132,12 @@ public class StartExamController implements Initializable {
 		tcDuration.setCellValueFactory(new PropertyValueFactory<Exam, String>("duration"));
 		tcQuestionList.setCellValueFactory(new PropertyValueFactory<Exam, JFXButton>("questionListButton"));
 
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(GET_EXAMS_LIST);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		ObservableList<Exam> exams = FXCollections.observableArrayList();
+		exams.addAll(Client.getExams());
+		tvExamPool.setItems(exams);
+		setExamQuestioListButtons(Client.getExams());
 	}
 
 }

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jfoenix.controls.JFXButton;
+
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Question;
@@ -414,6 +416,8 @@ public class DatabaseController {
 				String course = rsQuestionOfCourse.getString("Course");
 				String duration = rsQuestionOfCourse.getString("Duration");
 				Exam exam = new Exam(examID, subject, course, duration);
+				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
+				exam.setExamQuestions(questionsList);
 				examList.add(exam);
 			}
 
@@ -436,11 +440,80 @@ public class DatabaseController {
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
 				Exam exam = new Exam(examID, subject, course, duration);
+				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
+				exam.setExamQuestions(questionsList);
 				examList.add(exam);
 			}
 
 		} catch (SQLException e) {
-			System.err.println("ERROR #22132 - ERROR LOADING EXAM FROM DATABASE");
+			System.err.println("ERROR #223637 - ERROR LOADING EXAM FROM DATABASE");
+		}
+
+		return examList;
+	}
+
+	private List<ExamQuestion> getExamQuestionsList(String examID) {
+
+		List<ExamQuestion> examQuestionsList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String examQuestionQuery = "SELECT * FROM ExamQuestion WHERE examID=\"" + examID + "\";";
+			ResultSet rsexamQuestion = statement.executeQuery(examQuestionQuery);
+			while (rsexamQuestion.next()) {
+				String questionID = rsexamQuestion.getString("questionID");
+				String note = rsexamQuestion.getString("note");
+				int points = rsexamQuestion.getInt("point");
+				NoteType type = NoteType.valueOf(rsexamQuestion.getString("type"));
+
+				Statement statement2 = conn.createStatement();
+				String questionQuery = "SELECT * FROM Question WHERE questionID=\"" + questionID + "\";";
+				ResultSet rsQuestion = statement2.executeQuery(questionQuery);
+				if (rsQuestion.next()) {
+					String subject = rsQuestion.getString("Subject");
+					String details = rsQuestion.getString("Details");
+					String answer1 = rsQuestion.getString("Answer1");
+					String answer2 = rsQuestion.getString("Answer2");
+					String answer3 = rsQuestion.getString("Answer3");
+					String answer4 = rsQuestion.getString("Answer4");
+					int correctAnswer = rsQuestion.getInt("CorrectAnswer");
+					String teacherName = rsQuestion.getString("TeacherName");
+
+					Question question = new Question(questionID, teacherName, subject, details, answer1, answer2,
+							answer3, answer4, correctAnswer);
+					ExamQuestion examQuestion = new ExamQuestion(question, note, points, type);
+					examQuestionsList.add(examQuestion);
+				}
+
+			}
+
+		} catch (SQLException e) {
+			System.err.println("ERROR #22642 - ERROR LOADING QUESTION FROM DATABASE");
+		}
+
+		return examQuestionsList;
+	}
+
+	public List<Exam> getExamList() {
+		List<Exam> examList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String courseQuery = "SELECT * FROM Exam;";
+			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
+			while (rsQuestionOfCourse.next()) {
+				String examID = rsQuestionOfCourse.getString("examID");
+				String subject = rsQuestionOfCourse.getString("Subject");
+				String duration = rsQuestionOfCourse.getString("Duration");
+				String course = rsQuestionOfCourse.getString("Course");
+				Exam exam = new Exam(examID, subject, course, duration);
+				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
+				exam.setExamQuestions(questionsList);
+				examList.add(exam);
+			}
+
+		} catch (SQLException e) {
+			System.err.println("ERROR #223637 - ERROR LOADING EXAM FROM DATABASE");
 		}
 
 		return examList;

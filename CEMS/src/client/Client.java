@@ -129,10 +129,14 @@ public class Client extends AbstractClient {
 				System.out.println("Exam has been saved successfully");
 				break;
 
+			case GET_EXAMS_LIST:
+				exams = (List<Exam>) modelWrapperFromServer.getElements();
+				break;
+
 			case GET_EXAMS_LIST_BY_SUBJECT:
 				exams = (List<Exam>) modelWrapperFromServer.getElements();
 				break;
-				
+
 			case GET_EXAMS_LIST_BY_COURSE:
 				exams = (List<Exam>) modelWrapperFromServer.getElements();
 				break;
