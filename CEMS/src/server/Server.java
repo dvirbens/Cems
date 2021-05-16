@@ -152,9 +152,9 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_QUESTION_LIST:
-			String course = (String) modelWrapperFromClient.getElement();
+			String subjcet = (String) modelWrapperFromClient.getElement();
 
-			List<Question> questionList = databaseController.getQuestionList(course);
+			List<Question> questionList = databaseController.getQuestionList(subjcet);
 			modelWrapperToClient = new ModelWrapper<>(questionList, GET_QUESTION_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -167,6 +167,28 @@ public class Server extends AbstractServer {
 			databaseController.saveExam(newExam);
 			try {
 				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
+		case GET_EXAMS_LIST_BY_SUBJECT:
+			String subject = (String) modelWrapperFromClient.getElement();
+			List<Exam> examListBySubject = databaseController.getExamListBySubject(subject);
+			modelWrapperToClient = new ModelWrapper<>(examListBySubject, GET_EXAMS_LIST_BY_SUBJECT);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case GET_EXAMS_LIST_BY_COURSE:
+			String course = (String) modelWrapperFromClient.getElement();
+			List<Exam> examListByCourse = databaseController.getExamListByCourse(course);
+			modelWrapperToClient = new ModelWrapper<>(examListByCourse, GET_EXAMS_LIST_BY_SUBJECT);
+			try {
+				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -40,7 +40,7 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 
 	private static Question question;
 
-	private static TableView<Question> tvQuestionPull;
+	private static TableView<Question> tvQuestionPool;
 
 	private static TableView<ExamQuestion> tvSelectedQuestion;
 
@@ -74,7 +74,7 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 		else
 			type = NoteType.Teachers;
 
-		getTvQuestionPull().getItems().remove(getQuestion());
+		getTvQuestionPool().getItems().remove(getQuestion());
 		ExamQuestion newQuestion = new ExamQuestion(getQuestion(), note, Integer.valueOf(points), type);
 		JFXButton noteButton = new JFXButton();
 		noteButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -105,12 +105,12 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 		AddQuestionController.question = question;
 	}
 
-	public static TableView<Question> getTvQuestionPull() {
-		return tvQuestionPull;
+	public static TableView<Question> getTvQuestionPool() {
+		return tvQuestionPool;
 	}
 
 	public static void setTvQuestionPull(TableView<Question> tvQuestionPull) {
-		AddQuestionController.tvQuestionPull = tvQuestionPull;
+		AddQuestionController.tvQuestionPool = tvQuestionPull;
 	}
 
 	public static TableView<ExamQuestion> getTvSelectedQuestion() {

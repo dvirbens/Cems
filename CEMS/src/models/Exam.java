@@ -3,6 +3,8 @@ package models;
 import java.io.Serializable;
 import java.util.List;
 
+import com.jfoenix.controls.JFXButton;
+
 /**
  * Class that describe test on project system, store all necessary attributes
  * inside this model.
@@ -18,6 +20,7 @@ public class Exam implements Serializable {
 	private String course;
 	private String duration;
 	private List<ExamQuestion> examQuestions;
+	private JFXButton questionListButton;
 
 	public Exam(String id, String subject, String course, String duration, List<ExamQuestion> examQuestions) {
 		super();
@@ -28,12 +31,31 @@ public class Exam implements Serializable {
 		this.examQuestions = examQuestions;
 	}
 
+	public Exam(String id, String subject, String course, String duration, List<ExamQuestion> examQuestions,
+			JFXButton questionListButton) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.course = course;
+		this.duration = duration;
+		this.examQuestions = examQuestions;
+		this.questionListButton = questionListButton;
+	}
+
 	public Exam(String subject, String course, String duration, List<ExamQuestion> examQuestions) {
 		super();
 		this.subject = subject;
 		this.course = course;
 		this.duration = duration;
 		this.examQuestions = examQuestions;
+	}
+
+	public Exam(String id, String subject, String course, String duration) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.course = course;
+		this.duration = duration;
 	}
 
 	public String getId() {
@@ -74,6 +96,14 @@ public class Exam implements Serializable {
 
 	public void setExamQuestions(List<ExamQuestion> examQuestions) {
 		this.examQuestions = examQuestions;
+	}
+
+	public JFXButton getQuestionListButton() {
+		return questionListButton;
+	}
+
+	public void setQuestionListButton(JFXButton questionListButton) {
+		this.questionListButton = questionListButton;
 	}
 
 }

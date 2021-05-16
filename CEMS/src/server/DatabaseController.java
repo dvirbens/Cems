@@ -402,4 +402,48 @@ public class DatabaseController {
 		return questionList;
 	}
 
+	public List<Exam> getExamListBySubject(String subject) {
+		List<Exam> examList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String courseQuery = "SELECT * FROM Exam WHERE Subject=\"" + subject + "\";";
+			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
+			while (rsQuestionOfCourse.next()) {
+				String examID = rsQuestionOfCourse.getString("examID");
+				String course = rsQuestionOfCourse.getString("Course");
+				String duration = rsQuestionOfCourse.getString("Duration");
+				Exam exam = new Exam(examID, subject, course, duration);
+				examList.add(exam);
+			}
+
+		} catch (SQLException e) {
+			System.err.println("ERROR #22132 - ERROR LOADING EXAM FROM DATABASE");
+		}
+
+		return examList;
+	}
+
+	public List<Exam> getExamListByCourse(String course) {
+		List<Exam> examList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String courseQuery = "SELECT * FROM Exam WHERE Course=\"" + course + "\";";
+			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
+			while (rsQuestionOfCourse.next()) {
+				String examID = rsQuestionOfCourse.getString("examID");
+				String subject = rsQuestionOfCourse.getString("Subject");
+				String duration = rsQuestionOfCourse.getString("Duration");
+				Exam exam = new Exam(examID, subject, course, duration);
+				examList.add(exam);
+			}
+
+		} catch (SQLException e) {
+			System.err.println("ERROR #22132 - ERROR LOADING EXAM FROM DATABASE");
+		}
+
+		return examList;
+	}
+
 }

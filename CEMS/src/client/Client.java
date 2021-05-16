@@ -26,7 +26,7 @@ public class Client extends AbstractClient {
 	/**
 	 * Value the holds the list of test that will be shown on table user interface.
 	 */
-	private static List<Exam> tests;
+	private static List<Exam> exams;
 	/**
 	 * Value the holds the list of question that will be shown on table user
 	 * interface.
@@ -87,10 +87,6 @@ public class Client extends AbstractClient {
 			case LOAD_QUESTION:
 				break;
 
-			case LOAD_TEST_LIST:
-				tests = (List<Exam>) modelWrapperFromServer.getElements();
-				break;
-
 			case LOAD_QUESTION_LIST:
 				break;
 
@@ -131,6 +127,14 @@ public class Client extends AbstractClient {
 
 			case CREATE_EXAM:
 				System.out.println("Exam has been saved successfully");
+				break;
+
+			case GET_EXAMS_LIST_BY_SUBJECT:
+				exams = (List<Exam>) modelWrapperFromServer.getElements();
+				break;
+				
+			case GET_EXAMS_LIST_BY_COURSE:
+				exams = (List<Exam>) modelWrapperFromServer.getElements();
 				break;
 
 			default:
@@ -181,12 +185,12 @@ public class Client extends AbstractClient {
 		System.exit(0);
 	}
 
-	public static List<Exam> getTests() {
-		return tests;
+	public static List<Exam> getExams() {
+		return exams;
 	}
 
-	public static void setTests(List<Exam> tests) {
-		Client.tests = tests;
+	public static void setExams(List<Exam> exams) {
+		Client.exams = exams;
 	}
 
 	public static Exam getEditTest() {

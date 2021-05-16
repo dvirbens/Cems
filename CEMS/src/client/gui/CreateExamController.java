@@ -31,25 +31,25 @@ import models.Question;
 public class CreateExamController implements Initializable {
 
 	@FXML
-	public TableView<Question> tvQuestionPull;
+	public TableView<Question> tvQuestionPool;
 
 	@FXML
-	private TableColumn<Question, String> tcIdPull;
+	private TableColumn<Question, String> tcIdPool;
 
 	@FXML
-	private TableColumn<Question, String> tcSubjectPull;
+	private TableColumn<Question, String> tcSubjectPool;
 
 	@FXML
-	private TableColumn<Question, String> tcTeacherPull;
+	private TableColumn<Question, String> tcTeacherPool;
 
 	@FXML
-	private TableColumn<Question, JFXButton> tcDetailsPull;
+	private TableColumn<Question, JFXButton> tcDetailsPool;
 
 	@FXML
 	private TableView<ExamQuestion> tvSelectedQuestion;
 
 	@FXML
-	private TableColumn<Question, JFXButton> tcAddPull;
+	private TableColumn<Question, JFXButton> tcAddPool;
 
 	@FXML
 	private TableColumn<ExamQuestion, String> tcIdSelected;
@@ -98,7 +98,7 @@ public class CreateExamController implements Initializable {
 
 		ObservableList<Question> questions = FXCollections.observableArrayList();
 		questions.addAll(Client.getQuestions());
-		tvQuestionPull.setItems(questions);
+		tvQuestionPool.setItems(questions);
 
 		for (Question question : Client.getQuestions()) {
 			JFXButton detailsButton = new JFXButton();
@@ -130,7 +130,7 @@ public class CreateExamController implements Initializable {
 					if (!AddQuestionController.isWindowOpend()) {
 						AddQuestionController addQuestionController = new AddQuestionController();
 						AddQuestionController.setQuestion(question);
-						AddQuestionController.setTvQuestionPull(tvQuestionPull);
+						AddQuestionController.setTvQuestionPull(tvQuestionPool);
 						AddQuestionController.setTvSelectedQuestion(tvSelectedQuestion);
 						addQuestionController.start();
 					}
@@ -176,11 +176,11 @@ public class CreateExamController implements Initializable {
 		cbQuestionSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 		cbExamSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 
-		tcIdPull.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
-		tcSubjectPull.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
-		tcTeacherPull.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
-		tcAddPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addButton"));
-		tcDetailsPull.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
+		tcIdPool.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
+		tcSubjectPool.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
+		tcTeacherPool.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
+		tcAddPool.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addButton"));
+		tcDetailsPool.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
 		tcIdSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));
 		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("subject"));
@@ -188,7 +188,7 @@ public class CreateExamController implements Initializable {
 		tcPointsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
 		tcNoteSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("noteDetails"));
 		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
-		
+
 	}
 
 	public static List<ExamQuestion> getExamQuestionList() {

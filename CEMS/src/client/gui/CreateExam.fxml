@@ -10,13 +10,13 @@
 
 <Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.CreateExamController">
 	<children>
-		<TableView fx:id="tvQuestionPull" layoutX="27.0" layoutY="74.0" prefHeight="300.0" prefWidth="700.0">
+		<TableView fx:id="tvQuestionPool" layoutX="27.0" layoutY="74.0" prefHeight="300.0" prefWidth="700.0">
 			<columns>
-				<TableColumn fx:id="tcIdPull" prefWidth="109.0" style="-fx-alignment: center;" text="ID" />
-				<TableColumn fx:id="tcSubjectPull" prefWidth="180.0" style="-fx-alignment: center;" text="Subject" />
-				<TableColumn fx:id="tcTeacherPull" prefWidth="174.0" style="-fx-alignment: center;" text="Teacher" />
-				<TableColumn fx:id="tcAddPull" prefWidth="113.0" style="-fx-alignment: center;" text="Add" />
-				<TableColumn fx:id="tcDetailsPull" prefWidth="120.0" style="-fx-alignment: center;" text="Details" />
+				<TableColumn fx:id="tcIdPool" prefWidth="109.0" style="-fx-alignment: center;" text="ID" />
+				<TableColumn fx:id="tcSubjectPool" prefWidth="180.0" style="-fx-alignment: center;" text="Subject" />
+				<TableColumn fx:id="tcTeacherPool" prefWidth="174.0" style="-fx-alignment: center;" text="Teacher" />
+				<TableColumn fx:id="tcAddPool" prefWidth="113.0" style="-fx-alignment: center;" text="Add" />
+				<TableColumn fx:id="tcDetailsPool" prefWidth="120.0" style="-fx-alignment: center;" text="Details" />
 			</columns>
 		</TableView>
 		<TableView fx:id="tvSelectedQuestion" layoutX="27.0" layoutY="411.0" prefHeight="300.0" prefWidth="700.0">
@@ -29,7 +29,7 @@
             <TableColumn fx:id="tcNoteSelected" prefWidth="110.0" style="-fx-alignment: center;" text="Note" />
 			</columns>
 		</TableView>
-		<Label layoutX="37.0" layoutY="45.0" text="Question pull:" />
+		<Label layoutX="37.0" layoutY="45.0" text="Question pool:" />
 		<Label layoutX="37.0" layoutY="384.0" text="Selected question:" />
 		<JFXTextField fx:id="tfDuration" focusColor="#48a832" layoutX="400.0" layoutY="723.0" promptText="Exam Duration" style="-fx-alignment: center;" />
 		<JFXButton fx:id="btnContinue" layoutX="595.0" layoutY="723.0" onAction="#onClickContinue" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
