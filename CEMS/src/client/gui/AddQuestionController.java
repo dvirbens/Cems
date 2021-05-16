@@ -42,7 +42,7 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 
 	private static TableView<Question> tvQuestionPull;
 
-	private static TableView<Question> tvSelectedQuestion;
+	private static TableView<ExamQuestion> tvSelectedQuestion;
 
 	private static boolean isWindowOpend;
 
@@ -75,8 +75,21 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 			type = NoteType.Teachers;
 
 		getTvQuestionPull().getItems().remove(getQuestion());
-		ExamQuestion newQuestion = new ExamQuestion(getQuestion().getQuestionID(), note, Integer.valueOf(points), type);
-		getTvSelectedQuestion().getItems().add(getQuestion());
+		ExamQuestion newQuestion = new ExamQuestion(getQuestion(), note, Integer.valueOf(points), type);
+		JFXButton noteButton = new JFXButton();
+		noteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				System.out.println(newQuestion.getNote());
+			}
+
+		});
+		noteButton.setPrefSize(90, 15);
+		noteButton.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+		noteButton.setText("Note");
+		newQuestion.setNoteDetails(noteButton);
+		getTvSelectedQuestion().getItems().add(newQuestion);
 		CreateExamController.getExamQuestionList().add(newQuestion);
 		Node node = (Node) event.getSource();
 		Stage stage = (Stage) node.getScene().getWindow();
@@ -100,11 +113,11 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 		AddQuestionController.tvQuestionPull = tvQuestionPull;
 	}
 
-	public static TableView<Question> getTvSelectedQuestion() {
+	public static TableView<ExamQuestion> getTvSelectedQuestion() {
 		return tvSelectedQuestion;
 	}
 
-	public static void setTvSelectedQuestion(TableView<Question> tvSelectedQuestion) {
+	public static void setTvSelectedQuestion(TableView<ExamQuestion> tvSelectedQuestion) {
 		AddQuestionController.tvSelectedQuestion = tvSelectedQuestion;
 	}
 

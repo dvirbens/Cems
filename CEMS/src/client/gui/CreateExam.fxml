@@ -12,27 +12,29 @@
 	<children>
 		<TableView fx:id="tvQuestionPull" layoutX="27.0" layoutY="74.0" prefHeight="300.0" prefWidth="700.0">
 			<columns>
-				<TableColumn fx:id="tcIdPull" prefWidth="137.0" text="ID" />
-				<TableColumn fx:id="tcSubjectPull" prefWidth="170.0" text="Subject" />
-				<TableColumn fx:id="tcTeacherPull" prefWidth="175.0" text="Teacher" />
-				<TableColumn fx:id="tcAddPull" prefWidth="112.0" text="Add" />
-				<TableColumn fx:id="tcDetailsPull" prefWidth="103.0" text="Details" />
+				<TableColumn fx:id="tcIdPull" prefWidth="109.0" style="-fx-alignment: center;" text="ID" />
+				<TableColumn fx:id="tcSubjectPull" prefWidth="180.0" style="-fx-alignment: center;" text="Subject" />
+				<TableColumn fx:id="tcTeacherPull" prefWidth="174.0" style="-fx-alignment: center;" text="Teacher" />
+				<TableColumn fx:id="tcAddPull" prefWidth="113.0" style="-fx-alignment: center;" text="Add" />
+				<TableColumn fx:id="tcDetailsPull" prefWidth="120.0" style="-fx-alignment: center;" text="Details" />
 			</columns>
 		</TableView>
 		<TableView fx:id="tvSelectedQuestion" layoutX="27.0" layoutY="411.0" prefHeight="300.0" prefWidth="700.0">
 			<columns>
-				<TableColumn fx:id="tcIdSelected" prefWidth="147.0" text="ID" />
-				<TableColumn fx:id="tcSubjectSelected" prefWidth="162.0" text="Subject" />
-				<TableColumn fx:id="tcTeacherSelected" prefWidth="186.0" text="Teacher" />
-				<TableColumn fx:id="tcDetailsSelected" prefWidth="204.0" text="Details" />
+				<TableColumn fx:id="tcIdSelected" prefWidth="94.0" style="-fx-alignment: center;" text="ID" />
+				<TableColumn fx:id="tcSubjectSelected" prefWidth="136.0" style="-fx-alignment: center;" text="Subject" />
+				<TableColumn fx:id="tcTeacherSelected" prefWidth="138.0" style="-fx-alignment: center;" text="Teacher" />
+            <TableColumn fx:id="tcPointsSelected" prefWidth="65.0" style="-fx-alignment: center;" text="Points" />
+				<TableColumn fx:id="tcDetailsSelected" prefWidth="154.0" style="-fx-alignment: center;" text="Details" />
+            <TableColumn fx:id="tcNoteSelected" prefWidth="110.0" style="-fx-alignment: center;" text="Note" />
 			</columns>
 		</TableView>
 		<Label layoutX="37.0" layoutY="45.0" text="Question pull:" />
 		<Label layoutX="37.0" layoutY="384.0" text="Selected question:" />
-		<JFXTextField fx:id="tfDuration" focusColor="#48a832" layoutX="400.0" layoutY="723.0" promptText="Exam Duration" />
+		<JFXTextField fx:id="tfDuration" focusColor="#48a832" layoutX="400.0" layoutY="723.0" promptText="Exam Duration" style="-fx-alignment: center;" />
 		<JFXButton fx:id="btnContinue" layoutX="595.0" layoutY="723.0" onAction="#onClickContinue" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
-		<JFXComboBox fx:id="cbQuestionSubject" focusColor="#48a832" layoutX="305.0" layoutY="14.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" />
-		<JFXComboBox fx:id="cbExamCourse" focusColor="#48a832" layoutX="221.0" layoutY="723.0" prefHeight="28.0" prefWidth="145.0" promptText="Exam Course" />
-		<JFXComboBox fx:id="cbExamSubject" focusColor="#48a832" layoutX="37.0" layoutY="723.0" onAction="#onClickExamSubject" prefHeight="28.0" prefWidth="145.0" promptText="Exam Subject" />
+		<JFXComboBox fx:id="cbQuestionSubject" focusColor="#48a832" layoutX="305.0" layoutY="14.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" style="-fx-alignment: center;" />
+		<JFXComboBox fx:id="cbExamCourse" focusColor="#48a832" layoutX="221.0" layoutY="723.0" prefHeight="28.0" prefWidth="145.0" promptText="Exam Course" style="-fx-alignment: center;" />
+		<JFXComboBox fx:id="cbExamSubject" focusColor="#48a832" layoutX="37.0" layoutY="723.0" onAction="#onClickExamSubject" prefHeight="28.0" prefWidth="145.0" promptText="Exam Subject" style="-fx-alignment: center;" />
 	</children>
 </Pane>
