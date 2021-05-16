@@ -84,7 +84,7 @@ public class StartExamController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					System.out.println(exam.getExamQuestions());
+					MainGuiController.getMenuHandler().setQuestionListScreen(exam.getExamQuestions());
 				}
 
 			});

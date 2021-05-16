@@ -1,10 +1,12 @@
 package client.gui;
 
 import java.io.IOException;
+import java.util.List;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import models.ExamQuestion;
 
 public class MenuHandler {
 
@@ -132,6 +134,19 @@ public class MenuHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setQuestionListScreen(List<ExamQuestion> examQuestions) {
+		QuestionListController questionListController = new QuestionListController(examQuestions);
+		questionListController.start();
+	}
+
+	public BorderPane getMainFrame() {
+		return mainFrame;
+	}
+
+	public void setMainFrame(BorderPane mainFrame) {
+		this.mainFrame = mainFrame;
 	}
 
 }
