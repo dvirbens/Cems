@@ -149,12 +149,22 @@ public class CreateExamController implements Initializable {
 		String course = cbExamCourse.getSelectionModel().getSelectedItem();
 		String duration = tfDuration.getText();
 		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty()) {
+			deletExamQuestionListButtons();
 			List<ExamQuestion> examQuestion = getExamQuestionList();
 			Exam newExam = new Exam(subject, course, duration, examQuestion);
 			ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(newExam, CREATE_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		}
 
+	}
+
+	private void deletExamQuestionListButtons() {
+		List<ExamQuestion> examQuestions = getExamQuestionList();
+		for (ExamQuestion question : examQuestions) {
+			question.setAddButton(null);
+			question.setDetailsButton(null);
+			question.setNoteDetails(null);
+		}
 	}
 
 	@FXML
