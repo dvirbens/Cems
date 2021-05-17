@@ -20,6 +20,7 @@ import models.Exam;
 import models.ExamQuestion;
 import models.User;
 import models.ExamQuestion.NoteType;
+import models.ExecExam;
 import models.User.ErrorType;
 import models.User.UserType;
 
@@ -514,6 +515,35 @@ public class DatabaseController {
 
 		} catch (SQLException e) {
 			System.err.println("ERROR #223637 - ERROR LOADING EXAM FROM DATABASE");
+		}
+
+		return examList;
+	}
+	
+	public List<ExecExam> getExecutedExamListByID(String studentID) {
+		List<ExecExam> examList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String courseQuery = "SELECT * FROM Grades WHERE studentID=\"" + studentID + "\";";
+			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
+			while (rsQuestionOfCourse.next()) {
+				String examID = rsQuestionOfCourse.getString("ExamID");
+				String subject = rsQuestionOfCourse.getString("Subject");
+				String course = rsQuestionOfCourse.getString("Course");
+				String execDate = rsQuestionOfCourse.getString("ExecDate");
+				String testType = rsQuestionOfCourse.getString("TestType");
+				Integer grade = rsQuestionOfCourse.getInt("Grade");
+				
+				
+				ExecExam exam = new ExecExam(examID, subject, course, execDate, testType, grade);
+				System.out.println(examID + " " + subject);
+				//exam.setGetCopy(blob);
+				examList.add(exam);
+			}
+
+		} catch (SQLException e) {
+			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
 		}
 
 		return examList;
