@@ -2,8 +2,10 @@ package client.gui;
 
 import static common.ModelWrapper.Operation.GET_USER;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -14,11 +16,12 @@ import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import models.User;
 import models.User.ErrorType;
 
-public class LoginMenuController {
+public class LoginMenuController implements Initializable {
 
 	@FXML
 	private JFXTextField tfUserName;
@@ -81,6 +84,12 @@ public class LoginMenuController {
 				lWrongInput.setVisible(true);
 			}
 		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		tfUserName.setText("204459093");	
+		tfPassword.setText("1234");
 	}
 
 }

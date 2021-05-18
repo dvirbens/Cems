@@ -1,19 +1,27 @@
 package client.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ExamManagementController {
+public class ExamManagementController implements Initializable {
 
 	@FXML
-	private Label ltime;
+	private Label lTime;
+
+	@FXML
+	private Text tTime;
 
 	public void start() {
 		try {
@@ -27,8 +35,6 @@ public class ExamManagementController {
 			e.printStackTrace();
 		}
 
-		Stopwatch sw = new Stopwatch(3);
-		sw.startTime();
 	}
 
 	public class Stopwatch {
@@ -48,7 +54,7 @@ public class ExamManagementController {
 			timer.scheduleAtFixedRate(new TimerTask() {
 
 				public void run() {
-					System.out.printf("%02d:%02d\n", min, sec);
+					System.out.println(String.format("%02d:%02d\n", min, sec));
 					if (min == 0 && sec == 0) {
 						timer.cancel();
 					} else if (sec == 0) {
@@ -57,10 +63,14 @@ public class ExamManagementController {
 					} else {
 						sec--;
 					}
-
 				}
 			}, delay, period);
 		}
+
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 
 	}
 
