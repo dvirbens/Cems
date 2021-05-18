@@ -1,37 +1,62 @@
 package client.gui;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
 public class ExamManagementController {
-	
-	/*
-	 * 
-	 * public class Stopwatch {
-static int interval;
-static Timer timer;
 
-public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    System.out.print("Input seconds => : ");
-    String secs = sc.nextLine();
-    int delay = 1000;
-    int period = 1000;
-    timer = new Timer();
-    interval = Integer.parseInt(secs);
-    System.out.println(secs);
-    timer.scheduleAtFixedRate(new TimerTask() {
+	@FXML
+	private Label ltime;
 
-        public void run() {
-            System.out.println(setInterval());
+	public void start() {
+		try {
+			Pane examManagment = (Pane) FXMLLoader.load(getClass().getResource("ExamManagement.fxml"));
+			Scene scene = new Scene(examManagment, 500, 400);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Exam Management");
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Stopwatch sw = new Stopwatch(10);
+		sw.startTime();
+	}
 
-        }
-    }, delay, period);
-}
+	public class Stopwatch {
+		private int interval;
+		private Timer timer;
 
-private static final int setInterval() {
-    if (interval == 1)
-        timer.cancel();
-    return --interval;
-}
-}
-*/
+		public Stopwatch(int interval) {
+			this.interval = interval;
+		}
+
+		public void startTime() {
+			int delay = 1000;
+			int period = 1000;
+			timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+
+				public void run() {
+					System.out.println(setInterval());
+
+				}
+			}, delay, period);
+		}
+
+		private final int setInterval() {
+			if (interval == 1)
+				timer.cancel();
+			return --interval;
+		}
+	}
 
 }

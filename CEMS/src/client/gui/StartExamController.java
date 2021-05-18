@@ -120,18 +120,9 @@ public class StartExamController implements Initializable {
 			String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
 			System.out.println("execute exam:" + focusedExamID);
 			System.out.println("code: " + code);
-			try {
 			
-				Pane examManagment = (Pane) FXMLLoader.load(getClass().getResource("ExamManagement.fxml"));
-				Scene scene = new Scene(examManagment, 500, 400);
-				Stage stage=new Stage();
-				stage.setScene(scene);
-				stage.setTitle("Exam Management");
-				stage.show();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			ExamManagementController examManagementController = new ExamManagementController();
+			examManagementController.start();
 		}
 
 	}
