@@ -133,13 +133,13 @@ public class Server extends AbstractServer {
 			break;
 
 		case EXAM_EXECUTE:
-			List<String> studentInfo = (List<String>) modelWrapperFromClient.getElements();
-			 List<ExecExam> testArray = databaseController.getExecutedExamListByID(studentInfo.get(0)); 
-			 modelWrapperToClient = new ModelWrapper<ExecExam>(testArray, EXAM_EXECUTE); 
-			 try {
-				 client.sendToClient(modelWrapperToClient); } 
-			 catch (IOException e) {
-					 e.printStackTrace(); 
+			String studentID = (String) modelWrapperFromClient.getElement();
+			List<ExecExam> testArray = databaseController.getExecutedExamListByID(studentID);
+			modelWrapperToClient = new ModelWrapper<ExecExam>(testArray, EXAM_EXECUTE);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			break;
 
@@ -180,7 +180,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GET_EXAMS_LIST:
 			List<Exam> examList = databaseController.getExamList();
 			modelWrapperToClient = new ModelWrapper<>(examList, GET_EXAMS_LIST);
@@ -201,7 +201,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GET_EXAMS_LIST_BY_COURSE:
 			String course = (String) modelWrapperFromClient.getElement();
 			List<Exam> examListByCourse = databaseController.getExamListByCourse(course);

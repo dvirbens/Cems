@@ -111,7 +111,6 @@ public class Client extends AbstractClient {
 
 			case EXAM_EXECUTE:
 				execExams = (List<ExecExam>) modelWrapperFromServer.getElements();
-				System.out.println("TEST " + execExams.get(0) + " "+ execExams.get(1));
 				break;
 
 			case EXAM_EXTENSION_REQUEST:

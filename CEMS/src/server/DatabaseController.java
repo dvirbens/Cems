@@ -538,7 +538,6 @@ public class DatabaseController {
 				
 				
 				ExecExam exam = new ExecExam(examID, subject, course, execDate, testType, grade);
-				System.out.println(examID + " " + subject);
 				//exam.setGetCopy(blob);
 				examList.add(exam);
 			}

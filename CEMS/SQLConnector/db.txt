@@ -53,6 +53,20 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
+CREATE TABLE Grades (
+	studentID varchar(255),
+    examID varchar(255),
+	Subject varchar(255),
+    Course varchar(255),
+    ExecDate DATE,
+    TestType varchar(255),
+    Grade varchar(3),
+    Copy blob
+);
+
+INSERT INTO grades VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
+
+
 
 INSERT INTO  Subject VALUES ("01","Social Studies");
 INSERT INTO  Subject VALUES ("02","Mathematics");
@@ -90,5 +104,6 @@ INSERT INTO  test VALUES ("040101","Science","Biology ",90,10);
 INSERT INTO  test VALUES ("040201","Science","Chemistry  ",90,10);
 INSERT INTO  test VALUES ("040301","Science","Physics  ",45,50);
 INSERT INTO  test VALUES ("040401","Science","Computre Science",90,10);
+
 
 

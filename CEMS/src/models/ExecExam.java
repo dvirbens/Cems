@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 
 public class ExecExam implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	private String id;
 	private String subject;
 	private String course;
@@ -84,6 +85,12 @@ public class ExecExam implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ExecExam [id=" + id + ", subject=" + subject + ", course=" + course + ", execDate=" + execDate
+				+ ", testType=" + testType + ", grade=" + grade + ", getCopy=" + getCopy + "]";
+	}
+
 	
 }
