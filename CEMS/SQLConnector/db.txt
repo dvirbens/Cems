@@ -3,7 +3,6 @@ CREATE TABLE Exam (
     Subject varchar(255),
     Course varchar(255),
     Duration varchar(255),
-    PointPerQuestion varchar(255),
     PRIMARY KEY(examID)
 );
 
@@ -31,11 +30,13 @@ CREATE TABLE Question (
 );
 
 CREATE TABLE ExamQuestion (
-	ExamQuestionID varchar(255),
-	note varchar(255),
-	point int,
-	examID varchar(255),
-    FOREIGN KEY(examID) REFERENCES Exam(examID)
+		questionID varchar(255),
+		note varchar(255),
+		point int,
+		examID varchar(255),
+		type ENUM('Students','Teachers','None'),
+		FOREIGN KEY(examID) REFERENCES Exam(examID),
+        PRIMARY KEY(questionID,examID)
 );
 
 CREATE TABLE Subject (
@@ -48,7 +49,8 @@ CREATE TABLE Course (
 	courseID varchar(255),
 	courseName varchar(255),
     subjectID varchar(255),
-    FOREIGN KEY(subjectID) REFERENCES Subject(subjectID)
+    FOREIGN KEY(subjectID) REFERENCES Subject(subjectID),
+    PRIMARY KEY(courseID,subjectID)
 );
 
 
@@ -59,9 +61,9 @@ INSERT INTO  Subject VALUES ("04","Science");
 
 INSERT INTO  Course VALUES ("01","Algebra","02");
 INSERT INTO  Course VALUES ("02","Algebra II","02");
-INSERT INTO  Course VALUES ("01","Literature","03");
-INSERT INTO  Course VALUES ("01","Chemistry","04");
-INSERT INTO  Course VALUES ("01","Literature5","01");
+INSERT INTO  Course VALUES ("03","Literature","03");
+INSERT INTO  Course VALUES ("04","Chemistry","04");
+INSERT INTO  Course VALUES ("05","Literature5","01");
 
 INSERT INTO  User VALUES ("204459093","1234","Arik","Zagdon","Arikz15@gmail.com",'Teacher');
 INSERT INTO  User VALUES ("308315035","1234","Dvir","Ben-simon","Dvirbens@gmail.com",'Student');
@@ -89,16 +91,4 @@ INSERT INTO  test VALUES ("040201","Science","Chemistry  ",90,10);
 INSERT INTO  test VALUES ("040301","Science","Physics  ",45,50);
 INSERT INTO  test VALUES ("040401","Science","Computre Science",90,10);
 
-CREATE TABLE Grades (
-	studentID varchar(255),
-    examID varchar(255),
-	Subject varchar(255),
-    Course varchar(255),
-    ExecDate DATE,
-    TestType varchar(255),
-    Grade varchar(3),
-    Copy blob
-);
-
-INSERT INTO grades VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
 
