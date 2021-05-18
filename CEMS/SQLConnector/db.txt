@@ -53,7 +53,7 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
-CREATE TABLE Grades (
+CREATE TABLE ExecutedExam (
 	studentID varchar(255),
     examID varchar(255),
 	Subject varchar(255),

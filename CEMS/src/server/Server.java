@@ -11,7 +11,7 @@ import static common.ModelWrapper.Operation.*;
 import models.Database;
 import models.Question;
 import models.Exam;
-import models.ExecExam;
+import models.ExecutedExam;
 import models.User;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -134,8 +134,8 @@ public class Server extends AbstractServer {
 
 		case EXAM_EXECUTE:
 			String studentID = (String) modelWrapperFromClient.getElement();
-			List<ExecExam> testArray = databaseController.getExecutedExamListByID(studentID);
-			modelWrapperToClient = new ModelWrapper<ExecExam>(testArray, EXAM_EXECUTE);
+			List<ExecutedExam> testArray = databaseController.getExecutedExamListByID(studentID);
+			modelWrapperToClient = new ModelWrapper<ExecutedExam>(testArray, EXAM_EXECUTE);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {

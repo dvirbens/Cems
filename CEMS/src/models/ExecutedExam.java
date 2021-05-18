@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
-public class ExecExam implements Serializable {
+public class ExecutedExam implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String id;
@@ -16,7 +16,7 @@ public class ExecExam implements Serializable {
 	private int grade;
 	private JFXButton getCopy;
 	
-	public ExecExam(String id, String subject, String course, String execDate, String testType, int grade) {
+	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
 		super();
 		this.id = id;
 		this.subject = subject;

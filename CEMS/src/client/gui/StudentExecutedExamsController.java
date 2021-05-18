@@ -23,7 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
-import models.ExecExam;
+import models.ExecutedExam;
 
 public class StudentExecutedExamsController implements Initializable {
 
@@ -34,56 +34,56 @@ public class StudentExecutedExamsController implements Initializable {
 	private URL location;
 
 	@FXML
-	private TableView<ExecExam> tvExExams;
+	private TableView<ExecutedExam> tvExExams;
 
 	@FXML
-	private TableColumn<ExecExam, String> tcStudentID;
+	private TableColumn<ExecutedExam, String> tcStudentID;
 
 	@FXML
-	private TableColumn<ExecExam, String> tcExamID;
+	private TableColumn<ExecutedExam, String> tcExamID;
 
 	@FXML
-	private TableColumn<ExecExam, String> tcSubject;
+	private TableColumn<ExecutedExam, String> tcSubject;
 
 	@FXML
-	private TableColumn<ExecExam, String> tcCourse;
+	private TableColumn<ExecutedExam, String> tcCourse;
 
 	@FXML
-	private TableColumn<ExecExam, String> tcExecDate;
+	private TableColumn<ExecutedExam, String> tcExecDate;
 
 	@FXML
-	private TableColumn<ExecExam, String> tcTestType;
+	private TableColumn<ExecutedExam, String> tcTestType;
 
 	@FXML
-	private TableColumn<ExecExam, Integer> tcGrade;
+	private TableColumn<ExecutedExam, Integer> tcGrade;
 
 	@FXML
-	private TableColumn<ExecExam, JFXButton> tcGetTest;
+	private TableColumn<ExecutedExam, JFXButton> tcGetTest;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		tcExamID.setCellValueFactory(new PropertyValueFactory<ExecExam, String>("id"));
-		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecExam, String>("subject"));
-		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecExam, String>("course"));
-		tcExecDate.setCellValueFactory(new PropertyValueFactory<ExecExam, String>("execDate"));
-		tcTestType.setCellValueFactory(new PropertyValueFactory<ExecExam, String>("testType"));
-		tcGrade.setCellValueFactory(new PropertyValueFactory<ExecExam, Integer>("grade"));
-		tcGetTest.setCellValueFactory(new PropertyValueFactory<ExecExam, JFXButton>("getCopy"));
+		tcExamID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
+		tcExecDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
+		tcTestType.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("testType"));
+		tcGrade.setCellValueFactory(new PropertyValueFactory<ExecutedExam, Integer>("grade"));
+		tcGetTest.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("getCopy"));
 
 		String userID = Client.getUser().getUserID();
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-		ObservableList<ExecExam> exams = FXCollections.observableArrayList();
+		ObservableList<ExecutedExam> exams = FXCollections.observableArrayList();
 		exams.addAll(Client.getExecExams());
 		tvExExams.setItems(exams);
 
 		setExamGetCopyButtons(Client.getExecExams());
 	}
 	
-	private void setExamGetCopyButtons(List<ExecExam> exams) {
+	private void setExamGetCopyButtons(List<ExecutedExam> exams) {
 
-		for (ExecExam exam : exams) {
+		for (ExecutedExam exam : exams) {
 			JFXButton getCoptyButton = new JFXButton();
 			getCoptyButton.setPrefSize(90, 15);
 			getCoptyButton

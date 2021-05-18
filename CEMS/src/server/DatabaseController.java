@@ -20,7 +20,7 @@ import models.Exam;
 import models.ExamQuestion;
 import models.User;
 import models.ExamQuestion.NoteType;
-import models.ExecExam;
+import models.ExecutedExam;
 import models.User.ErrorType;
 import models.User.UserType;
 
@@ -521,12 +521,12 @@ public class DatabaseController {
 		return examList;
 	}
 	
-	public List<ExecExam> getExecutedExamListByID(String studentID) {
-		List<ExecExam> examList = new ArrayList<>();
+	public List<ExecutedExam> getExecutedExamListByID(String studentID) {
+		List<ExecutedExam> examList = new ArrayList<>();
 
 		try {
 			Statement statement = conn.createStatement();
-			String courseQuery = "SELECT * FROM Grades WHERE studentID=\"" + studentID + "\";";
+			String courseQuery = "SELECT * FROM ExecutedExam WHERE studentID=\"" + studentID + "\";";
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String examID = rsQuestionOfCourse.getString("ExamID");
@@ -537,7 +537,7 @@ public class DatabaseController {
 				Integer grade = rsQuestionOfCourse.getInt("Grade");
 				
 				
-				ExecExam exam = new ExecExam(examID, subject, course, execDate, testType, grade);
+				ExecutedExam exam = new ExecutedExam(examID, subject, course, execDate, testType, grade);
 				//exam.setGetCopy(blob);
 				examList.add(exam);
 			}

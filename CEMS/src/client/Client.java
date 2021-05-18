@@ -8,7 +8,7 @@ import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Question;
 import models.Exam;
-import models.ExecExam;
+import models.ExecutedExam;
 import models.User;
 import ocsf.client.AbstractClient;
 
@@ -31,7 +31,7 @@ public class Client extends AbstractClient {
 	/*
 	 * Value that hold the list of the executed tests of the user.
 	 */
-	private static List<ExecExam> execExams;
+	private static List<ExecutedExam> execExams;
 
 	/**
 	 * Value the holds the list of question that will be shown on table user
@@ -110,7 +110,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case EXAM_EXECUTE:
-				execExams = (List<ExecExam>) modelWrapperFromServer.getElements();
+				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				break;
 
 			case EXAM_EXTENSION_REQUEST:
@@ -244,11 +244,11 @@ public class Client extends AbstractClient {
 		Client.questions = questions;
 	}
 
-	public static List<ExecExam> getExecExams() {
+	public static List<ExecutedExam> getExecExams() {
 		return execExams;
 	}
 
-	public static void setExecExams(List<ExecExam> execExams) {
+	public static void setExecExams(List<ExecutedExam> execExams) {
 		Client.execExams = execExams;
 	}
 
