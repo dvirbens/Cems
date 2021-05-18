@@ -26,37 +26,42 @@ public class ExamManagementController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		Stopwatch sw = new Stopwatch(10);
+
+		Stopwatch sw = new Stopwatch(3);
 		sw.startTime();
 	}
 
 	public class Stopwatch {
-		private int interval;
+		private int min;
+		private int sec;
 		private Timer timer;
 
-		public Stopwatch(int interval) {
-			this.interval = interval;
+		public Stopwatch(int min) {
+			this.min = min;
 		}
 
 		public void startTime() {
+
 			int delay = 1000;
 			int period = 1000;
 			timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
 
 				public void run() {
-					System.out.println(setInterval());
+					System.out.printf("%02d:%02d\n", min, sec);
+					if (min == 0 && sec == 0) {
+						timer.cancel();
+					} else if (sec == 0) {
+						min--;
+						sec = 59;
+					} else {
+						sec--;
+					}
 
 				}
 			}, delay, period);
 		}
 
-		private final int setInterval() {
-			if (interval == 1)
-				timer.cancel();
-			return --interval;
-		}
 	}
 
 }
