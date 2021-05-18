@@ -119,6 +119,7 @@ public class DatabaseController {
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				for (ExamQuestion question : exam.getExamQuestions()) {
+					System.out.println(question);
 					saveExamQuestion(question, finalExamID);
 				}
 				System.out.print("Exam Saved Succuessfully");
