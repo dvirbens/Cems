@@ -25,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExecutedExam;
 
-public class StudentExecutedExamsController implements Initializable {
+public class ExecutedExamsController implements Initializable {
 
 	@FXML
 	private ResourceBundle resources;
