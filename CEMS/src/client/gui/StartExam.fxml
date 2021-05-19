@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -23,8 +22,7 @@
             <TableColumn fx:id="tcQuestionList" prefWidth="181.0" style="-fx-alignment: center;" text="Question List" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnStartExam" layoutX="494.0" layoutY="710.0" onAction="#onClickStartExam" prefHeight="41.0" prefWidth="97.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Start Exam" textFill="WHITE" />
-      <JFXTextField fx:id="tfCode" focusColor="#48a832" layoutX="301.0" layoutY="715.0" promptText="Exam Code" style="-fx-alignment: center;" />
-      <JFXDatePicker layoutX="81.0" layoutY="715.0" />
+      <JFXButton fx:id="btnStartExam" layoutX="424.0" layoutY="701.0" onAction="#onClickStartExam" prefHeight="41.0" prefWidth="97.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Start Exam" textFill="WHITE" />
+      <JFXTextField fx:id="tfCode" focusColor="#48a832" layoutX="231.0" layoutY="706.0" promptText="Exam Code" style="-fx-alignment: center;" />
    </children>
 </Pane>

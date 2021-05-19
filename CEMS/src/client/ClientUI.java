@@ -2,6 +2,7 @@ package client;
 
 import java.io.IOException;
 
+import client.gui.ExamManagementWindow;
 import client.gui.MainGuiController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -29,6 +30,7 @@ public class ClientUI extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+
 		try {
 			setClientController(new ClientController("localhost", 5555));
 			System.out.println("Connected to server");
@@ -36,8 +38,10 @@ public class ClientUI extends Application {
 			System.out.println("Cant connect to server");
 			e1.printStackTrace();
 		}
+
 		MainGuiController clientMainGuiController = new MainGuiController();
 		clientMainGuiController.start(primaryStage);
+
 	}
 
 	public static ClientController getClientController() {

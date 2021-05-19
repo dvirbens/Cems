@@ -1,7 +1,5 @@
 package client.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,19 +8,27 @@ import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class ExamManagementWindow implements Initializable {
+public class ExamManagementWindow {
 
-	public void start(String code, int minutes) {
+	private String code;
+	private int minutes;
+
+	public ExamManagementWindow(String code, int minutes) {
+		this.code = code;
+		this.minutes = minutes;
+	}
+
+	public void start() {
 		try {
 			VBox examManagement = new VBox();
-			setVBoxComponents(examManagement, minutes);
+			setVBoxComponents(examManagement);
 			Scene scene = new Scene(examManagement, 500, 400);
 			Stage stage = new Stage();
 			stage.setScene(scene);
@@ -35,17 +41,24 @@ public class ExamManagementWindow implements Initializable {
 
 	}
 
-	private void setVBoxComponents(VBox examManagement, int minutes) {
-		Label label = new Label();
-		label.setText(String.format("%02d:%02d\n", minutes, 0));
-		label.setPrefSize(515, 128);
-		label.setStyle("-fx-background-color:#333333;" + "-fx-text-fill:white;");
-		label.setAlignment(Pos.CENTER);
-		examManagement.setAlignment(Pos.CENTER);
+	private void setVBoxComponents(VBox examManagement) {
+		Label timerLabel = new Label(String.format("%02d:%02d\n", minutes, 0));
+		timerLabel.setFont(new Font(100));
+		timerLabel.setPrefSize(515, 128);
+		timerLabel.setStyle("-fx-background-color:#333333;" + "-fx-text-fill:white;");
+		timerLabel.setAlignment(Pos.CENTER);
+		
+		
+		Label codeLabel = new Label("Exam code: " + code);
+		codeLabel.setFont(new Font(30));
+		codeLabel.setStyle("-fx-text-fill:#333333;");
+		
 
+		examManagement.setAlignment(Pos.CENTER);
+		examManagement.setSpacing(10);
 		JFXButton freezeExam = new JFXButton();
 		freezeExam.setPrefSize(200, 30);
-		freezeExam.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+		freezeExam.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;" + "-jfx-disable-visual-focus: true;");
 		freezeExam.setText("Freeze exam");
 		freezeExam.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -69,10 +82,12 @@ public class ExamManagementWindow implements Initializable {
 
 		});
 
-		examManagement.getChildren().add(label);
+		examManagement.getChildren().add(codeLabel);
+		examManagement.getChildren().add(timerLabel);
 		examManagement.getChildren().add(freezeExam);
 		examManagement.getChildren().add(askForExstension);
-		Stopwatch sw = new Stopwatch(minutes, label);
+
+		Stopwatch sw = new Stopwatch(minutes, timerLabel);
 		sw.startTime();
 	}
 
@@ -113,11 +128,6 @@ public class ExamManagementWindow implements Initializable {
 				}
 			}, delay, period);
 		}
-
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
 
 	}
 
