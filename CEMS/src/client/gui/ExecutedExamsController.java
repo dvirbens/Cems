@@ -11,14 +11,17 @@ import com.jfoenix.controls.JFXButton;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExecutedExam;
 
@@ -56,8 +59,15 @@ public class ExecutedExamsController implements Initializable {
 
 	@FXML
 	private TableColumn<ExecutedExam, JFXButton> tcGetTest;
+	
+    @FXML
+    private Label lbl_StdID;
+
+    @FXML
+    private TextField tf_StdID;
 
 	public void initialize(URL location, ResourceBundle resources) {
+		setStudentIDTextField();
 		tcExamID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
@@ -102,6 +112,20 @@ public class ExecutedExamsController implements Initializable {
 
 			exam.setGetCopy(getCoptyButton);
 		}
+	}
+	
+	private void setStudentIDTextField()
+	{
+		String userID = Client.getUser().getUserID();
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				tf_StdID.setEditable(true);
+				tf_StdID.setText(userID);
+				tf_StdID.setEditable(false);
+			}
+		});
+
 	}
 
 }

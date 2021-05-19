@@ -64,7 +64,7 @@ CREATE TABLE ExecutedExam (
     Copy blob
 );
 
-INSERT INTO grades VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
+INSERT INTO ExecutedExam VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
 
 
 
