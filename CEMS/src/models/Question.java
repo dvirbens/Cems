@@ -4,13 +4,9 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
-import javafx.scene.control.Button;
-
 public class Question implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final int NUMBER_OF_QUESTION = 1000;
 
 	private String questionID;
 	private String teacherName;

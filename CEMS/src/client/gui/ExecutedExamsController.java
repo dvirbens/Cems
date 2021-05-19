@@ -1,14 +1,12 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.EXAM_EXECUTE;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
 import client.ClientUI;
@@ -22,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.Exam;
 import models.ExecutedExam;
 
 public class ExecutedExamsController implements Initializable {

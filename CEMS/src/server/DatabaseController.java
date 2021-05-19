@@ -11,16 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jfoenix.controls.JFXButton;
-
 import common.SubjectCourseCollection;
 import models.Database;
-import models.Question;
 import models.Exam;
 import models.ExamQuestion;
-import models.User;
 import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
+import models.Question;
+import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
 

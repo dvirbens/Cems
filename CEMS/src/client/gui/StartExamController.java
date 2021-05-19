@@ -1,6 +1,8 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_COURSE;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
 
 import java.net.URL;
 import java.util.List;
@@ -18,16 +20,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import models.Exam;
 
 public class StartExamController implements Initializable {

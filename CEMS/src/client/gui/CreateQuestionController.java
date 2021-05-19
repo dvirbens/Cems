@@ -3,7 +3,6 @@ package client.gui;
 import static common.ModelWrapper.Operation.CREATE_QUESTION;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;

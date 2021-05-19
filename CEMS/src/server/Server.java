@@ -1,17 +1,22 @@
 package server;
 
+import static common.ModelWrapper.Operation.EXAM_EXECUTE;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
+import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
+import static common.ModelWrapper.Operation.GET_USER;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
-
-import static common.ModelWrapper.Operation.*;
 import models.Database;
-import models.Question;
 import models.Exam;
 import models.ExecutedExam;
+import models.Question;
 import models.User;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
@@ -150,6 +155,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_USER:
+			@SuppressWarnings("unchecked")
 			List<String> userInfo = (List<String>) modelWrapperFromClient.getElements();
 			User user = databaseController.getUser(userInfo.get(0), userInfo.get(1));
 			modelWrapperToClient = new ModelWrapper<>(user, GET_USER);

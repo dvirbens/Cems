@@ -2,13 +2,12 @@ package client;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
-import models.Question;
 import models.Exam;
 import models.ExecutedExam;
+import models.Question;
 import models.User;
 import ocsf.client.AbstractClient;
 
