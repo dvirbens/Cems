@@ -576,4 +576,14 @@ public class DatabaseController {
 		}
 	}
 
+	public void closeExam(String code) {
+		try {
+			Statement statement = conn.createStatement();
+			String query = "DELETE FROM ExamProcess WHERE code=" + code + ";";
+			statement.execute(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

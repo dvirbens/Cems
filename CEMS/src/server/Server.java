@@ -135,6 +135,16 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case CLOSE_EXAM:
+			String code = (String) modelWrapperFromClient.getElement();
+			databaseController.closeExam(code);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		case CREATE_QUESTION:
 			Question question = (Question) modelWrapperFromClient.getElement();
 			databaseController.saveQuestion(question);

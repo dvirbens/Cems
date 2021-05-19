@@ -104,6 +104,10 @@ public class Client extends AbstractClient {
 			case START_EXAM:
 				System.out.println("Exam has been started");
 				break;
+				
+			case CLOSE_EXAM:
+				System.out.println("Exam has been stopped");
+				break;
 
 			case CREATE_QUESTION:
 				System.out.println("Question has been saved suucessfully");
