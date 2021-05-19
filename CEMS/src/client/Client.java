@@ -102,6 +102,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case START_EXAM:
+				System.out.println("Exam has been started");
 				break;
 
 			case CREATE_QUESTION:

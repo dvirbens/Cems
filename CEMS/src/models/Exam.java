@@ -16,14 +16,18 @@ public class Exam implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String id;
+	private String teacherID;
 	private String subject;
 	private String course;
 	private String duration;
+	private String teacherName;
 	private List<ExamQuestion> examQuestions;
 	private JFXButton questionListButton;
 
-	public Exam(String id, String subject, String course, String duration, List<ExamQuestion> examQuestions) {
+	public Exam(String id, String teacherID, String subject, String course, String duration,
+			List<ExamQuestion> examQuestions) {
 		super();
+		this.teacherID = teacherID;
 		this.id = id;
 		this.subject = subject;
 		this.course = course;
@@ -42,8 +46,9 @@ public class Exam implements Serializable {
 		this.questionListButton = questionListButton;
 	}
 
-	public Exam(String subject, String course, String duration, List<ExamQuestion> examQuestions) {
+	public Exam(String subject, String teacherID, String course, String duration, List<ExamQuestion> examQuestions) {
 		super();
+		this.teacherID = teacherID;
 		this.subject = subject;
 		this.course = course;
 		this.duration = duration;
@@ -98,6 +103,14 @@ public class Exam implements Serializable {
 		this.examQuestions = examQuestions;
 	}
 
+	public String getTeacherID() {
+		return teacherID;
+	}
+
+	public void setTeacherID(String teacherID) {
+		this.teacherID = teacherID;
+	}
+
 	public JFXButton getQuestionListButton() {
 		return questionListButton;
 	}
@@ -106,4 +119,11 @@ public class Exam implements Serializable {
 		this.questionListButton = questionListButton;
 	}
 
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
 }

@@ -15,6 +15,7 @@ import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Exam;
+import models.ExamProcess;
 import models.ExecutedExam;
 import models.Question;
 import models.User;
@@ -125,6 +126,13 @@ public class Server extends AbstractServer {
 			break;
 
 		case START_EXAM:
+			ExamProcess examProcess = (ExamProcess) modelWrapperFromClient.getElement();
+			databaseController.startExam(examProcess);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		case CREATE_QUESTION:

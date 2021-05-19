@@ -14,6 +14,7 @@ import java.util.Map;
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Exam;
+import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
@@ -109,11 +110,14 @@ public class DatabaseController {
 		System.out.println(finalExamID);
 
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO Exam VALUES (?,?,?,?);");
+			prepareStatement = conn.prepareStatement("INSERT INTO Exam VALUES (?,?,?,?,?,?);");
 			prepareStatement.setString(1, finalExamID);
-			prepareStatement.setString(2, exam.getSubject());
-			prepareStatement.setString(3, exam.getCourse());
-			prepareStatement.setString(4, exam.getDuration());
+			prepareStatement.setString(2, exam.getTeacherID());
+			prepareStatement.setString(3, exam.getTeacherName());
+			prepareStatement.setString(4, exam.getSubject());
+			prepareStatement.setString(5, exam.getCourse());
+			prepareStatement.setString(6, exam.getDuration());
+
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				for (ExamQuestion question : exam.getExamQuestions()) {
@@ -413,11 +417,13 @@ public class DatabaseController {
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String examID = rsQuestionOfCourse.getString("examID");
+				String teacherID = rsQuestionOfCourse.getString("teacherID");
+				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String course = rsQuestionOfCourse.getString("Course");
 				String duration = rsQuestionOfCourse.getString("Duration");
-				Exam exam = new Exam(examID, subject, course, duration);
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				exam.setExamQuestions(questionsList);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
 
@@ -437,11 +443,13 @@ public class DatabaseController {
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String examID = rsQuestionOfCourse.getString("examID");
+				String teacherID = rsQuestionOfCourse.getString("teacherID");
+				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
-				Exam exam = new Exam(examID, subject, course, duration);
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				exam.setExamQuestions(questionsList);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
 
@@ -503,12 +511,14 @@ public class DatabaseController {
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String examID = rsQuestionOfCourse.getString("examID");
+				String teacherID = rsQuestionOfCourse.getString("teacherID");
+				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
 				String course = rsQuestionOfCourse.getString("Course");
-				Exam exam = new Exam(examID, subject, course, duration);
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				exam.setExamQuestions(questionsList);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
 
@@ -518,7 +528,7 @@ public class DatabaseController {
 
 		return examList;
 	}
-	
+
 	public List<ExecutedExam> getExecutedExamListByID(String studentID) {
 		List<ExecutedExam> examList = new ArrayList<>();
 
@@ -533,10 +543,9 @@ public class DatabaseController {
 				String execDate = rsQuestionOfCourse.getString("ExecDate");
 				String testType = rsQuestionOfCourse.getString("TestType");
 				Integer grade = rsQuestionOfCourse.getInt("Grade");
-				
-				
+
 				ExecutedExam exam = new ExecutedExam(examID, subject, course, execDate, testType, grade);
-				//exam.setGetCopy(blob);
+				// exam.setGetCopy(blob);
 				examList.add(exam);
 			}
 
@@ -545,6 +554,26 @@ public class DatabaseController {
 		}
 
 		return examList;
+	}
+
+	public void startExam(ExamProcess examProcess) {
+		System.out.println(examProcess);
+		PreparedStatement prepareStatement;
+		try {
+			prepareStatement = conn.prepareStatement("INSERT INTO ExamProcess VALUES (?,?,?,?,?);");
+			prepareStatement.setString(1, examProcess.getExamID());
+			prepareStatement.setString(2, examProcess.getCode());
+			prepareStatement.setString(3, examProcess.getTeacherID());
+			prepareStatement.setString(4, examProcess.getDate());
+			prepareStatement.setString(5, examProcess.getTimeExtension());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
+				System.out.print("Exam started Succuessfully");
+			}
+
+		} catch (SQLException e) {
+			System.err.print("Error occurred, exam has not been started ");
+		}
 	}
 
 }

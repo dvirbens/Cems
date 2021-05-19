@@ -1,5 +1,7 @@
 CREATE TABLE Exam (
     examID varchar(255),
+    teacherID varchar(255),
+    teacherName varchar(255),
     Subject varchar(255),
     Course varchar(255),
     Duration varchar(255),
@@ -53,7 +55,24 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
+CREATE TABLE ExamProcess (
+	examID varchar(255),
+	code varchar(255),
+	teacherID varchar(255),
+	startDate date,
+	timeExtension varchar(255),
+	PRIMARY KEY(examID,code)
+);
+
 CREATE TABLE ExecutedExam (
+	examID varchar(255),
+	code varchar(255),
+	teacherID varchar(255),
+	median double,
+	avg double
+);
+
+CREATE TABLE ExecutedExamByStudent (
 	studentID varchar(255),
     examID varchar(255),
 	Subject varchar(255),

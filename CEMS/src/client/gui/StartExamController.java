@@ -1,10 +1,9 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_COURSE;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
-
+import static common.ModelWrapper.Operation.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
+import models.ExamProcess;
 
 public class StartExamController implements Initializable {
 
@@ -39,6 +39,9 @@ public class StartExamController implements Initializable {
 
 	@FXML
 	private TableColumn<Exam, String> tcID;
+
+	@FXML
+	private TableColumn<Exam, String> tcTeacher;
 
 	@FXML
 	private TableColumn<Exam, String> tcSubject;
@@ -115,6 +118,14 @@ public class StartExamController implements Initializable {
 		if (!code.isEmpty()) {
 			String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
 
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Date date = new Date();
+			String currentDate = formatter.format(date).toString();
+
+			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, Client.getUser().getUserID(), code);
+			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+
 			for (Exam exam : Client.getExams()) {
 				if (exam.getId().equals(focusedExamID)) {
 					ExamManagementWindow examManagementController = new ExamManagementWindow(code,
@@ -136,6 +147,7 @@ public class StartExamController implements Initializable {
 		cbExamSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 
 		tcID.setCellValueFactory(new PropertyValueFactory<Exam, String>("id"));
+		tcTeacher.setCellValueFactory(new PropertyValueFactory<Exam, String>("teacherName"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<Exam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<Exam, String>("course"));
 		tcDuration.setCellValueFactory(new PropertyValueFactory<Exam, String>("duration"));

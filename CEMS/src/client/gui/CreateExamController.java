@@ -151,7 +151,8 @@ public class CreateExamController implements Initializable {
 		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty()) {
 			deletExamQuestionListButtons();
 			List<ExamQuestion> examQuestion = getExamQuestionList();
-			Exam newExam = new Exam(subject, course, duration, examQuestion);
+			Exam newExam = new Exam(subject, Client.getUser().getUserID(), course, duration, examQuestion);
+			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
 			ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(newExam, CREATE_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		}
