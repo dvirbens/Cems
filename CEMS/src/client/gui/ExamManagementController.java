@@ -27,12 +27,10 @@ public class ExamManagementController implements Initializable {
 	@FXML
 	private Text tTime;
 
-	private static Label label;
-
-	public void start() {
+	public void start(int minutes) {
 		try {
 			VBox examManagement = new VBox();
-			setVBoxComponents(examManagement);
+			setVBoxComponents(examManagement, minutes);
 			Scene scene = new Scene(examManagement, 500, 400);
 			Stage stage = new Stage();
 			stage.setScene(scene);
@@ -45,8 +43,9 @@ public class ExamManagementController implements Initializable {
 
 	}
 
-	private void setVBoxComponents(VBox examManagement) {
-		label = new Label();
+	private void setVBoxComponents(VBox examManagement, int minutes) {
+		Label label = new Label();
+		label.setText(String.format("%02d:%02d\n", minutes, 0));
 		label.setPrefSize(515, 128);
 		label.setStyle("-fx-background-color:#333333;" + "-fx-text-fill:white;");
 		label.setAlignment(Pos.CENTER);
@@ -81,7 +80,7 @@ public class ExamManagementController implements Initializable {
 		examManagement.getChildren().add(label);
 		examManagement.getChildren().add(freezeExam);
 		examManagement.getChildren().add(askForExstension);
-		Stopwatch sw = new Stopwatch(3);
+		Stopwatch sw = new Stopwatch(minutes, label);
 		sw.startTime();
 	}
 
@@ -89,9 +88,11 @@ public class ExamManagementController implements Initializable {
 		private int min;
 		private int sec;
 		private Timer timer;
+		private Label label;
 
-		public Stopwatch(int min) {
+		public Stopwatch(int min, Label label) {
 			this.min = min;
+			this.label = label;
 		}
 
 		public void startTime() {

@@ -122,7 +122,7 @@ public class StartExamController implements Initializable {
 			System.out.println("code: " + code);
 			
 			ExamManagementController examManagementController = new ExamManagementController();
-			examManagementController.start();
+			examManagementController.start(10);
 		}
 
 	}
