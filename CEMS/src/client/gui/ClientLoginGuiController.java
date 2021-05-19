@@ -76,19 +76,14 @@ public class ClientLoginGuiController implements Initializable {
 	void onConnect(ActionEvent event) {
 		MainGuiController clientMainGuiController = new MainGuiController();
 
-		int port = Integer.parseInt(tfPort.getText());
-		try {
-			labelStatus.setText("");
-			setClientController(new ClientController("localhost", port));
-			((Node) event.getSource()).getScene().getWindow().hide();
-			Stage stage = new Stage();
-			clientMainGuiController.start(stage);
-		} catch (IOException e) {
-			e.printStackTrace();
-			labelStatus.setText("ERROR--Worng Port");
-			labelStatus.setTextFill(Color.color(1, 0, 0));
-			labelStatus.setAlignment(Pos.CENTER);
-		}
+		labelStatus.setText("");
+		((Node) event.getSource()).getScene().getWindow().hide();
+		Stage stage = new Stage();
+		clientMainGuiController.start(stage);
+
+		labelStatus.setText("ERROR--Worng Port");
+		labelStatus.setTextFill(Color.color(1, 0, 0));
+		labelStatus.setAlignment(Pos.CENTER);
 
 	}
 
@@ -100,11 +95,4 @@ public class ClientLoginGuiController implements Initializable {
 		tfPort.setText("5555");
 	}
 
-	public static ClientController getClientController() {
-		return clientController;
-	}
-
-	public static void setClientController(ClientController clientController) {
-		ClientLoginGuiController.clientController = clientController;
-	}
 }
