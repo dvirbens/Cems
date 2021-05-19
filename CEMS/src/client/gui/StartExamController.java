@@ -118,11 +118,14 @@ public class StartExamController implements Initializable {
 		String code = tfCode.getText();
 		if (!code.isEmpty()) {
 			String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
-			System.out.println("execute exam:" + focusedExamID);
-			System.out.println("code: " + code);
-			
-			ExamManagementController examManagementController = new ExamManagementController();
-			examManagementController.start(10);
+
+			for (Exam exam : Client.getExams()) {
+				if (exam.getId().equals(focusedExamID)) {
+					ExamManagementWindow examManagementController = new ExamManagementWindow();
+					examManagementController.start(code, Integer.valueOf(exam.getDuration()));
+				}
+			}
+
 		}
 
 	}

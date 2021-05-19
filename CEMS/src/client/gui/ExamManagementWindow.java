@@ -19,15 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ExamManagementController implements Initializable {
+public class ExamManagementWindow implements Initializable {
 
-	@FXML
-	private static Label lTime;
-
-	@FXML
-	private Text tTime;
-
-	public void start(int minutes) {
+	public void start(String code, int minutes) {
 		try {
 			VBox examManagement = new VBox();
 			setVBoxComponents(examManagement, minutes);
