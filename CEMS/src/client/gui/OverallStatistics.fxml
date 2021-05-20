@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="PaneOverallStatistic" prefHeight="768.0" prefWidth="754.0" stylesheets="@../../../GuiPrototype/PrincipleScreen/styleSelection.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.OverallStatistic">
+<Pane fx:id="PaneOverallStatistic" prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.OverallStatistic">
    <children>
       <Label layoutX="251.0" layoutY="231.0" prefHeight="27.0" prefWidth="60.0" text="Average:">
          <font>
