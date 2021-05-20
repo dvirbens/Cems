@@ -8,16 +8,14 @@ import com.jfoenix.controls.JFXComboBox;
 import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import sun.net.www.content.audio.x_aiff;
 
 public class OverallStatistic implements Initializable {
 
