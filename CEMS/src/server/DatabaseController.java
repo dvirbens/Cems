@@ -98,8 +98,7 @@ public class DatabaseController {
 		String courseID = Server.getSubjectCollection().getCourseMap().get(exam.getCourse());
 
 		String examLastID = getExamLastId(exam.getSubject(), exam.getCourse());
-		
-		
+
 		if (examLastID == null) {
 			examID = 0;
 		} else {
@@ -115,7 +114,7 @@ public class DatabaseController {
 			prepareStatement.setString(3, exam.getTeacherName());
 			prepareStatement.setString(4, exam.getSubject());
 			prepareStatement.setString(5, exam.getCourse());
-			prepareStatement.setString(6, exam.getDuration()+" minutes");
+			prepareStatement.setString(6, exam.getDuration() + " minutes");
 
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
@@ -217,10 +216,10 @@ public class DatabaseController {
 	private String getExamLastId(String subject, String course) {
 		try {
 			Statement statement = conn.createStatement();
-			String sql = "SELECT SUBSTRING(examID, 5, 6) examID FROM exam WHERE Subject=" +"\""+ subject + "\""+" AND Course="
-					+"\""+ course +"\""+ " ORDER BY examID DESC LIMIT 1;";
+			String sql = "SELECT SUBSTRING(examID, 5, 6) examID FROM exam WHERE Subject=" + "\"" + subject + "\""
+					+ " AND Course=" + "\"" + course + "\"" + " ORDER BY examID DESC LIMIT 1;";
 			ResultSet resultSet = statement.executeQuery(sql);
-			
+
 			if (resultSet.next()) {
 				String id = resultSet.getString("examID");
 				return id;
@@ -381,10 +380,16 @@ public class DatabaseController {
 
 	public List<Question> getQuestionList(String subject) {
 		List<Question> questionList = new ArrayList<>();
-
+		String courseQuery;
+		if (subject == null) {
+			courseQuery = "SELECT * FROM Question;";
+		} else {
+			courseQuery = "SELECT * FROM Question WHERE Subject=\"" + subject + "\";";
+		}
+		
 		try {
 			Statement statement = conn.createStatement();
-			String courseQuery = "SELECT * FROM Question WHERE Subject=\"" + subject + "\";";
+
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String questionID = rsQuestionOfCourse.getString("questionID");

@@ -153,7 +153,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 		tfPort.setText("3306");
 		tfScheme.setText("cems");
 		tfUserName.setText("root");
-		tfPassword.setText("");
+		tfPassword.setText("1234");
 		tfPortServer.setText("5555");
 	}
 

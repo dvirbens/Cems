@@ -81,15 +81,9 @@ public class Client extends AbstractClient {
 		if (msg != null) {
 			ModelWrapper<?> modelWrapperFromServer = (ModelWrapper<?>) msg;
 			switch (modelWrapperFromServer.getOperation()) {
-			case UPDATE_TEST:
-				editTest = (Exam) modelWrapperFromServer.getElement();
-				break;
 
-			case LOAD_TEST:
-				editTest = (Exam) modelWrapperFromServer.getElement();
-				break;
-
-			case LOAD_QUESTION:
+			case GET_QUESTION_LIST:
+				questions = (List<Question>) modelWrapperFromServer.getElements();
 				break;
 
 			case LOAD_QUESTION_LIST:
@@ -104,7 +98,7 @@ public class Client extends AbstractClient {
 			case START_EXAM:
 				System.out.println("Exam has been started");
 				break;
-				
+
 			case CLOSE_EXAM:
 				System.out.println("Exam has been stopped");
 				break;
@@ -132,7 +126,7 @@ public class Client extends AbstractClient {
 				subjectCollection = (SubjectCourseCollection) modelWrapperFromServer.getElement();
 				break;
 
-			case GET_QUESTION_LIST:
+			case GET_QUESTION_LIST_BY_SUBJECT:
 				questions = (List<Question>) modelWrapperFromServer.getElements();
 				break;
 

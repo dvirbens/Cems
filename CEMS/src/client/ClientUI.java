@@ -2,7 +2,6 @@ package client;
 
 import java.io.IOException;
 
-import client.gui.ExamManagementWindow;
 import client.gui.MainGuiController;
 import javafx.application.Application;
 import javafx.stage.Stage;

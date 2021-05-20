@@ -1,7 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
-
+import static common.ModelWrapper.Operation.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +13,13 @@ import com.jfoenix.controls.JFXTextField;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
-import static common.ModelWrapper.Operation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -93,9 +92,13 @@ public class CreateExamController implements Initializable {
 	void onSubjectSelected(ActionEvent event) {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
 
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST_BY_SUBJECT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		addQuestionList();
 
+	}
+
+	private void addQuestionList() {
 		ObservableList<Question> questions = FXCollections.observableArrayList();
 		questions.addAll(Client.getQuestions());
 		tvQuestionPool.setItems(questions);
@@ -104,7 +107,7 @@ public class CreateExamController implements Initializable {
 			JFXButton detailsButton = new JFXButton();
 			detailsButton.setPrefSize(90, 15);
 			detailsButton
-					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			detailsButton.setText("Details");
 			detailsButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -121,7 +124,7 @@ public class CreateExamController implements Initializable {
 			question.setDetailsButton(detailsButton);
 			JFXButton addButton = new JFXButton();
 			addButton.setPrefSize(70, 15);
-			addButton.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			addButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			addButton.setText("Add");
 			addButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -140,7 +143,6 @@ public class CreateExamController implements Initializable {
 
 			question.setAddButton(addButton);
 		}
-
 	}
 
 	@FXML
@@ -184,6 +186,11 @@ public class CreateExamController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		examQuestionList = new ArrayList<>();
 
+		ModelWrapper<Question> modelWrapper = new ModelWrapper<>(GET_QUESTION_LIST);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		addQuestionList();
+		
+		tvSelectedQuestion.setPlaceholder(new Label("No question were added to the list"));
 		cbQuestionSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 		cbExamSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 

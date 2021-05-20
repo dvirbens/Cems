@@ -64,6 +64,15 @@ CREATE TABLE ExamProcess (
 	PRIMARY KEY(examID,code)
 );
 
+CREATE TABLE ExamExtension (
+	examID varchar(255),
+	teacherID varchar(255),
+	timeExtension varchar(255),
+	PRIMARY KEY(teacherID,examID),
+	FOREIGN KEY(examID) REFERENCES Exam(examID)
+);
+
+
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
 	code varchar(255),
@@ -85,8 +94,6 @@ CREATE TABLE ExecutedExamByStudent (
 
 INSERT INTO ExecutedExam VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
 
-
-
 INSERT INTO  Subject VALUES ("01","Social Studies");
 INSERT INTO  Subject VALUES ("02","Mathematics");
 INSERT INTO  Subject VALUES ("03","Language");
@@ -101,28 +108,5 @@ INSERT INTO  Course VALUES ("05","Literature5","01");
 INSERT INTO  User VALUES ("204459093","1234","Arik","Zagdon","Arikz15@gmail.com",'Teacher');
 INSERT INTO  User VALUES ("308315035","1234","Dvir","Ben-simon","Dvirbens@gmail.com",'Student');
 INSERT INTO  User VALUES ("409024902","1234","Shehav","Hezi","Hezi@gmail.com",'Principal');
-
-INSERT INTO  test VALUES ("020301","Mathematics","Algebra",90,10);
-INSERT INTO  test VALUES ("020302","Mathematics","Algebra",120,20);
-INSERT INTO  test VALUES ("020303","Mathematics","Algebra",60,33);
-INSERT INTO  test VALUES ("020401","Mathematics","Algebra II",90,10);
-INSERT INTO  test VALUES ("020201","Mathematics","Geometry",90,10);
-INSERT INTO  test VALUES ("020601","Mathematics","Trigonometry ",90,10);
-
-INSERT INTO  test VALUES ("010101","Social Studies","Geography",90,10);
-INSERT INTO  test VALUES ("010201","Social Studies","History",90,10);
-INSERT INTO  test VALUES ("010301","Social Studies","Economics",50,50);
-INSERT INTO  test VALUES ("010401","Social Studies","Citizenship",90,10);
-
-INSERT INTO  test VALUES ("030101","Language ","Speech",90,10);
-INSERT INTO  test VALUES ("030201","Language ","Literature",90,10);
-INSERT INTO  test VALUES ("030202","Language ","Literature",120,25);
-INSERT INTO  test VALUES ("030301","Language ","Writing",90,10);
-
-INSERT INTO  test VALUES ("040101","Science","Biology ",90,10);
-INSERT INTO  test VALUES ("040201","Science","Chemistry  ",90,10);
-INSERT INTO  test VALUES ("040301","Science","Physics  ",45,50);
-INSERT INTO  test VALUES ("040401","Science","Computre Science",90,10);
-sss
 
 
