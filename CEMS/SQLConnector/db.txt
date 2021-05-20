@@ -123,6 +123,6 @@ INSERT INTO  test VALUES ("040101","Science","Biology ",90,10);
 INSERT INTO  test VALUES ("040201","Science","Chemistry  ",90,10);
 INSERT INTO  test VALUES ("040301","Science","Physics  ",45,50);
 INSERT INTO  test VALUES ("040401","Science","Computre Science",90,10);
-
+sss
 
 
