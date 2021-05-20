@@ -590,7 +590,7 @@ public class DatabaseController {
 	}
 
 	public void UploadFile(WordFile file) {
-		 String sql = "INSERT INTO UploadTest VALUES (?,?,?,?,?,?)";
+		 String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
 		 
 	        try {
 	        		InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());
