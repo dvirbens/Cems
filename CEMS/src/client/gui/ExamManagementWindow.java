@@ -79,7 +79,7 @@ public class ExamManagementWindow {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				stopExam();
 			}
 
 		});
@@ -93,7 +93,7 @@ public class ExamManagementWindow {
 
 			@Override
 			public void handle(ActionEvent event) {
-				stopExam();
+				
 			}
 
 		});

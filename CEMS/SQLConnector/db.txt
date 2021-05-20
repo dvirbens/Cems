@@ -59,7 +59,7 @@ CREATE TABLE ExamProcess (
 	examID varchar(255),
 	code varchar(255),
 	teacherID varchar(255),
-	startDate date,
+	startDate varchar(255),
 	timeExtension varchar(255),
 	PRIMARY KEY(examID,code)
 );
