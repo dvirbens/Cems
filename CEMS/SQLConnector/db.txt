@@ -92,6 +92,16 @@ CREATE TABLE ExecutedExamByStudent (
     Copy blob
 );
 
+CREATE TABLE StudentUploadManualTest (
+	studentID varchar(255),
+    examID varchar(255),
+	Subject varchar(255),
+    Course varchar(255),
+    ExecDate varchar(255),
+    WordFile blob
+);
+
+
 INSERT INTO ExecutedExam VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
 
 INSERT INTO  Subject VALUES ("01","Social Studies");

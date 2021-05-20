@@ -19,6 +19,7 @@ import models.ExamProcess;
 import models.ExecutedExam;
 import models.Question;
 import models.User;
+import models.WordFile;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
@@ -206,6 +207,16 @@ public class Server extends AbstractServer {
 			modelWrapperToClient = new ModelWrapper<>(examListByCourse, GET_EXAMS_LIST_BY_SUBJECT);
 			try {
 				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case UPLOAD_FILE:
+			WordFile file = (WordFile) modelWrapperFromClient.getElement();
+			databaseController.UploadFile(file);
+			try {
+				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

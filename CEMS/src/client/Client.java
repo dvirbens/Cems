@@ -145,7 +145,11 @@ public class Client extends AbstractClient {
 			case GET_EXAMS_LIST_BY_COURSE:
 				exams = (List<Exam>) modelWrapperFromServer.getElements();
 				break;
-
+		
+			case UPLOAD_FILE:
+				System.out.println("FileUploaded.");
+				break;
+				
 			default:
 				break;
 

@@ -1,5 +1,9 @@
 package server;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,14 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 import common.SubjectCourseCollection;
-import models.Database;
-import models.Exam;
-import models.ExamProcess;
-import models.ExamQuestion;
+import models.*;
 import models.ExamQuestion.NoteType;
-import models.ExecutedExam;
-import models.Question;
-import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
 
@@ -591,4 +589,23 @@ public class DatabaseController {
 		}
 	}
 
-}
+	public void UploadFile(WordFile file) {
+		 String sql = "INSERT INTO UploadTest VALUES (?,?,?,?,?,?)";
+		 
+	        try {
+	        		InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());
+	        		PreparedStatement stmt = conn.prepareStatement(sql);
+	        	 	stmt.setString(1, "123");
+	        	 	stmt.setString(2, "121212");
+	        	 	stmt.setString(3, "Mathematic");
+	        	 	stmt.setString(4, "Algebra");
+			        stmt.setString(5, "12.12.12");
+			        stmt.setBlob(6, targetStream);
+			        stmt.execute();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	       
+		}
+	}

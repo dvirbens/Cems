@@ -107,6 +107,15 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setManualTestScreen() {
+		try {
+			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
+			mainFrame.setCenter(manualTestPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void setEnterExamScreen() {
 		try {
