@@ -83,7 +83,7 @@ public class StartExamController implements Initializable {
 			JFXButton questionListButton = new JFXButton();
 			questionListButton.setPrefSize(90, 15);
 			questionListButton
-					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			questionListButton.setText("List");
 			questionListButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -159,6 +159,7 @@ public class StartExamController implements Initializable {
 		exams.addAll(Client.getExams());
 		tvExamPool.setItems(exams);
 		setExamQuestioListButtons(Client.getExams());
+
 	}
 
 }
