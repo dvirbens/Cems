@@ -93,7 +93,7 @@ public class QuestionListController implements Initializable {
 			JFXButton detailsButton = new JFXButton();
 			detailsButton.setPrefSize(90, 15);
 			detailsButton
-					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			detailsButton.setText("Details");
 			detailsButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -115,7 +115,7 @@ public class QuestionListController implements Initializable {
 		for (ExamQuestion question : questions) {
 			JFXButton noteButton = new JFXButton();
 			noteButton.setPrefSize(90, 15);
-			noteButton.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			noteButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			noteButton.setText("Note");
 			noteButton.setOnAction(new EventHandler<ActionEvent>() {
 

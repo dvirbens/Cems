@@ -115,7 +115,7 @@ public class DatabaseController {
 			prepareStatement.setString(3, exam.getTeacherName());
 			prepareStatement.setString(4, exam.getSubject());
 			prepareStatement.setString(5, exam.getCourse());
-			prepareStatement.setString(6, exam.getDuration());
+			prepareStatement.setString(6, exam.getDuration()+" minutes");
 
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {

@@ -8,7 +8,7 @@
 
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(#32CD32 0%, #48a832 100%);
+    -fx-background-color: #333333;
 }
 
 .table-view .column-header-background .label{
@@ -37,7 +37,7 @@
 
 
 .table-row-cell:selected{
-    -fx-background-color:#333333;
+    -fx-background-color:#48a832;
 	-fx-table-cell-border-color: gray;
 
 	
@@ -48,5 +48,28 @@
       -fx-fill: white;
 	  -fx-font-weight: bold
 	  
+
+}
+
+.table-row-cell .text
+{
+	-fx-fill: black;
+}
+
+
+
+.combo-box-popup .list-view .list-cell:hover {
+	
+    -fx-text-fill: white;
+	-fx-background-color:#48a832;
+
+
+	
+}
+
+.combo-box .cell:selected {
+	
+    -fx-text-fill: white;
+	-fx-background-color:#48a832;
 
 }
