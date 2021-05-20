@@ -216,7 +216,6 @@ public class DatabaseController {
 
 	private String getExamLastId(String subject, String course) {
 		try {
-			System.out.println(subject+course);
 			Statement statement = conn.createStatement();
 			String sql = "SELECT SUBSTRING(examID, 5, 6) examID FROM exam WHERE Subject=" +"\""+ subject + "\""+" AND Course="
 					+"\""+ course +"\""+ " ORDER BY examID DESC LIMIT 1;";
