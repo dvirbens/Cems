@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="768.0" prefWidth="754.0" style="-fx-background-color: #ffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.StartExamController">
+<Pane prefHeight="768.0" prefWidth="754.0" style="-fx-background-color: #ffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.StartExamController">
    <children>
       <Label layoutX="40.0" layoutY="57.0" text="Exam pool" />
       <JFXComboBox fx:id="cbExamCourse" focusColor="#48a832" layoutX="397.0" layoutY="26.0" onAction="#onClickExamCourse" prefHeight="28.0" prefWidth="145.0" promptText="Exam Course" style="-fx-alignment: center;" />

@@ -96,11 +96,10 @@ public class DatabaseController {
 		int examID;
 		String subjectID = Server.getSubjectCollection().getSubjectMap().get(exam.getSubject());
 		String courseID = Server.getSubjectCollection().getCourseMap().get(exam.getCourse());
-		System.out.println(subjectID);
-		System.out.println(courseID);
 
 		String examLastID = getExamLastId(exam.getSubject(), exam.getCourse());
-
+		
+		
 		if (examLastID == null) {
 			examID = 0;
 		} else {
@@ -217,10 +216,12 @@ public class DatabaseController {
 
 	private String getExamLastId(String subject, String course) {
 		try {
+			System.out.println(subject+course);
 			Statement statement = conn.createStatement();
-			String sql = ("SELECT SUBSTRING(examID, 5, 6) examID FROM exam WHERE Subject=" + subject + " AND Course="
-					+ course + " ORDER BY examID DESC LIMIT 1;");
+			String sql = "SELECT SUBSTRING(examID, 5, 6) examID FROM exam WHERE Subject=" +"\""+ subject + "\""+" AND Course="
+					+"\""+ course +"\""+ " ORDER BY examID DESC LIMIT 1;";
 			ResultSet resultSet = statement.executeQuery(sql);
+			
 			if (resultSet.next()) {
 				String id = resultSet.getString("examID");
 				return id;

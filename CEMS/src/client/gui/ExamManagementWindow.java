@@ -59,7 +59,7 @@ public class ExamManagementWindow {
 
 	private void setVBoxComponents(VBox examManagement) {
 		timerLabel = new Label(String.format("%02d:%02d\n", minutes, 0));
-		timerLabel.setFont(new Font(100));
+		timerLabel.setFont(new Font("Agency FB",100));
 		timerLabel.setPrefSize(515, 128);
 		timerLabel.setStyle("-fx-background-color:#333333;" + "-fx-text-fill:white;");
 		timerLabel.setAlignment(Pos.CENTER);
