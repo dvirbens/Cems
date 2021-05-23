@@ -1,16 +1,15 @@
 package client.gui;
 
 import static common.ModelWrapper.Operation.CLOSE_EXAM;
-import static common.ModelWrapper.Operation.EXTENSTION_REQUEST;
+import static common.ModelWrapper.Operation.EXTENSION_REQUEST;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
@@ -19,11 +18,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import models.ExamExtension;
 
 public class ExamManagementWindow {
 
@@ -32,23 +34,24 @@ public class ExamManagementWindow {
 	private Stopwatch sw;
 	private JFXButton freezeExam;
 	private JFXButton askForExstension;
+	private TextArea taCause;
 	private Label codeLabel;
 	private Label timerLabel;
 	private HBox requestSection;
 	private boolean requestFlag;
-	private List<String> causeAndTime;
+	private String examID;
 
-	public ExamManagementWindow(String code, int minutes) {
+	public ExamManagementWindow(String examID, String code, int minutes) {
 		this.code = code;
 		this.minutes = minutes;
-		causeAndTime = new ArrayList<>();
+		this.examID = examID;
 	}
 
 	public void open() {
 		try {
 			VBox examManagement = new VBox();
 			setVBoxComponents(examManagement);
-			Scene scene = new Scene(examManagement, 550, 450);
+			Scene scene = new Scene(examManagement, 600, 600);
 			Stage stage = new Stage();
 			stage.setScene(scene);
 			stage.setTitle("Exam Management");
@@ -70,7 +73,7 @@ public class ExamManagementWindow {
 
 		timerLabel = new Label(String.format("%02d:%02d\n", minutes, 0));
 		timerLabel.setFont(new Font("Agency FB", 100));
-		timerLabel.setPrefSize(550, 128);
+		timerLabel.setPrefSize(600, 128);
 		timerLabel.setStyle("-fx-background-color:#333333;" + "-fx-text-fill:white;");
 		timerLabel.setAlignment(Pos.CENTER);
 
@@ -108,15 +111,23 @@ public class ExamManagementWindow {
 			public void handle(ActionEvent event) {
 				if (!requestFlag) {
 					requestSection.setVisible(true);
+					taCause.setVisible(true);
 				} else {
 					requestSection.setVisible(false);
+					taCause.setVisible(false);
 				}
 				requestFlag = !requestFlag;
 			}
 
 		});
 
-		JFXTextField tfTime = new JFXTextField("Time");
+		taCause = new TextArea();
+		VBox.setVgrow(taCause, Priority.NEVER);
+		taCause.setMaxSize(250, 250);
+		taCause.setVisible(false);
+		taCause.setPromptText("Cause");
+		JFXTextField tfTime = new JFXTextField();
+		tfTime.setPromptText("time");
 		JFXButton sendRequest = new JFXButton("Send");
 
 		sendRequest.setPrefSize(100, 30);
@@ -126,10 +137,13 @@ public class ExamManagementWindow {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (!causeAndTime.isEmpty()) {
-					ModelWrapper<String> modelWrapper = new ModelWrapper<>(causeAndTime, EXTENSTION_REQUEST);
-					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-				}
+				String cause = taCause.getText();
+				String time = ((JFXTextField) requestSection.getChildren().get(0)).getText();
+				String teacherName = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+				String teacherID = Client.getUser().getUserID();
+				ExamExtension extesnion = new ExamExtension(examID, teacherID, teacherName, time, cause);
+				ModelWrapper<ExamExtension> modelWrapper = new ModelWrapper<>(extesnion, EXTENSION_REQUEST);
+				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			}
 
 		});
@@ -145,6 +159,7 @@ public class ExamManagementWindow {
 		examManagement.getChildren().add(timerLabel);
 		examManagement.getChildren().add(freezeExam);
 		examManagement.getChildren().add(askForExstension);
+		examManagement.getChildren().add(taCause);
 		examManagement.getChildren().add(requestSection);
 
 		sw = new Stopwatch(minutes, timerLabel);

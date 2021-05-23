@@ -128,7 +128,7 @@ public class StartExamController implements Initializable {
 
 			for (Exam exam : Client.getExams()) {
 				if (exam.getId().equals(focusedExamID)) {
-					ExamManagementWindow examManagementWindow = new ExamManagementWindow(code,
+					ExamManagementWindow examManagementWindow = new ExamManagementWindow(exam.getId(), code,
 							Integer.valueOf(exam.getDuration()));
 					examManagementWindow.open();
 				}

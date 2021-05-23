@@ -384,7 +384,7 @@ public class DatabaseController {
 		} else {
 			courseQuery = "SELECT * FROM Question WHERE Subject=\"" + subject + "\";";
 		}
-		
+
 		try {
 			Statement statement = conn.createStatement();
 
@@ -560,7 +560,6 @@ public class DatabaseController {
 	}
 
 	public void startExam(ExamProcess examProcess) {
-		System.out.println(examProcess);
 		PreparedStatement prepareStatement;
 		try {
 			prepareStatement = conn.prepareStatement("INSERT INTO ExamProcess VALUES (?,?,?,?,?);");
@@ -571,11 +570,11 @@ public class DatabaseController {
 			prepareStatement.setString(5, examProcess.getTimeExtension());
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
-				System.out.print("Exam started Succuessfully");
+				System.out.println("Exam started Succuessfully");
 			}
 
 		} catch (SQLException e) {
-			System.err.print("Error occurred, exam has not been started ");
+			System.err.println("Error occurred, exam has not been started ");
 		}
 	}
 
@@ -590,22 +589,40 @@ public class DatabaseController {
 	}
 
 	public void UploadFile(WordFile file) {
-		 String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
-		 
-	        try {
-	        		InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());
-	        		PreparedStatement stmt = conn.prepareStatement(sql);
-	        	 	stmt.setString(1, "123");
-	        	 	stmt.setString(2, "121212");
-	        	 	stmt.setString(3, "Mathematic");
-	        	 	stmt.setString(4, "Algebra");
-			        stmt.setString(5, "12.12.12");
-			        stmt.setBlob(6, targetStream);
-			        stmt.execute();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
+
+		try {
+			InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "123");
+			stmt.setString(2, "121212");
+			stmt.setString(3, "Mathematic");
+			stmt.setString(4, "Algebra");
+			stmt.setString(5, "12.12.12");
+			stmt.setBlob(6, targetStream);
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void saveExtension(ExamExtension examExtension) {
+		PreparedStatement prepareStatement;
+		try {
+			prepareStatement = conn.prepareStatement("INSERT INTO ExamExtension VALUES (?,?,?,?);");
+			prepareStatement.setString(1, examExtension.getExamID());
+			prepareStatement.setString(2, examExtension.getTeacherID());
+			prepareStatement.setString(3, examExtension.getTimeExtension());
+			prepareStatement.setString(4, examExtension.getCasue());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
+				System.out.println("Extension sent to principal succuessfully");
 			}
-	       
+
+		} catch (SQLException e) {
+			System.err.println("Error occurred, Extension has not been sent ");
 		}
 	}
+}

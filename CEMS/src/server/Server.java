@@ -15,6 +15,7 @@ import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Exam;
+import models.ExamExtension;
 import models.ExamProcess;
 import models.ExecutedExam;
 import models.Question;
@@ -142,7 +143,14 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case EXAM_EXTENSION_REQUEST:
+		case EXTENSION_REQUEST:
+			ExamExtension examExtension = (ExamExtension) modelWrapperFromClient.getElement();
+			databaseController.saveExtension(examExtension);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		case OVERALL_STATISTICS:
@@ -211,7 +219,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case UPLOAD_FILE:
 			WordFile file = (WordFile) modelWrapperFromClient.getElement();
 			databaseController.UploadFile(file);

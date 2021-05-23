@@ -111,7 +111,8 @@ public class Client extends AbstractClient {
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				break;
 
-			case EXAM_EXTENSION_REQUEST:
+			case EXTENSION_REQUEST:
+				System.out.println("Extension has been sent suucessfully");
 				break;
 
 			case OVERALL_STATISTICS:
@@ -145,11 +146,11 @@ public class Client extends AbstractClient {
 			case GET_EXAMS_LIST_BY_COURSE:
 				exams = (List<Exam>) modelWrapperFromServer.getElements();
 				break;
-		
+
 			case UPLOAD_FILE:
 				System.out.println("FileUploaded.");
 				break;
-				
+
 			default:
 				break;
 

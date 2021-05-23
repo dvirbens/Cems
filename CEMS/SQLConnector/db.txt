@@ -68,6 +68,7 @@ CREATE TABLE ExamExtension (
 	examID varchar(255),
 	teacherID varchar(255),
 	timeExtension varchar(255),
+	cause varchar(255),
 	PRIMARY KEY(teacherID,examID),
 	FOREIGN KEY(examID) REFERENCES Exam(examID)
 );
