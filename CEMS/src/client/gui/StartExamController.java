@@ -62,10 +62,9 @@ public class StartExamController implements Initializable {
 	@FXML
 	private JFXTextField tfCode;
 
+	@FXML
+	private Label masgeLabel;
 
-    @FXML
-    private Label masgeLabel;
-	
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
 		String subjectSelected = cbExamSubject.getSelectionModel().getSelectedItem();
@@ -82,7 +81,7 @@ public class StartExamController implements Initializable {
 
 	}
 
-	private void setExamQuestioListButtons(List<Exam> exams) {
+	private List<Exam> setExamQuestioListButtons(List<Exam> exams) {
 
 		for (Exam exam : exams) {
 			JFXButton questionListButton = new JFXButton();
@@ -101,6 +100,7 @@ public class StartExamController implements Initializable {
 
 			exam.setQuestionListButton(questionListButton);
 		}
+		return exams;
 	}
 
 	@FXML
@@ -121,27 +121,17 @@ public class StartExamController implements Initializable {
 	void onClickStartExam(ActionEvent event) {
 		String code = tfCode.getText();
 		String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
-		boolean flag=true;
+		boolean flag = true;
 		masgeLabel.setStyle("-fx-text-fill: RED;");
-		
-		if(focusedExamID.isEmpty())
-		{
-			masgeLabel.setText("llll");
-			flag=false;
 
-		}
-		else if(code.isEmpty())
-		{
+		if (code.isEmpty()) {
 			masgeLabel.setText("You need to insert exam code");
-			flag=false;
-		} else if (code.length()!=4)
-		{
+			flag = false;
+		} else if (code.length() != 4) {
 			masgeLabel.setText("Exam code should have 4 digits");
-			flag=false;
+			flag = false;
 		}
-		
-		
-		
+
 		if (flag) {
 			masgeLabel.setText("");
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -182,10 +172,20 @@ public class StartExamController implements Initializable {
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(GET_EXAMS_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		ObservableList<Exam> exams = FXCollections.observableArrayList();
-		exams.addAll(Client.getExams());
+		List<Exam> examList = Client.getExams();
+		examList = setExamQuestioListButtons(examList);
+		examList = setTimeMinutes(examList);
+		exams.addAll(examList);
 		tvExamPool.setItems(exams);
-		setExamQuestioListButtons(Client.getExams());
+		tvExamPool.getSelectionModel().select(0);
 
+	}
+
+	private List<Exam> setTimeMinutes(List<Exam> exams) {
+		for (Exam exam : exams) {
+			exam.setDuration(exam.getDuration() + " min");
+		}
+		return exams;
 	}
 
 }
