@@ -84,6 +84,9 @@ public class CreateExamController implements Initializable {
 	private JFXComboBox<String> cbExamCourse;
 
 	@FXML
+	private Label messageLabel;
+
+	@FXML
 	private JFXComboBox<String> cbExamSubject;
 
 	private static List<ExamQuestion> examQuestionList;
@@ -147,16 +150,43 @@ public class CreateExamController implements Initializable {
 
 	@FXML
 	void onClickContinue(ActionEvent event) {
-		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
-		String course = cbExamCourse.getSelectionModel().getSelectedItem();
-		String duration = tfDuration.getText();
-		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty()) {
+		String subject, course, duration;
+		if (cbExamSubject.getSelectionModel().getSelectedItem() == null) {
+			subject = "";
+		} else {
+			subject = cbExamSubject.getSelectionModel().getSelectedItem();
+		}
+
+		if (cbExamCourse.getSelectionModel().getSelectedItem() == null) {
+			course = "";
+		} else {
+			course = cbExamCourse.getSelectionModel().getSelectedItem();
+		}
+		duration = tfDuration.getText();
+		List<ExamQuestion> examQuestion = getExamQuestionList();
+		messageLabel.setStyle("-fx-text-fill: RED;");
+
+		if (examQuestion.isEmpty()) {
+			messageLabel.setText("Question list is empty, please insert question");
+		} else if (subject.isEmpty()) {
+			messageLabel.setText("Please select exam subject");
+		} else if (course.isEmpty()) {
+			messageLabel.setText("Please select exam course");
+		} else if (duration.isEmpty()) {
+			messageLabel.setText("Please insert exam duration");
+		} else if (!isNumeric(duration)) {
+			messageLabel.setText("Duration must to be number value");
+		}
+
+		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestion != null
+				&& isNumeric(duration)) {
 			deletExamQuestionListButtons();
-			List<ExamQuestion> examQuestion = getExamQuestionList();
 			Exam newExam = new Exam(subject, Client.getUser().getUserID(), course, duration, examQuestion);
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
 			ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(newExam, CREATE_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			messageLabel.setStyle("-fx-text-fill: GREEN;");
+			messageLabel.setText(Client.getServerMessages());
 		}
 
 	}
@@ -189,7 +219,7 @@ public class CreateExamController implements Initializable {
 		ModelWrapper<Question> modelWrapper = new ModelWrapper<>(GET_QUESTION_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		addQuestionList();
-		
+
 		tvSelectedQuestion.setPlaceholder(new Label("No question were added to the list"));
 		cbQuestionSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 		cbExamSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
@@ -215,6 +245,18 @@ public class CreateExamController implements Initializable {
 
 	public static void setExamQuestionList(List<ExamQuestion> examQuestionList) {
 		CreateExamController.examQuestionList = examQuestionList;
+	}
+
+	public static boolean isNumeric(String strNum) {
+		if (strNum == null) {
+			return false;
+		}
+		try {
+			double d = Double.parseDouble(strNum);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 
 }

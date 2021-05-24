@@ -134,7 +134,7 @@ public class CreateQuestionController implements Initializable {
 		}
 
 		if (correctAnswer == -1) {
-			message.setText("You must choose one correct answer the list");
+			message.setText("You must choose one correct answer");
 			message.setStyle("-fx-text-fill: RED;");
 		} else {
 			message.setText("");
