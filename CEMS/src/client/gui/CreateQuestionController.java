@@ -14,6 +14,7 @@ import common.ModelWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import models.Question;
 import models.User;
@@ -45,6 +46,30 @@ public class CreateQuestionController implements Initializable {
 	private TextArea taAnswer4;
 
 	@FXML
+	private Label subjectError;
+
+	@FXML
+	private Label descriptionError;
+
+	@FXML
+	private Label answer1Error;
+
+	@FXML
+	private Label answer2Error;
+
+	@FXML
+	private Label answer3Error;
+
+	@FXML
+	private Label answer4Error;
+
+	@FXML
+	private Label correctAnswerError;
+
+	@FXML
+	private Label message;
+
+	@FXML
 	void cbCorrect(ActionEvent event) {
 
 	}
@@ -58,14 +83,72 @@ public class CreateQuestionController implements Initializable {
 		String answer3 = taAnswer3.getText();
 		String answer4 = taAnswer4.getText();
 		String teacherName = teacherUser.getFirstName() + " " + teacherUser.getLastName();
-		String subject = cbSubject.getSelectionModel().getSelectedItem();
-		int correctAnswer = cbCorrectAnswer.getSelectionModel().getSelectedItem();
+		String subject;
 
-		Question question = new Question(teacherName, subject, details, answer1, answer2, answer3, answer4,
-				correctAnswer);
+		if (cbSubject.getSelectionModel().getSelectedItem() == null)
+			subject = "";
+		else
+			subject = cbSubject.getSelectionModel().getSelectedItem();
 
-		ModelWrapper<Question> modelWrapper = new ModelWrapper<>(question, CREATE_QUESTION);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		int correctAnswer;
+
+		if (cbCorrectAnswer.getSelectionModel().getSelectedItem() == null)
+			correctAnswer = -1;
+		else
+			correctAnswer = cbCorrectAnswer.getSelectionModel().getSelectedItem();
+
+		if (subject.isEmpty()) {
+			subjectError.setText("You must choose subject from subject list");
+		} else {
+			subjectError.setText("");
+		}
+
+		if (details.isEmpty()) {
+			descriptionError.setText("You must write question description");
+		} else {
+			descriptionError.setText("");
+		}
+
+		if (answer1.isEmpty()) {
+			answer1Error.setText("answer can't be empty");
+		} else {
+			answer1Error.setText("");
+		}
+
+		if (answer2.isEmpty()) {
+			answer2Error.setText("answer can't be empty");
+		} else {
+			answer2Error.setText("");
+		}
+
+		if (answer3.isEmpty()) {
+			answer3Error.setText("answer can't be empty");
+		} else {
+			answer3Error.setText("");
+		}
+
+		if (answer4.isEmpty()) {
+			answer4Error.setText("answer can't be empty");
+		} else {
+			answer4Error.setText("");
+		}
+
+		if (correctAnswer == -1) {
+			message.setText("You must choose one correct answer the list");
+			message.setStyle("-fx-text-fill: RED;");
+		} else {
+			message.setText("");
+		}
+
+		if (!details.isEmpty() && !answer1.isEmpty() && !answer2.isEmpty() && !answer3.isEmpty() && !answer4.isEmpty()
+				&& !subject.isEmpty() && correctAnswer != -1) {
+			Question question = new Question(teacherName, subject, details, answer1, answer2, answer3, answer4,
+					correctAnswer);
+			ModelWrapper<Question> modelWrapper = new ModelWrapper<>(question, CREATE_QUESTION);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			message.setStyle("-fx-text-fill: GREEN;");
+			message.setText(Client.getServerMessages());
+		}
 
 	}
 

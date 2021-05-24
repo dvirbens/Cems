@@ -43,9 +43,9 @@ public class Client extends AbstractClient {
 	 */
 	private static Exam editTest;
 	/**
-	 * Value that hold the error message causing by server side.
+	 * Value that hold the messages server side sent.
 	 */
-	private static String errorMessage;
+	private static String serverMessages;
 
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
@@ -96,15 +96,15 @@ public class Client extends AbstractClient {
 				break;
 
 			case START_EXAM:
-				System.out.println("Exam has been started");
+				setServerMessages("Exam has been started");
 				break;
 
 			case CLOSE_EXAM:
-				System.out.println("Exam has been stopped");
+				setServerMessages("Exam has been stopped");
 				break;
 
 			case CREATE_QUESTION:
-				System.out.println("Question has been saved suucessfully");
+				setServerMessages("Question has been saved suucessfully");
 				break;
 
 			case EXAM_EXECUTE:
@@ -112,7 +112,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case EXTENSION_REQUEST:
-				System.out.println("Extension has been sent suucessfully");
+				setServerMessages("Extension has been sent suucessfully");
 				break;
 
 			case OVERALL_STATISTICS:
@@ -132,7 +132,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case CREATE_EXAM:
-				System.out.println("Exam has been saved successfully");
+				setServerMessages("Exam has been saved successfully");
 				break;
 
 			case GET_EXAMS_LIST:
@@ -148,7 +148,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case UPLOAD_FILE:
-				System.out.println("FileUploaded.");
+				setServerMessages("FileUploaded.");
 				break;
 
 			default:
@@ -215,20 +215,20 @@ public class Client extends AbstractClient {
 		Client.editTest = editTest;
 	}
 
-	public static String getErrorMessage() {
-		return errorMessage;
-	}
-
-	public static void setErrorMessage(String errorMessage) {
-		Client.errorMessage = errorMessage;
-	}
-
 	public static User getUser() {
 		return user;
 	}
 
 	public static void setUser(User user) {
 		Client.user = user;
+	}
+
+	public static String getServerMessages() {
+		return serverMessages;
+	}
+
+	public static void setServerMessages(String serverMessages) {
+		Client.serverMessages = serverMessages;
 	}
 
 	public static SubjectCourseCollection getSubjectCollection() {
