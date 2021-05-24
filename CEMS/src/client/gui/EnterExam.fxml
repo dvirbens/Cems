@@ -7,7 +7,7 @@
 <Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.StudentEnterExamController">
    <children>
       <JFXTextField fx:id="tfCode" layoutX="300.0" layoutY="303.0" prefHeight="31.0" prefWidth="129.0" promptText="Code" />
-      <JFXButton fx:id="btComputerizedExam" layoutX="239.0" layoutY="353.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Computerized exam" textFill="WHITE" />
-      <JFXButton fx:id="btManualExam" layoutX="407.0" layoutY="353.0" onAction="#OnClickEnterExam" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Manual exam" textFill="WHITE" />
+      <JFXButton fx:id="btComputerizedExam" layoutX="239.0" layoutY="353.0" onAction="#OnClickEnterComputerizedExam" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Computerized exam" textFill="WHITE" />
+      <JFXButton fx:id="btManualExam" layoutX="407.0" layoutY="353.0" onAction="#OnClickEnterManualExam" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Manual exam" textFill="WHITE" />
    </children>
 </Pane>

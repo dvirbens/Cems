@@ -1,14 +1,10 @@
 package server;
 
-import static common.ModelWrapper.Operation.EXAM_EXECUTE;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
-import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
-import static common.ModelWrapper.Operation.GET_USER;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import common.ModelWrapper;
@@ -17,6 +13,7 @@ import models.Database;
 import models.Exam;
 import models.ExamExtension;
 import models.ExamProcess;
+import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
 import models.User;
@@ -99,6 +96,17 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case GET_QUESTION_LIST_BY_EXAM_ID:
+			String examID = (String) modelWrapperFromClient.getElement();
+			List<ExamQuestion> questionListByExamID = databaseController.getExamQuestionsList(examID);
+			modelWrapperToClient = new ModelWrapper<ExamQuestion>(questionListByExamID, GET_QUESTION_LIST_BY_EXAM_ID);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
 		case TEST_STATISTICS:
 			break;
 
@@ -223,6 +231,33 @@ public class Server extends AbstractServer {
 		case UPLOAD_FILE:
 			WordFile file = (WordFile) modelWrapperFromClient.getElement();
 			databaseController.UploadFile(file);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case INSERT_STUDENT_TO_EXAM:
+			//Get code and check if examID exist, if so insert student to exam in DB
+			
+			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
+			studentID = elements.get(0);
+			String userCode = elements.get(1);
+			String type = elements.get(2);
+			int examID2 = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
+			modelWrapperToClient = new ModelWrapper<>(examID2, INSERT_STUDENT_TO_EXAM);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case GET_EXAM_ID:
+			String examCode = (String) modelWrapperFromClient.getElement();
+			examID = databaseController.GetExamID(examCode);
+			modelWrapperToClient = new ModelWrapper<>(examID, GET_EXAM_ID);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {

@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -463,13 +465,12 @@ public class DatabaseController {
 		return examList;
 	}
 
-	private List<ExamQuestion> getExamQuestionsList(String examID) {
+	public List<ExamQuestion> getExamQuestionsList(String examID) {
 
 		List<ExamQuestion> examQuestionsList = new ArrayList<>();
-
 		try {
 			Statement statement = conn.createStatement();
-			String examQuestionQuery = "SELECT * FROM ExamQuestion WHERE examID=\"" + examID + "\";";
+			String examQuestionQuery = "SELECT * FROM examquestion WHERE examID=\"" + examID + "\";";
 			ResultSet rsexamQuestion = statement.executeQuery(examQuestionQuery);
 			while (rsexamQuestion.next()) {
 				String questionID = rsexamQuestion.getString("questionID");
@@ -478,7 +479,7 @@ public class DatabaseController {
 				NoteType type = NoteType.valueOf(rsexamQuestion.getString("type"));
 
 				Statement statement2 = conn.createStatement();
-				String questionQuery = "SELECT * FROM Question WHERE questionID=\"" + questionID + "\";";
+				String questionQuery = "SELECT * FROM question WHERE questionID=\"" + questionID + "\";";
 				ResultSet rsQuestion = statement2.executeQuery(questionQuery);
 				if (rsQuestion.next()) {
 					String subject = rsQuestion.getString("Subject");
@@ -501,9 +502,9 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			System.err.println("ERROR #22642 - ERROR LOADING QUESTION FROM DATABASE");
 		}
-
 		return examQuestionsList;
 	}
+
 
 	public List<Exam> getExamList() {
 		List<Exam> examList = new ArrayList<>();
@@ -537,7 +538,7 @@ public class DatabaseController {
 
 		try {
 			Statement statement = conn.createStatement();
-			String courseQuery = "SELECT * FROM ExecutedExam WHERE studentID=\"" + studentID + "\";";
+			String courseQuery = "SELECT * FROM executedexambystudent WHERE studentID=\"" + studentID + "\";";
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String examID = rsQuestionOfCourse.getString("ExamID");
@@ -624,5 +625,67 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			System.err.println("Error occurred, Extension has not been sent ");
 		}
+	}
+	
+	public int CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
+		String sql = "SELECT examID FROM examprocess WHERE code = "+userCode;
+		String examID = "";
+		String subject = "";
+		String course = "";
+		try {
+			Statement statement = conn.createStatement();
+			ResultSet examID_RS = statement.executeQuery(sql);
+
+			if (examID_RS.next()) {
+				examID = examID_RS.getString("ExamID");
+			}
+			String sql2 = "SELECT Subject, Course FROM exam WHERE examID = " + examID;
+			ResultSet sc_RS = statement.executeQuery(sql2);
+			if (sc_RS.next()) {
+				subject = sc_RS.getString("Subject");
+				course = sc_RS.getString("Course");
+			}
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now();  
+		    
+		    String sql3 = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?, ?, ?);";
+		    PreparedStatement stmt = conn.prepareStatement(sql3);
+			
+			stmt.setString(1, studentID);
+			stmt.setString(2, examID);
+			stmt.setString(3, subject);
+			stmt.setString(4, course);
+			stmt.setString(5, dtf.format(now));
+			stmt.setString(6, type);
+			stmt.setString(7, null);
+			stmt.setString(8, null);
+			int resultSet = stmt.executeUpdate();
+			if (resultSet == 1) {
+				System.out.println("Student ID: " + studentID + " entered examID: " + examID + " in " +  dtf.format(now)+ " succuessfully");
+			}
+			return Integer.parseInt(examID);
+		
+		} catch (SQLException e) {
+			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
+		}
+		return -1;
+	}
+	
+	public String GetExamID(String userCode) {
+		String sql = "SELECT examID FROM examprocess WHERE code = "+userCode;
+		String examID = "";
+		try {
+			Statement statement = conn.createStatement();
+			ResultSet examID_RS = statement.executeQuery(sql);
+
+			if (examID_RS.next()) {
+				examID = examID_RS.getString("ExamID");
+			}
+			return examID;
+		
+		} catch (SQLException e) {
+			System.err.println("ERROR #223982 - EXAM ID NOT EXIST FOR CODE " + userCode);
+		}
+		return null;
 	}
 }

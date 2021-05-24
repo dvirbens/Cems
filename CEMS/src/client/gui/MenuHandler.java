@@ -116,6 +116,15 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setComputerizedTestScreen() {
+		try {
+			Pane computerizedTestPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedTest.fxml"));
+			mainFrame.setCenter(computerizedTestPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void setEnterExamScreen() {
 		try {

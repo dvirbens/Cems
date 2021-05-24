@@ -87,7 +87,7 @@ CREATE TABLE ExecutedExamByStudent (
     examID varchar(255),
 	Subject varchar(255),
     Course varchar(255),
-    ExecDate DATE,
+    ExecDate varchar(255),
     TestType varchar(255),
     Grade varchar(3),
     Copy blob
@@ -121,3 +121,6 @@ INSERT INTO  User VALUES ("308315035","1234","Dvir","Ben-simon","Dvirbens@gmail.
 INSERT INTO  User VALUES ("409024902","1234","Shehav","Hezi","Hezi@gmail.com",'Principal');
 
 
+INSERT INTO examquestion VALUES ("123", "abc", 100, "121212", "None");
+
+INSERT INTO question VALUES ("123", "Mathermatics", "Simpe question", "a", "b", "c", "d", 1, "Bla");
