@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -61,6 +62,10 @@ public class StartExamController implements Initializable {
 	@FXML
 	private JFXTextField tfCode;
 
+
+    @FXML
+    private Label masgeLabel;
+	
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
 		String subjectSelected = cbExamSubject.getSelectionModel().getSelectedItem();
@@ -115,10 +120,31 @@ public class StartExamController implements Initializable {
 	@FXML
 	void onClickStartExam(ActionEvent event) {
 		String code = tfCode.getText();
-		if (!code.isEmpty()) {
-			String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
+		String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
+		boolean flag=true;
+		masgeLabel.setStyle("-fx-text-fill: RED;");
+		
+		if(focusedExamID.isEmpty())
+		{
+			masgeLabel.setText("llll");
+			flag=false;
 
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		}
+		else if(code.isEmpty())
+		{
+			masgeLabel.setText("You need to insert exam code");
+			flag=false;
+		} else if (code.length()!=4)
+		{
+			masgeLabel.setText("Exam code should have 4 digits");
+			flag=false;
+		}
+		
+		
+		
+		if (flag) {
+			masgeLabel.setText("");
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			Date date = new Date();
 			String currentDate = formatter.format(date).toString();
 
