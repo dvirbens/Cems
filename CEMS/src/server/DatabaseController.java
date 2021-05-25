@@ -626,7 +626,7 @@ public class DatabaseController {
 		}
 	}
 
-	public int CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
+	public String CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
 		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
 		String examID = "";
 		String subject = "";
@@ -663,12 +663,12 @@ public class DatabaseController {
 				System.out.println("Student ID: " + studentID + " entered examID: " + examID + " in " + dtf.format(now)
 						+ " succuessfully");
 			}
-			return Integer.parseInt(examID);
+			return examID;
 
 		} catch (SQLException e) {
 			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
 		}
-		return -1;
+		return null;
 	}
 
 	public String GetExamID(String userCode) {
@@ -686,6 +686,33 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			System.err.println("ERROR #223982 - EXAM ID NOT EXIST FOR CODE " + userCode);
 		}
+		return null;
+	}
+	
+	public Exam GetExamByExamID(String examID)
+	{
+		Exam exam;
+
+		try {
+			Statement statement = conn.createStatement();
+			String Query = "SELECT * FROM exam WHERE examID=\"" + examID + "\";";
+			ResultSet rs = statement.executeQuery(Query);
+			if (rs.next()) {
+				String teacherID = rs.getString("teacherID");
+				String subject = rs.getString("Subject");
+				String course = rs.getString("Course");
+				String duration = rs.getString("Duration");
+				String teacherName = rs.getString("teacherName");
+				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
+				exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				exam.setTeacherName(teacherName);
+				return exam;
+			}
+
+		} catch (SQLException e) {
+			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
+		}
+
 		return null;
 	}
 }

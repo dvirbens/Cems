@@ -41,6 +41,10 @@ public class Client extends AbstractClient {
 	 */
 	private static String examCode;
 	/**
+	 * value that hold current executing exam
+	 */
+	private static Exam exam;
+	/**
 	 * 
 	 * 
 	 * /** Value the holds the list of question that will be shown on table user
@@ -176,6 +180,10 @@ public class Client extends AbstractClient {
 			case GET_QUESTION_LIST_BY_EXAM_ID:
 				questions = (List<Question>) modelWrapperFromServer.getElements();
 				break;
+				
+			case GET_EXAM_BY_EXAM_ID:
+				Client.setExam((Exam) modelWrapperFromServer.getElement());
+				break;
 
 			default:
 				break;
@@ -296,5 +304,15 @@ public class Client extends AbstractClient {
 	public static void setExamCode(String examCode) {
 		Client.examCode = examCode;
 	}
+
+	public static Exam getExam() {
+		return exam;
+	}
+
+	public static void setExam(Exam exam) {
+		Client.exam = exam;
+	}
+	
+	
 
 }

@@ -254,10 +254,10 @@ public class Server extends AbstractServer {
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
 			String type = elements.get(2);
-			int examID2 = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
-			modelWrapperToClient = new ModelWrapper<>(examID2, INSERT_STUDENT_TO_EXAM);
+			examID = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
+			modelWrapperToClient = new ModelWrapper<>(examID, INSERT_STUDENT_TO_EXAM);
 			try {
-				client.sendToClient(modelWrapperFromClient);
+				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -268,7 +268,18 @@ public class Server extends AbstractServer {
 			examID = databaseController.GetExamID(examCode);
 			modelWrapperToClient = new ModelWrapper<>(examID, GET_EXAM_ID);
 			try {
-				client.sendToClient(modelWrapperFromClient);
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case GET_EXAM_BY_EXAM_ID:
+			examID = (String) modelWrapperFromClient.getElement();
+			Exam exam = databaseController.GetExamByExamID(examID);
+			modelWrapperToClient = new ModelWrapper<>(exam, GET_EXAM_BY_EXAM_ID);
+			try {
+				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

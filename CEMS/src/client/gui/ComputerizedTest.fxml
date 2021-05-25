@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.StudentExecComputerizedTest">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="914.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.StudentExecComputerizedTest">
    <children>
-      <TableView fx:id="tvQuestions" layoutX="58.0" layoutY="81.0" prefHeight="300.0" prefWidth="700.0">
+      <TableView fx:id="tvQuestions" layoutX="122.0" layoutY="86.0" prefHeight="300.0" prefWidth="700.0">
          <columns>
             <TableColumn fx:id="tcQuestionNumber" prefWidth="122.0" style="-fx-alignment: center;" text="Num" />
             <TableColumn fx:id="tcQuestionPoints" prefWidth="91.0" style="-fx-alignment: center;" text="Points" />
@@ -25,7 +25,11 @@
       <JFXButton fx:id="btnSaveAnswer" layoutX="196.0" layoutY="653.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Save Answer" textFill="WHITE" />
       <TextArea fx:id="taSelectedQuestion" layoutX="153.0" layoutY="397.0" prefHeight="27.0" prefWidth="568.0" />
       <JFXButton fx:id="btnSubmitTest" layoutX="713.0" layoutY="653.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Submit Test" textFill="WHITE" />
-      <Label fx:id="lblPossibleAnswers" layoutX="39.0" layoutY="509.0" text="Possible Answers:" />
+      <Label fx:id="lblPossibleAnswers1" layoutX="34.0" layoutY="500.0" text="Possible Answers:" />
+      <JFXRadioButton fx:id="radio11" layoutX="158.0" layoutY="500.0" text="a" />
+      <JFXRadioButton fx:id="radio21" layoutX="158.0" layoutY="536.0" text="b" />
+      <JFXRadioButton fx:id="radio31" layoutX="158.0" layoutY="567.0" text="c" />
+      <JFXRadioButton fx:id="radio41" layoutX="158.0" layoutY="602.0" text="d" />
       <Pane layoutX="558.0" layoutY="36.0">
          <children>
             <Label fx:id="lblRemainingTime" text="Remaining Time:">
@@ -33,13 +37,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="tfRemainingTime" editable="false" layoutX="155.0" layoutY="1.0" prefHeight="25.0" prefWidth="91.0" />
+            <TextField fx:id="tfRemainingTime" layoutX="155.0" layoutY="1.0" prefHeight="25.0" prefWidth="91.0" />
          </children>
       </Pane>
-      <JFXRadioButton fx:id="radio1" layoutX="163.0" layoutY="509.0" text="a" />
-      <JFXRadioButton fx:id="radio2" layoutX="163.0" layoutY="545.0" text="b" />
-      <JFXRadioButton fx:id="radio3" layoutX="163.0" layoutY="576.0" text="c" />
-      <JFXRadioButton fx:id="radio4" layoutX="163.0" layoutY="611.0" text="d" />
       <TextField fx:id="tfNote" layoutX="153.0" layoutY="448.0" prefHeight="25.0" prefWidth="568.0" />
       <Label fx:id="lblNote" layoutX="71.0" layoutY="452.0" text="Note:" />
    </children>
