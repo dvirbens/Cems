@@ -4,8 +4,14 @@ import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
 import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_COURSE;
 import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
 import static common.ModelWrapper.Operation.START_EXAM;
+import static common.ModelWrapper.Operation.UPLOAD_FILE_TEACHER;
 import static models.ExamProcess.ExamType.*;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,8 +35,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import models.Exam;
 import models.ExamProcess;
+import models.WordFile;
+import models.ExamProcess.ExamType;
 
 public class StartExamController implements Initializable {
 
@@ -72,6 +81,10 @@ public class StartExamController implements Initializable {
 
 	@FXML
 	private JFXButton btnUpload;
+
+	private ExamType examType;
+
+	private String filePath;
 
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
@@ -128,37 +141,67 @@ public class StartExamController implements Initializable {
 	@FXML
 	void onClickStartExam(ActionEvent event) {
 		String code = tfCode.getText();
-		String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
 		boolean flag = true;
-		masgeLabel.setStyle("-fx-text-fill: RED;");
+		switch (examType) {
+		case COMPUTERIZED:
+			String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
+			masgeLabel.setStyle("-fx-text-fill: RED;");
 
-		if (code.isEmpty()) {
-			masgeLabel.setText("You need to insert exam code");
-			flag = false;
-		} else if (code.length() != 4) {
-			masgeLabel.setText("Exam code should have 4 digits");
-			flag = false;
-		}
+			if (code.isEmpty()) {
+				masgeLabel.setText("You need to insert exam code");
+				flag = false;
+			} else if (code.length() != 4) {
+				masgeLabel.setText("Exam code should have 4 digits");
+				flag = false;
+			}
 
-		if (flag) {
-			masgeLabel.setText("");
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-			Date date = new Date();
-			String currentDate = formatter.format(date).toString();
-			String teacherID = Client.getUser().getUserID();
+			if (flag) {
+				masgeLabel.setText("");
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+				Date date = new Date();
+				String currentDate = formatter.format(date).toString();
+				String teacherID = Client.getUser().getUserID();
 
-			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, teacherID, code, COMPUTERIZED);
+				ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, teacherID, code, COMPUTERIZED);
 
-			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
-			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+				ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
+				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-			for (Exam exam : Client.getExams()) {
-				if (exam.getId().equals(focusedExamID)) {
-					ExamManagementWindow examManagementWindow = new ExamManagementWindow(exam.getId(), code,
-							Integer.valueOf(exam.getDuration()));
-					examManagementWindow.open();
+				for (Exam exam : Client.getExams()) {
+					if (exam.getId().equals(focusedExamID)) {
+						ExamManagementWindow examManagementWindow = new ExamManagementWindow(code,
+								Integer.valueOf(exam.getDuration()));
+						examManagementWindow.open();
+					}
 				}
 			}
+			break;
+		case MANUAL:
+			uploadFile(filePath);
+			masgeLabel.setStyle("-fx-text-fill: RED;");
+
+			if (code.isEmpty()) {
+				masgeLabel.setText("You need to insert exam code");
+				flag = false;
+			} else if (code.length() != 4) {
+				masgeLabel.setText("Exam code should have 4 digits");
+				flag = false;
+			}
+
+			if (flag) {
+				masgeLabel.setText("");
+				SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+				Date date = new Date();
+				String currentDate = formatter.format(date).toString();
+				String teacherID = Client.getUser().getUserID();
+				ExamProcess examProcess = new ExamProcess(currentDate, teacherID, code, MANUAL);
+				ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
+				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+				ExamManagementWindow examManagementWindow = new ExamManagementWindow(code, 90);
+				examManagementWindow.open();
+			}
+
+			break;
 
 		}
 
@@ -193,8 +236,43 @@ public class StartExamController implements Initializable {
 
 	@FXML
 	void onClickUpload(ActionEvent event) {
+		filePath = chooseFile();
+		examType = ExamType.MANUAL;
+	}
+
+	private String chooseFile() {
 		tvExamPool.getSelectionModel().clearSelection();
-		System.out.println("Uploading file");
+		FileChooser fc = new FileChooser();
+		File file = fc.showOpenDialog(null);
+		if (file != null) {
+			masgeLabel.setStyle("-fx-text-fill: GREEN;");
+			masgeLabel.setText(file.getName() + " file has been Choosen");
+		} else {
+			masgeLabel.setStyle("-fx-text-fill: RED;");
+			masgeLabel.setText("File is not valid");
+		}
+		return file.getName();
+	}
+
+	private void uploadFile(String filePath) {
+		FileInputStream fileIn;
+		WordFile file = new WordFile();
+		if (filePath == null)
+			return;
+		try {
+			byte[] mybytearray = new byte[(int) filePath.length()];
+			fileIn = new FileInputStream(filePath);
+			BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
+			file.initArray(mybytearray.length);
+			file.setSize(mybytearray.length);
+			bufferIn.read(file.getMybytearray(), 0, mybytearray.length);
+			ModelWrapper<WordFile> modelWrapper = new ModelWrapper<>(file, UPLOAD_FILE_TEACHER);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private List<Exam> setTimeMinutes(List<Exam> exams) {

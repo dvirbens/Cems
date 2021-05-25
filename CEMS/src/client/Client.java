@@ -31,7 +31,7 @@ public class Client extends AbstractClient {
 	 * Value that hold the list of the executed tests of the user.
 	 */
 	private static List<ExecutedExam> execExams;
-	
+
 	/**
 	 * value that hold exam id of specific test
 	 */
@@ -41,10 +41,9 @@ public class Client extends AbstractClient {
 	 */
 	private static String examCode;
 	/**
-	
-	
-	/**
-	 * Value the holds the list of question that will be shown on table user
+	 * 
+	 * 
+	 * /** Value the holds the list of question that will be shown on table user
 	 * interface.
 	 */
 	private static List<Question> questions;
@@ -161,15 +160,18 @@ public class Client extends AbstractClient {
 			case UPLOAD_FILE:
 				setServerMessages("FileUploaded.");
 				break;
-				
+
+			case UPLOAD_FILE_TEACHER:
+				setServerMessages("FileUploaded.");
+				break;
+
 			case INSERT_STUDENT_TO_EXAM:
 				setExamID((String) modelWrapperFromServer.getElement());
 				break;
-				
+
 			case GET_EXAM_ID:
 				setExamID((String) modelWrapperFromServer.getElement());
 				break;
-
 
 			case GET_QUESTION_LIST_BY_EXAM_ID:
 				questions = (List<Question>) modelWrapperFromServer.getElements();
@@ -294,7 +296,5 @@ public class Client extends AbstractClient {
 	public static void setExamCode(String examCode) {
 		Client.examCode = examCode;
 	}
-	
-	
 
 }

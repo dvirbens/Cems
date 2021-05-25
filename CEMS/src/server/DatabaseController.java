@@ -505,7 +505,6 @@ public class DatabaseController {
 		return examQuestionsList;
 	}
 
-
 	public List<Exam> getExamList() {
 		List<Exam> examList = new ArrayList<>();
 
@@ -613,7 +612,7 @@ public class DatabaseController {
 		PreparedStatement prepareStatement;
 		try {
 			prepareStatement = conn.prepareStatement("INSERT INTO ExamExtension VALUES (?,?,?,?);");
-			prepareStatement.setString(1, examExtension.getExamID());
+			prepareStatement.setString(1, examExtension.getCode());
 			prepareStatement.setString(2, examExtension.getTeacherID());
 			prepareStatement.setString(3, examExtension.getTimeExtension());
 			prepareStatement.setString(4, examExtension.getCasue());
@@ -626,9 +625,9 @@ public class DatabaseController {
 			System.err.println("Error occurred, Extension has not been sent ");
 		}
 	}
-	
+
 	public int CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
-		String sql = "SELECT examID FROM examprocess WHERE code = "+userCode;
+		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
 		String examID = "";
 		String subject = "";
 		String course = "";
@@ -645,12 +644,12 @@ public class DatabaseController {
 				subject = sc_RS.getString("Subject");
 				course = sc_RS.getString("Course");
 			}
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
-			LocalDateTime now = LocalDateTime.now();  
-		    
-		    String sql3 = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?, ?, ?);";
-		    PreparedStatement stmt = conn.prepareStatement(sql3);
-			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+
+			String sql3 = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?, ?, ?);";
+			PreparedStatement stmt = conn.prepareStatement(sql3);
+
 			stmt.setString(1, studentID);
 			stmt.setString(2, examID);
 			stmt.setString(3, subject);
@@ -661,18 +660,19 @@ public class DatabaseController {
 			stmt.setString(8, null);
 			int resultSet = stmt.executeUpdate();
 			if (resultSet == 1) {
-				System.out.println("Student ID: " + studentID + " entered examID: " + examID + " in " +  dtf.format(now)+ " succuessfully");
+				System.out.println("Student ID: " + studentID + " entered examID: " + examID + " in " + dtf.format(now)
+						+ " succuessfully");
 			}
 			return Integer.parseInt(examID);
-		
+
 		} catch (SQLException e) {
 			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
 		}
 		return -1;
 	}
-	
+
 	public String GetExamID(String userCode) {
-		String sql = "SELECT examID FROM examprocess WHERE code = "+userCode;
+		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
 		String examID = "";
 		try {
 			Statement statement = conn.createStatement();
@@ -682,7 +682,7 @@ public class DatabaseController {
 				examID = examID_RS.getString("ExamID");
 			}
 			return examID;
-		
+
 		} catch (SQLException e) {
 			System.err.println("ERROR #223982 - EXAM ID NOT EXIST FOR CODE " + userCode);
 		}

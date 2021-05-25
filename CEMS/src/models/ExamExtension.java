@@ -8,29 +8,29 @@ public class ExamExtension implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String examID;
+	private String code;
 	private String teacherID;
 	private String teacherName;
 	private String timeExtension;
 	private String casue;
 
-	public ExamExtension(String examID, String teacherID, String teacherName, String timeExtension, String casue) {
+	public ExamExtension(String code, String teacherID, String teacherName, String timeExtension, String casue) {
 		super();
-		this.examID = examID;
+		this.code = code;
 		this.teacherID = teacherID;
 		this.teacherName = teacherName;
 		this.timeExtension = timeExtension;
 		this.casue = casue;
 	}
-
-	public String getExamID() {
-		return examID;
+	
+	public String getCode() {
+		return code;
 	}
 
-	public void setExamID(String examID) {
-		this.examID = examID;
+	public void setCode(String code) {
+		this.code = code;
 	}
-
+	
 	public String getTeacherID() {
 		return teacherID;
 	}
@@ -65,8 +65,8 @@ public class ExamExtension implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ExamExtension [examID=" + examID + ", teacherID=" + teacherID + ", teacherName=" + teacherName
+		return "ExamExtension [code=" + code + ", teacherID=" + teacherID + ", teacherName=" + teacherName
 				+ ", timeExtension=" + timeExtension + ", casue=" + casue + "]";
 	}
-
+	
 }

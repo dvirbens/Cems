@@ -30,6 +30,14 @@ public class ExamProcess implements Serializable {
 		this.type = type;
 	}
 
+	public ExamProcess(String date, String teacherID, String code, ExamType type) {
+		super();
+		this.date = date;
+		this.teacherID = teacherID;
+		this.code = code;
+		this.type = type;
+	}
+
 	public String getExamID() {
 		return examID;
 	}

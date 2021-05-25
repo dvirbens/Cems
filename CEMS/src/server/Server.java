@@ -106,7 +106,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case TEST_STATISTICS:
 			break;
 
@@ -237,10 +237,19 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
+		case UPLOAD_FILE_TEACHER:
+			/*
+			 * WordFile fileFromTeacher = (WordFile) modelWrapperFromClient.getElement();
+			 * databaseController.UploadFile(fileFromTeacher); try {
+			 * client.sendToClient(modelWrapperFromClient); } catch (IOException e) {
+			 * e.printStackTrace(); }
+			 */
+			break;
+
 		case INSERT_STUDENT_TO_EXAM:
-			//Get code and check if examID exist, if so insert student to exam in DB
-			
+			// Get code and check if examID exist, if so insert student to exam in DB
+
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
@@ -253,7 +262,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GET_EXAM_ID:
 			String examCode = (String) modelWrapperFromClient.getElement();
 			examID = databaseController.GetExamID(examCode);

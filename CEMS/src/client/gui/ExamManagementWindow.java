@@ -39,12 +39,10 @@ public class ExamManagementWindow {
 	private Label timerLabel;
 	private HBox requestSection;
 	private boolean requestFlag;
-	private String examID;
 
-	public ExamManagementWindow(String examID, String code, int minutes) {
+	public ExamManagementWindow(String code, int minutes) {
 		this.code = code;
 		this.minutes = minutes;
-		this.examID = examID;
 	}
 
 	public void open() {
@@ -141,7 +139,7 @@ public class ExamManagementWindow {
 				String time = ((JFXTextField) requestSection.getChildren().get(0)).getText();
 				String teacherName = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
 				String teacherID = Client.getUser().getUserID();
-				ExamExtension extesnion = new ExamExtension(examID, teacherID, teacherName, time, cause);
+				ExamExtension extesnion = new ExamExtension(code, teacherID, teacherName, time, cause);
 				ModelWrapper<ExamExtension> modelWrapper = new ModelWrapper<>(extesnion, EXTENSION_REQUEST);
 				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			}
