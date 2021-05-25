@@ -1,11 +1,9 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -26,9 +24,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import models.Exam;
 import models.ExamQuestion;
-import models.Question;
+import models.ExamQuestion.NoteType;
 
 public class StudentExecComputerizedTest implements Initializable{
 
@@ -125,41 +124,19 @@ public class StudentExecComputerizedTest implements Initializable{
 		questions.addAll(exam.getExamQuestions());
 		tvQuestions.setItems((ObservableList<ExamQuestion>) questions);
     	
-    	//tcQuestionNumber.setCellValueFactory(new PropertyValueFactory<Number, String>(tvQuestions.getItems().indexOf(tcQuestionNumber.getValue()));
+		
 		tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
     	tcQuestionContent.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("details"));
     	tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>(""));
     	
-    	taSelectedQuestion.setText(exam.getExamQuestions().get(0).getDetails());
-    	System.out.println(exam.getExamQuestions().get(0).getDetails());
-    	
-    	tvQuestions.getSelectionModel().getSelectedCells().get(2);
-    	
-    	/*
-    	tcQuestionNumber.setCellFactory(col -> new TableCell<Task, String>() {
-    	    @Override
-    	    protected void updateIndex(int index) {
-    	        super.updateIndex(index);
-    	        if (isEmpty() || index < 0) {
-    	            setText(null);
-    	        } else {
-    	            setText(Integer.toString(index));
-    	        }
+    	tvQuestions.getSelectionModel().select(0);
+    	onRowClick();
+    	tvQuestions.setOnMouseClicked((MouseEvent event) -> {
+    	    if (event.getClickCount() > 0) {
+    	    	onRowClick();
     	    }
     	});
-		
 
-		//String userID = Client.getUser().getUserID();
-
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
-		ObservableList<ExecutedExam> exams = FXCollections.observableArrayList();
-		exams.addAll(Client.getExecExams());
-		tvExExams.setItems(exams);
-
-		setExamGetCopyButtons(Client.getExecExams());
-    	 */
 		}
     
     public void setRemainingTime()
@@ -189,6 +166,27 @@ public class StudentExecComputerizedTest implements Initializable{
     	return elapsedMinutes;
     	
     }
+    
+	public void onRowClick() {
+	    // check the table's selected item and get selected item
+	    if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
+	    	ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
+	    	taSelectedQuestion.setText(selectedRow.getDetails());
+	    	if (selectedRow.getNoteType() == NoteType.Students)
+	    	{
+	    		tfNote.setText(selectedRow.getNote());
+	    	}
+	    	else
+	    	{
+	    		tfNote.setText("");
+	    	}
+	    	
+	    	radio1.setText(selectedRow.getAnswer1());
+	    	radio2.setText(selectedRow.getAnswer2());
+	    	radio3.setText(selectedRow.getAnswer3());
+	    	radio4.setText(selectedRow.getAnswer4());
+	    }
+	}
     
 }
     
