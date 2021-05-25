@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -26,18 +27,23 @@
       <TextArea fx:id="taSelectedQuestion" layoutX="153.0" layoutY="397.0" prefHeight="27.0" prefWidth="568.0" />
       <JFXButton fx:id="btnSubmitTest" layoutX="713.0" layoutY="653.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Submit Test" textFill="WHITE" />
       <Label fx:id="lblPossibleAnswers1" layoutX="34.0" layoutY="500.0" text="Possible Answers:" />
-      <JFXRadioButton fx:id="radio11" layoutX="158.0" layoutY="500.0" text="a" />
-      <JFXRadioButton fx:id="radio21" layoutX="158.0" layoutY="536.0" text="b" />
-      <JFXRadioButton fx:id="radio31" layoutX="158.0" layoutY="567.0" text="c" />
-      <JFXRadioButton fx:id="radio41" layoutX="158.0" layoutY="602.0" text="d" />
-      <Pane layoutX="558.0" layoutY="36.0">
+      <JFXRadioButton fx:id="radio1" layoutX="158.0" layoutY="500.0" text="a">
+         <toggleGroup>
+            <ToggleGroup fx:id="AnswersGroup" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="radio2" layoutX="158.0" layoutY="536.0" text="b" toggleGroup="$AnswersGroup" />
+      <JFXRadioButton fx:id="radio3" layoutX="158.0" layoutY="567.0" text="c" toggleGroup="$AnswersGroup" />
+      <JFXRadioButton fx:id="radio4" layoutX="158.0" layoutY="602.0" text="d" toggleGroup="$AnswersGroup" />
+      <Pane layoutX="558.0" layoutY="36.0" prefHeight="27.0" prefWidth="279.0">
          <children>
             <Label fx:id="lblRemainingTime" text="Remaining Time:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="tfRemainingTime" layoutX="155.0" layoutY="1.0" prefHeight="25.0" prefWidth="91.0" />
+            <TextField fx:id="tfRemainingTime" layoutX="153.0" layoutY="1.0" prefHeight="25.0" prefWidth="43.0" />
+            <Label layoutX="204.0" layoutY="7.0" text="Minutes" />
          </children>
       </Pane>
       <TextField fx:id="tfNote" layoutX="153.0" layoutY="448.0" prefHeight="25.0" prefWidth="568.0" />

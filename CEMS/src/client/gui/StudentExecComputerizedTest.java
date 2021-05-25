@@ -24,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamQuestion;
@@ -32,19 +33,19 @@ import models.Question;
 public class StudentExecComputerizedTest implements Initializable{
 
     @FXML
-    private TableView<Question> tvQuestions;
+    private TableView<ExamQuestion> tvQuestions;
 
     @FXML
-    private TableColumn<Question, Integer> tcQuestionNumber;
+    private TableColumn<ExamQuestion, Integer> tcQuestionNumber;
 
     @FXML
     private TableColumn<ExamQuestion, Integer> tcQuestionPoints;
 
     @FXML
-    private TableColumn<Question, String> tcQuestionContent;
+    private TableColumn<ExamQuestion, String> tcQuestionContent;
 
     @FXML
-    private TableColumn<Question, String> tcFilled;
+    private TableColumn<ExamQuestion, String> tcFilled;
 
     @FXML
     private Label lblQuestions;
@@ -81,6 +82,9 @@ public class StudentExecComputerizedTest implements Initializable{
 
     @FXML
     private JFXRadioButton radio4;
+    
+    @FXML
+    private ToggleGroup AnswersGroup;
 
     @FXML
     private TextField tfNote;
@@ -89,6 +93,10 @@ public class StudentExecComputerizedTest implements Initializable{
     private Label lblNote;
     
     private long startTime;
+    
+    private Exam exam;
+    
+    private long duration;
     
     public void initialize(URL location, ResourceBundle resources) {
 		//setStudentIDTextField();
@@ -108,19 +116,24 @@ public class StudentExecComputerizedTest implements Initializable{
 		//Get exam
 		modelWrapper = new ModelWrapper<String>(examID, GET_EXAM_BY_EXAM_ID);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
-
+		exam = Client.getExam();
+		
+		duration = Long.parseLong(exam.getDuration());
+		System.out.println("DURATION: " + duration);
     	
-		ObservableList<Question> questions = FXCollections.observableArrayList();
-		questions.addAll((ArrayList<Question>) Client.getQuestions());
-		tvQuestions.setItems((ObservableList<Question>) questions);
+		ObservableList<ExamQuestion> questions = FXCollections.observableArrayList();
+		questions.addAll(exam.getExamQuestions());
+		tvQuestions.setItems((ObservableList<ExamQuestion>) questions);
     	
     	//tcQuestionNumber.setCellValueFactory(new PropertyValueFactory<Number, String>(tvQuestions.getItems().indexOf(tcQuestionNumber.getValue()));
 		tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
-    	tcQuestionContent.setCellValueFactory(new PropertyValueFactory<Question, String>("details"));
-    	tcFilled.setCellValueFactory(new PropertyValueFactory<Question, String>(""));
+    	tcQuestionContent.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("details"));
+    	tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>(""));
     	
-
+    	taSelectedQuestion.setText(exam.getExamQuestions().get(0).getDetails());
+    	System.out.println(exam.getExamQuestions().get(0).getDetails());
+    	
+    	tvQuestions.getSelectionModel().getSelectedCells().get(2);
     	
     	/*
     	tcQuestionNumber.setCellFactory(col -> new TableCell<Task, String>() {
@@ -168,20 +181,14 @@ public class StudentExecComputerizedTest implements Initializable{
     
     public long calcTime()
     {
-    	long elapsedTime = System.currentTimeMillis() - startTime;
+    	long elapsedTime = duration*60*1000 - (System.currentTimeMillis() - startTime);
     	long elapsedSeconds = elapsedTime / 1000;
     	long secondsDisplay = elapsedSeconds % 60;
     	long elapsedMinutes = elapsedSeconds / 60;
 
-    	return elapsedSeconds;
+    	return elapsedMinutes;
     	
     }
-    /*
-    public long getTestDuration()
-    {
-    	
-    }
-    */
     
 }
     
