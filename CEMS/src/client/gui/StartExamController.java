@@ -1,6 +1,11 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_COURSE;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
+import static common.ModelWrapper.Operation.START_EXAM;
+import static models.ExamProcess.ExamType.*;
+
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,6 +69,9 @@ public class StartExamController implements Initializable {
 
 	@FXML
 	private Label masgeLabel;
+
+	@FXML
+	private JFXButton btnUpload;
 
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
@@ -137,8 +145,10 @@ public class StartExamController implements Initializable {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			Date date = new Date();
 			String currentDate = formatter.format(date).toString();
+			String teacherID = Client.getUser().getUserID();
 
-			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, Client.getUser().getUserID(), code);
+			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, teacherID, code, COMPUTERIZED);
+
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
@@ -179,6 +189,12 @@ public class StartExamController implements Initializable {
 		tvExamPool.setItems(exams);
 		tvExamPool.getSelectionModel().select(0);
 
+	}
+
+	@FXML
+	void onClickUpload(ActionEvent event) {
+		tvExamPool.getSelectionModel().clearSelection();
+		System.out.println("Uploading file");
 	}
 
 	private List<Exam> setTimeMinutes(List<Exam> exams) {

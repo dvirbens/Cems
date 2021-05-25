@@ -43,15 +43,6 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
-				<JFXButton fx:id="btnStatistic" onAction="#onClickExamStatistic" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Exam Statistic" textFill="WHITE">
-					<graphic>
-						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-							<image>
-								<Image url="@../../../images/statistic.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</JFXButton>
             <JFXButton fx:id="btnGradeApproval" onAction="#onClickGradeApproval" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Grade Approval" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -61,6 +52,15 @@
                   </ImageView>
                </graphic>
             </JFXButton>
+				<JFXButton fx:id="btnStatistic" onAction="#onClickExamStatistic" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Exam Statistic" textFill="WHITE">
+					<graphic>
+						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../../images/statistic.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</JFXButton>
             <JFXButton fx:id="btnLogout" onAction="#onClickLogout" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Logout" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

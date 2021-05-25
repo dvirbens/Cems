@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -29,16 +30,21 @@
             <TableColumn fx:id="tcQuestionList" prefWidth="116.0" style="-fx-alignment: center;" text="Question List" />
         </columns>
       </TableView>
-      <VBox alignment="CENTER" layoutX="186.0" layoutY="676.0" spacing="10.0">
+      <VBox alignment="CENTER" layoutX="70.0" layoutY="682.0" spacing="10.0">
          <children>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
+                  <JFXButton fx:id="btnUpload" onAction="#onClickUpload" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Upload Manual Exam" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </JFXButton>
                   <Label text="Enter four digits code:" textFill="#333333">
                      <font>
                         <Font name="Calibri Bold" size="16.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="tfCode" focusColor="#48a832" prefHeight="31.0" prefWidth="117.0" promptText="Exam Code" style="-fx-alignment: center;" />
+                  <JFXTextField fx:id="tfCode" focusColor="#48a832" prefHeight="31.0" prefWidth="127.0" promptText="Exam Code" style="-fx-alignment: center;" />
                   <JFXButton fx:id="btnStartExam" onAction="#onClickStartExam" prefHeight="41.0" prefWidth="97.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Start Exam" textFill="WHITE" />
                </children>
             </HBox>

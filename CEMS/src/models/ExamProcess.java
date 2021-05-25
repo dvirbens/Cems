@@ -10,8 +10,9 @@ public class ExamProcess implements Serializable {
 	private String teacherID;
 	private String timeExtension;
 	private String code;
+	private ExamType type;
 
-	enum ExamType {
+	public enum ExamType {
 		COMPUTERIZED, MANUAL
 	}
 
@@ -20,12 +21,13 @@ public class ExamProcess implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ExamProcess(String examID, String date, String teacherID, String code) {
+	public ExamProcess(String examID, String date, String teacherID, String code, ExamType type) {
 		super();
 		this.examID = examID;
 		this.date = date;
 		this.teacherID = teacherID;
 		this.code = code;
+		this.type = type;
 	}
 
 	public String getExamID() {
@@ -77,5 +79,5 @@ public class ExamProcess implements Serializable {
 		return "ExamProcess [examID=" + examID + ", date=" + date + ", teacherID=" + teacherID + ", timeExtension="
 				+ timeExtension + ", code=" + code + "]";
 	}
-	
+
 }
