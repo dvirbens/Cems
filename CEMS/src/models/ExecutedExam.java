@@ -24,6 +24,16 @@ public class ExecutedExam implements Serializable {
 		this.testType = testType;
 		this.grade = grade;
 	}
+	
+	public ExecutedExam(String id, String subject, String course, String execDate, String testType) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.course = course;
+		this.execDate = execDate;
+		this.testType = testType;
+		this.grade = grade;
+	}
 
 	public String getId() {
 		return id;

@@ -467,7 +467,7 @@ public class DatabaseController {
 		return examList;
 	}
 
-	public List<ExecutedExam> getExecutedExamListByID(String studentID) {
+	public List<ExecutedExam> getExecutedExamListByStudentID(String studentID) {
 		List<ExecutedExam> examList = new ArrayList<>();
 
 		try {
@@ -493,54 +493,44 @@ public class DatabaseController {
 
 		return examList;
 	}
-/*
-	public void startExam(ExamProcess examProcess) {
-		PreparedStatement prepareStatement;
-		try {
-			switch (examProcess.getType()) {
-			case Computerized:
-				prepareStatement = conn.prepareStatement(
-						"INSERT INTO ExamProcess(examID,code,teacherID,startDate,type) VALUES (?,?,?,?,?);");
-				prepareStatement.setString(1, examProcess.getComputerizedExamID());
-				prepareStatement.setString(2, examProcess.getCode());
-				prepareStatement.setString(3, examProcess.getTeacherID());
-				prepareStatement.setString(4, examProcess.getDate());
-				prepareStatement.setString(5, examProcess.getType().toString());
-				int resultSetComputerized = prepareStatement.executeUpdate();
-				if (resultSetComputerized == 1) {
-					System.out.println("Computerized Exam started Succuessfully");
-				}
-				break;
 
-			case Manual:
-				WordFile wordFile = examProcess.getManualFile();
-				InputStream targetStream = new ByteArrayInputStream(wordFile.getMybytearray());
-				prepareStatement = conn.prepareStatement(
-						"INSERT INTO ExamProcess(code,type,startDate,manualSubject,manualCourse,manualDuration,teacherID,manualExam) VALUES (?,?,?,?,?,?,?,?);");
-				prepareStatement.setString(1, examProcess.getCode());
-				prepareStatement.setString(2, examProcess.getType().toString());
-				prepareStatement.setString(3, examProcess.getDate());
-				prepareStatement.setString(4, examProcess.getManualSubject());
-				prepareStatement.setString(5, examProcess.getManulCourse());
-				prepareStatement.setString(6, examProcess.getManualDuration());
-				prepareStatement.setString(7, examProcess.getTeacherID());
-				prepareStatement.setBlob(8, targetStream);
-				int resultSetManual = prepareStatement.executeUpdate();
-				if (resultSetManual == 1) {
-					System.out.println("Manual Exam started Succuessfully");
-				}
-
-				break;
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("Error occurred, exam has not been started ");
-		}
-	}
-
-*/
+	/*
+	 * public void startExam(ExamProcess examProcess) { PreparedStatement
+	 * prepareStatement; try { switch (examProcess.getType()) { case Computerized:
+	 * prepareStatement = conn.prepareStatement(
+	 * "INSERT INTO ExamProcess(examID,code,teacherID,startDate,type) VALUES (?,?,?,?,?);"
+	 * ); prepareStatement.setString(1, examProcess.getComputerizedExamID());
+	 * prepareStatement.setString(2, examProcess.getCode());
+	 * prepareStatement.setString(3, examProcess.getTeacherID());
+	 * prepareStatement.setString(4, examProcess.getDate());
+	 * prepareStatement.setString(5, examProcess.getType().toString()); int
+	 * resultSetComputerized = prepareStatement.executeUpdate(); if
+	 * (resultSetComputerized == 1) {
+	 * System.out.println("Computerized Exam started Succuessfully"); } break;
+	 * 
+	 * case Manual: WordFile wordFile = examProcess.getManualFile(); InputStream
+	 * targetStream = new ByteArrayInputStream(wordFile.getMybytearray());
+	 * prepareStatement = conn.prepareStatement(
+	 * "INSERT INTO ExamProcess(code,type,startDate,manualSubject,manualCourse,manualDuration,teacherID,manualExam) VALUES (?,?,?,?,?,?,?,?);"
+	 * ); prepareStatement.setString(1, examProcess.getCode());
+	 * prepareStatement.setString(2, examProcess.getType().toString());
+	 * prepareStatement.setString(3, examProcess.getDate());
+	 * prepareStatement.setString(4, examProcess.getManualSubject());
+	 * prepareStatement.setString(5, examProcess.getManulCourse());
+	 * prepareStatement.setString(6, examProcess.getManualDuration());
+	 * prepareStatement.setString(7, examProcess.getTeacherID());
+	 * prepareStatement.setBlob(8, targetStream); int resultSetManual =
+	 * prepareStatement.executeUpdate(); if (resultSetManual == 1) {
+	 * System.out.println("Manual Exam started Succuessfully"); }
+	 * 
+	 * break;
+	 * 
+	 * }
+	 * 
+	 * } catch (SQLException e) { e.printStackTrace();
+	 * System.err.println("Error occurred, exam has not been started "); } }
+	 * 
+	 */
 	public void closeExam(String code) {
 		try {
 			Statement statement = conn.createStatement();
@@ -673,6 +663,54 @@ public class DatabaseController {
 
 		} catch (SQLException e) {
 			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
+		}
+
+		return null;
+	}
+
+	public List<ExecutedExam> getExecutedExamListByTeacherID(String teacherID) {
+		List<ExecutedExam> examList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String executedExamQuery = "SELECT examID,execDate,type FROM executedExam WHERE teacherID=\"" + teacherID
+					+ "\";";
+			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
+			while (rsExecutedExam.next()) {
+				String examID = rsExecutedExam.getString("ExamID");
+				String execDate = rsExecutedExam.getString("execDate");
+				String type = rsExecutedExam.getString("type");
+				//List<String> examDetails = getExamDetailsByExamId(examID);
+				//ExecutedExam executedExam = new ExecutedExam(examID, examDetails.get(0), examDetails.get(1), execDate, type);
+				//System.out.println(executedExam);
+				//examList.add(executedExam);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
+		}
+
+		return examList;
+	}
+
+	private List<String> getExamDetailsByExamId(String examID) {
+		List<String> examDetails = new ArrayList<>();
+		try {
+			Statement statement = conn.createStatement();
+			String examQuery = "SELECT * FROM Exam WHERE examID=\"" + examID + "\";";
+			ResultSet rsExam = statement.executeQuery(examQuery);
+			if (rsExam.next()) {
+				String subject = rsExam.getString("Subject");
+				String course = rsExam.getString("Course");
+				examDetails.add(subject);
+				examDetails.add(course);
+				return examDetails;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #223688 - ERROR LOADING EXAM FROM DATABASE");
 		}
 
 		return null;

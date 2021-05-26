@@ -75,14 +75,14 @@ CREATE TABLE ExamExtension (
 	FOREIGN KEY(code) REFERENCES Exam(code)
 );
 
-
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
 	code varchar(255),
 	teacherID varchar(255),
 	median double,
 	avg double,
-	PRIMARY KEY(examID,code),
+	type ENUM('Manual','Computerized'),
+	PRIMARY KEY(examID,code)
 );
 
 ADD CODE TO THIS TABLE ->

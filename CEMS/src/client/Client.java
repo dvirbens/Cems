@@ -109,6 +109,10 @@ public class Client extends AbstractClient {
 			case TEST_STATISTICS:
 				break;
 
+			case GET_EXECUTED_EXAM_LIST:
+				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
+				break;
+
 			case START_EXAM_SUCCESS:
 				setServerMessages("Exam has been started");
 
