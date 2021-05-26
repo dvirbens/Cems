@@ -14,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.StudentExecComputerizedTest">
    <children>
-      <TableView fx:id="tvQuestions" layoutX="65.0" layoutY="90.0" prefHeight="300.0" prefWidth="654.0" stylesheets="@style.css">
+      <TableView fx:id="tvQuestions" layoutX="65.0" layoutY="90.0" prefHeight="266.0" prefWidth="654.0" stylesheets="@style.css">
          <columns>
             <TableColumn fx:id="tcQuestionNumber" prefWidth="122.0" style="-fx-alignment: center;" text="Num" />
             <TableColumn fx:id="tcQuestionPoints" prefWidth="91.0" style="-fx-alignment: center;" text="Points" />
@@ -23,21 +23,21 @@
          </columns>
       </TableView>
       <Label fx:id="lblQuestions" layoutX="58.0" layoutY="49.0" text="Questions:" />
-      <Label fx:id="lblSelectedQuestion" layoutX="37.0" layoutY="407.0" text="Selected question:" />
-      <JFXButton fx:id="btnSaveAnswer" layoutX="196.0" layoutY="653.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Save Answer" textFill="WHITE" />
-      <TextArea fx:id="taSelectedQuestion" layoutX="153.0" layoutY="397.0" prefHeight="37.0" prefWidth="568.0" />
-      <JFXButton fx:id="btnSubmitTest" layoutX="633.0" layoutY="653.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Submit Test" textFill="WHITE" />
-      <Label fx:id="lblPossibleAnswers1" layoutX="34.0" layoutY="500.0" text="Possible Answers:" />
-      <JFXRadioButton fx:id="radio1" layoutX="158.0" layoutY="500.0" text="a">
+      <Label fx:id="lblSelectedQuestion" layoutX="28.0" layoutY="405.0" text="Question Description:" />
+      <JFXButton fx:id="btnSaveAnswer" layoutX="199.0" layoutY="686.0" onAction="#onSaveClick" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Save Answer" textFill="WHITE" />
+      <TextArea fx:id="taSelectedQuestion" layoutX="153.0" layoutY="397.0" prefHeight="67.0" prefWidth="568.0" />
+      <JFXButton fx:id="btnSubmitTest" layoutX="622.0" layoutY="686.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Submit Test" textFill="WHITE" />
+      <Label fx:id="lblPossibleAnswers1" layoutX="34.0" layoutY="534.0" text="Possible Answers:" />
+      <JFXRadioButton fx:id="radio1" layoutX="158.0" layoutY="534.0" text="a">
          <toggleGroup>
             <ToggleGroup fx:id="AnswersGroup" />
          </toggleGroup>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="radio2" layoutX="158.0" layoutY="536.0" text="b" toggleGroup="$AnswersGroup" />
-      <JFXRadioButton fx:id="radio3" layoutX="158.0" layoutY="567.0" text="c" toggleGroup="$AnswersGroup" />
-      <JFXRadioButton fx:id="radio4" layoutX="158.0" layoutY="602.0" text="d" toggleGroup="$AnswersGroup" />
-      <TextField fx:id="tfNote" layoutX="153.0" layoutY="448.0" prefHeight="25.0" prefWidth="568.0" />
-      <Label fx:id="lblNote" layoutX="71.0" layoutY="452.0" text="Note:" />
+      <JFXRadioButton fx:id="radio2" layoutX="158.0" layoutY="570.0" text="b" toggleGroup="$AnswersGroup" />
+      <JFXRadioButton fx:id="radio3" layoutX="158.0" layoutY="601.0" text="c" toggleGroup="$AnswersGroup" />
+      <JFXRadioButton fx:id="radio4" layoutX="158.0" layoutY="636.0" text="d" toggleGroup="$AnswersGroup" />
+      <TextField fx:id="tfNote" layoutX="153.0" layoutY="484.0" prefHeight="25.0" prefWidth="568.0" />
+      <Label fx:id="lblNote" layoutX="66.0" layoutY="488.0" text="Note:" />
       <HBox layoutX="499.0" layoutY="19.0" prefHeight="30.0" prefWidth="222.0">
          <children>
             <Label fx:id="lblRemainingTime" text="Remaining Time:">

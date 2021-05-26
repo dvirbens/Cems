@@ -5,6 +5,7 @@ import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
@@ -14,9 +15,11 @@ import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -25,6 +28,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -101,7 +105,9 @@ public class StudentExecComputerizedTest implements Initializable{
     
     private long duration;
     
-    private Integer[] answersArr;
+    private int[] answersArr;
+    
+    private int selectedRadio;
     
     public void initialize(URL location, ResourceBundle resources) {
 		//setStudentIDTextField();
@@ -122,6 +128,8 @@ public class StudentExecComputerizedTest implements Initializable{
 		modelWrapper = new ModelWrapper<String>(examID, GET_EXAM_BY_EXAM_ID);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		exam = Client.getExam();
+		
+		answersArr = new int[exam.getExamQuestions().size()];
 		
 		duration = Long.parseLong(exam.getDuration());
 		System.out.println("DURATION: " + duration);
@@ -148,6 +156,16 @@ public class StudentExecComputerizedTest implements Initializable{
     	tcQuestionContent.setSortable(false);
     	tcFilled.setSortable(false);
     	
+    	AnswersGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldToggle, Toggle newToggle)
+            {
+            	selectedRadio = Character.getNumericValue((((JFXRadioButton)newToggle).getId().charAt(5)));
+            	System.out.println(selectedRadio);
+            }
+        });
+    	
     	tvQuestions.getSelectionModel().select(0);
     	onRowClick();
     	tvQuestions.setOnMouseClicked((MouseEvent event) -> {
@@ -167,7 +185,11 @@ public class StudentExecComputerizedTest implements Initializable{
 	            } catch (InterruptedException e) {
 	                e.printStackTrace();
 	            }
-	            final String time = Long.toString(calcTime());
+	            long timeInSeconds = calcTime();
+	            long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
+	            long seconds = timeInSeconds % 60;
+	            
+	            final String time = Long.toString(minutes) + ":" + Long.toString(seconds);
 	            Platform.runLater(() -> {
 	                tfRemainingTime.setText(time);
 	            });
@@ -181,8 +203,8 @@ public class StudentExecComputerizedTest implements Initializable{
     	long elapsedSeconds = elapsedTime / 1000;
     	long secondsDisplay = elapsedSeconds % 60;
     	long elapsedMinutes = elapsedSeconds / 60;
-
-    	return elapsedMinutes;
+    	
+    	return elapsedSeconds;
     	
     }
     
@@ -205,6 +227,16 @@ public class StudentExecComputerizedTest implements Initializable{
 	    	radio3.setText(selectedRow.getAnswer3());
 	    	radio4.setText(selectedRow.getAnswer4());
 	    }
+	}
+	
+	@FXML
+	public void onSaveClick(ActionEvent event)
+	{
+		  if (AnswersGroup.getSelectedToggle() != null) {
+			  int selectedQuestion = tvQuestions.getSelectionModel().getSelectedIndex();
+			  System.out.println("Question: " + selectedQuestion + " radio: " + selectedRadio);
+			  answersArr[selectedQuestion] = selectedRadio;
+		  }
 	}
     
 }
