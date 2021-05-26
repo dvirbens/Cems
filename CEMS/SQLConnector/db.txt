@@ -81,9 +81,11 @@ CREATE TABLE ExecutedExam (
 	code varchar(255),
 	teacherID varchar(255),
 	median double,
-	avg double
+	avg double,
+	PRIMARY KEY(examID,code),
 );
 
+ADD CODE TO THIS TABLE ->
 CREATE TABLE ExecutedExamByStudent (
 	studentID varchar(255),
     examID varchar(255),
