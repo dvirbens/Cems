@@ -5,15 +5,18 @@ import java.util.Date;
 
 public class ExamProcess implements Serializable {
 
-	private String examID;
+	private String computerizedExamID;
 	private String date;
 	private String teacherID;
-	private String timeExtension;
 	private String code;
+	private String manualSubject;
+	private String manulCourse;
+	private String manualDuration;
+	private WordFile manualFile;
 	private ExamType type;
 
 	public enum ExamType {
-		COMPUTERIZED, MANUAL
+		Computerized, Manual
 	}
 
 	/**
@@ -21,29 +24,26 @@ public class ExamProcess implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ExamProcess(String examID, String date, String teacherID, String code, ExamType type) {
+	public ExamProcess(String computerizedExamID, String date, String teacherID, String code) {
 		super();
-		this.examID = examID;
+		this.computerizedExamID = computerizedExamID;
 		this.date = date;
 		this.teacherID = teacherID;
 		this.code = code;
-		this.type = type;
+		type = ExamType.Computerized;
 	}
 
-	public ExamProcess(String date, String teacherID, String code, ExamType type) {
+	public ExamProcess(String manualSubject, String manulCourse, String manualDuration, String date, String teacherID,
+			String code, WordFile manualFile) {
 		super();
+		this.manualSubject = manualSubject;
+		this.manulCourse = manulCourse;
+		this.manualDuration = manualDuration;
 		this.date = date;
 		this.teacherID = teacherID;
 		this.code = code;
-		this.type = type;
-	}
-
-	public String getExamID() {
-		return examID;
-	}
-
-	public void setExamID(String examID) {
-		this.examID = examID;
+		this.manualFile = manualFile;
+		type = ExamType.Manual;
 	}
 
 	public String getTeacherID() {
@@ -52,14 +52,6 @@ public class ExamProcess implements Serializable {
 
 	public void setTeacherID(String teacherID) {
 		this.teacherID = teacherID;
-	}
-
-	public String getTimeExtension() {
-		return timeExtension;
-	}
-
-	public void setTimeExtension(String timeExtension) {
-		this.timeExtension = timeExtension;
 	}
 
 	public static long getSerialversionuid() {
@@ -82,10 +74,59 @@ public class ExamProcess implements Serializable {
 		this.code = code;
 	}
 
+	public String getComputerizedExamID() {
+		return computerizedExamID;
+	}
+
+	public void setComputerizedExamID(String computerizedExamID) {
+		this.computerizedExamID = computerizedExamID;
+	}
+
+	public String getManualSubject() {
+		return manualSubject;
+	}
+
+	public void setManualSubject(String manualSubject) {
+		this.manualSubject = manualSubject;
+	}
+
+	public String getManulCourse() {
+		return manulCourse;
+	}
+
+	public void setManulCourse(String manulCourse) {
+		this.manulCourse = manulCourse;
+	}
+
+	public String getManualDuration() {
+		return manualDuration;
+	}
+
+	public void setManualDuration(String manualDuration) {
+		this.manualDuration = manualDuration;
+	}
+
+	public ExamType getType() {
+		return type;
+	}
+
+	public void setType(ExamType type) {
+		this.type = type;
+	}
+
+	public WordFile getManualFile() {
+		return manualFile;
+	}
+
+	public void setManualFile(WordFile manualFile) {
+		this.manualFile = manualFile;
+	}
+
 	@Override
 	public String toString() {
-		return "ExamProcess [examID=" + examID + ", date=" + date + ", teacherID=" + teacherID + ", timeExtension="
-				+ timeExtension + ", code=" + code + "]";
+		return "ExamProcess [computerizedExamID=" + computerizedExamID + ", date=" + date + ", teacherID=" + teacherID
+				+ ", code=" + code + ", manualSubject=" + manualSubject + ", manulCourse=" + manulCourse
+				+ ", manualDuration=" + manualDuration + ", manualFile=" + manualFile + ", type=" + type + "]";
 	}
 
 }

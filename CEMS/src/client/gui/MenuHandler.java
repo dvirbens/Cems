@@ -81,6 +81,24 @@ public class MenuHandler {
 		}
 	}
 
+	public void setComputerizedScreen() {
+		try {
+			Pane computerizedPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedExam.fxml"));
+			mainFrame.setCenter(computerizedPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setManualScreen() {
+		try {
+			Pane manualPane = (Pane) FXMLLoader.load(getClass().getResource("ManualExam.fxml"));
+			mainFrame.setCenter(manualPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void setExamStatisticScreen() {
 		try {
 			Pane examStatisticPane = (Pane) FXMLLoader.load(getClass().getResource("ExamStatistic.fxml"));
@@ -107,7 +125,7 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setManualTestScreen() {
 		try {
 			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
@@ -116,7 +134,7 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setComputerizedTestScreen() {
 		try {
 			Pane computerizedTestPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedTest.fxml"));

@@ -19,6 +19,7 @@ import java.util.Map;
 
 import common.SubjectCourseCollection;
 import models.*;
+import static models.ExamProcess.ExamType.*;
 import models.ExamQuestion.NoteType;
 import models.User.ErrorType;
 import models.User.UserType;
@@ -232,50 +233,6 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all of test list from database test table, using appropriate query and
-	 * SQL statement variable.
-	 * 
-	 * @return list of all test on database
-	 * 
-	 *         public List<Exam> getTestList() { List<Exam> tests = new
-	 *         ArrayList<>(); try { Statement statement = conn.createStatement();
-	 *         String query = ("SELECT * FROM Test;"); ResultSet resultSet =
-	 *         statement.executeQuery(query); while (resultSet.next()) { String id =
-	 *         resultSet.getString("Id"); String subject =
-	 *         resultSet.getString("Subject"); String course =
-	 *         resultSet.getString("Course"); String duration =
-	 *         resultSet.getString("Duration"); String pointPerQuestion =
-	 *         resultSet.getString("PointPerQuestion"); Exam test = new Exam(id,
-	 *         subject, course, duration, pointPerQuestion, null); tests.add(test);
-	 *         } } catch (SQLException e) { System.err.println("Test list not
-	 *         found"); }
-	 * 
-	 *         return tests; }
-	 */
-
-	/**
-	 * Get specific test by given id key from database test table, using appropriate
-	 * query and SQL statement.
-	 * 
-	 * @param givenId specific test id that's store on database
-	 * @return test requested
-	 * 
-	 *         public Exam getTest(String givenId) { try { Statement statement =
-	 *         conn.createStatement(); String sql = ("SELECT * FROM Test WHERE id="
-	 *         + givenId + ";"); ResultSet resultSet = statement.executeQuery(sql);
-	 *         if (resultSet.next()) { String id = resultSet.getString("Id"); String
-	 *         subject = resultSet.getString("Subject"); String course =
-	 *         resultSet.getString("Course"); String duration =
-	 *         resultSet.getString("Duration"); String pointPerQuestion =
-	 *         resultSet.getString("PointPerQuestion"); Exam test = new Exam(id,
-	 *         subject, course, duration, pointPerQuestion, null); return test; } }
-	 *         catch (SQLException e) { System.err.println("Test not found"); }
-	 * 
-	 *         return null; }
-	 * 
-	 */
-
-	/**
 	 * Get specific user by given user name and password from database test table,
 	 * using appropriate query and SQL statement.
 	 * 
@@ -310,28 +267,6 @@ public class DatabaseController {
 
 		return user;
 	}
-
-	/**
-	 * Updating test on test database table, using SQL statement with appropriate
-	 * query, and given test to edit.
-	 * 
-	 * @param testToEdit new test details to replace on database
-	 * @return boolean value{true = test replaced successfully,false = can't edit
-	 *         test}
-	 * 
-	 *         public boolean updateTest(Exam testToEdit) { PreparedStatement pstmt;
-	 *         try { String id = testToEdit.getId(); String subject =
-	 *         testToEdit.getSubject(); String course = testToEdit.getCourse();
-	 *         String duration = testToEdit.getDuration(); String ppq =
-	 *         testToEdit.getPointsPerQuestion(); String query = "UPDATE test SET
-	 *         Subject=?,Course=?,Duration=?,PointPerQuestion=? WHERE id=?;"; pstmt
-	 *         = conn.prepareStatement(query); pstmt.setString(1, subject);
-	 *         pstmt.setString(2, course); pstmt.setString(3, duration);
-	 *         pstmt.setString(4, ppq); pstmt.setString(5, id);
-	 *         pstmt.executeUpdate(); return true; } catch (SQLException e) {
-	 *         System.err.print("Error occurred, test has not been updated ");
-	 *         return false; } }
-	 */
 
 	public SubjectCourseCollection updateSubjectCollection(SubjectCourseCollection subjectCollection) {
 		subjectCollection = new SubjectCourseCollection();
@@ -562,18 +497,45 @@ public class DatabaseController {
 	public void startExam(ExamProcess examProcess) {
 		PreparedStatement prepareStatement;
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO ExamProcess VALUES (?,?,?,?,?);");
-			prepareStatement.setString(1, examProcess.getExamID());
-			prepareStatement.setString(2, examProcess.getCode());
-			prepareStatement.setString(3, examProcess.getTeacherID());
-			prepareStatement.setString(4, examProcess.getDate());
-			prepareStatement.setString(5, examProcess.getTimeExtension());
-			int resultSet = prepareStatement.executeUpdate();
-			if (resultSet == 1) {
-				System.out.println("Exam started Succuessfully");
+			switch (examProcess.getType()) {
+			case Computerized:
+				prepareStatement = conn.prepareStatement(
+						"INSERT INTO ExamProcess(examID,code,teacherID,startDate,type) VALUES (?,?,?,?,?);");
+				prepareStatement.setString(1, examProcess.getComputerizedExamID());
+				prepareStatement.setString(2, examProcess.getCode());
+				prepareStatement.setString(3, examProcess.getTeacherID());
+				prepareStatement.setString(4, examProcess.getDate());
+				prepareStatement.setString(5, examProcess.getType().toString());
+				int resultSetComputerized = prepareStatement.executeUpdate();
+				if (resultSetComputerized == 1) {
+					System.out.println("Computerized Exam started Succuessfully");
+				}
+				break;
+
+			case Manual:
+				WordFile wordFile = examProcess.getManualFile();
+				InputStream targetStream = new ByteArrayInputStream(wordFile.getMybytearray());
+				prepareStatement = conn.prepareStatement(
+						"INSERT INTO ExamProcess(code,type,startDate,manualSubject,manualCourse,manualDuration,teacherID,manualExam) VALUES (?,?,?,?,?,?,?,?);");
+				prepareStatement.setString(1, examProcess.getCode());
+				prepareStatement.setString(2, examProcess.getType().toString());
+				prepareStatement.setString(3, examProcess.getDate());
+				prepareStatement.setString(4, examProcess.getManualSubject());
+				prepareStatement.setString(5, examProcess.getManulCourse());
+				prepareStatement.setString(6, examProcess.getManualDuration());
+				prepareStatement.setString(7, examProcess.getTeacherID());
+				prepareStatement.setBlob(8, targetStream);
+				int resultSetManual = prepareStatement.executeUpdate();
+				if (resultSetManual == 1) {
+					System.out.println("Manual Exam started Succuessfully");
+				}
+
+				break;
+
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.println("Error occurred, exam has not been started ");
 		}
 	}
@@ -688,9 +650,8 @@ public class DatabaseController {
 		}
 		return null;
 	}
-	
-	public Exam GetExamByExamID(String examID)
-	{
+
+	public Exam GetExamByExamID(String examID) {
 		Exam exam;
 
 		try {
