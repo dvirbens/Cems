@@ -32,7 +32,6 @@ public class ExecutedExam implements Serializable {
 		this.course = course;
 		this.execDate = execDate;
 		this.testType = testType;
-		this.grade = grade;
 	}
 
 	public String getId() {

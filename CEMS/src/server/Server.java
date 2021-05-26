@@ -112,13 +112,11 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_EXECUTED_EXAM_LIST:
-			/*
 			String teacherID = (String) modelWrapperFromClient.getElement();
-			//List<ExecutedExam> executedExamByTeacherId = databaseController.getExecutedExamListByTeacherID(teacherID);
+			List<ExecutedExam> executedExamByTeacherId = databaseController.getExecutedExamListByTeacherID(teacherID);
 			modelWrapperToClient = new ModelWrapper<>(executedExamByTeacherId, GET_EXECUTED_EXAM_LIST);
-			*/
 			try {
-				client.sendToClient(modelWrapperFromClient);
+				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

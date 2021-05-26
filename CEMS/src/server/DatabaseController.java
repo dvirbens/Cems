@@ -680,10 +680,14 @@ public class DatabaseController {
 				String examID = rsExecutedExam.getString("ExamID");
 				String execDate = rsExecutedExam.getString("execDate");
 				String type = rsExecutedExam.getString("type");
-				//List<String> examDetails = getExamDetailsByExamId(examID);
-				//ExecutedExam executedExam = new ExecutedExam(examID, examDetails.get(0), examDetails.get(1), execDate, type);
-				//System.out.println(executedExam);
-				//examList.add(executedExam);
+				List<String> examDetails = getExamDetailsByExamId(examID);
+				if (examDetails != null) {
+					String subject = examDetails.get(0);
+					String course = examDetails.get(1);
+					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, execDate, type);
+					examList.add(executedExam);
+
+				}
 			}
 
 		} catch (SQLException e) {
@@ -695,12 +699,12 @@ public class DatabaseController {
 	}
 
 	private List<String> getExamDetailsByExamId(String examID) {
-		List<String> examDetails = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
 			String examQuery = "SELECT * FROM Exam WHERE examID=\"" + examID + "\";";
 			ResultSet rsExam = statement.executeQuery(examQuery);
 			if (rsExam.next()) {
+				List<String> examDetails = new ArrayList<>();
 				String subject = rsExam.getString("Subject");
 				String course = rsExam.getString("Course");
 				examDetails.add(subject);

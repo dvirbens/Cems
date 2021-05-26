@@ -73,7 +73,7 @@ public class ExamStatisticController implements Initializable {
 		String teacherID = Client.getUser().getUserID();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
+		
 		XYChart.Series<String, Integer> stats = new XYChart.Series<>();
 		stats.setName("Math exam");
 		stats.getData().add(new XYChart.Data<>("Arik Zagdon", 90));
