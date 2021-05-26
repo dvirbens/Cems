@@ -19,7 +19,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../GuiPrototype/test.png" />
+                        <Image url="@../../../images/test.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -28,7 +28,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../GuiPrototype/start.png" />
+                        <Image url="@../../../images/start.png" />
                      </image>
                   </ImageView>
                </graphic>

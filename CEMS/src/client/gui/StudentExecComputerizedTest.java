@@ -13,18 +13,22 @@ import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import models.Exam;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
@@ -97,6 +101,8 @@ public class StudentExecComputerizedTest implements Initializable{
     
     private long duration;
     
+    private Integer[] answersArr;
+    
     public void initialize(URL location, ResourceBundle resources) {
 		//setStudentIDTextField();
     	
@@ -124,10 +130,23 @@ public class StudentExecComputerizedTest implements Initializable{
 		questions.addAll(exam.getExamQuestions());
 		tvQuestions.setItems((ObservableList<ExamQuestion>) questions);
     	
+		//tcQuestionNumber.setCellValueFactory(new Callback<ExamQuestion, Integer>);
+		
+		tcQuestionNumber.setCellValueFactory(new Callback<CellDataFeatures<ExamQuestion, Integer>, ObservableValue<Integer>>() {
+			  @Override public ObservableValue<Integer> call(CellDataFeatures<ExamQuestion, Integer> p) {
+			    return new ReadOnlyObjectWrapper(tvQuestions.getItems().indexOf(p.getValue())+1 + "");
+			  }
+			});   
+		
 		
 		tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
     	tcQuestionContent.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("details"));
     	tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>(""));
+    	
+    	tcQuestionNumber.setSortable(false);
+    	tcQuestionPoints.setSortable(false);
+    	tcQuestionContent.setSortable(false);
+    	tcFilled.setSortable(false);
     	
     	tvQuestions.getSelectionModel().select(0);
     	onRowClick();
