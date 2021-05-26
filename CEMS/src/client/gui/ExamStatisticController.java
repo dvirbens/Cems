@@ -72,8 +72,7 @@ public class ExamStatisticController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		String teacherID = Client.getUser().getUserID();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST);
-		System.out.println(teacherID);
-		//ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		XYChart.Series<String, Integer> stats = new XYChart.Series<>();
 		stats.setName("Math exam");
