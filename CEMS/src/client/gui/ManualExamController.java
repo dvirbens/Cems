@@ -1,8 +1,6 @@
 package client.gui;
 
 import static common.ModelWrapper.Operation.START_EXAM;
-import static common.ModelWrapper.Operation.UPLOAD_FILE;
-import static common.ModelWrapper.Operation.UPLOAD_FILE_TEACHER;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -26,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
-import models.Exam;
 import models.ExamProcess;
 import models.WordFile;
 
@@ -55,8 +52,6 @@ public class ManualExamController implements Initializable {
 
 	@FXML
 	private Label masgeLabel;
-
-	private String filePath;
 
 	private File file;
 

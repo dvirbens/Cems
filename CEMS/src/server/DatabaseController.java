@@ -493,7 +493,7 @@ public class DatabaseController {
 
 		return examList;
 	}
-
+/*
 	public void startExam(ExamProcess examProcess) {
 		PreparedStatement prepareStatement;
 		try {
@@ -540,6 +540,7 @@ public class DatabaseController {
 		}
 	}
 
+*/
 	public void closeExam(String code) {
 		try {
 			Statement statement = conn.createStatement();

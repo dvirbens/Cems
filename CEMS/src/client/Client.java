@@ -109,8 +109,12 @@ public class Client extends AbstractClient {
 			case TEST_STATISTICS:
 				break;
 
-			case START_EXAM:
+			case START_EXAM_SUCCESS:
 				setServerMessages("Exam has been started");
+
+				break;
+			case START_EXAM_FAILD:
+				setServerMessages("Can't start exam");
 				break;
 
 			case CLOSE_EXAM:
@@ -165,10 +169,6 @@ public class Client extends AbstractClient {
 				setServerMessages("FileUploaded.");
 				break;
 
-			case UPLOAD_FILE_TEACHER:
-				setServerMessages("FileUploaded.");
-				break;
-
 			case INSERT_STUDENT_TO_EXAM:
 				setExamID((String) modelWrapperFromServer.getElement());
 				break;
@@ -180,7 +180,7 @@ public class Client extends AbstractClient {
 			case GET_QUESTION_LIST_BY_EXAM_ID:
 				questions = (List<Question>) modelWrapperFromServer.getElements();
 				break;
-				
+
 			case GET_EXAM_BY_EXAM_ID:
 				Client.setExam((Exam) modelWrapperFromServer.getElement());
 				break;
@@ -312,7 +312,5 @@ public class Client extends AbstractClient {
 	public static void setExam(Exam exam) {
 		Client.exam = exam;
 	}
-	
-	
 
 }

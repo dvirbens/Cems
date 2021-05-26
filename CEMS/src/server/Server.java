@@ -5,7 +5,9 @@ import static common.ModelWrapper.Operation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
@@ -44,7 +46,9 @@ public class Server extends AbstractServer {
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
 	 */
-	private static SubjectCourseCollection subjectCollection;
+	private static SubjectCourseCollection subjectCourseCollection;
+
+	private static Map<String, ExamProcess> examsInProcess;
 
 	/**
 	 * Indicate if the server is connected
@@ -70,6 +74,7 @@ public class Server extends AbstractServer {
 		super(Integer.parseInt(serverPort));
 		this.serverListener = logListener;
 		databaseController = new DatabaseController(database, logListener);
+		examsInProcess = new HashMap<>();
 	}
 
 	/**
@@ -80,7 +85,6 @@ public class Server extends AbstractServer {
 	 */
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
-
 		ModelWrapper<?> modelWrapperFromClient = (ModelWrapper<?>) msg;
 		ModelWrapper<?> modelWrapperToClient;
 
@@ -111,10 +115,16 @@ public class Server extends AbstractServer {
 			break;
 
 		case START_EXAM:
-			ExamProcess examProcess = (ExamProcess) modelWrapperFromClient.getElement();
-			databaseController.startExam(examProcess);
 			try {
-				client.sendToClient(modelWrapperFromClient);
+				ExamProcess examProcess = (ExamProcess) modelWrapperFromClient.getElement();
+				if (!examsInProcess.containsKey(examProcess.getCode())) {
+					examsInProcess.put(examProcess.getCode(), examProcess);
+					modelWrapperToClient = new ModelWrapper<>(START_EXAM_SUCCESS);
+					client.sendToClient(modelWrapperToClient);
+				} else {
+					modelWrapperToClient = new ModelWrapper<>(START_EXAM_FAILD);
+					client.sendToClient(modelWrapperToClient);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -238,18 +248,10 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case UPLOAD_FILE_TEACHER:
-			/*
-			 * WordFile fileFromTeacher = (WordFile) modelWrapperFromClient.getElement();
-			 * databaseController.UploadFile(fileFromTeacher); try {
-			 * client.sendToClient(modelWrapperFromClient); } catch (IOException e) {
-			 * e.printStackTrace(); }
-			 */
-			break;
-
 		case INSERT_STUDENT_TO_EXAM:
 			// Get code and check if examID exist, if so insert student to exam in DB
 
+			@SuppressWarnings("unchecked")
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
@@ -273,7 +275,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GET_EXAM_BY_EXAM_ID:
 			examID = (String) modelWrapperFromClient.getElement();
 			Exam exam = databaseController.GetExamByExamID(examID);
@@ -331,8 +333,8 @@ public class Server extends AbstractServer {
 	protected void clientConnected(ConnectionToClient client) {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
 
-		subjectCollection = databaseController.updateSubjectCollection(subjectCollection);
-		ModelWrapper<SubjectCourseCollection> modelWrapperToClient = new ModelWrapper<>(subjectCollection,
+		subjectCourseCollection = databaseController.updateSubjectCollection(subjectCourseCollection);
+		ModelWrapper<SubjectCourseCollection> modelWrapperToClient = new ModelWrapper<>(subjectCourseCollection,
 				GET_SUBJECT_COURSE_LIST);
 		try {
 			client.sendToClient(modelWrapperToClient);
@@ -351,11 +353,19 @@ public class Server extends AbstractServer {
 	}
 
 	public static SubjectCourseCollection getSubjectCollection() {
-		return subjectCollection;
+		return subjectCourseCollection;
 	}
 
-	public static void setSubjectCollection(SubjectCourseCollection subjectCollection) {
-		Server.subjectCollection = subjectCollection;
+	public static void setSubjectCollection(SubjectCourseCollection subjectCourseCollection) {
+		Server.subjectCourseCollection = subjectCourseCollection;
+	}
+
+	public static Map<String, ExamProcess> getExamsInProcess() {
+		return examsInProcess;
+	}
+
+	public static void setExamsInProcess(Map<String, ExamProcess> examsInProcess) {
+		Server.examsInProcess = examsInProcess;
 	}
 
 }
