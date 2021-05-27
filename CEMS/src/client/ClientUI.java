@@ -37,7 +37,6 @@ public class ClientUI extends Application {
 			System.out.println("Connected to server");
 		} catch (IOException e1) {
 			System.out.println("Cant connect to server");
-			e1.printStackTrace();
 		}
 
 		MainGuiController clientMainGuiController = new MainGuiController();

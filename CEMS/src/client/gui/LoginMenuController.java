@@ -28,83 +28,88 @@ public class LoginMenuController implements Initializable {
 	private JFXTextField tfUserName;
 
 	@FXML
-    private JFXPasswordField tfPassword;
+	private JFXPasswordField tfPassword;
 
 	@FXML
 	private JFXButton btnLogin;
 
 	@FXML
 	private Label lWrongInput;
-	
 
-    @FXML
-    private Label labelServerStatus;
+	@FXML
+	private Label labelServerStatus;
 
-    @FXML
-    private Label labelStatus;
+	@FXML
+	private Label labelStatus;
 
 	@FXML
 	void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
 		String password = tfPassword.getText();
-	
-		if (userID.isEmpty() || password.isEmpty()) {
-			lWrongInput.setText("Empty fields");
+
+		if (!ClientUI.serverStatus) {
+			lWrongInput.setText("Cant connect to server");
 			lWrongInput.setVisible(true);
+			
 		} else {
-			lWrongInput.setVisible(false);
-			List<String> userInfo = new ArrayList<>();
-			userInfo.add(userID);
-			userInfo.add(password);
 
-			ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
-			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			if (userID.isEmpty() || password.isEmpty()) {
+				lWrongInput.setText("Empty fields");
+				lWrongInput.setVisible(true);
+			} else {
+				lWrongInput.setVisible(false);
+				List<String> userInfo = new ArrayList<>();
+				userInfo.add(userID);
+				userInfo.add(password);
 
-			User user = Client.getUser();
-			if (user != null) {
-				if (user.getUserID() != null) {
-					switch (user.getType()) {
-					case Student:
-						MainGuiController.getMenuHandler().setStudentlMenu();
-						break;
+				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
+				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-					case Teacher:
-						MainGuiController.getMenuHandler().setTeacherMenu();
-						break;
+				User user = Client.getUser();
+				if (user != null) {
+					if (user.getUserID() != null) {
+						switch (user.getType()) {
+						case Student:
+							MainGuiController.getMenuHandler().setStudentlMenu();
+							break;
 
-					case Principal:
-						MainGuiController.getMenuHandler().setPrincipalMenu();
-						break;
+						case Teacher:
+							MainGuiController.getMenuHandler().setTeacherMenu();
+							break;
+
+						case Principal:
+							MainGuiController.getMenuHandler().setPrincipalMenu();
+							break;
+						}
+					} else {
+						if (user.getError() == ErrorType.WRONG_ID) {
+							lWrongInput.setText("User not found");
+							lWrongInput.setVisible(true);
+						}
+
+						if (user.getError() == ErrorType.WRONG_PASSWORD) {
+							lWrongInput.setText("Wrong password");
+							lWrongInput.setVisible(true);
+						}
 					}
 				} else {
-					if (user.getError() == ErrorType.WRONG_ID) {
-						lWrongInput.setText("User not found");
-						lWrongInput.setVisible(true);
-					}
-
-					if (user.getError() == ErrorType.WRONG_PASSWORD) {
-						lWrongInput.setText("Wrong password");
-						lWrongInput.setVisible(true);
-					}
+					lWrongInput.setText("User not found");
+					lWrongInput.setVisible(true);
 				}
-			} else {
-				lWrongInput.setText("User not found");
-				lWrongInput.setVisible(true);
 			}
 		}
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		tfUserName.setText("204459093");	
+		tfUserName.setText("204459093");
 		tfPassword.setText("1234");
-		
-		if(ClientUI.serverStatus)
-		{
+
+		if (ClientUI.serverStatus) {
 			labelStatus.setStyle("-fx-text-fill: GREEN;");
 			labelStatus.setText("Online");
-		}else
-		{
+		} else {
 			labelStatus.setStyle("-fx-text-fill: RED;");
 			labelStatus.setText("Offline");
 		}
