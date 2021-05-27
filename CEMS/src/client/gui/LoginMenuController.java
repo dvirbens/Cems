@@ -47,7 +47,7 @@ public class LoginMenuController implements Initializable {
 		String userID = tfUserName.getText();
 		String password = tfPassword.getText();
 
-		if (!ClientUI.serverStatus) {
+		if (!ClientUI.isServerStatus()) {
 			lWrongInput.setText("Cant connect to server");
 			lWrongInput.setVisible(true);
 			
@@ -106,7 +106,7 @@ public class LoginMenuController implements Initializable {
 		tfUserName.setText("204459093");
 		tfPassword.setText("1234");
 
-		if (ClientUI.serverStatus) {
+		if (ClientUI.isServerStatus()) {
 			labelStatus.setStyle("-fx-text-fill: GREEN;");
 			labelStatus.setText("Online");
 		} else {
