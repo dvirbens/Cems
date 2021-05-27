@@ -31,6 +31,7 @@ public class ClientUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
+
 		try {
 			setClientController(new ClientController("localhost", 5555));
 			serverStatus=true;
