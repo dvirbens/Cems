@@ -1,6 +1,20 @@
 package server;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.ERROR_INSERT_STUDENT_TO_EXAM;
+import static common.ModelWrapper.Operation.EXAM_EXECUTE;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
+import static common.ModelWrapper.Operation.GET_USER;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_GRADE;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
+import static common.ModelWrapper.Operation.START_EXAM_FAILD;
+import static common.ModelWrapper.Operation.START_EXAM_SUCCESS;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,7 +66,8 @@ public class Server extends AbstractServer {
 
 	private static Map<String, List<String>> studentInExam;
 	
-	private static Map<String, ArrayList<Integer>> solutions;
+	//ExamID -> AnswersArray
+	private static Map<String, ArrayList<String[]>> solutions;
 	/**
 	 * Indicate if the server is connected
 	 */
@@ -275,10 +290,8 @@ public class Server extends AbstractServer {
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
 			String type = elements.get(2);
-			System.out.println("SERVER TEST");
 			if (examsInProcess.containsKey(userCode))
 			{
-				System.out.println("YES");
 				List<String> temp = studentInExam.get(userCode);
 				
 				if (temp == null)
@@ -289,14 +302,12 @@ public class Server extends AbstractServer {
 				temp.add(studentID);
 
 				studentInExam.put(userCode, temp);
-				System.out.println("YES");
 				examID = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
 				modelWrapperToClient = new ModelWrapper<>(examID,INSERT_STUDENT_TO_EXAM);
 				
 			}
 			else
 			{
-				System.out.println("NO");
 				modelWrapperToClient = new ModelWrapper<>(ERROR_INSERT_STUDENT_TO_EXAM);
 			}
 			try {
@@ -322,6 +333,34 @@ public class Server extends AbstractServer {
 			examID = (String) modelWrapperFromClient.getElement();
 			Exam exam = databaseController.GetExamByExamID(examID);
 			modelWrapperToClient = new ModelWrapper<>(exam, GET_EXAM_BY_EXAM_ID);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case INSERT_STUDENT_GRADE:
+			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
+			studentID = elements.get(0);
+			examID = elements.get(1);
+			String grade = elements.get(2);
+			databaseController.insertStudentGrade(studentID, examID, grade);
+			modelWrapperToClient = new ModelWrapper<>(INSERT_STUDENT_GRADE);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case INSERT_STUDENT_ANSWERS:
+			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
+			String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
+			studentID = elements.get(0);
+			examID = elements.get(1);
+
+			modelWrapperToClient = new ModelWrapper<>(INSERT_STUDENT_GRADE);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -409,5 +448,5 @@ public class Server extends AbstractServer {
 	public static void setExamsInProcess(Map<String, ExamProcess> examsInProcess) {
 		Server.examsInProcess = examsInProcess;
 	}
-
+	
 }

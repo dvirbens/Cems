@@ -1,10 +1,11 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
@@ -112,9 +113,11 @@ public class StudentExecComputerizedTest implements Initializable{
     
     private long duration;
     
-    private Integer[] answersArr;
+    private String[] answersArr;
     
-    private int selectedRadio;
+    private Integer selectedRadio;
+    
+    private String examID;
     
     public void initialize(URL location, ResourceBundle resources) {
     	//Start time counter
@@ -122,7 +125,7 @@ public class StudentExecComputerizedTest implements Initializable{
     	setRemainingTime();
 
     	//Get ExamID
-    	String examID = Client.getExamID();
+    	examID = Client.getExamID();
     	
     	// Get questions
     	ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);
@@ -133,7 +136,7 @@ public class StudentExecComputerizedTest implements Initializable{
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		exam = Client.getExam();
 		
-		answersArr = new Integer[exam.getExamQuestions().size()];
+		answersArr = new String[exam.getExamQuestions().size()];
 		
 		duration = Long.parseLong(exam.getDuration());
 		
@@ -235,8 +238,9 @@ public class StudentExecComputerizedTest implements Initializable{
 	    	ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
 	    	int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
 	    	taSelectedQuestion.setText(selectedRow.getDetails());
-	    	Integer currentSelectedAnswer = answersArr[selectedRowIndex];
-	    	System.out.println(currentSelectedAnswer);
+	    	Integer currentSelectedAnswer = null;
+	    	if (answersArr[selectedRowIndex] != null)
+	    		currentSelectedAnswer = Integer.parseInt(answersArr[selectedRowIndex]);
 	    	if (selectedRow.getNoteType() == NoteType.Students)
 	    	{
 	    		tfNote.setText(selectedRow.getNote());
@@ -277,11 +281,42 @@ public class StudentExecComputerizedTest implements Initializable{
 		  if (AnswersGroup.getSelectedToggle() != null) {
 			  ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
 			  int selectedQuestion = tvQuestions.getSelectionModel().getSelectedIndex();
-			  answersArr[selectedQuestion] = selectedRadio;
+			  answersArr[selectedQuestion] = (String) selectedRadio.toString();
 			  int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
 			  tvQuestions.getSelectionModel().select(selectedRowIndex + 1);
 			  selectedRow.setVisibleImage();
 		  }
+	}
+	
+	public void checkTest(ActionEvent event)
+	{
+		Integer grade = 0;
+		for (int i=0; i < exam.getExamQuestions().size(); i++)
+		{
+			if (answersArr[i] != null)
+			{
+				if (Integer.parseInt(answersArr[i]) == exam.getExamQuestions().get(i).getCorrectAnswer())
+				{
+					grade += exam.getExamQuestions().get(i).getPoints();
+				}
+			}
+		}
+		//Insert grade to DB
+		ArrayList<String> elements = new ArrayList<>();
+		elements.add(Client.getUser().getUserID());
+		elements.add(examID);
+		elements.add(grade.toString());
+		
+    	ModelWrapper<String> modelWrapper = new ModelWrapper<String>(elements, INSERT_STUDENT_GRADE);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		
+		ArrayList<String> elements2 = new ArrayList<>();
+		elements2.add(Client.getUser().getUserID());
+		elements2.add(examID);
+		
+		ModelWrapper<String> modelWrapper2 = new ModelWrapper<String>(elements2, answersArr, INSERT_STUDENT_ANSWERS);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper2);
+		MainGuiController.getMenuHandler().setMainScreen();	
 	}
     
 }

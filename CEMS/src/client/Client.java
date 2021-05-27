@@ -177,7 +177,6 @@ public class Client extends AbstractClient {
 
 			case INSERT_STUDENT_TO_EXAM:
 				setExamID((String) modelWrapperFromServer.getElement());
-				System.out.println("CLIENT TEST");
 				setServerMessages("Student entered exam successfully");
 				break;
 				
@@ -199,6 +198,9 @@ public class Client extends AbstractClient {
 			
 			case STUDENT_TIME_EXTENSION:
 				Client.setTimeExtension(Long.parseLong((String) modelWrapperFromServer.getElement()));
+				break;
+				
+			case INSERT_STUDENT_GRADE:
 				break;
 
 			default:

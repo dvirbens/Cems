@@ -171,6 +171,15 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setMainScreen(){
+		try {
+			Pane mainPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
+			mainFrame.setCenter(mainPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void setQuestionListScreen(List<ExamQuestion> examQuestions) {
 		QuestionListController questionListController = new QuestionListController(examQuestions);

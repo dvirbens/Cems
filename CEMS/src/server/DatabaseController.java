@@ -600,7 +600,7 @@ public class DatabaseController {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 			LocalDateTime now = LocalDateTime.now();
 
-			String sql3 = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?, ?, ?);";
+			String sql3 = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?, ?, ?,?,?);";
 			PreparedStatement stmt = conn.prepareStatement(sql3);
 
 			stmt.setString(1, studentID);
@@ -611,6 +611,8 @@ public class DatabaseController {
 			stmt.setString(6, type);
 			stmt.setString(7, null);
 			stmt.setString(8, null);
+			stmt.setBoolean(9, false);
+			stmt.setString(10, null);
 			int resultSet = stmt.executeUpdate();
 			if (resultSet == 1) {
 				System.out.println("Student ID: " + studentID + " entered examID: " + examID + " in " + dtf.format(now)
@@ -718,5 +720,26 @@ public class DatabaseController {
 		}
 
 		return null;
+	}
+	
+	public void insertStudentGrade(String studentID, String examID, String grade)
+	{
+		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ?;";
+		
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, grade);
+			stmt.setString(2, studentID);
+			stmt.setString(3, examID);
+
+			stmt.executeUpdate();
+			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade "+ grade);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+
 	}
 }

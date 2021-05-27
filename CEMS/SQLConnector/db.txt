@@ -85,7 +85,7 @@ CREATE TABLE ExecutedExam (
 	PRIMARY KEY(examID,code)
 );
 
-ADD CODE TO THIS TABLE ->
+
 CREATE TABLE ExecutedExamByStudent (
 	studentID varchar(255),
     examID varchar(255),
@@ -94,7 +94,9 @@ CREATE TABLE ExecutedExamByStudent (
     ExecDate varchar(255),
     TestType varchar(255),
     Grade varchar(3),
-    Copy blob
+    Copy blob,
+    Approved boolean,
+    Alert varchar(255)
 );
 
 CREATE TABLE StudentUploadManualTest (

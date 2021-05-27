@@ -26,6 +26,9 @@ public class ModelWrapper<E> implements Serializable {
 	 * Store list of class model element, in order to transfer it via client/server
 	 */
 	private List<E> elements;
+	
+	private E[] elements2;
+		
 	/**
 	 * Which operation should be executed in server/client
 	 */
@@ -37,7 +40,8 @@ public class ModelWrapper<E> implements Serializable {
 		GET_SUBJECT_COURSE_LIST, GET_COURSE_LIST, GET_QUESTION_LIST, GET_EXAMS_LIST_BY_SUBJECT,
 		GET_EXAMS_LIST_BY_COURSE, GET_EXAMS_LIST, CLOSE_EXAM, GET_QUESTION_LIST_BY_SUBJECT, EXTENSION_REQUEST,
 		UPLOAD_FILE, GET_EXAM_ID, GET_QUESTION_LIST_BY_EXAM_ID, INSERT_STUDENT_TO_EXAM, GET_EXAM_BY_EXAM_ID,
-		START_EXAM_SUCCESS, START_EXAM_FAILD, GET_EXECUTED_EXAM_LIST, ERROR_INSERT_STUDENT_TO_EXAM, STUDENT_TIME_EXTENSION
+		START_EXAM_SUCCESS, START_EXAM_FAILD, GET_EXECUTED_EXAM_LIST, ERROR_INSERT_STUDENT_TO_EXAM, STUDENT_TIME_EXTENSION, INSERT_STUDENT_GRADE,
+		INSERT_STUDENT_ANSWERS
 	};
 
 	/**
@@ -74,6 +78,13 @@ public class ModelWrapper<E> implements Serializable {
 		this.elements = elements;
 		this.operation = operation;
 	}
+	
+	public ModelWrapper(List<E> elements1, E[] elements2, Operation operation) {
+		super();
+		this.elements = elements1;
+		this.elements2 = elements2;
+		this.operation = operation;
+	}
 
 	public E getElement() {
 		return element;
@@ -97,6 +108,15 @@ public class ModelWrapper<E> implements Serializable {
 
 	public void setElements(List<E> elements) {
 		this.elements = elements;
+	}
+	
+
+	public E[] getElements2() {
+		return elements2;
+	}
+
+	public void setElements2(E[] elements2) {
+		this.elements2 = elements2;
 	}
 
 	@Override
