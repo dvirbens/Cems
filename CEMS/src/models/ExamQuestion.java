@@ -2,6 +2,8 @@ package models;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.scene.image.ImageView;
+
 public class ExamQuestion extends Question {
 
 	private static final long serialVersionUID = 1L;
@@ -9,6 +11,7 @@ public class ExamQuestion extends Question {
 	private int points;
 	private NoteType noteType;
 	private JFXButton noteDetails;
+	private ImageView checkImage;
 
 	public enum NoteType {
 		Students, Teachers, None
@@ -54,5 +57,20 @@ public class ExamQuestion extends Question {
 	public void setNoteDetails(JFXButton noteDetails) {
 		this.noteDetails = noteDetails;
 	}
+
+	public ImageView getCheckImage() {
+		return checkImage;
+	}
+
+	public void setCheckImage(ImageView checkImage) {
+		this.checkImage = checkImage;
+	}
+	
+	public void setVisibleImage()
+	{
+		this.checkImage.setVisible(true);
+	}
+	
+	
 
 }

@@ -65,6 +65,8 @@ public class Client extends AbstractClient {
 	 * Value that hold the user, use to login and and open appropriate menu
 	 */
 	private static User user;
+	
+	private static long timeExtension = 0;
 
 	/**
 	 * Value that hold the user, use to login and and open appropriate menu
@@ -175,6 +177,12 @@ public class Client extends AbstractClient {
 
 			case INSERT_STUDENT_TO_EXAM:
 				setExamID((String) modelWrapperFromServer.getElement());
+				System.out.println("CLIENT TEST");
+				setServerMessages("Student entered exam successfully");
+				break;
+				
+			case ERROR_INSERT_STUDENT_TO_EXAM:
+				setServerMessages("Invalid code.");
 				break;
 
 			case GET_EXAM_ID:
@@ -187,6 +195,10 @@ public class Client extends AbstractClient {
 
 			case GET_EXAM_BY_EXAM_ID:
 				Client.setExam((Exam) modelWrapperFromServer.getElement());
+				break;
+			
+			case STUDENT_TIME_EXTENSION:
+				Client.setTimeExtension(Long.parseLong((String) modelWrapperFromServer.getElement()));
 				break;
 
 			default:
@@ -316,5 +328,15 @@ public class Client extends AbstractClient {
 	public static void setExam(Exam exam) {
 		Client.exam = exam;
 	}
+
+	public static long getTimeExtension() {
+		return timeExtension;
+	}
+
+	public static void setTimeExtension(long timeExtension) {
+		Client.timeExtension = timeExtension;
+	}
+	
+	
 
 }

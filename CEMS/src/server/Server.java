@@ -50,6 +50,9 @@ public class Server extends AbstractServer {
 
 	private static Map<String, ExamProcess> examsInProcess;
 
+	private static Map<String, List<String>> studentInExam;
+	
+	private static Map<String, ArrayList<Integer>> solutions;
 	/**
 	 * Indicate if the server is connected
 	 */
@@ -75,6 +78,9 @@ public class Server extends AbstractServer {
 		this.serverListener = logListener;
 		databaseController = new DatabaseController(database, logListener);
 		examsInProcess = new HashMap<>();
+		examsInProcess.put("555", null);
+		studentInExam = new HashMap<>();
+		solutions = new HashMap<>();
 	}
 
 	/**
@@ -262,19 +268,43 @@ public class Server extends AbstractServer {
 
 		case INSERT_STUDENT_TO_EXAM:
 			// Get code and check if examID exist, if so insert student to exam in DB
-
+			
+			
 			@SuppressWarnings("unchecked")
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
 			String type = elements.get(2);
-			examID = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
-			modelWrapperToClient = new ModelWrapper<>(examID, INSERT_STUDENT_TO_EXAM);
+			System.out.println("SERVER TEST");
+			if (examsInProcess.containsKey(userCode))
+			{
+				System.out.println("YES");
+				List<String> temp = studentInExam.get(userCode);
+				
+				if (temp == null)
+				{
+					temp = new ArrayList<>();
+				}
+
+				temp.add(studentID);
+
+				studentInExam.put(userCode, temp);
+				System.out.println("YES");
+				examID = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
+				modelWrapperToClient = new ModelWrapper<>(examID,INSERT_STUDENT_TO_EXAM);
+				
+			}
+			else
+			{
+				System.out.println("NO");
+				modelWrapperToClient = new ModelWrapper<>(ERROR_INSERT_STUDENT_TO_EXAM);
+			}
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		
 			break;
 
 		case GET_EXAM_ID:

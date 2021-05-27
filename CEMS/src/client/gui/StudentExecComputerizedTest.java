@@ -3,7 +3,9 @@ package client.gui;
 import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
 import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
+import java.io.Serializable;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -20,9 +22,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -31,10 +35,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import models.Exam;
 import models.ExamQuestion;
+import models.ExecutedExam;
 import models.ExamQuestion.NoteType;
 
 public class StudentExecComputerizedTest implements Initializable{
@@ -52,7 +59,7 @@ public class StudentExecComputerizedTest implements Initializable{
     private TableColumn<ExamQuestion, String> tcQuestionContent;
 
     @FXML
-    private TableColumn<ExamQuestion, String> tcFilled;
+    private TableColumn<ExamQuestion, ImageView> tcFilled;
 
     @FXML
     private Label lblQuestions;
@@ -105,16 +112,13 @@ public class StudentExecComputerizedTest implements Initializable{
     
     private long duration;
     
-    private int[] answersArr;
+    private Integer[] answersArr;
     
     private int selectedRadio;
     
     public void initialize(URL location, ResourceBundle resources) {
-		//setStudentIDTextField();
-    	
     	//Start time counter
     	startTime = System.currentTimeMillis();
-    	
     	setRemainingTime();
 
     	//Get ExamID
@@ -129,45 +133,57 @@ public class StudentExecComputerizedTest implements Initializable{
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		exam = Client.getExam();
 		
-		answersArr = new int[exam.getExamQuestions().size()];
+		answersArr = new Integer[exam.getExamQuestions().size()];
 		
 		duration = Long.parseLong(exam.getDuration());
-		System.out.println("DURATION: " + duration);
-    	
+		
+		//Setting the table
 		ObservableList<ExamQuestion> questions = FXCollections.observableArrayList();
+		
+		for (ExamQuestion q : exam.getExamQuestions()) {
+	    	 final ImageView imageview = new ImageView(new Image(getClass().getResource("check.jpg").toExternalForm()));
+	         imageview.setFitHeight(30);
+	         imageview.setFitWidth(30);
+	         imageview.setVisible(false);
+			q.setCheckImage(imageview);
+		}
+		
 		questions.addAll(exam.getExamQuestions());
 		tvQuestions.setItems((ObservableList<ExamQuestion>) questions);
-    	
-		//tcQuestionNumber.setCellValueFactory(new Callback<ExamQuestion, Integer>);
-		
+
 		tcQuestionNumber.setCellValueFactory(new Callback<CellDataFeatures<ExamQuestion, Integer>, ObservableValue<Integer>>() {
 			  @Override public ObservableValue<Integer> call(CellDataFeatures<ExamQuestion, Integer> p) {
 			    return new ReadOnlyObjectWrapper(tvQuestions.getItems().indexOf(p.getValue())+1 + "");
 			  }
 			});   
 		
-		
 		tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
     	tcQuestionContent.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("details"));
-    	tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>(""));
+    	tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, ImageView>("checkImage"));
     	
+    	// Disable sort columns
     	tcQuestionNumber.setSortable(false);
     	tcQuestionPoints.setSortable(false);
     	tcQuestionContent.setSortable(false);
     	tcFilled.setSortable(false);
     	
+    	//Adding listener to toggle group
     	AnswersGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
         {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle oldToggle, Toggle newToggle)
             {
             	selectedRadio = Character.getNumericValue((((JFXRadioButton)newToggle).getId().charAt(5)));
-            	System.out.println(selectedRadio);
             }
         });
     	
+    	//Setting start selection on first row
     	tvQuestions.getSelectionModel().select(0);
+    	
+    	// Loading answers for first question
     	onRowClick();
+    	
+    	// Loading answers on click
     	tvQuestions.setOnMouseClicked((MouseEvent event) -> {
     	    if (event.getClickCount() > 0) {
     	    	onRowClick();
@@ -187,9 +203,14 @@ public class StudentExecComputerizedTest implements Initializable{
 	            }
 	            long timeInSeconds = calcTime();
 	            long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
+	            if (Client.getTimeExtension() != 0)
+	            {
+	            	minutes += Client.getTimeExtension();
+	            	Client.setTimeExtension(0);
+	            }
 	            long seconds = timeInSeconds % 60;
 	            
-	            final String time = Long.toString(minutes) + ":" + Long.toString(seconds);
+	            final String time = Long.toString(minutes) + ":" + Long.toString(seconds);  
 	            Platform.runLater(() -> {
 	                tfRemainingTime.setText(time);
 	            });
@@ -212,7 +233,10 @@ public class StudentExecComputerizedTest implements Initializable{
 	    // check the table's selected item and get selected item
 	    if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
 	    	ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
+	    	int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
 	    	taSelectedQuestion.setText(selectedRow.getDetails());
+	    	Integer currentSelectedAnswer = answersArr[selectedRowIndex];
+	    	System.out.println(currentSelectedAnswer);
 	    	if (selectedRow.getNoteType() == NoteType.Students)
 	    	{
 	    		tfNote.setText(selectedRow.getNote());
@@ -221,11 +245,29 @@ public class StudentExecComputerizedTest implements Initializable{
 	    	{
 	    		tfNote.setText("");
 	    	}
-	    	
+	    	if (currentSelectedAnswer != null)
+			{
+	    		switch(currentSelectedAnswer)
+	    		{
+	    			case 1:
+	    				AnswersGroup.selectToggle(radio1);
+	    				break;
+	    			case 2:
+	    				AnswersGroup.selectToggle(radio2);
+	    				break;
+	    			case 3:
+	    				AnswersGroup.selectToggle(radio3);
+	    				break;
+	    			case 4:
+	    				AnswersGroup.selectToggle(radio4);
+	    				break;
+	    		}
+			}
 	    	radio1.setText(selectedRow.getAnswer1());
 	    	radio2.setText(selectedRow.getAnswer2());
 	    	radio3.setText(selectedRow.getAnswer3());
 	    	radio4.setText(selectedRow.getAnswer4());
+	    	
 	    }
 	}
 	
@@ -233,9 +275,12 @@ public class StudentExecComputerizedTest implements Initializable{
 	public void onSaveClick(ActionEvent event)
 	{
 		  if (AnswersGroup.getSelectedToggle() != null) {
+			  ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
 			  int selectedQuestion = tvQuestions.getSelectionModel().getSelectedIndex();
-			  System.out.println("Question: " + selectedQuestion + " radio: " + selectedRadio);
 			  answersArr[selectedQuestion] = selectedRadio;
+			  int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
+			  tvQuestions.getSelectionModel().select(selectedRowIndex + 1);
+			  selectedRow.setVisibleImage();
 		  }
 	}
     
