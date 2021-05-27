@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.prism.paint.Color;
 
 import client.Client;
 import client.ClientUI;
@@ -34,12 +35,19 @@ public class LoginMenuController implements Initializable {
 
 	@FXML
 	private Label lWrongInput;
+	
+
+    @FXML
+    private Label labelServerStatus;
+
+    @FXML
+    private Label labelStatus;
 
 	@FXML
 	void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
 		String password = tfPassword.getText();
-
+	
 		if (userID.isEmpty() || password.isEmpty()) {
 			lWrongInput.setText("Empty fields");
 			lWrongInput.setVisible(true);
@@ -90,6 +98,16 @@ public class LoginMenuController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		tfUserName.setText("204459093");	
 		tfPassword.setText("1234");
+		
+		if(ClientUI.serverStatus)
+		{
+			labelStatus.setStyle("-fx-text-fill: GREEN;");
+			labelStatus.setText("Online");
+		}else
+		{
+			labelStatus.setStyle("-fx-text-fill: RED;");
+			labelStatus.setText("Offline");
+		}
 	}
 
 }

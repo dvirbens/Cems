@@ -1,11 +1,17 @@
 package client.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
 
+import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
-public class StudentMenuController {
+public class StudentMenuController implements Initializable {
 
 	@FXML
 	private JFXButton btnExecutedExams;
@@ -15,6 +21,10 @@ public class StudentMenuController {
 
 	@FXML
 	private JFXButton btnLogout;
+	
+
+    @FXML
+    private Label labelWelcome;
 
 	enum Buttons {
 		EXECUTED_EXAMS, ENTER_EXAM
@@ -51,6 +61,14 @@ public class StudentMenuController {
 			break;
 		}
 
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+		String name = Client.getUser().getFirstName()+" "+Client.getUser().getLastName();
+		String LabelPrint="Welcome, "+name;
+		labelWelcome.setText(LabelPrint);
 	}
 
 }

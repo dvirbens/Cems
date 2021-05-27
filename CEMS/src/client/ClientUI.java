@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 public class ClientUI extends Application {
 
 	private static ClientController clientController;
+	public static boolean serverStatus=false;
 
 	/**
 	 * @param args main arguments
@@ -32,6 +33,7 @@ public class ClientUI extends Application {
 
 		try {
 			setClientController(new ClientController("localhost", 5555));
+			serverStatus=true;
 			System.out.println("Connected to server");
 		} catch (IOException e1) {
 			System.out.println("Cant connect to server");

@@ -1,11 +1,17 @@
 package client.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
 
+import client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
-public class PrincipalMenuController {
+public class PrincipalMenuController implements Initializable {
 
 	@FXML
 	private JFXButton btnOverallStatistics;
@@ -15,6 +21,9 @@ public class PrincipalMenuController {
 
 	@FXML
 	private JFXButton btnLogout;
+	
+    @FXML
+    private Label labelWelcome;
 
 	enum Buttons {
 		OVERALL_STATISTICS, TIME_EXTENSION_REQUEST
@@ -50,6 +59,14 @@ public class PrincipalMenuController {
 			btnTimeExtensionRequest.setStyle("-fx-background-color:#48a832");
 			break;
 		}
+
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		String name = Client.getUser().getFirstName()+" "+Client.getUser().getLastName();
+		String LabelPrint="Welcome, "+name;
+		labelWelcome.setText(LabelPrint);
 
 	}
 

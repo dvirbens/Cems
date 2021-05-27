@@ -25,6 +25,7 @@ public class ClientController {
 
 		client = new Client(ip, port);
 		client.openConnection();
+
 	}
 
 	/**
