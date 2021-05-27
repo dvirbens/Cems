@@ -1,6 +1,9 @@
 package client.gui;
 
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST;
+
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -9,7 +12,8 @@ import com.jfoenix.controls.JFXComboBox;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
-import static common.ModelWrapper.Operation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +21,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import models.ExecutedExam;
 
 public class ExamStatisticController implements Initializable {
@@ -35,6 +42,9 @@ public class ExamStatisticController implements Initializable {
 	private TableColumn<ExecutedExam, String> tcID;
 
 	@FXML
+	private TableColumn<ExecutedExam, String> tcTeacher;
+
+	@FXML
 	private TableColumn<ExecutedExam, String> tcSubject;
 
 	@FXML
@@ -44,10 +54,10 @@ public class ExamStatisticController implements Initializable {
 	private TableColumn<ExecutedExam, String> tcDuration;
 
 	@FXML
-	private TableColumn<ExecutedExam, JFXButton> tcQuestionList;
+	private TableColumn<ExecutedExam, String> tcDate;
 
 	@FXML
-	private TableColumn<ExecutedExam, JFXButton> tcStudentsList;
+	private TableColumn<ExecutedExam, JFXButton> tcDetails;
 
 	@FXML
 	private Label avgLabel;
@@ -73,6 +83,20 @@ public class ExamStatisticController implements Initializable {
 		String teacherID = Client.getUser().getUserID();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+
+		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
+		tcDuration.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("addButton"));
+		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
+		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("detailsButton"));
+
+		ObservableList<ExecutedExam> executedExam = FXCollections.observableArrayList();
+		List<ExecutedExam> executedExamList = Client.getExecExams();
+		executedExam.addAll(executedExamList);
+		tvExecutedExams.setItems(executedExam);
+		
+		tvExecutedExams.setRowFactory(null);
 		
 		XYChart.Series<String, Integer> stats = new XYChart.Series<>();
 		stats.setName("Math exam");

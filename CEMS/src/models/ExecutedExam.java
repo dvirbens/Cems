@@ -6,7 +6,7 @@ import com.jfoenix.controls.JFXButton;
 
 public class ExecutedExam implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String id;
 	private String subject;
 	private String course;
@@ -14,7 +14,8 @@ public class ExecutedExam implements Serializable {
 	private String testType;
 	private int grade;
 	private JFXButton getCopy;
-	
+	private JFXButton details;
+
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
 		super();
 		this.id = id;
@@ -24,7 +25,7 @@ public class ExecutedExam implements Serializable {
 		this.testType = testType;
 		this.grade = grade;
 	}
-	
+
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType) {
 		super();
 		this.id = id;
@@ -94,11 +95,18 @@ public class ExecutedExam implements Serializable {
 		return serialVersionUID;
 	}
 
+	public JFXButton getDetails() {
+		return details;
+	}
+
+	public void setDetails(JFXButton details) {
+		this.details = details;
+	}
+
 	@Override
 	public String toString() {
 		return "ExecExam [id=" + id + ", subject=" + subject + ", course=" + course + ", execDate=" + execDate
 				+ ", testType=" + testType + ", grade=" + grade + ", getCopy=" + getCopy + "]";
 	}
 
-	
 }
