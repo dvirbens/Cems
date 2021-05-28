@@ -198,6 +198,10 @@ public class ExamManagementWindow {
 
 						@Override
 						public void run() {
+							if (Client.getTimeExtension() != 0) {
+								min += (int) Client.getTimeExtension();
+								Client.setTimeExtension(0);
+							}
 							label.setText(String.format("%02d:%02d\n", min, sec));
 							if (min == 0 && sec == 0) {
 								stopExam();
