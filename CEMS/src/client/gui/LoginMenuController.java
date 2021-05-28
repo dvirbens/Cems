@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.prism.paint.Color;
 
 import client.Client;
 import client.ClientUI;

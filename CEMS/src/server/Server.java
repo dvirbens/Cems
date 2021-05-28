@@ -107,6 +107,7 @@ public class Server extends AbstractServer {
 	 * 
 	 * @param msg: get the returning message from client
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		ModelWrapper<?> modelWrapperFromClient = (ModelWrapper<?>) msg;
@@ -221,7 +222,6 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_USER:
-			@SuppressWarnings("unchecked")
 			List<String> userInfo = (List<String>) modelWrapperFromClient.getElements();
 			User user = databaseController.getUser(userInfo.get(0), userInfo.get(1));
 			modelWrapperToClient = new ModelWrapper<>(user, GET_USER);
@@ -297,7 +297,6 @@ public class Server extends AbstractServer {
 		case INSERT_STUDENT_TO_EXAM:
 			// Get code and check if examID exist, if so insert student to exam in DB
 
-			@SuppressWarnings("unchecked")
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
@@ -364,7 +363,7 @@ public class Server extends AbstractServer {
 
 		case INSERT_STUDENT_ANSWERS:
 			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
-			String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
+			// String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
 			studentID = elements.get(0);
 			examID = elements.get(1);
 

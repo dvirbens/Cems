@@ -1,8 +1,6 @@
 package server;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,11 +16,16 @@ import java.util.List;
 import java.util.Map;
 
 import common.SubjectCourseCollection;
-import models.*;
-import static models.ExamProcess.ExamType.*;
+import models.Database;
+import models.Exam;
+import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
+import models.ExecutedExam;
+import models.Question;
+import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
+import models.WordFile;
 
 /**
  * Class that handles all of operation sent by client, database controller

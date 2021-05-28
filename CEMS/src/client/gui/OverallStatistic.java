@@ -1,13 +1,13 @@
 package client.gui;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
-import com.sun.corba.se.spi.orb.Operation;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
 import javafx.event.ActionEvent;
@@ -22,8 +22,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 
 
 public class OverallStatistic implements Initializable{

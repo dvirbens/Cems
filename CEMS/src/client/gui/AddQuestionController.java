@@ -196,7 +196,6 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 			return false;
 		}
 		try {
-			double d = Double.parseDouble(strNum);
 		} catch (NumberFormatException nfe) {
 			return false;
 		}

@@ -1,6 +1,5 @@
 package models;
 
-import java.io.FileInputStream;
 import java.io.Serializable;
 
 public class WordFile implements Serializable {

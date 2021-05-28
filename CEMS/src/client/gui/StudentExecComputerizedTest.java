@@ -1,12 +1,12 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_ANSWERS;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_GRADE;
 
-import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -23,11 +23,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -42,7 +40,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import models.Exam;
 import models.ExamQuestion;
-import models.ExecutedExam;
 import models.ExamQuestion.NoteType;
 
 public class StudentExecComputerizedTest implements Initializable{

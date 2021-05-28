@@ -1,6 +1,9 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.CREATE_EXAM;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_SUBJECT;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -252,7 +255,6 @@ public class CreateExamController implements Initializable {
 			return false;
 		}
 		try {
-			double d = Double.parseDouble(strNum);
 		} catch (NumberFormatException nfe) {
 			return false;
 		}

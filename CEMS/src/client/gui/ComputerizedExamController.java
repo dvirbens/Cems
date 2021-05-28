@@ -30,7 +30,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamProcess;
-import models.ExamProcess.ExamType;
 
 public class ComputerizedExamController implements Initializable {
 
@@ -87,10 +86,6 @@ public class ComputerizedExamController implements Initializable {
 
 	@FXML
 	private Label masgeLabel;
-
-	private ExamType examType;
-
-	private String filePath;
 
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
