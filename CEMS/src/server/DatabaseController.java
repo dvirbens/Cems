@@ -560,25 +560,7 @@ public class DatabaseController {
 		}
 
 	}
-
-	public void saveExtension(ExamExtension examExtension) {
-		PreparedStatement prepareStatement;
-		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO ExamExtension VALUES (?,?,?,?);");
-			prepareStatement.setString(1, examExtension.getCode());
-			prepareStatement.setString(2, examExtension.getTeacherID());
-			prepareStatement.setString(3, examExtension.getTimeExtension());
-			prepareStatement.setString(4, examExtension.getCasue());
-			int resultSet = prepareStatement.executeUpdate();
-			if (resultSet == 1) {
-				System.out.println("Extension sent to principal succuessfully");
-			}
-
-		} catch (SQLException e) {
-			System.err.println("Error occurred, Extension has not been sent ");
-		}
-	}
-
+	
 	public String CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
 		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
 		String examID = "";

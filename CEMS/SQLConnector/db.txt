@@ -55,26 +55,6 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
-CREATE TABLE ExamProcess (
-	examID varchar(255),
-	code varchar(255),
-	teacherID varchar(255),
-	startDate varchar(255),
-	type ENUM('Manual','Computerized'),
-	manualExam blob,
-	PRIMARY KEY(examID,code)
-);
-
-
-CREATE TABLE ExamExtension (
-	code varchar(255),
-	teacherID varchar(255),
-	timeExtension varchar(255),
-	cause varchar(255),
-	PRIMARY KEY(teacherID,examID),
-	FOREIGN KEY(code) REFERENCES Exam(code)
-);
-
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
 	code varchar(255),

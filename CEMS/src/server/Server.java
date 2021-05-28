@@ -64,10 +64,12 @@ public class Server extends AbstractServer {
 
 	private static Map<String, ExamProcess> examsInProcess;
 
+	private static Map<String, List<ExamExtension>> examsExtensions;
+
 	private static Map<String, List<String>> studentInExam;
-	
-	//ExamID -> AnswersArray
-	private static Map<String, ArrayList<String[]>> solutions;
+
+	// ExamID -> AnswersArray
+	private static Map<String, List<String[]>> solutions;
 	/**
 	 * Indicate if the server is connected
 	 */
@@ -96,6 +98,7 @@ public class Server extends AbstractServer {
 		examsInProcess.put("555", null);
 		studentInExam = new HashMap<>();
 		solutions = new HashMap<>();
+		examsExtensions = new HashMap<>();
 	}
 
 	/**
@@ -141,7 +144,7 @@ public class Server extends AbstractServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			break;
 
 		case TEST_STATISTICS:
@@ -196,7 +199,17 @@ public class Server extends AbstractServer {
 
 		case EXTENSION_REQUEST:
 			ExamExtension examExtension = (ExamExtension) modelWrapperFromClient.getElement();
-			databaseController.saveExtension(examExtension);
+			List<ExamExtension> examExtensionsList;
+
+			if (!examsExtensions.containsKey(examExtension.getCode()))
+				examExtensionsList = new ArrayList<>();
+			else
+				examExtensionsList = examsExtensions.get(examExtension.getCode());
+
+			examExtensionsList.add(examExtension);
+			examsExtensions.put(examExtension.getCode(), examExtensionsList);
+
+			System.out.println(examsExtensions);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -283,19 +296,16 @@ public class Server extends AbstractServer {
 
 		case INSERT_STUDENT_TO_EXAM:
 			// Get code and check if examID exist, if so insert student to exam in DB
-			
-			
+
 			@SuppressWarnings("unchecked")
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
 			String type = elements.get(2);
-			if (examsInProcess.containsKey(userCode))
-			{
+			if (examsInProcess.containsKey(userCode)) {
 				List<String> temp = studentInExam.get(userCode);
-				
-				if (temp == null)
-				{
+
+				if (temp == null) {
 					temp = new ArrayList<>();
 				}
 
@@ -303,11 +313,9 @@ public class Server extends AbstractServer {
 
 				studentInExam.put(userCode, temp);
 				examID = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
-				modelWrapperToClient = new ModelWrapper<>(examID,INSERT_STUDENT_TO_EXAM);
-				
-			}
-			else
-			{
+				modelWrapperToClient = new ModelWrapper<>(examID, INSERT_STUDENT_TO_EXAM);
+
+			} else {
 				modelWrapperToClient = new ModelWrapper<>(ERROR_INSERT_STUDENT_TO_EXAM);
 			}
 			try {
@@ -315,7 +323,7 @@ public class Server extends AbstractServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
+
 			break;
 
 		case GET_EXAM_ID:
@@ -339,7 +347,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case INSERT_STUDENT_GRADE:
 			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
@@ -353,7 +361,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case INSERT_STUDENT_ANSWERS:
 			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
@@ -448,5 +456,29 @@ public class Server extends AbstractServer {
 	public static void setExamsInProcess(Map<String, ExamProcess> examsInProcess) {
 		Server.examsInProcess = examsInProcess;
 	}
-	
+
+	public static Map<String, List<ExamExtension>> getExamsExtensions() {
+		return examsExtensions;
+	}
+
+	public static void setExamsExtensions(Map<String, List<ExamExtension>> examsExtensions) {
+		Server.examsExtensions = examsExtensions;
+	}
+
+	public static Map<String, List<String>> getStudentInExam() {
+		return studentInExam;
+	}
+
+	public static void setStudentInExam(Map<String, List<String>> studentInExam) {
+		Server.studentInExam = studentInExam;
+	}
+
+	public static Map<String, List<String[]>> getSolutions() {
+		return solutions;
+	}
+
+	public static void setSolutions(Map<String, List<String[]>> solutions) {
+		Server.solutions = solutions;
+	}
+
 }
