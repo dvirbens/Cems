@@ -39,6 +39,7 @@ public class ExamManagementWindow {
 	private Label timerLabel;
 	private HBox requestSection;
 	private boolean requestFlag;
+	private boolean isClosed=false;
 
 	public ExamManagementWindow(String code, int minutes) {
 		this.code = code;
@@ -166,6 +167,7 @@ public class ExamManagementWindow {
 	}
 
 	public void stopExam() {
+		if(!isClosed) {
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(code, CLOSE_EXAM);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		sw.stopTime();
@@ -173,6 +175,9 @@ public class ExamManagementWindow {
 		askForExstension.setVisible(false);
 		timerLabel.setFont(new Font(50));
 		timerLabel.setText("Exam Finished");
+		isClosed=true;
+	}
+		
 	}
 
 	public class Stopwatch {

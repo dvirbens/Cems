@@ -67,7 +67,7 @@ public class QuestionListController implements Initializable {
 
 	@FXML
 	void onClickBack(ActionEvent event) {
-		MainGuiController.getMenuHandler().setStartExamScreen();
+		MainGuiController.getMenuHandler().setComputerizedScreen();
 	}
 
 	@Override

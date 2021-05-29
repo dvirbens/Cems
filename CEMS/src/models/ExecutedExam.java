@@ -10,11 +10,14 @@ public class ExecutedExam implements Serializable {
 	private String id;
 	private String subject;
 	private String course;
+	private String TeacherId;
 	private String execDate;
 	private String testType;
 	private int grade;
 	private JFXButton getCopy;
 	private JFXButton details;
+	private JFXButton studentList;
+
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
 		super();
@@ -102,11 +105,30 @@ public class ExecutedExam implements Serializable {
 	public void setDetails(JFXButton details) {
 		this.details = details;
 	}
+	
+	public JFXButton getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(JFXButton studentList) {
+		this.studentList = studentList;
+	}
+	
+
+
+	public String getTeacherId() {
+		return TeacherId;
+	}
+
+	public void setTeacherId(String teacherId) {
+		TeacherId = teacherId;
+	}
 
 	@Override
 	public String toString() {
-		return "ExecExam [id=" + id + ", subject=" + subject + ", course=" + course + ", execDate=" + execDate
-				+ ", testType=" + testType + ", grade=" + grade + ", getCopy=" + getCopy + "]";
+		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", TeacherId=" + TeacherId
+				+ ", execDate=" + execDate + ", testType=" + testType + ", grade=" + grade + "]";
 	}
+
 
 }

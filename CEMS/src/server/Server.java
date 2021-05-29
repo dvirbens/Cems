@@ -1,20 +1,6 @@
 package server;
 
-import static common.ModelWrapper.Operation.ERROR_INSERT_STUDENT_TO_EXAM;
-import static common.ModelWrapper.Operation.EXAM_EXECUTE;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
-import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
-import static common.ModelWrapper.Operation.GET_USER;
-import static common.ModelWrapper.Operation.INSERT_STUDENT_GRADE;
-import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
-import static common.ModelWrapper.Operation.START_EXAM_FAILD;
-import static common.ModelWrapper.Operation.START_EXAM_SUCCESS;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import client.gui.OverallStatistic.Operation;
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Database;
@@ -145,8 +132,20 @@ public class Server extends AbstractServer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			break;
+			
+			
+		case GET_EXECUTED_EXAM_LIST_OWNER:
+			String teacherID2= (String) modelWrapperFromClient.getElement();
+			List<ExecutedExam> executedExamByTeacherCreat = databaseController.getExecutedExamListByTeacherCreator(teacherID2);
+			modelWrapperToClient = new ModelWrapper<>(executedExamByTeacherCreat,GET_EXECUTED_EXAM_LIST_OWNER);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 
 		case TEST_STATISTICS:
 			break;
@@ -169,7 +168,8 @@ public class Server extends AbstractServer {
 
 		case CLOSE_EXAM:
 			String code = (String) modelWrapperFromClient.getElement();
-			databaseController.closeExam(code);
+			databaseController.saveExecutedExam(examsInProcess.get(code));
+			examsInProcess.remove(code);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {

@@ -18,6 +18,7 @@ import java.util.Map;
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Exam;
+import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
@@ -534,15 +535,6 @@ public class DatabaseController {
 	 * System.err.println("Error occurred, exam has not been started "); } }
 	 * 
 	 */
-	public void closeExam(String code) {
-		try {
-			Statement statement = conn.createStatement();
-			String query = "DELETE FROM ExamProcess WHERE code=" + code + ";";
-			statement.execute(query);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void UploadFile(WordFile file) {
 		String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
@@ -674,6 +666,48 @@ public class DatabaseController {
 					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, execDate, type);
 					examList.add(executedExam);
 
+
+				}
+			}
+			
+			
+			
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
+		}
+
+		return examList;
+	}
+	
+	
+	
+	public List<ExecutedExam> getExecutedExamListByTeacherCreator(String teacherID) {
+		List<ExecutedExam> examList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String executedExamQuery = "SELECT examID,execDate,type FROM executedExam;";
+			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
+			while (rsExecutedExam.next()) {
+				String examID = rsExecutedExam.getString("ExamID");
+				String execDate = rsExecutedExam.getString("execDate");
+				String type = rsExecutedExam.getString("type");
+				List<String> examDetails = getExamDetailsByExamId(examID);
+				if (examDetails != null) {
+					String subject = examDetails.get(0);
+					String course = examDetails.get(1);
+					String creatorTeacher=examDetails.get(2);
+					if(creatorTeacher.equals(teacherID))
+					{
+						ExecutedExam executedExam = new ExecutedExam(examID, subject, course, execDate, type);
+						examList.add(executedExam);
+
+					}
+
+
 				}
 			}
 
@@ -685,6 +719,7 @@ public class DatabaseController {
 		return examList;
 	}
 
+
 	private List<String> getExamDetailsByExamId(String examID) {
 		try {
 			Statement statement = conn.createStatement();
@@ -694,8 +729,10 @@ public class DatabaseController {
 				List<String> examDetails = new ArrayList<>();
 				String subject = rsExam.getString("Subject");
 				String course = rsExam.getString("Course");
+				String teacher=rsExam.getString("teacherID");
 				examDetails.add(subject);
 				examDetails.add(course);
+				examDetails.add(teacher);
 				return examDetails;
 			}
 
@@ -723,8 +760,37 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+	}
+	
+	
+	
+	public boolean saveExecutedExam(ExamProcess exam){
+		PreparedStatement prepareStatement;
+
+
+
+		try {
+			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?);");
+			
+			prepareStatement.setString(1, exam.getexamId());
+			prepareStatement.setString(2, exam.getTeacherID());
+			prepareStatement.setString(3, exam.getDate());
+			prepareStatement.setDouble(4, 0);
+			prepareStatement.setDouble(5, 0);
+			prepareStatement.setString(6, exam.getType().toString());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
+				System.out.print("Exam Saved Succuessfully");
+				return true;
+			}
+
+		} catch (SQLException e) {
+			System.err.print("Error occurred, Exam has not been saved ");
+			return false;
+		}
+
+		return true;
 		
-
-
 	}
 }

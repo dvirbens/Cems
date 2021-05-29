@@ -203,6 +203,10 @@ public class Client extends AbstractClient {
 			case INSERT_STUDENT_GRADE:
 				break;
 
+			case GET_EXECUTED_EXAM_LIST_OWNER:
+				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
+				break;
+				
 			default:
 				break;
 

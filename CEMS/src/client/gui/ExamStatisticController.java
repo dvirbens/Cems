@@ -1,6 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST;
+import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
 import java.util.List;
@@ -79,7 +79,7 @@ public class ExamStatisticController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String teacherID = Client.getUser().getUserID();
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST_OWNER);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));

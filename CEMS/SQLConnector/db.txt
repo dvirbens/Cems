@@ -55,14 +55,15 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
+
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
-	code varchar(255),
 	teacherID varchar(255),
+    execDate varchar(255),
 	median double,
 	avg double,
 	type ENUM('Manual','Computerized'),
-	PRIMARY KEY(examID,code)
+	PRIMARY KEY(examID,execDate,teacherID)
 );
 
 

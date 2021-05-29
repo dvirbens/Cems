@@ -1,11 +1,14 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class ExamProcess implements Serializable {
 
 	private String computerizedExamID;
+	private String examId;
 	private String date;
+	private String time;
 	private String teacherID;
 	private String code;
 	private String manualSubject;
@@ -23,22 +26,26 @@ public class ExamProcess implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ExamProcess(String computerizedExamID, String date, String teacherID, String code) {
+	public ExamProcess(String examId, String date,String time, String teacherID, String code) {
 		super();
-		this.computerizedExamID = computerizedExamID;
+		this.examId = examId;
 		this.date = date;
+		this.time=time;
 		this.teacherID = teacherID;
 		this.code = code;
 		type = ExamType.Computerized;
 	}
 
-	public ExamProcess(String manualSubject, String manulCourse, String manualDuration, String date, String teacherID,
+	public ExamProcess(String manualSubject, String manulCourse, String manualDuration, String date,String time, String teacherID,
 			String code, WordFile manualFile) {
 		super();
+		Random r=new Random();
+		this.examId=String.valueOf(r.nextInt(99999)); 
 		this.manualSubject = manualSubject;
 		this.manulCourse = manulCourse;
 		this.manualDuration = manualDuration;
 		this.date = date;
+		this.time=time;
 		this.teacherID = teacherID;
 		this.code = code;
 		this.manualFile = manualFile;
@@ -73,12 +80,12 @@ public class ExamProcess implements Serializable {
 		this.code = code;
 	}
 
-	public String getComputerizedExamID() {
-		return computerizedExamID;
+	public String getexamId() {
+		return examId;
 	}
 
-	public void setComputerizedExamID(String computerizedExamID) {
-		this.computerizedExamID = computerizedExamID;
+	public void setexamId(String examId) {
+		this.examId = examId;
 	}
 
 	public String getManualSubject() {

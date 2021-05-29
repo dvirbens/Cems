@@ -156,13 +156,13 @@ public class ComputerizedExamController implements Initializable {
 
 		if (validInput) {
 			masgeLabel.setText("");
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
 			String currentDate = formatter.format(date).toString();
+			SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
+			String currentTime = timeformat.format(date).toString();
 			String teacherID = Client.getUser().getUserID();
-
-			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, teacherID, code);
-
+			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, currentTime, teacherID, code);
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 

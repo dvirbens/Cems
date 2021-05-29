@@ -79,17 +79,19 @@ public class ManualExamController implements Initializable {
 		}
 
 		if (validInput) {
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
 			String currentDate = formatter.format(date).toString();
+			SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
+			String currentTime = timeformat.format(date).toString();
 			String teacherID = Client.getUser().getUserID();
 			String duration = tfDuration.getText();
 			String subject = cbSubject.getSelectionModel().getSelectedItem();
 			String course = cbCourse.getSelectionModel().getSelectedItem();
 			WordFile wordFile = getWordFile();
-
-			ExamProcess examProcess = new ExamProcess(subject, course, duration, currentDate, teacherID, code,
-					wordFile);
+			System.out.println(currentTime);
+			ExamProcess examProcess = new ExamProcess(subject, course, duration, currentDate, currentTime, teacherID,
+					code, wordFile);
 
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
