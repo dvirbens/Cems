@@ -11,13 +11,13 @@ public class ExecutedExam implements Serializable {
 	private String subject;
 	private String course;
 	private String TeacherId;
+	private String executorTeacherName;
 	private String execDate;
 	private String testType;
 	private int grade;
 	private JFXButton getCopy;
 	private JFXButton details;
-	private JFXButton studentList;
-
+	private JFXButton gradeApproval;
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
 		super();
@@ -29,8 +29,10 @@ public class ExecutedExam implements Serializable {
 		this.grade = grade;
 	}
 
-	public ExecutedExam(String id, String subject, String course, String execDate, String testType) {
+	public ExecutedExam(String id, String executorTeacherName, String subject, String course, String execDate,
+			String testType) {
 		super();
+		this.executorTeacherName = executorTeacherName;
 		this.id = id;
 		this.subject = subject;
 		this.course = course;
@@ -105,16 +107,6 @@ public class ExecutedExam implements Serializable {
 	public void setDetails(JFXButton details) {
 		this.details = details;
 	}
-	
-	public JFXButton getStudentList() {
-		return studentList;
-	}
-
-	public void setStudentList(JFXButton studentList) {
-		this.studentList = studentList;
-	}
-	
-
 
 	public String getTeacherId() {
 		return TeacherId;
@@ -124,11 +116,26 @@ public class ExecutedExam implements Serializable {
 		TeacherId = teacherId;
 	}
 
+	public JFXButton getGradeApproval() {
+		return gradeApproval;
+	}
+
+	public void setGradeApproval(JFXButton gradeApproval) {
+		this.gradeApproval = gradeApproval;
+	}
+
+	public String getExecutorTeacherName() {
+		return executorTeacherName;
+	}
+
+	public void setExecutorTeacherName(String executorTeacherName) {
+		this.executorTeacherName = executorTeacherName;
+	}
+
 	@Override
 	public String toString() {
 		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", TeacherId=" + TeacherId
 				+ ", execDate=" + execDate + ", testType=" + testType + ", grade=" + grade + "]";
 	}
-
 
 }

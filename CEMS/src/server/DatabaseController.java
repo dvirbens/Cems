@@ -697,18 +697,21 @@ public class DatabaseController {
 
 		try {
 			Statement statement = conn.createStatement();
-			String executedExamQuery = "SELECT examID,executeDate,type FROM executedExam WHERE executeTeacherID=\""
+			String executedExamQuery = "SELECT examID,executeDate,type,executeTeacherID FROM executedExam WHERE executeTeacherID=\""
 					+ loggedInTeacherId + "\";";
 			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
 			while (rsExecutedExam.next()) {
 				String examID = rsExecutedExam.getString("ExamID");
 				String executeDate = rsExecutedExam.getString("executeDate");
 				String type = rsExecutedExam.getString("type");
+				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
 				List<String> examDetails = getExamDetailsByExamId(examID);
 				if (examDetails != null) {
 					String subject = examDetails.get(0);
 					String course = examDetails.get(1);
-					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeDate, type);
+					String teacherName = getExecutorTeacherName(executeTeacherID);
+					ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate,
+							type);
 					examList.add(executedExam);
 				}
 			}
@@ -726,18 +729,21 @@ public class DatabaseController {
 
 		try {
 			Statement statement = conn.createStatement();
-			String executedExamQuery = "SELECT examID,executeDate,type FROM executedExam WHERE creatorTeacherID=\""
+			String executedExamQuery = "SELECT examID,executeDate,type,executeTeacherID FROM executedExam WHERE creatorTeacherID=\""
 					+ loggedInTeacherId + "\";";
 			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
 			while (rsExecutedExam.next()) {
 				String examID = rsExecutedExam.getString("ExamID");
 				String executeDate = rsExecutedExam.getString("executeDate");
 				String type = rsExecutedExam.getString("type");
+				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
 				List<String> examDetails = getExamDetailsByExamId(examID);
 				if (examDetails != null) {
 					String subject = examDetails.get(0);
 					String course = examDetails.get(1);
-					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeDate, type);
+					String teacherName = getExecutorTeacherName(executeTeacherID);
+					ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate,
+							type);
 					examList.add(executedExam);
 				}
 			}
@@ -748,6 +754,24 @@ public class DatabaseController {
 		}
 
 		return examList;
+	}
+
+	private String getExecutorTeacherName(String loggedInTeacherId) {
+		try {
+			Statement statement = conn.createStatement();
+			String sql = ("SELECT * FROM User WHERE userID=" + loggedInTeacherId + ";");
+			ResultSet resultSet = statement.executeQuery(sql);
+			if (resultSet.next()) {
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+
+				return firstName + " " + lastName;
+			}
+		} catch (SQLException e) {
+			System.err.println("User not found");
+		}
+
+		return null;
 	}
 
 	private List<String> getExamDetailsByExamId(String examID) {
@@ -775,7 +799,6 @@ public class DatabaseController {
 	}
 
 	private String getCreatorTeacherID(String examID) {
-
 		try {
 			Statement statement = conn.createStatement();
 			String examQuery = "SELECT * FROM Exam WHERE examID=\"" + examID + "\";";
@@ -791,4 +814,5 @@ public class DatabaseController {
 		}
 		return null;
 	}
+
 }

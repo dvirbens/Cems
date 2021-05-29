@@ -127,6 +127,14 @@ public class ExamProcess implements Serializable {
 	public void setManualFile(WordFile manualFile) {
 		this.manualFile = manualFile;
 	}
+	
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
 
 	@Override
 	public String toString() {

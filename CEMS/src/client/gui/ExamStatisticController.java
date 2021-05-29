@@ -50,6 +50,9 @@ public class ExamStatisticController implements Initializable {
 
 	@FXML
 	private TableColumn<ExecutedExam, JFXButton> tcDetails;
+	
+    @FXML
+    private TableColumn<ExecutedExam, String> tcTeacher;
 
 	@FXML
 	private Label avgLabel;
@@ -77,6 +80,7 @@ public class ExamStatisticController implements Initializable {
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
+		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("executorTeacherName"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
 		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
