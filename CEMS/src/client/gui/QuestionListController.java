@@ -48,12 +48,15 @@ public class QuestionListController implements Initializable {
 
 	private static List<ExamQuestion> questions;
 
+	private static String backClassName;
+
 	public QuestionListController() {
 
 	}
 
-	public QuestionListController(List<ExamQuestion> examQuestions) {
+	public QuestionListController(List<ExamQuestion> examQuestions, String backClassName) {
 		questions = examQuestions;
+		QuestionListController.backClassName = backClassName;
 	}
 
 	public void start() {
@@ -67,7 +70,16 @@ public class QuestionListController implements Initializable {
 
 	@FXML
 	void onClickBack(ActionEvent event) {
-		MainGuiController.getMenuHandler().setComputerizedScreen();
+		switch (backClassName) {
+		case "ExamStatisticController":
+			MainGuiController.getMenuHandler().setExamStatisticScreen();
+			break;
+
+		case "ComputerizedExamController":
+			MainGuiController.getMenuHandler().setComputerizedScreen();
+			break;
+		}
+
 	}
 
 	@Override

@@ -16,7 +16,16 @@ public class ExecutedExam implements Serializable {
 	private String testType;
 	private int grade;
 	private JFXButton getCopy;
-	private JFXButton details;
+	private JFXButton questionList;
+
+	public JFXButton getQuestionList() {
+		return questionList;
+	}
+
+	public void setQuestionList(JFXButton questionList) {
+		this.questionList = questionList;
+	}
+
 	private JFXButton gradeApproval;
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
@@ -98,14 +107,6 @@ public class ExecutedExam implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public JFXButton getDetails() {
-		return details;
-	}
-
-	public void setDetails(JFXButton details) {
-		this.details = details;
 	}
 
 	public String getTeacherId() {

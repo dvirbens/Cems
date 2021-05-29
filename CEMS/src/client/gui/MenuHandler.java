@@ -153,6 +153,26 @@ public class MenuHandler {
 		}
 	}
 
+	public void setExamPoolScreen() {
+		try {
+			Pane examPoolPane = (Pane) FXMLLoader.load(getClass().getResource("ExamPool.fxml"));
+			mainFrame.setCenter(examPoolPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void setQuestionPoolScreen() {
+		try {
+			Pane questionPoolPane = (Pane) FXMLLoader.load(getClass().getResource("QuestionPool.fxml"));
+			mainFrame.setCenter(questionPoolPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public void setOverallStatisticsScreen() {
 		try {
 			Pane overallStatisticsPane = (Pane) FXMLLoader.load(getClass().getResource("OverallStatistics.fxml"));
@@ -171,8 +191,8 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setMainScreen(){
+
+	public void setMainScreen() {
 		try {
 			Pane mainPane = (Pane) FXMLLoader.load(getClass().getResource("LoginLogo.fxml"));
 			mainFrame.setCenter(mainPane);
@@ -181,8 +201,8 @@ public class MenuHandler {
 		}
 	}
 
-	public void setQuestionListScreen(List<ExamQuestion> examQuestions) {
-		QuestionListController questionListController = new QuestionListController(examQuestions);
+	public void setQuestionListScreen(List<ExamQuestion> examQuestions, String backClassName) {
+		QuestionListController questionListController = new QuestionListController(examQuestions, backClassName);
 		questionListController.start();
 	}
 

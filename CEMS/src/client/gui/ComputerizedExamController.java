@@ -115,7 +115,8 @@ public class ComputerizedExamController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					MainGuiController.getMenuHandler().setQuestionListScreen(exam.getExamQuestions());
+					MainGuiController.getMenuHandler().setQuestionListScreen(exam.getExamQuestions(),
+							"ComputerizedExamController");
 				}
 
 			});

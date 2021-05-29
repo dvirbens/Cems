@@ -6,6 +6,7 @@ import java.util.List;
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Exam;
+import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
 import models.User;
@@ -51,6 +52,8 @@ public class Client extends AbstractClient {
 	 * interface.
 	 */
 	private static List<Question> questions;
+
+	private static List<ExamQuestion> examQuestions;
 
 	/**
 	 * Value that hold the test the will be shown on editTest user interface.
@@ -189,7 +192,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case GET_QUESTION_LIST_BY_EXAM_ID:
-				questions = (List<Question>) modelWrapperFromServer.getElements();
+				examQuestions = (List<ExamQuestion>) modelWrapperFromServer.getElements();
 				break;
 
 			case GET_EXAM_BY_EXAM_ID:
@@ -341,6 +344,14 @@ public class Client extends AbstractClient {
 
 	public static void setTimeExtension(long timeExtension) {
 		Client.timeExtension = timeExtension;
+	}
+
+	public static List<ExamQuestion> getExamQuestions() {
+		return examQuestions;
+	}
+
+	public static void setExamQuestions(List<ExamQuestion> examQuestions) {
+		Client.examQuestions = examQuestions;
 	}
 
 }

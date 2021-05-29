@@ -1,6 +1,7 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
 import java.net.URL;
 import java.util.List;
@@ -12,17 +13,20 @@ import com.jfoenix.controls.JFXComboBox;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import models.ExamQuestion;
 import models.ExecutedExam;
 
 public class ExamStatisticController implements Initializable {
@@ -50,9 +54,9 @@ public class ExamStatisticController implements Initializable {
 
 	@FXML
 	private TableColumn<ExecutedExam, JFXButton> tcDetails;
-	
-    @FXML
-    private TableColumn<ExecutedExam, String> tcTeacher;
+
+	@FXML
+	private TableColumn<ExecutedExam, String> tcTeacher;
 
 	@FXML
 	private Label avgLabel;
@@ -61,7 +65,7 @@ public class ExamStatisticController implements Initializable {
 	private Label medLabel;
 
 	@FXML
-	private LineChart<String, Integer> clExamStatistic;
+	private BarChart<String, Integer> bcExamStatistic;
 
 	@FXML
 	void onClickExamCourse(ActionEvent event) {
@@ -84,24 +88,65 @@ public class ExamStatisticController implements Initializable {
 		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
 		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
-		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("detailsButton"));
+		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("questionList"));
 
 		ObservableList<ExecutedExam> executedExam = FXCollections.observableArrayList();
 		List<ExecutedExam> executedExamList = Client.getExecExams();
+		executedExamList = setExecutedExamsListQuestionListButtons(executedExamList);
 		executedExam.addAll(executedExamList);
 		tvExecutedExams.setItems(executedExam);
-		
-		tvExecutedExams.setRowFactory(null);
-		
+
+		tvExecutedExams.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			if (newSelection != null) {
+				System.out.println(newSelection.getId());
+
+				XYChart.Series<String, Integer> newStats = new XYChart.Series<>();
+				newStats.setName("Algebra exam");
+				newStats.getData().add(new XYChart.Data<>("Arik Zagdon", 20));
+				newStats.getData().add(new XYChart.Data<>("Aviel Turgeman", 40));
+				newStats.getData().add(new XYChart.Data<>("Dvir ben simon", 100));
+				newStats.getData().add(new XYChart.Data<>("Shenhav Hezi", 90));
+				newStats.getData().add(new XYChart.Data<>("Yakov Shitrit", 30));
+
+				bcExamStatistic.getData().add(newStats);
+
+			}
+		});
+
 		XYChart.Series<String, Integer> stats = new XYChart.Series<>();
 		stats.setName("Math exam");
 		stats.getData().add(new XYChart.Data<>("Arik Zagdon", 90));
 		stats.getData().add(new XYChart.Data<>("Aviel Turgeman", 60));
-		stats.getData().add(new XYChart.Data<>("Dvir ben simon", 80));
+		stats.getData().add(new XYChart.Data<>("Dvir ben simon", 100));
 		stats.getData().add(new XYChart.Data<>("Shenhav Hezi", 70));
 		stats.getData().add(new XYChart.Data<>("Yakov Shitrit", 50));
 
-		clExamStatistic.getData().add(stats);
+		bcExamStatistic.getData().add(stats);
+	}
+
+	private List<ExecutedExam> setExecutedExamsListQuestionListButtons(List<ExecutedExam> executedExamsList) {
+		for (ExecutedExam exam : executedExamsList) {
+			JFXButton questionListButton = new JFXButton();
+			questionListButton.setPrefSize(90, 15);
+			questionListButton
+					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			questionListButton.setText("List");
+			questionListButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(exam.getId(), GET_QUESTION_LIST_BY_EXAM_ID);
+					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+					List<ExamQuestion> questionList = Client.getExamQuestions();
+					MainGuiController.getMenuHandler().setQuestionListScreen(questionList, "ExamStatisticController");
+
+				}
+			});
+
+			exam.setQuestionList(questionListButton);
+		}
+
+		return executedExamsList;
 	}
 
 }
