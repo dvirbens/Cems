@@ -58,8 +58,9 @@ CREATE TABLE Course (
 
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
-	teacherID varchar(255),
-    execDate varchar(255),
+	executeTeacherID varchar(255),
+	creatorTeacherID varchar(255),
+    executeDate varchar(255),
 	median double,
 	avg double,
 	type ENUM('Manual','Computerized'),
@@ -106,6 +107,8 @@ INSERT INTO  Course VALUES ("05","Literature5","01");
 INSERT INTO  User VALUES ("204459093","1234","Arik","Zagdon","Arikz15@gmail.com",'Teacher');
 INSERT INTO  User VALUES ("308315035","1234","Dvir","Ben-simon","Dvirbens@gmail.com",'Student');
 INSERT INTO  User VALUES ("409024902","1234","Shehav","Hezi","Hezi@gmail.com",'Principal');
+INSERT INTO  User VALUES ("312423847","1234","Shoola","Ben-zaken","Sholaz@gmail.com",'Teacher');
+
 
 INSERT INTO question VALUES ("123", "Mathermatics", "Simpe question", "a", "b", "c", "d", 1, "Bla");
 INSERT INTO question VALUES ("124", "Mathermatics", "Simpe question22", "a", "b", "c", "d", 1, "Bla");

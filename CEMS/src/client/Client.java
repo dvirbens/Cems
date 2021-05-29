@@ -65,7 +65,7 @@ public class Client extends AbstractClient {
 	 * Value that hold the user, use to login and and open appropriate menu
 	 */
 	private static User user;
-	
+
 	private static long timeExtension = 0;
 
 	/**
@@ -111,7 +111,7 @@ public class Client extends AbstractClient {
 			case TEST_STATISTICS:
 				break;
 
-			case GET_EXECUTED_EXAM_LIST:
+			case GET_EXECUTED_EXAM_LIST_BY_EXECUTOR:
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				break;
 
@@ -179,7 +179,7 @@ public class Client extends AbstractClient {
 				setExamID((String) modelWrapperFromServer.getElement());
 				setServerMessages("Student entered exam successfully");
 				break;
-				
+
 			case ERROR_INSERT_STUDENT_TO_EXAM:
 				setServerMessages("Invalid code.");
 				break;
@@ -195,18 +195,18 @@ public class Client extends AbstractClient {
 			case GET_EXAM_BY_EXAM_ID:
 				Client.setExam((Exam) modelWrapperFromServer.getElement());
 				break;
-			
+
 			case STUDENT_TIME_EXTENSION:
 				Client.setTimeExtension(Long.parseLong((String) modelWrapperFromServer.getElement()));
 				break;
-				
+
 			case INSERT_STUDENT_GRADE:
 				break;
 
-			case GET_EXECUTED_EXAM_LIST_OWNER:
+			case GET_EXECUTED_EXAM_LIST_BY_CREATOR:
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				break;
-				
+
 			default:
 				break;
 
@@ -342,7 +342,5 @@ public class Client extends AbstractClient {
 	public static void setTimeExtension(long timeExtension) {
 		Client.timeExtension = timeExtension;
 	}
-	
-	
 
 }

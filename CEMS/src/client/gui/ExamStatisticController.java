@@ -40,16 +40,10 @@ public class ExamStatisticController implements Initializable {
 	private TableColumn<ExecutedExam, String> tcID;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcTeacher;
-
-	@FXML
 	private TableColumn<ExecutedExam, String> tcSubject;
 
 	@FXML
 	private TableColumn<ExecutedExam, String> tcCourse;
-
-	@FXML
-	private TableColumn<ExecutedExam, String> tcDuration;
 
 	@FXML
 	private TableColumn<ExecutedExam, String> tcDate;
@@ -79,13 +73,12 @@ public class ExamStatisticController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String teacherID = Client.getUser().getUserID();
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST_OWNER);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST_BY_CREATOR);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
-		tcDuration.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("addButton"));
 		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("detailsButton"));
 

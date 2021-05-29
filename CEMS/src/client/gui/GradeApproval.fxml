@@ -8,12 +8,12 @@
    <children>
       <TableView fx:id="tvExecutedExams" layoutX="35.0" layoutY="50.0" prefHeight="654.0" prefWidth="681.0" stylesheets="@style.css">
         <columns>
-          <TableColumn fx:id="tcExamID" prefWidth="118.0" text="Exam ID" />
-          <TableColumn fx:id="tcSubject" minWidth="1.0" prefWidth="109.0" text="Subject" />
-            <TableColumn fx:id="tcCourse" minWidth="7.0" prefWidth="97.0" text="Coruse " />
-            <TableColumn fx:id="tcDate" prefWidth="92.0" text="Date" />
-            <TableColumn fx:id="tcType" prefWidth="113.0" text="Type" />
-            <TableColumn fx:id="tcStudentList" prefWidth="151.0" text="Student List" />
+          <TableColumn fx:id="tcExamID" prefWidth="96.0" style="-fx-alignment: center;" text="Exam ID" />
+          <TableColumn fx:id="tcSubject" minWidth="1.0" prefWidth="115.0" style="-fx-alignment: center;" text="Subject" />
+            <TableColumn fx:id="tcCourse" minWidth="7.0" prefWidth="88.0" style="-fx-alignment: center;" text="Coruse " />
+            <TableColumn fx:id="tcDate" prefWidth="128.0" style="-fx-alignment: center;" text="Date" />
+            <TableColumn fx:id="tcType" prefWidth="117.0" style="-fx-alignment: center;" text="Type" />
+            <TableColumn fx:id="tcStudentList" prefWidth="136.0" style="-fx-alignment: center;" text="Grade Approval" />
         </columns>
       </TableView>
    </children>

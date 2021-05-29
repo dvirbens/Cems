@@ -555,7 +555,7 @@ public class DatabaseController {
 		}
 
 	}
-	
+
 	public String CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
 		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
 		String examID = "";
@@ -647,32 +647,71 @@ public class DatabaseController {
 		return null;
 	}
 
-	public List<ExecutedExam> getExecutedExamListByTeacherID(String teacherID) {
+	public void insertStudentGrade(String studentID, String examID, String grade) {
+		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ?;";
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, grade);
+			stmt.setString(2, studentID);
+			stmt.setString(3, examID);
+
+			stmt.executeUpdate();
+			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade " + grade);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public boolean saveExecutedExam(ExamProcess exam) {
+		PreparedStatement prepareStatement;
+		String creatorTeacherID = getCreatorTeacherID(exam.getexamId());
+		creatorTeacherID = creatorTeacherID != null ? creatorTeacherID : "";
+		try {
+			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?,?);");
+			prepareStatement.setString(1, exam.getexamId());
+			prepareStatement.setString(2, exam.getTeacherID());
+			prepareStatement.setString(3, creatorTeacherID);
+			prepareStatement.setString(4, exam.getDate());
+			prepareStatement.setDouble(5, 0);
+			prepareStatement.setDouble(6, 0);
+			prepareStatement.setString(7, exam.getType().toString());
+			int resultSet = prepareStatement.executeUpdate();
+			if (resultSet == 1) {
+				System.out.print("Exam Saved Succuessfully");
+				return true;
+			}
+
+		} catch (SQLException e) {
+			System.err.print("Error occurred, Exam has not been saved ");
+			return false;
+		}
+
+		return true;
+
+	}
+
+	public List<ExecutedExam> getExecutedExamListByExecutorTeacherID(String loggedInTeacherId) {
 		List<ExecutedExam> examList = new ArrayList<>();
 
 		try {
 			Statement statement = conn.createStatement();
-			String executedExamQuery = "SELECT examID,execDate,type FROM executedExam WHERE teacherID=\"" + teacherID
-					+ "\";";
+			String executedExamQuery = "SELECT examID,executeDate,type FROM executedExam WHERE executeTeacherID=\""
+					+ loggedInTeacherId + "\";";
 			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
 			while (rsExecutedExam.next()) {
 				String examID = rsExecutedExam.getString("ExamID");
-				String execDate = rsExecutedExam.getString("execDate");
+				String executeDate = rsExecutedExam.getString("executeDate");
 				String type = rsExecutedExam.getString("type");
 				List<String> examDetails = getExamDetailsByExamId(examID);
 				if (examDetails != null) {
 					String subject = examDetails.get(0);
 					String course = examDetails.get(1);
-					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, execDate, type);
+					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeDate, type);
 					examList.add(executedExam);
-
-
 				}
 			}
-			
-			
-			
-			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -681,33 +720,25 @@ public class DatabaseController {
 
 		return examList;
 	}
-	
-	
-	
-	public List<ExecutedExam> getExecutedExamListByTeacherCreator(String teacherID) {
+
+	public List<ExecutedExam> getExecutedExamListByCreatorTeacherID(String loggedInTeacherId) {
 		List<ExecutedExam> examList = new ArrayList<>();
 
 		try {
 			Statement statement = conn.createStatement();
-			String executedExamQuery = "SELECT examID,execDate,type FROM executedExam;";
+			String executedExamQuery = "SELECT examID,executeDate,type FROM executedExam WHERE creatorTeacherID=\""
+					+ loggedInTeacherId + "\";";
 			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
 			while (rsExecutedExam.next()) {
 				String examID = rsExecutedExam.getString("ExamID");
-				String execDate = rsExecutedExam.getString("execDate");
+				String executeDate = rsExecutedExam.getString("executeDate");
 				String type = rsExecutedExam.getString("type");
 				List<String> examDetails = getExamDetailsByExamId(examID);
 				if (examDetails != null) {
 					String subject = examDetails.get(0);
 					String course = examDetails.get(1);
-					String creatorTeacher=examDetails.get(2);
-					if(creatorTeacher.equals(teacherID))
-					{
-						ExecutedExam executedExam = new ExecutedExam(examID, subject, course, execDate, type);
-						examList.add(executedExam);
-
-					}
-
-
+					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeDate, type);
+					examList.add(executedExam);
 				}
 			}
 
@@ -718,7 +749,6 @@ public class DatabaseController {
 
 		return examList;
 	}
-
 
 	private List<String> getExamDetailsByExamId(String examID) {
 		try {
@@ -729,7 +759,7 @@ public class DatabaseController {
 				List<String> examDetails = new ArrayList<>();
 				String subject = rsExam.getString("Subject");
 				String course = rsExam.getString("Course");
-				String teacher=rsExam.getString("teacherID");
+				String teacher = rsExam.getString("teacherID");
 				examDetails.add(subject);
 				examDetails.add(course);
 				examDetails.add(teacher);
@@ -743,54 +773,22 @@ public class DatabaseController {
 
 		return null;
 	}
-	
-	public void insertStudentGrade(String studentID, String examID, String grade)
-	{
-		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ?;";
-		
+
+	private String getCreatorTeacherID(String examID) {
 
 		try {
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, grade);
-			stmt.setString(2, studentID);
-			stmt.setString(3, examID);
-
-			stmt.executeUpdate();
-			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade "+ grade);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	
-	
-	public boolean saveExecutedExam(ExamProcess exam){
-		PreparedStatement prepareStatement;
-
-
-
-		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?);");
-			
-			prepareStatement.setString(1, exam.getexamId());
-			prepareStatement.setString(2, exam.getTeacherID());
-			prepareStatement.setString(3, exam.getDate());
-			prepareStatement.setDouble(4, 0);
-			prepareStatement.setDouble(5, 0);
-			prepareStatement.setString(6, exam.getType().toString());
-			int resultSet = prepareStatement.executeUpdate();
-			if (resultSet == 1) {
-				System.out.print("Exam Saved Succuessfully");
-				return true;
+			Statement statement = conn.createStatement();
+			String examQuery = "SELECT * FROM Exam WHERE examID=\"" + examID + "\";";
+			ResultSet rsExam = statement.executeQuery(examQuery);
+			if (rsExam.next()) {
+				String teacherID = rsExam.getString("teacherID");
+				return teacherID;
 			}
 
 		} catch (SQLException e) {
-			System.err.print("Error occurred, Exam has not been saved ");
-			return false;
+			e.printStackTrace();
+			System.err.println("ERROR #223688 - ERROR LOADING EXAM FROM DATABASE");
 		}
-
-		return true;
-		
+		return null;
 	}
 }

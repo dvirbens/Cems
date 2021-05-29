@@ -123,22 +123,11 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case GET_EXECUTED_EXAM_LIST:
-			String teacherID = (String) modelWrapperFromClient.getElement();
-			List<ExecutedExam> executedExamByTeacherId = databaseController.getExecutedExamListByTeacherID(teacherID);
-			modelWrapperToClient = new ModelWrapper<>(executedExamByTeacherId, GET_EXECUTED_EXAM_LIST);
-			try {
-				client.sendToClient(modelWrapperToClient);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-			
-			
-		case GET_EXECUTED_EXAM_LIST_OWNER:
-			String teacherID2= (String) modelWrapperFromClient.getElement();
-			List<ExecutedExam> executedExamByTeacherCreat = databaseController.getExecutedExamListByTeacherCreator(teacherID2);
-			modelWrapperToClient = new ModelWrapper<>(executedExamByTeacherCreat,GET_EXECUTED_EXAM_LIST_OWNER);
+		case GET_EXECUTED_EXAM_LIST_BY_EXECUTOR:
+			String currentTeacherID = (String) modelWrapperFromClient.getElement();
+			List<ExecutedExam> executedExamListByExecutor = databaseController
+					.getExecutedExamListByExecutorTeacherID(currentTeacherID);
+			modelWrapperToClient = new ModelWrapper<>(executedExamListByExecutor, GET_EXECUTED_EXAM_LIST_BY_EXECUTOR);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -146,6 +135,17 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case GET_EXECUTED_EXAM_LIST_BY_CREATOR:
+			String currentTeacherID2 = (String) modelWrapperFromClient.getElement();
+			List<ExecutedExam> executedExamListByCreator = databaseController
+					.getExecutedExamListByCreatorTeacherID(currentTeacherID2);
+			modelWrapperToClient = new ModelWrapper<>(executedExamListByCreator, GET_EXECUTED_EXAM_LIST_BY_CREATOR);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
 
 		case TEST_STATISTICS:
 			break;
