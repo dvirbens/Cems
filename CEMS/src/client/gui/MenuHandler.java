@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import models.ExamQuestion;
+import models.ExecutedExam;
 
 public class MenuHandler {
 
@@ -124,6 +125,11 @@ public class MenuHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setStudentListsScreen(ExecutedExam executedExam) {
+		StudentListController studentListController = new StudentListController(executedExam);
+		studentListController.start();
 	}
 
 	public void setManualTestScreen() {

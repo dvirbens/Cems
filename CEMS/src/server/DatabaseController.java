@@ -23,6 +23,7 @@ import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
 import models.Question;
+import models.StudentExecutedExam;
 import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
@@ -800,6 +801,12 @@ public class DatabaseController {
 			System.err.println("ERROR #223688 - ERROR LOADING EXAM FROM DATABASE");
 		}
 		return null;
+	}
+
+	public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam executedExam) {
+		List<StudentExecutedExam> studentList = new ArrayList<>();
+		studentList.add(new StudentExecutedExam("0001", "arik zagdon", "100", "90%"));
+		return studentList;
 	}
 
 }

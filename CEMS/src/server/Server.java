@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import client.gui.OverallStatistic.Operation;
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Database;
@@ -19,6 +18,7 @@ import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
+import models.StudentExecutedExam;
 import models.StudentInExam;
 import models.User;
 import models.WordFile;
@@ -305,11 +305,11 @@ public class Server extends AbstractServer {
 				if (temp == null) {
 					temp = new ArrayList<>();
 				}
-				
+
 				StudentInExam student = new StudentInExam(studentID, client);
 				temp.add(student);
 				studentInExam.put(userCode, temp);
-				
+
 				ExamProcess examProcess = examsInProcess.get(userCode);
 				databaseController.insertToExecutedExamByStudent(studentID, examProcess);
 				modelWrapperToClient = new ModelWrapper<>(examProcess, INSERT_STUDENT_TO_EXAM);
@@ -376,9 +376,9 @@ public class Server extends AbstractServer {
 
 		case GET_EXAM_IN_PROCESS:
 			userCode = (String) modelWrapperFromClient.getElement();
-			
+
 			modelWrapperToClient = new ModelWrapper<>(examsInProcess.get(userCode), GET_EXAM_IN_PROCESS);
-			
+
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -386,7 +386,17 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-			
+		case GET_EXECUTED_EXAM_STUDENT_LIST:
+			ExecutedExam executedExam = (ExecutedExam) modelWrapperFromClient.getElement();
+			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(executedExam);
+			modelWrapperToClient = new ModelWrapper<>(studentList, GET_EXECUTED_EXAM_STUDENT_LIST);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		default:
 			break;
 

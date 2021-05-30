@@ -10,8 +10,10 @@ import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
+import models.StudentExecutedExam;
 import models.User;
 import ocsf.client.AbstractClient;
+
 //
 /**
  * Class that's handle server-client communication.
@@ -33,6 +35,8 @@ public class Client extends AbstractClient {
 	 * Value that hold the list of the executed tests of the user.
 	 */
 	private static List<ExecutedExam> execExams;
+
+	private static List<StudentExecutedExam> executedExamStudentList;
 
 	/**
 	 * value that hold exam id of specific test
@@ -216,7 +220,11 @@ public class Client extends AbstractClient {
 			case GET_EXAM_IN_PROCESS:
 				examProcess = (ExamProcess) modelWrapperFromServer.getElement();
 				break;
-				
+
+			case GET_EXECUTED_EXAM_STUDENT_LIST:
+				executedExamStudentList = (List<StudentExecutedExam>) modelWrapperFromServer.getElements();
+				break;
+
 			default:
 				break;
 
@@ -367,6 +375,14 @@ public class Client extends AbstractClient {
 
 	public static void setExamProcess(ExamProcess examProcess) {
 		Client.examProcess = examProcess;
+	}
+
+	public static List<StudentExecutedExam> getExecutedExamStudentList() {
+		return executedExamStudentList;
+	}
+
+	public static void setExecutedExamStudentList(List<StudentExecutedExam> executedExamStudentList) {
+		Client.executedExamStudentList = executedExamStudentList;
 	}
 
 }

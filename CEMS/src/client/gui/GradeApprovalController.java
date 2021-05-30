@@ -78,7 +78,7 @@ public class GradeApprovalController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					System.out.println("meow");
+					MainGuiController.getMenuHandler().setStudentListsScreen(exam);
 				}
 			});
 
