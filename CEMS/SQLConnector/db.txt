@@ -65,13 +65,13 @@ CREATE TABLE ExecutedExam (
 	avg double,
 	type ENUM('Manual','Computerized'),
 	PRIMARY KEY(examID,execDate,teacherID)
-	
 );
 
 
 CREATE TABLE ExecutedExamByStudent (
 	studentID varchar(255),
     examID varchar(255),
+    teacherID varchar(255),
 	Subject varchar(255),
     Course varchar(255),
     ExecDate varchar(255),

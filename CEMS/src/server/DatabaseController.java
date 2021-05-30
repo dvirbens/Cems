@@ -556,51 +556,37 @@ public class DatabaseController {
 
 	}
 
-	public String CheckCodeAndInsertToTest(String studentID, String userCode, String type) {
-		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
-		String examID = "";
-		String subject = "";
-		String course = "";
+	public boolean insertToExecutedExamByStudent(String studentID, ExamProcess exam) {
+		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+		List<String> examDetails = getExamDetailsByExamId(exam.getexamId());
+		String subject = examDetails.get(0);
+		String course = examDetails.get(1);
+		String teacherID = examDetails.get(2);
 		try {
-			Statement statement = conn.createStatement();
-			ResultSet examID_RS = statement.executeQuery(sql);
-
-			if (examID_RS.next()) {
-				examID = examID_RS.getString("ExamID");
-			}
-			String sql2 = "SELECT Subject, Course FROM exam WHERE examID = " + examID;
-			ResultSet sc_RS = statement.executeQuery(sql2);
-			if (sc_RS.next()) {
-				subject = sc_RS.getString("Subject");
-				course = sc_RS.getString("Course");
-			}
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-
-			String sql3 = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?, ?, ?,?,?);";
-			PreparedStatement stmt = conn.prepareStatement(sql3);
-
+			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, studentID);
-			stmt.setString(2, examID);
-			stmt.setString(3, subject);
-			stmt.setString(4, course);
-			stmt.setString(5, dtf.format(now));
-			stmt.setString(6, type);
-			stmt.setString(7, null);
-			stmt.setString(8, null);
-			stmt.setBoolean(9, false);
-			stmt.setString(10, null);
+			stmt.setString(2, exam.getexamId());
+			stmt.setString(3, teacherID);
+			stmt.setString(4, subject);
+			stmt.setString(5, course);
+			stmt.setString(6, exam.getDate());
+			stmt.setString(7, exam.getType().toString());
+			stmt.setString(8, "0");
+			stmt.setString(9, null);
+			stmt.setBoolean(10, false);
+			stmt.setString(11, null);
 			int resultSet = stmt.executeUpdate();
 			if (resultSet == 1) {
-				System.out.println("Student ID: " + studentID + " entered examID: " + examID + " in " + dtf.format(now)
-						+ " succuessfully");
+				System.out.println("Student entered exam");
 			}
-			return examID;
+			return true;
 
-		} catch (SQLException e) {
+		} catch (
+
+		SQLException e) {
 			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
 		}
-		return null;
+		return false;
 	}
 
 	public String GetExamID(String userCode) {
@@ -635,6 +621,7 @@ public class DatabaseController {
 				String duration = rs.getString("Duration");
 				String teacherName = rs.getString("teacherName");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
+				System.out.println(questionsList);
 				exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
 				exam.setTeacherName(teacherName);
 				return exam;

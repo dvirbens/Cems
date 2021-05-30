@@ -306,14 +306,13 @@ public class Server extends AbstractServer {
 
 				if (temp == null) {
 					temp = new ArrayList<>();
-				}
-
+				} 
 				temp.add(studentID);
 
 				studentInExam.put(userCode, temp);
-				examID = databaseController.CheckCodeAndInsertToTest(studentID, userCode, type);
-				modelWrapperToClient = new ModelWrapper<>(examID, INSERT_STUDENT_TO_EXAM);
-
+				ExamProcess examProcess = examsInProcess.get(userCode);
+				databaseController.insertToExecutedExamByStudent(studentID, examProcess);
+				modelWrapperToClient = new ModelWrapper<>(examProcess.getexamId(), INSERT_STUDENT_TO_EXAM);
 			} else {
 				modelWrapperToClient = new ModelWrapper<>(ERROR_INSERT_STUDENT_TO_EXAM);
 			}

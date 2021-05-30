@@ -53,6 +53,7 @@ public class StudentEnterExamController implements Initializable {
 			elements.add(type);
 			ModelWrapper<String> modelWrapper = new ModelWrapper<String>(elements, INSERT_STUDENT_TO_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			System.out.println(Client.getExamID());
 			// examID = Client.getExamID();
 			Client.setExamCode(tfCode.getText());
 			return 1;

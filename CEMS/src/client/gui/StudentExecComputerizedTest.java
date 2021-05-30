@@ -123,6 +123,7 @@ public class StudentExecComputerizedTest implements Initializable{
 
     	//Get ExamID
     	examID = Client.getExamID();
+    	System.out.println(Client.getExamID());
     	
     	// Get questions
     	ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);
