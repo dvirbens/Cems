@@ -4,17 +4,15 @@ import ocsf.server.ConnectionToClient;
 
 public class StudentInExam {
 
-	String studentID;
-	ConnectionToClient client;
-	String[] soloution;
-	boolean isFinished;
+	private String studentID;
+	private ConnectionToClient client;
+	private String[] soloution;
+	private boolean finished;
 
 	public StudentInExam(String studentID, ConnectionToClient client) {
 		super();
 		this.studentID = studentID;
 		this.client = client;
-		this.soloution = soloution;
-		this.isFinished = isFinished;
 	}
 
 	public String getStudentID() {
@@ -42,11 +40,11 @@ public class StudentInExam {
 	}
 
 	public boolean isFinished() {
-		return isFinished;
+		return finished;
 	}
 
-	public void setFinished(boolean isFinished) {
-		this.isFinished = isFinished;
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 
 }
