@@ -13,14 +13,19 @@
 
 <Pane prefHeight="768.0" prefWidth="754.0" style="-fx-background-color: #ffff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ExamStatisticController">
    <children>
-      <VBox layoutX="27.0" prefHeight="768.0" spacing="5.0">
+      <Label layoutX="259.0" text="Exam Statistic" textFill="#3d9a26">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+      <VBox layoutX="27.0" layoutY="40.0" prefHeight="768.0">
          <children>
             <Label text="Executed Exams" textFill="#333333">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Label>
-            <TableView fx:id="tvExecutedExams" prefHeight="307.0" prefWidth="700.0">
+            <TableView fx:id="tvExecutedExams" prefHeight="296.0" prefWidth="700.0">
               <columns>
                 <TableColumn fx:id="tcID" prefWidth="79.0" style="-fx-alignment: center;" text="ID" />
                   <TableColumn fx:id="tcTeacher" prefWidth="136.0" style="-fx-alignment: center;" text="Teacher" />

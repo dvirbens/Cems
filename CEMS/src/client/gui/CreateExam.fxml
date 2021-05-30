@@ -14,7 +14,7 @@
 
 <Pane prefHeight="768.0" prefWidth="754.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.CreateExamController">
 	<children>
-		<TableView fx:id="tvQuestionPool" layoutX="27.0" layoutY="58.0" prefHeight="280.0" prefWidth="700.0">
+		<TableView fx:id="tvQuestionPool" layoutX="27.0" layoutY="102.0" prefHeight="280.0" prefWidth="700.0">
 			<columns>
 				<TableColumn fx:id="tcIdPool" prefWidth="109.0" style="-fx-alignment: center;" text="ID" />
 				<TableColumn fx:id="tcSubjectPool" prefWidth="180.0" style="-fx-alignment: center;" text="Subject" />
@@ -23,7 +23,7 @@
 				<TableColumn fx:id="tcDetailsPool" prefWidth="120.0" style="-fx-alignment: center;" text="Details" />
 			</columns>
 		</TableView>
-		<TableView fx:id="tvSelectedQuestion" layoutX="28.0" layoutY="359.0" prefHeight="280.0" prefWidth="700.0">
+		<TableView fx:id="tvSelectedQuestion" layoutX="28.0" layoutY="403.0" prefHeight="280.0" prefWidth="700.0">
 			<columns>
 				<TableColumn fx:id="tcIdSelected" prefWidth="94.0" style="-fx-alignment: center;" text="ID" />
 				<TableColumn fx:id="tcSubjectSelected" prefWidth="136.0" style="-fx-alignment: center;" text="Subject" />
@@ -33,16 +33,16 @@
             <TableColumn fx:id="tcNoteSelected" prefWidth="110.0" style="-fx-alignment: center;" text="Note" />
 			</columns>
 		</TableView>
-		<Label layoutX="27.0" layoutY="37.0" text="Question pool:" textFill="#333333">
+		<Label layoutX="27.0" layoutY="81.0" text="Question pool:" textFill="#333333">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-		<Label layoutX="27.0" layoutY="338.0" text="Selected question:" textFill="#333333">
+		<Label layoutX="27.0" layoutY="382.0" text="Selected question:" textFill="#333333">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-		<JFXComboBox fx:id="cbQuestionSubject" focusColor="#48a832" layoutX="305.0" layoutY="6.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" style="-fx-alignment: center;" />
-      <VBox alignment="CENTER" layoutX="95.0" layoutY="653.0" spacing="5.0">
+		<JFXComboBox fx:id="cbQuestionSubject" focusColor="#48a832" layoutX="305.0" layoutY="56.0" onAction="#onSubjectSelected" prefHeight="28.0" prefWidth="145.0" promptText="Question Subject" style="-fx-alignment: center;" />
+      <VBox alignment="CENTER" layoutX="95.0" layoutY="697.0" spacing="5.0">
          <children>
             <HBox spacing="10.0">
                <children>
@@ -67,5 +67,10 @@
             <Label fx:id="messageLabel" />
          </children>
       </VBox>
+      <Label layoutX="254.0" text="Exam Creation" textFill="#3d9a26">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
 	</children>
 </Pane>
