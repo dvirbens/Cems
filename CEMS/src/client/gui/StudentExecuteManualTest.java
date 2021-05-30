@@ -4,6 +4,7 @@ import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
 import static common.ModelWrapper.Operation.*;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -88,15 +89,13 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 		
 		// Get ExamID
 		examID = Client.getExamProcess().getexamId();
-		exam = Client.getExam();
 		
-		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_EXAM_BY_EXAM_ID);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		
-		modelWrapper = new ModelWrapper<String>(Client.getExamCode(), GET_EXAM_IN_PROCESS);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(Client.getExamCode(), GET_EXAM_IN_PROCESS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		//exam = Client.getExam();
 		examProcess = Client.getExamProcess();
-		
+
 		String teacherTime = Client.getExamProcess().getTime();
 		Date date = new Date();
 		SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
@@ -107,8 +106,7 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 			Date date1 = format.parse(currentTime);
 			Date date2 = format.parse(teacherTime);
 			long difference = date1.getTime() - date2.getTime();
-			System.out.println(difference);
-			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(Client.getExam().getDuration()));
+			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(examProcess.getManualDuration()));
 			duration = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -161,9 +159,22 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
     void onDownloadClick(ActionEvent event) {
 		btChooseFile.setVisible(true);
 		tfFileName.setVisible(true);
+		String path = System.getProperty("user.home") + "/Desktop";
 		
-		//File outputFile = new File(examProcess.getManualFile());
-		//FileOutputStream fos = new FileOutputStream(examProcess.getManualFile())
+		File outputFile = new File(path + "/fileTest.docx");
+		try {
+			FileOutputStream fos = new FileOutputStream(outputFile);
+			BufferedOutputStream bos = new BufferedOutputStream(fos);
+			bos.write(examProcess.getManualFile().getMybytearray(), 0, examProcess.getManualFile().getSize());
+			bos.flush();
+			fos.flush();
+			bos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		
+
     }
     
 	public void setRemainingTime() {

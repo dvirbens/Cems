@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class ExamProcess implements Serializable {
 
-	private String computerizedExamID;
 	private String examId;
 	private String date;
 	private String time;
@@ -138,7 +137,7 @@ public class ExamProcess implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ExamProcess [computerizedExamID=" + computerizedExamID + ", date=" + date + ", teacherID=" + teacherID
+		return "ExamProcess [date=" + date + ", teacherID=" + teacherID
 				+ ", code=" + code + ", manualSubject=" + manualSubject + ", manulCourse=" + manulCourse
 				+ ", manualDuration=" + manualDuration + ", manualFile=" + manualFile + ", type=" + type + "]";
 	}

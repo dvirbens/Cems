@@ -298,14 +298,13 @@ public class Server extends AbstractServer {
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
-			String type = elements.get(2);
+			String type = elements.get(2);	
 			if (examsInProcess.containsKey(userCode)) {
 				List<StudentInExam> temp = studentInExam.get(userCode);
 
 				if (temp == null) {
 					temp = new ArrayList<>();
 				}
-
 				StudentInExam student = new StudentInExam(studentID, client);
 				temp.add(student);
 				studentInExam.put(userCode, temp);

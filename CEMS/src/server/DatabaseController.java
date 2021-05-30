@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import client.Client;
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Exam;
@@ -28,6 +29,7 @@ import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
 import models.WordFile;
+import models.ExamProcess.ExamType;
 
 /**
  * Class that handles all of operation sent by client, database controller
@@ -558,11 +560,24 @@ public class DatabaseController {
 	}
 
 	public boolean insertToExecutedExamByStudent(String studentID, ExamProcess exam) {
+		String subject;
+		String course;
+		String teacherID;
+		
 		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?);";
-		List<String> examDetails = getExamDetailsByExamId(exam.getexamId());
-		String subject = examDetails.get(0);
-		String course = examDetails.get(1);
-		String teacherID = examDetails.get(2);
+		if (exam.getType() == ExamType.Manual)
+		{
+			subject = exam.getManualSubject();
+			course = exam.getManulCourse();
+			teacherID = exam.getTeacherID();
+		}
+		else
+		{
+			List<String> examDetails = getExamDetailsByExamId(exam.getexamId());
+			subject = examDetails.get(0);
+			course = examDetails.get(1);
+			teacherID = examDetails.get(2);
+		}
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, studentID);
@@ -580,11 +595,12 @@ public class DatabaseController {
 			if (resultSet == 1) {
 				System.out.println("Student entered exam");
 			}
+
+			
+			
 			return true;
 
-		} catch (
-
-		SQLException e) {
+		} catch (SQLException e) {
 			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
 		}
 		return false;
