@@ -19,6 +19,7 @@ import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
+import models.StudentInExam;
 import models.User;
 import models.WordFile;
 import ocsf.server.AbstractServer;
@@ -53,10 +54,8 @@ public class Server extends AbstractServer {
 
 	private static Map<String, List<ExamExtension>> examsExtensions;
 
-	private static Map<String, List<String>> studentInExam;
+	private static Map<String, List<StudentInExam>> studentInExam;
 
-	// ExamID -> AnswersArray
-	private static Map<String, List<String[]>> solutions;
 	/**
 	 * Indicate if the server is connected
 	 */
@@ -84,7 +83,6 @@ public class Server extends AbstractServer {
 		examsInProcess = new HashMap<>();
 		examsInProcess.put("555", null);
 		studentInExam = new HashMap<>();
-		solutions = new HashMap<>();
 		examsExtensions = new HashMap<>();
 	}
 
@@ -302,14 +300,16 @@ public class Server extends AbstractServer {
 			String userCode = elements.get(1);
 			String type = elements.get(2);
 			if (examsInProcess.containsKey(userCode)) {
-				List<String> temp = studentInExam.get(userCode);
+				List<StudentInExam> temp = studentInExam.get(userCode);
 
 				if (temp == null) {
 					temp = new ArrayList<>();
-				} 
-				temp.add(studentID);
-
+				}
+				
+				StudentInExam student = new StudentInExam(studentID, client);
+				temp.add(student);
 				studentInExam.put(userCode, temp);
+				
 				ExamProcess examProcess = examsInProcess.get(userCode);
 				databaseController.insertToExecutedExamByStudent(studentID, examProcess);
 				modelWrapperToClient = new ModelWrapper<>(examProcess, INSERT_STUDENT_TO_EXAM);
@@ -463,20 +463,12 @@ public class Server extends AbstractServer {
 		Server.examsExtensions = examsExtensions;
 	}
 
-	public static Map<String, List<String>> getStudentInExam() {
+	public static Map<String, List<StudentInExam>> getStudentInExam() {
 		return studentInExam;
 	}
 
-	public static void setStudentInExam(Map<String, List<String>> studentInExam) {
+	public static void setStudentInExam(Map<String, List<StudentInExam>> studentInExam) {
 		Server.studentInExam = studentInExam;
-	}
-
-	public static Map<String, List<String[]>> getSolutions() {
-		return solutions;
-	}
-
-	public static void setSolutions(Map<String, List<String[]>> solutions) {
-		Server.solutions = solutions;
 	}
 
 }
