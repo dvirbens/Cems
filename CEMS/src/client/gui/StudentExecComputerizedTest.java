@@ -127,12 +127,6 @@ public class StudentExecComputerizedTest implements Initializable {
 		// Get ExamID
 		examID = Client.getExamProcess().getexamId();
 
-		// hh/mm/ss
-		System.out.println(Client.getExamProcess().getTime());
-		String min = Client.getExamProcess().getTime().substring(3, 5);
-		String hour = Client.getExamProcess().getTime().substring(0, 2);
-		String second = Client.getExamProcess().getTime().substring(6, 8);
-
 		// Get questions
 		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
@@ -157,7 +151,6 @@ public class StudentExecComputerizedTest implements Initializable {
 			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(Client.getExam().getDuration()));
 			duration = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -298,6 +291,11 @@ public class StudentExecComputerizedTest implements Initializable {
 			int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
 			tvQuestions.getSelectionModel().select(selectedRowIndex + 1);
 			selectedRow.setVisibleImage();
+			selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
+			radio1.setText(selectedRow.getAnswer1());
+			radio2.setText(selectedRow.getAnswer2());
+			radio3.setText(selectedRow.getAnswer3());
+			radio4.setText(selectedRow.getAnswer4());
 		}
 	}
 

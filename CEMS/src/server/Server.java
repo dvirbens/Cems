@@ -374,6 +374,19 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case GET_EXAM_IN_PROCESS:
+			userCode = (String) modelWrapperFromClient.getElement();
+			
+			modelWrapperToClient = new ModelWrapper<>(examsInProcess.get(userCode), GET_EXAM_IN_PROCESS);
+			
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
+			
 		default:
 			break;
 

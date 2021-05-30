@@ -213,6 +213,10 @@ public class Client extends AbstractClient {
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				break;
 
+			case GET_EXAM_IN_PROCESS:
+				examProcess = (ExamProcess) modelWrapperFromServer.getElement();
+				break;
+				
 			default:
 				break;
 
