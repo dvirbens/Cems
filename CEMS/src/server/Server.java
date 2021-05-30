@@ -312,7 +312,7 @@ public class Server extends AbstractServer {
 				studentInExam.put(userCode, temp);
 				ExamProcess examProcess = examsInProcess.get(userCode);
 				databaseController.insertToExecutedExamByStudent(studentID, examProcess);
-				modelWrapperToClient = new ModelWrapper<>(examProcess.getexamId(), INSERT_STUDENT_TO_EXAM);
+				modelWrapperToClient = new ModelWrapper<>(examProcess, INSERT_STUDENT_TO_EXAM);
 			} else {
 				modelWrapperToClient = new ModelWrapper<>(ERROR_INSERT_STUDENT_TO_EXAM);
 			}

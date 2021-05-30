@@ -11,7 +11,6 @@ public class WordFile implements Serializable {
 	
 	public WordFile() {
 		super();
-
 	}
 	
 	public void initArray(int size)

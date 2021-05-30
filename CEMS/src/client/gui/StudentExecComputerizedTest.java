@@ -6,7 +6,10 @@ import static common.ModelWrapper.Operation.INSERT_STUDENT_ANSWERS;
 import static common.ModelWrapper.Operation.INSERT_STUDENT_GRADE;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -42,280 +45,287 @@ import models.Exam;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
 
-public class StudentExecComputerizedTest implements Initializable{
+public class StudentExecComputerizedTest implements Initializable {
 
-    @FXML
-    private TableView<ExamQuestion> tvQuestions;
+	@FXML
+	private TableView<ExamQuestion> tvQuestions;
 
-    @FXML
-    private TableColumn<ExamQuestion, Integer> tcQuestionNumber;
+	@FXML
+	private TableColumn<ExamQuestion, Integer> tcQuestionNumber;
 
-    @FXML
-    private TableColumn<ExamQuestion, Integer> tcQuestionPoints;
+	@FXML
+	private TableColumn<ExamQuestion, Integer> tcQuestionPoints;
 
-    @FXML
-    private TableColumn<ExamQuestion, String> tcQuestionContent;
+	@FXML
+	private TableColumn<ExamQuestion, String> tcQuestionContent;
 
-    @FXML
-    private TableColumn<ExamQuestion, ImageView> tcFilled;
+	@FXML
+	private TableColumn<ExamQuestion, ImageView> tcFilled;
 
-    @FXML
-    private Label lblQuestions;
+	@FXML
+	private Label lblQuestions;
 
-    @FXML
-    private Label lblSelectedQuestion;
+	@FXML
+	private Label lblSelectedQuestion;
 
-    @FXML
-    private JFXButton btnSaveAnswer;
+	@FXML
+	private JFXButton btnSaveAnswer;
 
-    @FXML
-    private TextArea taSelectedQuestion;
+	@FXML
+	private TextArea taSelectedQuestion;
 
-    @FXML
-    private JFXButton btnSubmitTest;
+	@FXML
+	private JFXButton btnSubmitTest;
 
-    @FXML
-    private Label lblPossibleAnswers;
+	@FXML
+	private Label lblPossibleAnswers;
 
-    @FXML
-    private Label lblRemainingTime;
+	@FXML
+	private Label lblRemainingTime;
 
-    @FXML
-    private TextField tfRemainingTime;
+	@FXML
+	private TextField tfRemainingTime;
 
-    @FXML
-    private JFXRadioButton radio1;
+	@FXML
+	private JFXRadioButton radio1;
 
-    @FXML
-    private JFXRadioButton radio2;
+	@FXML
+	private JFXRadioButton radio2;
 
-    @FXML
-    private JFXRadioButton radio3;
+	@FXML
+	private JFXRadioButton radio3;
 
-    @FXML
-    private JFXRadioButton radio4;
-    
-    @FXML
-    private ToggleGroup AnswersGroup;
+	@FXML
+	private JFXRadioButton radio4;
 
-    @FXML
-    private TextField tfNote;
+	@FXML
+	private ToggleGroup AnswersGroup;
 
-    @FXML
-    private Label lblNote;
-    
-    private long startTime;
-    
-    private Exam exam;
-    
-    private long duration;
-    
-    private String[] answersArr;
-    
-    private Integer selectedRadio;
-    
-    private String examID;
-    
-    public void initialize(URL location, ResourceBundle resources) {
-    	//Start time counter
-    	startTime = System.currentTimeMillis();
-    	setRemainingTime();
+	@FXML
+	private TextField tfNote;
 
-    	//Get ExamID
-    	examID = Client.getExamID();
-    	System.out.println(Client.getExamID());
-    	
-    	// Get questions
-    	ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);
+	@FXML
+	private Label lblNote;
+
+	private long startTime;
+
+	private Exam exam;
+
+	private long duration;
+
+	private String[] answersArr;
+
+	private Integer selectedRadio;
+
+	private String examID;
+
+	public void initialize(URL location, ResourceBundle resources) {
+		// Start time counter
+		startTime = System.currentTimeMillis();
+		setRemainingTime();
+
+		// Get ExamID
+		examID = Client.getExamProcess().getexamId();
+
+		// hh/mm/ss
+		System.out.println(Client.getExamProcess().getTime());
+		String min = Client.getExamProcess().getTime().substring(3, 5);
+		String hour = Client.getExamProcess().getTime().substring(0, 2);
+		String second = Client.getExamProcess().getTime().substring(6, 8);
+
+		// Get questions
+		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-    	
-		//Get exam
+
+		// Get exam
 		modelWrapper = new ModelWrapper<String>(examID, GET_EXAM_BY_EXAM_ID);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		exam = Client.getExam();
-		
+
 		answersArr = new String[exam.getExamQuestions().size()];
-		
-		duration = Long.parseLong(exam.getDuration());
-		
-		//Setting the table
+
+		String teacherTime = Client.getExamProcess().getTime();
+		Date date = new Date();
+		SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
+		String currentTime = timeformat.format(date).toString();
+
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Date date1 = format.parse(currentTime);
+			Date date2 = format.parse(teacherTime);
+			long difference = date1.getTime() - date2.getTime();
+			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(Client.getExam().getDuration()));
+			duration = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Setting the table
 		ObservableList<ExamQuestion> questions = FXCollections.observableArrayList();
-		
+
 		for (ExamQuestion q : exam.getExamQuestions()) {
-	    	 final ImageView imageview = new ImageView(new Image(getClass().getResource("check.jpg").toExternalForm()));
-	         imageview.setFitHeight(30);
-	         imageview.setFitWidth(30);
-	         imageview.setVisible(false);
+			final ImageView imageview = new ImageView(new Image(getClass().getResource("check.jpg").toExternalForm()));
+			imageview.setFitHeight(30);
+			imageview.setFitWidth(30);
+			imageview.setVisible(false);
 			q.setCheckImage(imageview);
 		}
-		
+
 		questions.addAll(exam.getExamQuestions());
 		tvQuestions.setItems((ObservableList<ExamQuestion>) questions);
 
-		tcQuestionNumber.setCellValueFactory(new Callback<CellDataFeatures<ExamQuestion, Integer>, ObservableValue<Integer>>() {
-			  @Override public ObservableValue<Integer> call(CellDataFeatures<ExamQuestion, Integer> p) {
-			    return new ReadOnlyObjectWrapper(tvQuestions.getItems().indexOf(p.getValue())+1 + "");
-			  }
-			});   
-		
+		tcQuestionNumber
+				.setCellValueFactory(new Callback<CellDataFeatures<ExamQuestion, Integer>, ObservableValue<Integer>>() {
+					@Override
+					public ObservableValue<Integer> call(CellDataFeatures<ExamQuestion, Integer> p) {
+						return new ReadOnlyObjectWrapper(tvQuestions.getItems().indexOf(p.getValue()) + 1 + "");
+					}
+				});
+
 		tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
-    	tcQuestionContent.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("details"));
-    	tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, ImageView>("checkImage"));
-    	
-    	// Disable sort columns
-    	tcQuestionNumber.setSortable(false);
-    	tcQuestionPoints.setSortable(false);
-    	tcQuestionContent.setSortable(false);
-    	tcFilled.setSortable(false);
-    	
-    	//Adding listener to toggle group
-    	AnswersGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldToggle, Toggle newToggle)
-            {
-            	selectedRadio = Character.getNumericValue((((JFXRadioButton)newToggle).getId().charAt(5)));
-            }
-        });
-    	
-    	//Setting start selection on first row
-    	tvQuestions.getSelectionModel().select(0);
-    	
-    	// Loading answers for first question
-    	onRowClick();
-    	
-    	// Loading answers on click
-    	tvQuestions.setOnMouseClicked((MouseEvent event) -> {
-    	    if (event.getClickCount() > 0) {
-    	    	onRowClick();
-    	    }
-    	});
+		tcQuestionContent.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("details"));
+		tcFilled.setCellValueFactory(new PropertyValueFactory<ExamQuestion, ImageView>("checkImage"));
+
+		// Disable sort columns
+		tcQuestionNumber.setSortable(false);
+		tcQuestionPoints.setSortable(false);
+		tcQuestionContent.setSortable(false);
+		tcFilled.setSortable(false);
+
+		// Adding listener to toggle group
+		AnswersGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldToggle, Toggle newToggle) {
+				selectedRadio = Character.getNumericValue((((JFXRadioButton) newToggle).getId().charAt(5)));
+			}
+		});
+
+		// Setting start selection on first row
+		tvQuestions.getSelectionModel().select(0);
+
+		// Loading answers for first question
+		onRowClick();
+
+		// Loading answers on click
+		tvQuestions.setOnMouseClicked((MouseEvent event) -> {
+			if (event.getClickCount() > 0) {
+				onRowClick();
+			}
+		});
+
+	}
+
+	public void setRemainingTime() {
+		Thread timerThread = new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(1000); // 1 second
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				long timeInSeconds = calcTime();
+				long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
+				if (Client.getTimeExtension() != 0) {
+					minutes += Client.getTimeExtension();
+					Client.setTimeExtension(0);
+				}
+				long seconds = timeInSeconds % 60;
+
+				final String time = Long.toString(minutes) + ":" + Long.toString(seconds);
+				Platform.runLater(() -> {
+					tfRemainingTime.setText(time);
+				});
+			}
+		});
+		timerThread.start();
+	}
+
+	public long calcTime() {
+		long elapsedTime = duration  * 1000 - (System.currentTimeMillis() - startTime);
+		long elapsedSeconds = elapsedTime / 1000;
+		long secondsDisplay = elapsedSeconds % 60;
+		long elapsedMinutes = elapsedSeconds / 60;
+
+		return elapsedSeconds;
+
+	}
+
+	public void onRowClick() {
+		// check the table's selected item and get selected item
+		if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
+			ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
+			int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
+			taSelectedQuestion.setText(selectedRow.getDetails());
+			Integer currentSelectedAnswer = null;
+			if (answersArr[selectedRowIndex] != null)
+				currentSelectedAnswer = Integer.parseInt(answersArr[selectedRowIndex]);
+			if (selectedRow.getNoteType() == NoteType.Students) {
+				tfNote.setText(selectedRow.getNote());
+			} else {
+				tfNote.setText("");
+			}
+			if (currentSelectedAnswer != null) {
+				switch (currentSelectedAnswer) {
+				case 1:
+					AnswersGroup.selectToggle(radio1);
+					break;
+				case 2:
+					AnswersGroup.selectToggle(radio2);
+					break;
+				case 3:
+					AnswersGroup.selectToggle(radio3);
+					break;
+				case 4:
+					AnswersGroup.selectToggle(radio4);
+					break;
+				}
+			}
+			radio1.setText(selectedRow.getAnswer1());
+			radio2.setText(selectedRow.getAnswer2());
+			radio3.setText(selectedRow.getAnswer3());
+			radio4.setText(selectedRow.getAnswer4());
 
 		}
-    
-    public void setRemainingTime()
-    {
-	    Thread timerThread = new Thread(() -> {
-	        while (true) {
-	            try {
-	                Thread.sleep(1000); //1 second
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-	            long timeInSeconds = calcTime();
-	            long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
-	            if (Client.getTimeExtension() != 0)
-	            {
-	            	minutes += Client.getTimeExtension();
-	            	Client.setTimeExtension(0);
-	            }
-	            long seconds = timeInSeconds % 60;
-	            
-	            final String time = Long.toString(minutes) + ":" + Long.toString(seconds);  
-	            Platform.runLater(() -> {
-	                tfRemainingTime.setText(time);
-	            });
-	        }
-	    });   timerThread.start();
-    }
-    
-    public long calcTime()
-    {
-    	long elapsedTime = duration*60*1000 - (System.currentTimeMillis() - startTime);
-    	long elapsedSeconds = elapsedTime / 1000;
-    	long secondsDisplay = elapsedSeconds % 60;
-    	long elapsedMinutes = elapsedSeconds / 60;
-    	
-    	return elapsedSeconds;
-    	
-    }
-    
-	public void onRowClick() {
-	    // check the table's selected item and get selected item
-	    if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
-	    	ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
-	    	int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
-	    	taSelectedQuestion.setText(selectedRow.getDetails());
-	    	Integer currentSelectedAnswer = null;
-	    	if (answersArr[selectedRowIndex] != null)
-	    		currentSelectedAnswer = Integer.parseInt(answersArr[selectedRowIndex]);
-	    	if (selectedRow.getNoteType() == NoteType.Students)
-	    	{
-	    		tfNote.setText(selectedRow.getNote());
-	    	}
-	    	else
-	    	{
-	    		tfNote.setText("");
-	    	}
-	    	if (currentSelectedAnswer != null)
-			{
-	    		switch(currentSelectedAnswer)
-	    		{
-	    			case 1:
-	    				AnswersGroup.selectToggle(radio1);
-	    				break;
-	    			case 2:
-	    				AnswersGroup.selectToggle(radio2);
-	    				break;
-	    			case 3:
-	    				AnswersGroup.selectToggle(radio3);
-	    				break;
-	    			case 4:
-	    				AnswersGroup.selectToggle(radio4);
-	    				break;
-	    		}
-			}
-	    	radio1.setText(selectedRow.getAnswer1());
-	    	radio2.setText(selectedRow.getAnswer2());
-	    	radio3.setText(selectedRow.getAnswer3());
-	    	radio4.setText(selectedRow.getAnswer4());
-	    	
-	    }
 	}
-	
+
 	@FXML
-	public void onSaveClick(ActionEvent event)
-	{
-		  if (AnswersGroup.getSelectedToggle() != null) {
-			  ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
-			  int selectedQuestion = tvQuestions.getSelectionModel().getSelectedIndex();
-			  answersArr[selectedQuestion] = (String) selectedRadio.toString();
-			  int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
-			  tvQuestions.getSelectionModel().select(selectedRowIndex + 1);
-			  selectedRow.setVisibleImage();
-		  }
+	public void onSaveClick(ActionEvent event) {
+		if (AnswersGroup.getSelectedToggle() != null) {
+			ExamQuestion selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
+			int selectedQuestion = tvQuestions.getSelectionModel().getSelectedIndex();
+			answersArr[selectedQuestion] = (String) selectedRadio.toString();
+			int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
+			tvQuestions.getSelectionModel().select(selectedRowIndex + 1);
+			selectedRow.setVisibleImage();
+		}
 	}
-	
-	public void checkTest(ActionEvent event)
-	{
+
+	public void checkTest(ActionEvent event) {
 		Integer grade = 0;
-		for (int i=0; i < exam.getExamQuestions().size(); i++)
-		{
-			if (answersArr[i] != null)
-			{
-				if (Integer.parseInt(answersArr[i]) == exam.getExamQuestions().get(i).getCorrectAnswer())
-				{
+		for (int i = 0; i < exam.getExamQuestions().size(); i++) {
+			if (answersArr[i] != null) {
+				if (Integer.parseInt(answersArr[i]) == exam.getExamQuestions().get(i).getCorrectAnswer()) {
 					grade += exam.getExamQuestions().get(i).getPoints();
 				}
 			}
 		}
-		//Insert grade to DB
+		// Insert grade to DB
 		ArrayList<String> elements = new ArrayList<>();
 		elements.add(Client.getUser().getUserID());
 		elements.add(examID);
 		elements.add(grade.toString());
-		
-    	ModelWrapper<String> modelWrapper = new ModelWrapper<String>(elements, INSERT_STUDENT_GRADE);
+
+		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(elements, INSERT_STUDENT_GRADE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		
+
 		ArrayList<String> elements2 = new ArrayList<>();
 		elements2.add(Client.getUser().getUserID());
 		elements2.add(examID);
-		
+
 		ModelWrapper<String> modelWrapper2 = new ModelWrapper<String>(elements2, answersArr, INSERT_STUDENT_ANSWERS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper2);
-		MainGuiController.getMenuHandler().setMainScreen();	
+		MainGuiController.getMenuHandler().setMainScreen();
 	}
-    
+
 }
-    

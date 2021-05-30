@@ -6,6 +6,7 @@ import java.util.List;
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Exam;
+import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
@@ -52,6 +53,8 @@ public class Client extends AbstractClient {
 	 * interface.
 	 */
 	private static List<Question> questions;
+
+	private static ExamProcess examProcess;
 
 	private static List<ExamQuestion> examQuestions;
 
@@ -179,7 +182,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case INSERT_STUDENT_TO_EXAM:
-				setExamID((String) modelWrapperFromServer.getElement());
+				examProcess = (ExamProcess) modelWrapperFromServer.getElement();
 				setServerMessages("Student entered exam successfully");
 				break;
 
@@ -352,6 +355,14 @@ public class Client extends AbstractClient {
 
 	public static void setExamQuestions(List<ExamQuestion> examQuestions) {
 		Client.examQuestions = examQuestions;
+	}
+
+	public static ExamProcess getExamProcess() {
+		return examProcess;
+	}
+
+	public static void setExamProcess(ExamProcess examProcess) {
+		Client.examProcess = examProcess;
 	}
 
 }
