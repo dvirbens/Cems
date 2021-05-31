@@ -187,8 +187,8 @@ public class Server extends AbstractServer {
 
 		case EXAM_EXECUTE:
 			String studentID = (String) modelWrapperFromClient.getElement();
-			List<ExecutedExam> testArray = databaseController.getExecutedExamListByStudentID(studentID);
-			modelWrapperToClient = new ModelWrapper<ExecutedExam>(testArray, EXAM_EXECUTE);
+			List<StudentExecutedExam> testArray = databaseController.getExecutedExamListByStudentID(studentID);
+			modelWrapperToClient = new ModelWrapper<StudentExecutedExam>(testArray, EXAM_EXECUTE);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -283,8 +283,9 @@ public class Server extends AbstractServer {
 			break;
 
 		case UPLOAD_FILE:
-			WordFile file = (WordFile) modelWrapperFromClient.getElement();
-			databaseController.UploadFile(file);
+			WordFile file = (WordFile) modelWrapperFromClient.getFile();
+			StudentExecutedExam studentExam = (StudentExecutedExam) modelWrapperFromClient.getElement();
+			databaseController.UploadFile(studentExam, file);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -384,7 +385,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-
+/*
 		case GET_EXECUTED_EXAM_STUDENT_LIST:
 			ExecutedExam executedExam = (ExecutedExam) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(executedExam);
@@ -395,7 +396,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-
+*/
 		default:
 			break;
 

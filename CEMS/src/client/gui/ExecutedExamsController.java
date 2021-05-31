@@ -2,6 +2,10 @@ package client.gui;
 
 import static common.ModelWrapper.Operation.EXAM_EXECUTE;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,7 +27,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import models.ExecutedExam;
+import models.StudentExecutedExam;
+import models.WordFile;
 
 public class ExecutedExamsController implements Initializable {
 
@@ -34,31 +39,31 @@ public class ExecutedExamsController implements Initializable {
 	private URL location;
 
 	@FXML
-	private TableView<ExecutedExam> tvExExams;
+	private TableView<StudentExecutedExam> tvExExams;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcStudentID;
+	private TableColumn<StudentExecutedExam, String> tcStudentID;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcExamID;
+	private TableColumn<StudentExecutedExam, String> tcExamID;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcSubject;
+	private TableColumn<StudentExecutedExam, String> tcSubject;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcCourse;
+	private TableColumn<StudentExecutedExam, String> tcCourse;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcExecDate;
+	private TableColumn<StudentExecutedExam, String> tcExecDate;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcTestType;
+	private TableColumn<StudentExecutedExam, String> tcTestType;
 
 	@FXML
-	private TableColumn<ExecutedExam, Integer> tcGrade;
+	private TableColumn<StudentExecutedExam, Integer> tcGrade;
 
 	@FXML
-	private TableColumn<ExecutedExam, JFXButton> tcGetTest;
+	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
 	
     @FXML
     private Label lbl_StdID;
@@ -68,49 +73,70 @@ public class ExecutedExamsController implements Initializable {
 
 	public void initialize(URL location, ResourceBundle resources) {
 		setStudentIDTextField();
-		tcExamID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
-		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
-		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
-		tcExecDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
-		tcTestType.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("testType"));
-		tcGrade.setCellValueFactory(new PropertyValueFactory<ExecutedExam, Integer>("grade"));
-		tcGetTest.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("getCopy"));
+		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("course"));
+		tcExecDate.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("execDate"));
+		tcTestType.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("testType"));
+		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, Integer>("grade"));
+		tcGetTest.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, JFXButton>("getCopy"));
 
 		String userID = Client.getUser().getUserID();
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-		ObservableList<ExecutedExam> exams = FXCollections.observableArrayList();
-		exams.addAll(Client.getExecExams());
+		ObservableList<StudentExecutedExam> exams = FXCollections.observableArrayList();
+		exams.addAll(Client.getExecutedExamStudentList());
 		tvExExams.setItems(exams);
 
-		setExamGetCopyButtons(Client.getExecExams());
+		setExamGetCopyButtons(Client.getExecutedExamStudentList());
 	}
 	
-	private void setExamGetCopyButtons(List<ExecutedExam> exams) {
+	private void setExamGetCopyButtons(List<StudentExecutedExam> exams) {
 
-		for (ExecutedExam exam : exams) {
-			JFXButton getCoptyButton = new JFXButton();
-			getCoptyButton.setPrefSize(90, 15);
-			getCoptyButton
-					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			getCoptyButton.setText("Get Copy");
+		for (StudentExecutedExam exam : exams) {
+			System.out.println(exam.getTestType());
+			if (exam.getTestType().equals("Manual"))
+			{
+				JFXButton getCopyButton = new JFXButton();
+				getCopyButton.setPrefSize(90, 15);
+				getCopyButton
+						.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				getCopyButton.setText("Get Copy");
+				
+				getCopyButton.setOnAction(new EventHandler<ActionEvent>() {
+	
+					@Override
+					public void handle(ActionEvent event) {
+						if (exam.getCopy().getSize() == 0)
+						{
+							System.out.println("Copy doesn't exist");
+						}
+						/*
+						else
+						{
+							String path = System.getProperty("user.home") + "/Desktop";
+							
+							File outputFile = new File(path + "/TestAfterCheck.docx");
+							try {
+								FileOutputStream fos = new FileOutputStream(outputFile);
+								BufferedOutputStream bos = new BufferedOutputStream(fos);
+								bos.write(exam.getCopy().getMybytearray(), 0, exam.getCopy().getSize());
+								bos.flush();
+								fos.flush();
+								bos.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						*/
+					}
+	
+				});
+				exam.setGetCopy(getCopyButton);
+			}
 			
-			getCoptyButton.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-					
-					//ModelWrapper<String> modelWrapper = new ModelWrapper<>(EXAM_EXECUTE);
-					//ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-					
-					System.out.println("HELLO");
-				}
-
-			});
-
-			exam.setGetCopy(getCoptyButton);
 		}
 	}
 	

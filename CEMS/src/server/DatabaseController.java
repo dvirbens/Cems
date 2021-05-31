@@ -1,25 +1,27 @@
 package server;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import client.Client;
 import common.SubjectCourseCollection;
 import models.Database;
 import models.Exam;
 import models.ExamProcess;
+import models.ExamProcess.ExamType;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
@@ -29,7 +31,6 @@ import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
 import models.WordFile;
-import models.ExamProcess.ExamType;
 
 /**
  * Class that handles all of operation sent by client, database controller
@@ -474,25 +475,61 @@ public class DatabaseController {
 		return examList;
 	}
 
-	public List<ExecutedExam> getExecutedExamListByStudentID(String studentID) {
-		List<ExecutedExam> examList = new ArrayList<>();
-
+	public List<StudentExecutedExam> getExecutedExamListByStudentID(String studentID) {
+		List<StudentExecutedExam> examList = new ArrayList<>();
+		InputStream copyFile = null;
+		WordFile checked_file = new WordFile();
 		try {
 			Statement statement = conn.createStatement();
 			String courseQuery = "SELECT * FROM executedexambystudent WHERE studentID=\"" + studentID + "\";";
 			ResultSet rsQuestionOfCourse = statement.executeQuery(courseQuery);
 			while (rsQuestionOfCourse.next()) {
 				String examID = rsQuestionOfCourse.getString("ExamID");
+				String teacherID = rsQuestionOfCourse.getString("teacherID");
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String course = rsQuestionOfCourse.getString("Course");
 				String execDate = rsQuestionOfCourse.getString("ExecDate");
 				String testType = rsQuestionOfCourse.getString("TestType");
-				Integer grade = rsQuestionOfCourse.getInt("Grade");
+				String grade = rsQuestionOfCourse.getString("Grade");
+				String approval = rsQuestionOfCourse.getString("Approved");
+				Blob copy = rsQuestionOfCourse.getBlob("Copy");
+				String alert = rsQuestionOfCourse.getString("Alert");
 
-				ExecutedExam exam = new ExecutedExam(examID, subject, course, execDate, testType, grade);
-				// exam.setGetCopy(blob);
+				if(testType != "Manual" || copy.length() == 0)
+				{
+					checked_file.setSize(0);
+				}
+				else
+				{
+					copyFile = copy.getBinaryStream();
+					
+					ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+					int nRead;
+					byte[] data = new byte[16384];
+
+					try {
+						while ((nRead = copyFile.read(data, 0, data.length)) != -1) {
+						  buffer.write(data, 0, nRead);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+					byte[] arr = buffer.toByteArray();
+
+					checked_file.initArray(arr.length);
+					checked_file.setSize(arr.length);
+					checked_file.setMybytearray(arr);
+				}
+					
+				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, teacherID, subject,
+						course, execDate, testType, grade, checked_file, approval, alert );
+				
 				examList.add(exam);
 			}
+			
+
 
 		} catch (SQLException e) {
 			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
@@ -539,17 +576,17 @@ public class DatabaseController {
 	 * 
 	 */
 
-	public void UploadFile(WordFile file) {
+	public void UploadFile(StudentExecutedExam studentExam, WordFile file) {
 		String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
 
 		try {
 			InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "123");
-			stmt.setString(2, "121212");
-			stmt.setString(3, "Mathematic");
-			stmt.setString(4, "Algebra");
-			stmt.setString(5, "12.12.12");
+			stmt.setString(1, studentExam.getStudentID());
+			stmt.setString(2, studentExam.getExamID());
+			stmt.setString(3, studentExam.getSubject());
+			stmt.setString(4, studentExam.getCourse());
+			stmt.setString(5, studentExam.getExecDate());
 			stmt.setBlob(6, targetStream);
 			stmt.execute();
 		} catch (SQLException e) {
@@ -818,11 +855,11 @@ public class DatabaseController {
 		}
 		return null;
 	}
-
+/*
 	public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam executedExam) {
 		List<StudentExecutedExam> studentList = new ArrayList<>();
 		studentList.add(new StudentExecutedExam("0001", "arik zagdon", "100", "90%"));
 		return studentList;
 	}
-
+*/
 }

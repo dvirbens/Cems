@@ -142,7 +142,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case EXAM_EXECUTE:
-				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
+				executedExamStudentList = (List<StudentExecutedExam>) modelWrapperFromServer.getElements();
 				break;
 
 			case EXTENSION_REQUEST:

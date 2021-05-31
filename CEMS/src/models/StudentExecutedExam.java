@@ -1,6 +1,8 @@
 package models;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.Blob;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -11,18 +13,33 @@ public class StudentExecutedExam implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String examID;
-	private String studentName;
+	private String studentID;
+	private String TeacherId;
+	private String subject;
+	private String course;
+	private String execDate;
+	private String testType;
 	private String grade;
-	private String CopyPercentage;
-	private JFXButton copy;
-	private JFXButton approvalButton;
+	private WordFile copy;
+	private String approved;
+	private String Alert;
 
-	public StudentExecutedExam(String examID, String studentName, String grade, String copyPercentage) {
+	private JFXButton getCopy;
+
+	public StudentExecutedExam(String examID, String studentID, String teacherId, String subject, String course,
+			String execDate, String testType, String grade, WordFile copy, String approved, String alert) {
 		super();
 		this.examID = examID;
-		this.studentName = studentName;
+		this.studentID = studentID;
+		TeacherId = teacherId;
+		this.subject = subject;
+		this.course = course;
+		this.execDate = execDate;
+		this.testType = testType;
 		this.grade = grade;
-		CopyPercentage = copyPercentage;
+		this.copy = copy;
+		this.approved = approved;
+		Alert = alert;
 	}
 
 	public String getExamID() {
@@ -33,12 +50,52 @@ public class StudentExecutedExam implements Serializable {
 		this.examID = examID;
 	}
 
-	public String getStudentName() {
-		return studentName;
+	public String getStudentID() {
+		return studentID;
 	}
 
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
+	public void setStudentID(String studentID) {
+		this.studentID = studentID;
+	}
+
+	public String getTeacherId() {
+		return TeacherId;
+	}
+
+	public void setTeacherId(String teacherId) {
+		TeacherId = teacherId;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+
+	public String getExecDate() {
+		return execDate;
+	}
+
+	public void setExecDate(String execDate) {
+		this.execDate = execDate;
+	}
+
+	public String getTestType() {
+		return testType;
+	}
+
+	public void setTestType(String testType) {
+		this.testType = testType;
 	}
 
 	public String getGrade() {
@@ -49,33 +106,45 @@ public class StudentExecutedExam implements Serializable {
 		this.grade = grade;
 	}
 
-	public String getCopyPercentage() {
-		return CopyPercentage;
+	public String getApproved() {
+		return approved;
 	}
 
-	public void setCopyPercentage(String copyPercentage) {
-		CopyPercentage = copyPercentage;
+	public void setApproved(String approved) {
+		this.approved = approved;
 	}
 
-	public JFXButton getCopy() {
+	public String getAlert() {
+		return Alert;
+	}
+
+	public void setAlert(String alert) {
+		Alert = alert;
+	}
+
+	public JFXButton getGetCopy() {
+		return getCopy;
+	}
+
+	public void setGetCopy(JFXButton getCopy) {
+		this.getCopy = getCopy;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public WordFile getCopy() {
 		return copy;
 	}
 
-	public void setCopy(JFXButton copy) {
+	public void setCopy(WordFile copy) {
 		this.copy = copy;
 	}
 
-	public JFXButton getApprovalButton() {
-		return approvalButton;
-	}
 
-	public void setApprovalButton(JFXButton approvalButton) {
-		this.approvalButton = approvalButton;
-	}
 
-	@Override
-	public String toString() {
-		return "StudentExecutedExam [examID=" + examID + ", studentName=" + studentName + ", grade=" + grade
-				+ ", CopyPercentage=" + CopyPercentage + ", copy=" + copy + ", approvalButton=" + approvalButton + "]";
-	}
+	
+
+	
 }

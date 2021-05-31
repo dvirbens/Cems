@@ -3,6 +3,8 @@ package common;
 import java.io.Serializable;
 import java.util.List;
 
+import models.WordFile;
+
 /**
  * Generic class that wrap all of CEMS Projects model, in order to make
  * transfers between client and server available and indicate which operation
@@ -29,6 +31,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	private E[] elements2;
 
+	private WordFile file;
 	/**
 	 * Which operation should be executed in server/client
 	 */
@@ -86,6 +89,13 @@ public class ModelWrapper<E> implements Serializable {
 		this.elements2 = elements2;
 		this.operation = operation;
 	}
+	
+	public ModelWrapper(WordFile elements1, E elements2, Operation operation) {
+		super();
+		this.file = elements1;
+		this.element = elements2;
+		this.operation = operation;
+	}
 
 	public E getElement() {
 		return element;
@@ -117,6 +127,16 @@ public class ModelWrapper<E> implements Serializable {
 
 	public void setElements2(E[] elements2) {
 		this.elements2 = elements2;
+	}
+
+	
+	
+	public WordFile getFile() {
+		return file;
+	}
+
+	public void setFile(WordFile file) {
+		this.file = file;
 	}
 
 	@Override
