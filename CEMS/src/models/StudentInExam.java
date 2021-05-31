@@ -6,7 +6,7 @@ public class StudentInExam {
 
 	private String studentID;
 	private ConnectionToClient client;
-	private String[] soloution;
+	private String[] solution;
 	private boolean finished;
 
 	public StudentInExam(String studentID, ConnectionToClient client) {
@@ -31,12 +31,12 @@ public class StudentInExam {
 		this.client = client;
 	}
 
-	public String[] getSoloution() {
-		return soloution;
+	public String[] getSolution() {
+		return solution;
 	}
 
-	public void setSoloution(String[] soloution) {
-		this.soloution = soloution;
+	public void setSolution(String[] solution) {
+		this.solution = solution;
 	}
 
 	public boolean isFinished() {
@@ -46,5 +46,7 @@ public class StudentInExam {
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
+
+
 
 }

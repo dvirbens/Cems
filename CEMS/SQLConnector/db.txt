@@ -64,7 +64,7 @@ CREATE TABLE ExecutedExam (
 	median double,
 	avg double,
 	type ENUM('Manual','Computerized'),
-	PRIMARY KEY(examID,execDate,teacherID)
+	PRIMARY KEY(examID,executeDate,executeTeacherID)
 );
 
 

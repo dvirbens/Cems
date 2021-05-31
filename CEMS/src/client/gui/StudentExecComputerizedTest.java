@@ -319,7 +319,7 @@ public class StudentExecComputerizedTest implements Initializable {
 
 		ArrayList<String> elements2 = new ArrayList<>();
 		elements2.add(Client.getUser().getUserID());
-		elements2.add(examID);
+		elements2.add(Client.getExamCode());
 
 		ModelWrapper<String> modelWrapper2 = new ModelWrapper<String>(elements2, answersArr, INSERT_STUDENT_ANSWERS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper2);

@@ -862,4 +862,21 @@ public class DatabaseController {
 		return studentList;
 	}
 */
+	
+	public void updateAlertValue(String studentID, String examID, String AlertPercent)
+	{
+		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ?;";
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, AlertPercent);
+			stmt.setString(2, studentID);
+			stmt.setString(3, examID);
+
+			stmt.executeUpdate();
+			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got Alert " + AlertPercent);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

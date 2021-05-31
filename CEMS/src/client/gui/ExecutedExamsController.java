@@ -60,25 +60,19 @@ public class ExecutedExamsController implements Initializable {
 	private TableColumn<StudentExecutedExam, String> tcTestType;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, Integer> tcGrade;
+	private TableColumn<StudentExecutedExam, String> tcGrade;
 
 	@FXML
 	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
 	
-    @FXML
-    private Label lbl_StdID;
-
-    @FXML
-    private TextField tf_StdID;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		setStudentIDTextField();
 		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("course"));
 		tcExecDate.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("execDate"));
 		tcTestType.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("testType"));
-		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, Integer>("grade"));
+		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("grade"));
 		tcGetTest.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, JFXButton>("getCopy"));
 
 		String userID = Client.getUser().getUserID();
@@ -87,7 +81,15 @@ public class ExecutedExamsController implements Initializable {
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		ObservableList<StudentExecutedExam> exams = FXCollections.observableArrayList();
+		
 		exams.addAll(Client.getExecutedExamStudentList());
+		for (StudentExecutedExam exam : exams)
+		{
+			if (exam.getApproved().equals("0"))
+			{
+				exam.setGrade("Not checked");
+			}
+		}
 		tvExExams.setItems(exams);
 
 		setExamGetCopyButtons(Client.getExecutedExamStudentList());
@@ -96,8 +98,7 @@ public class ExecutedExamsController implements Initializable {
 	private void setExamGetCopyButtons(List<StudentExecutedExam> exams) {
 
 		for (StudentExecutedExam exam : exams) {
-			System.out.println(exam.getTestType());
-			if (exam.getTestType().equals("Manual"))
+			if (exam.getTestType().equals("Manual") && (exam.getCopy().getSize() != 0))
 			{
 				JFXButton getCopyButton = new JFXButton();
 				getCopyButton.setPrefSize(90, 15);
@@ -109,28 +110,20 @@ public class ExecutedExamsController implements Initializable {
 	
 					@Override
 					public void handle(ActionEvent event) {
-						if (exam.getCopy().getSize() == 0)
-						{
-							System.out.println("Copy doesn't exist");
+
+						String path = System.getProperty("user.home") + "/Desktop";
+						
+						File outputFile = new File(path + "/TestAfterCheck.docx");
+						try {
+							FileOutputStream fos = new FileOutputStream(outputFile);
+							BufferedOutputStream bos = new BufferedOutputStream(fos);
+							bos.write(exam.getCopy().getMybytearray(), 0, exam.getCopy().getSize());
+							bos.flush();
+							fos.flush();
+							bos.close();
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
-						/*
-						else
-						{
-							String path = System.getProperty("user.home") + "/Desktop";
-							
-							File outputFile = new File(path + "/TestAfterCheck.docx");
-							try {
-								FileOutputStream fos = new FileOutputStream(outputFile);
-								BufferedOutputStream bos = new BufferedOutputStream(fos);
-								bos.write(exam.getCopy().getMybytearray(), 0, exam.getCopy().getSize());
-								bos.flush();
-								fos.flush();
-								bos.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-						*/
 					}
 	
 				});
@@ -140,18 +133,5 @@ public class ExecutedExamsController implements Initializable {
 		}
 	}
 	
-	private void setStudentIDTextField()
-	{
-		String userID = Client.getUser().getUserID();
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				tf_StdID.setEditable(true);
-				tf_StdID.setText(userID);
-				tf_StdID.setEditable(false);
-			}
-		});
-
-	}
 
 }

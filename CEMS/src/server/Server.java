@@ -5,6 +5,8 @@ import static common.ModelWrapper.Operation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,7 @@ public class Server extends AbstractServer {
 	private static Map<String, List<ExamExtension>> examsExtensions;
 
 	private static Map<String, List<StudentInExam>> studentInExam;
-
+	
 	/**
 	 * Indicate if the server is connected
 	 */
@@ -166,8 +168,10 @@ public class Server extends AbstractServer {
 
 		case CLOSE_EXAM:
 			String code = (String) modelWrapperFromClient.getElement();
+			examID = examsInProcess.get(code).getexamId();
 			databaseController.saveExecutedExam(examsInProcess.get(code));
 			examsInProcess.remove(code);
+			checkAlert(code, examID);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -361,11 +365,20 @@ public class Server extends AbstractServer {
 			break;
 
 		case INSERT_STUDENT_ANSWERS:
+		
 			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
-			// String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
+			String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
 			studentID = elements.get(0);
-			examID = elements.get(1);
+			userCode = elements.get(1);
 
+			for (StudentInExam student : studentInExam.get(userCode))
+			{
+				if (student.getStudentID() == studentID)
+				{
+					student.setSolution(AnswersArr);
+				}
+			}
+			
 			modelWrapperToClient = new ModelWrapper<>(INSERT_STUDENT_GRADE);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -454,6 +467,39 @@ public class Server extends AbstractServer {
 
 	}
 
+	/*
+	 * Function that check all students answers when test finished and insert to DB the alert percentage
+	 */
+	public void checkAlert(String code, String examID)
+	{
+		
+		int length = studentInExam.get(code).size();
+		int numOfQuestions = studentInExam.get(code).get(0).getSolution().length;
+		List<StudentInExam> studentsList = studentInExam.get(code);
+		int diff = 0;
+		Integer AlertPercent = 0;
+		Exam exam = databaseController.GetExamByExamID(examID);
+
+		for (int i=0; i < length; i++)
+		{
+			Integer[] diff_arr = new Integer[length];
+			for (int k=0; k < numOfQuestions; k++)
+			{
+				if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k).getCorrectAnswer())
+				{
+					diff_arr[i]++;
+				}
+			}
+			diff = Collections.max(Arrays.asList(diff_arr));
+			AlertPercent = 100 - 1/(numOfQuestions) * diff * 100;
+			
+			databaseController.updateAlertValue(studentsList.get(i).getStudentID(), examID, AlertPercent.toString());
+			studentsList.get(i).setFinished(true);
+		}
+		
+	}
+	
+	
 	public static boolean isConnected() {
 		return isConnected;
 	}
