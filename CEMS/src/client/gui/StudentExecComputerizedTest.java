@@ -125,7 +125,7 @@ public class StudentExecComputerizedTest implements Initializable {
 		setRemainingTime();
 
 		// Get ExamID
-		examID = Client.getExamProcess().getexamId();
+		examID = Client.getExamProcess().getExamId();
 
 		// Get questions
 		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);

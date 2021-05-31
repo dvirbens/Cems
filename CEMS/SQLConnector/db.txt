@@ -60,6 +60,8 @@ CREATE TABLE ExecutedExam (
 	examID varchar(255),
 	executeTeacherID varchar(255),
 	creatorTeacherID varchar(255),
+	subject varchar(255),
+	course varchar(255),
     executeDate varchar(255),
 	median double,
 	avg double,

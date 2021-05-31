@@ -180,10 +180,10 @@ public class Server extends AbstractServer {
 
 		case CLOSE_EXAM:
 			String code = (String) modelWrapperFromClient.getElement();
-			examID = examsInProcess.get(code).getexamId();
+			examID = examsInProcess.get(code).getExamId();
 			databaseController.saveExecutedExam(examsInProcess.get(code));
 			examsInProcess.remove(code);
-			checkAlert(code, examID);
+			//checkAlert(code, examID);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {

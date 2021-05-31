@@ -10,9 +10,9 @@ public class ExamProcess implements Serializable {
 	private String time;
 	private String teacherID;
 	private String code;
-	private String manualSubject;
-	private String manulCourse;
-	private String manualDuration;
+	private String subject;
+	private String course;
+	private String duration;
 	private WordFile manualFile;
 	private ExamType type;
 
@@ -25,30 +25,33 @@ public class ExamProcess implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ExamProcess(String examId, String date,String time, String teacherID, String code) {
+	public ExamProcess(String examId, String date, String time, String teacherID, String code, String subject,
+			String course, String duration) {
 		super();
 		this.examId = examId;
 		this.date = date;
-		this.time=time;
+		this.time = time;
 		this.teacherID = teacherID;
 		this.code = code;
-		type = ExamType.Computerized;
+		this.subject = subject;
+		this.course = course;
+		this.duration = duration;
+		this.type = ExamType.Computerized;
 	}
 
-	public ExamProcess(String manualSubject, String manulCourse, String manualDuration, String date,String time, String teacherID,
-			String code, WordFile manualFile) {
+	public ExamProcess(String examId, String date, String time, String teacherID, String code, String subject,
+			String course, String duration, WordFile manualFile) {
 		super();
-		Random r=new Random();
-		this.examId=String.valueOf(r.nextInt(99999)); 
-		this.manualSubject = manualSubject;
-		this.manulCourse = manulCourse;
-		this.manualDuration = manualDuration;
+		this.examId = examId;
 		this.date = date;
-		this.time=time;
+		this.time = time;
 		this.teacherID = teacherID;
 		this.code = code;
+		this.subject = subject;
+		this.course = course;
+		this.duration = duration;
 		this.manualFile = manualFile;
-		type = ExamType.Manual;
+		this.type = ExamType.Manual;
 	}
 
 	public String getTeacherID() {
@@ -79,36 +82,8 @@ public class ExamProcess implements Serializable {
 		this.code = code;
 	}
 
-	public String getexamId() {
-		return examId;
-	}
-
 	public void setexamId(String examId) {
 		this.examId = examId;
-	}
-
-	public String getManualSubject() {
-		return manualSubject;
-	}
-
-	public void setManualSubject(String manualSubject) {
-		this.manualSubject = manualSubject;
-	}
-
-	public String getManulCourse() {
-		return manulCourse;
-	}
-
-	public void setManulCourse(String manulCourse) {
-		this.manulCourse = manulCourse;
-	}
-
-	public String getManualDuration() {
-		return manualDuration;
-	}
-
-	public void setManualDuration(String manualDuration) {
-		this.manualDuration = manualDuration;
 	}
 
 	public ExamType getType() {
@@ -126,7 +101,7 @@ public class ExamProcess implements Serializable {
 	public void setManualFile(WordFile manualFile) {
 		this.manualFile = manualFile;
 	}
-	
+
 	public String getTime() {
 		return time;
 	}
@@ -135,11 +110,43 @@ public class ExamProcess implements Serializable {
 		this.time = time;
 	}
 
+	public String getExamId() {
+		return examId;
+	}
+
+	public void setExamId(String examId) {
+		this.examId = examId;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
 	@Override
 	public String toString() {
-		return "ExamProcess [date=" + date + ", teacherID=" + teacherID
-				+ ", code=" + code + ", manualSubject=" + manualSubject + ", manulCourse=" + manulCourse
-				+ ", manualDuration=" + manualDuration + ", manualFile=" + manualFile + ", type=" + type + "]";
+		return "ExamProcess [examId=" + examId + ", date=" + date + ", time=" + time + ", teacherID=" + teacherID
+				+ ", code=" + code + ", subject=" + subject + ", course=" + course + ", duration=" + duration
+				+ ", manualFile=" + manualFile + ", type=" + type + "]";
 	}
 
 }

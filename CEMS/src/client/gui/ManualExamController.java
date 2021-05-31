@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -64,6 +65,7 @@ public class ManualExamController implements Initializable {
 
 	@FXML
 	void onClickStartExam(ActionEvent event) {
+		Random rand = new Random();
 		String code = tfCode.getText();
 		String fileName = fileNameLabel.getText();
 		boolean validInput = true;
@@ -81,17 +83,20 @@ public class ManualExamController implements Initializable {
 		if (validInput) {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
+
 			String currentDate = formatter.format(date).toString();
 			SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
 			String currentTime = timeformat.format(date).toString();
+			String examID = String.valueOf(rand.nextInt(9999));
 			String teacherID = Client.getUser().getUserID();
 			String duration = tfDuration.getText();
 			String subject = cbSubject.getSelectionModel().getSelectedItem();
 			String course = cbCourse.getSelectionModel().getSelectedItem();
 			WordFile wordFile = getWordFile();
 			System.out.println(currentTime);
-			ExamProcess examProcess = new ExamProcess(subject, course, duration, currentDate, currentTime, teacherID,
-					code, wordFile);
+
+			ExamProcess examProcess = new ExamProcess(examID, currentDate, currentTime, teacherID, code, subject,
+					course, duration, wordFile);
 
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);

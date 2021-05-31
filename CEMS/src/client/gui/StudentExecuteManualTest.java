@@ -58,42 +58,41 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 
 	@FXML
 	private TextField tfFileName;
-	
-    @FXML
-    private TextField tfRemainingTime;
 
-    @FXML
-    private Label lblRemainingTime;
+	@FXML
+	private TextField tfRemainingTime;
+
+	@FXML
+	private Label lblRemainingTime;
 
 	private File newFile;
-	
+
 	private long startTime;
-	
+
 	private long duration;
-	
+
 	private String examID;
-	
+
 	private ExamProcess examProcess;
-	
+
 	private Exam exam;
-    
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		btChooseFile.setVisible(false);
 		tfFileName.setVisible(false);
 		btUpload.setVisible(false);
-		
+
 		// Start time counter
 		startTime = System.currentTimeMillis();
 		setRemainingTime();
-		
+
 		// Get ExamID
-		examID = Client.getExamProcess().getexamId();
-		
-		
+		examID = Client.getExamProcess().getExamId();
+
 		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(Client.getExamCode(), GET_EXAM_IN_PROCESS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		//exam = Client.getExam();
+		// exam = Client.getExam();
 		examProcess = Client.getExamProcess();
 
 		String teacherTime = Client.getExamProcess().getTime();
@@ -106,12 +105,11 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 			Date date1 = format.parse(currentTime);
 			Date date2 = format.parse(teacherTime);
 			long difference = date1.getTime() - date2.getTime();
-			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(examProcess.getManualDuration()));
+			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(examProcess.getDuration()));
 			duration = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
 
 	}
 
@@ -154,13 +152,13 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 			System.out.println("File is not valid");
 		}
 	}
-	
-    @FXML
-    void onDownloadClick(ActionEvent event) {
+
+	@FXML
+	void onDownloadClick(ActionEvent event) {
 		btChooseFile.setVisible(true);
 		tfFileName.setVisible(true);
 		String path = System.getProperty("user.home") + "/Desktop";
-		
+
 		File outputFile = new File(path + "/fileTest.docx");
 		try {
 			FileOutputStream fos = new FileOutputStream(outputFile);
@@ -173,10 +171,8 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 			e.printStackTrace();
 		}
 
-		
+	}
 
-    }
-    
 	public void setRemainingTime() {
 		Thread timerThread = new Thread(() -> {
 			while (true) {
@@ -203,7 +199,7 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 	}
 
 	public long calcTime() {
-		long elapsedTime = duration  * 1000 - (System.currentTimeMillis() - startTime);
+		long elapsedTime = duration * 1000 - (System.currentTimeMillis() - startTime);
 		long elapsedSeconds = elapsedTime / 1000;
 		long secondsDisplay = elapsedSeconds % 60;
 		long elapsedMinutes = elapsedSeconds / 60;

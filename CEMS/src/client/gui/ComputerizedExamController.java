@@ -143,7 +143,7 @@ public class ComputerizedExamController implements Initializable {
 	@FXML
 	void onClickStartComputerized(ActionEvent event) {
 		String code = tfCodeComputerized.getText();
-		String focusedExamID = tvExamPool.getFocusModel().getFocusedItem().getId();
+
 		boolean validInput = true;
 		masgeLabel.setStyle("-fx-text-fill: RED;");
 
@@ -159,16 +159,23 @@ public class ComputerizedExamController implements Initializable {
 			masgeLabel.setText("");
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
+
 			String currentDate = formatter.format(date).toString();
 			SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
 			String currentTime = timeformat.format(date).toString();
-			String teacherID = Client.getUser().getUserID();
-			ExamProcess examProcess = new ExamProcess(focusedExamID, currentDate, currentTime, teacherID, code);
+			String examID = tvExamPool.getFocusModel().getFocusedItem().getId();
+			String loggedInTeacherID = Client.getUser().getUserID();
+			String subject = tvExamPool.getFocusModel().getFocusedItem().getSubject();
+			String course = tvExamPool.getFocusModel().getFocusedItem().getCourse();
+			String duration = tvExamPool.getFocusModel().getFocusedItem().getDuration();
+
+			ExamProcess examProcess = new ExamProcess(examID, currentDate, currentTime, loggedInTeacherID, code,
+					subject, course, duration);
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 			for (Exam exam : Client.getExams()) {
-				if (exam.getId().equals(focusedExamID)) {
+				if (exam.getId().equals(examID)) {
 					ExamManagementWindow examManagementWindow = new ExamManagementWindow(code,
 							Integer.valueOf(exam.getDuration()));
 					examManagementWindow.open();

@@ -109,6 +109,7 @@ public class ExamStatisticController implements Initializable {
 				newStats.getData().add(new XYChart.Data<>("Yakov Shitrit", 30));
 
 				bcExamStatistic.getData().add(newStats);
+				bcExamStatistic.getData().clear();
 
 			}
 		});

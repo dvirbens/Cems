@@ -362,24 +362,24 @@ public class DatabaseController {
 
 		return questionList;
 	}
-	
-    //Belong to overall statisti - Statistic by course:
-    // (i should change to ll 3 statuse by enum operation)
-    public List<Statistics> getGradesForStatisticByCourse(){
-            List<Statistics> set = new ArrayList<Statistics>();
-            try {
-                    Statement statement = conn.createStatement();
-                    String courseStatistic = "select user.userID, user.FirstName, user.LastName, executedexambystudent.Grade\r\n"
-                                    + "from executedexambystudent, user\r\n"
-                                    + "where executedexambystudent.studentID=user.userID && Course=\"Algebra\" && ExecDate=\"12/05/22\";";
-                    ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
-                    while (rsGtadeStatisticByCourse.next()) {
-                            String userID =rsGtadeStatisticByCourse.getString("userID");
-                            String FirstName = rsGtadeStatisticByCourse.getString("FirstName");
-                            String LastName = rsGtadeStatisticByCourse.getString("LastName");
-                            String Grade = rsGtadeStatisticByCourse.getString("Grade");
-                            Statistics statisticByCourse = new Statistics(userID, FirstName, LastName, Grade);
-                            
+
+	// Belong to overall statisti - Statistic by course:
+	// (i should change to ll 3 statuse by enum operation)
+	public List<Statistics> getGradesForStatisticByCourse() {
+		List<Statistics> set = new ArrayList<Statistics>();
+		try {
+			Statement statement = conn.createStatement();
+			String courseStatistic = "select user.userID, user.FirstName, user.LastName, executedexambystudent.Grade\r\n"
+					+ "from executedexambystudent, user\r\n"
+					+ "where executedexambystudent.studentID=user.userID && Course=\"Algebra\" && ExecDate=\"12/05/22\";";
+			ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
+			while (rsGtadeStatisticByCourse.next()) {
+				String userID = rsGtadeStatisticByCourse.getString("userID");
+				String FirstName = rsGtadeStatisticByCourse.getString("FirstName");
+				String LastName = rsGtadeStatisticByCourse.getString("LastName");
+				String Grade = rsGtadeStatisticByCourse.getString("Grade");
+				Statistics statisticByCourse = new Statistics(userID, FirstName, LastName, Grade);
+
 //                            if(Statistics==Operation.STATISTIC_BY_COURSE_X) {
 //                                    
 //                            }
@@ -387,14 +387,14 @@ public class DatabaseController {
 //                                    String Grade = rsGtadeStatisticByCourse.getString("Grade");	
 //                                    Statistics statisticByCourse = new Statistics(Grades);	
 //                            }
-                           
-                            set.add(statisticByCourse);
-                    }
-            }catch (SQLException e) {	
-                    System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");
-            }	
-            return set;	
-    }
+
+				set.add(statisticByCourse);
+			}
+		} catch (SQLException e) {
+			System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");
+		}
+		return set;
+	}
 
 	public List<Exam> getExamListBySubject(String subject) {
 		List<Exam> examList = new ArrayList<>();
@@ -535,14 +535,11 @@ public class DatabaseController {
 				Blob copy = rsQuestionOfCourse.getBlob("Copy");
 				String alert = rsQuestionOfCourse.getString("Alert");
 
-				if(testType != "Manual" || copy.length() == 0)
-				{
+				if (testType != "Manual" || copy.length() == 0) {
 					checked_file.setSize(0);
-				}
-				else
-				{
+				} else {
 					copyFile = copy.getBinaryStream();
-					
+
 					ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
 					int nRead;
@@ -550,7 +547,7 @@ public class DatabaseController {
 
 					try {
 						while ((nRead = copyFile.read(data, 0, data.length)) != -1) {
-						  buffer.write(data, 0, nRead);
+							buffer.write(data, 0, nRead);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -562,14 +559,12 @@ public class DatabaseController {
 					checked_file.setSize(arr.length);
 					checked_file.setMybytearray(arr);
 				}
-					
-				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, teacherID, subject,
-						course, execDate, testType, grade, checked_file, approval, alert );
-				
+
+				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, teacherID, subject, course,
+						execDate, testType, grade, checked_file, approval, alert);
+
 				examList.add(exam);
 			}
-			
-
 
 		} catch (SQLException e) {
 			System.err.println("ERROR #223688 - ERROR LOADING EXECUTED EXAM FROM DATABASE");
@@ -637,31 +632,14 @@ public class DatabaseController {
 	}
 
 	public boolean insertToExecutedExamByStudent(String studentID, ExamProcess exam) {
-		String subject;
-		String course;
-		String teacherID;
-		
 		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?);";
-		if (exam.getType() == ExamType.Manual)
-		{
-			subject = exam.getManualSubject();
-			course = exam.getManulCourse();
-			teacherID = exam.getTeacherID();
-		}
-		else
-		{
-			List<String> examDetails = getExamDetailsByExamId(exam.getexamId());
-			subject = examDetails.get(0);
-			course = examDetails.get(1);
-			teacherID = examDetails.get(2);
-		}
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, studentID);
-			stmt.setString(2, exam.getexamId());
-			stmt.setString(3, teacherID);
-			stmt.setString(4, subject);
-			stmt.setString(5, course);
+			stmt.setString(2, exam.getExamId());
+			stmt.setString(3, exam.getTeacherID());
+			stmt.setString(4, exam.getSubject());
+			stmt.setString(5, exam.getCourse());
 			stmt.setString(6, exam.getDate());
 			stmt.setString(7, exam.getType().toString());
 			stmt.setString(8, "0");
@@ -672,12 +650,10 @@ public class DatabaseController {
 			if (resultSet == 1) {
 				System.out.println("Student entered exam");
 			}
-
-			
-			
 			return true;
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
 		}
 		return false;
@@ -747,17 +723,21 @@ public class DatabaseController {
 
 	public boolean saveExecutedExam(ExamProcess exam) {
 		PreparedStatement prepareStatement;
-		String creatorTeacherID = getCreatorTeacherID(exam.getexamId());
+		String creatorTeacherID = getCreatorTeacherID(exam.getExamId());
 		creatorTeacherID = creatorTeacherID != null ? creatorTeacherID : "";
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?,?);");
-			prepareStatement.setString(1, exam.getexamId());
+			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+			prepareStatement.setString(1, exam.getExamId());
 			prepareStatement.setString(2, exam.getTeacherID());
 			prepareStatement.setString(3, creatorTeacherID);
-			prepareStatement.setString(4, exam.getDate());
-			prepareStatement.setDouble(5, 0);
-			prepareStatement.setDouble(6, 0);
-			prepareStatement.setString(7, exam.getType().toString());
+			prepareStatement.setString(4,exam.getSubject());
+			prepareStatement.setString(5, exam.getCourse());
+			prepareStatement.setString(6, exam.getDuration());
+			prepareStatement.setString(7, exam.getDate());
+			prepareStatement.setString(8, exam.getTime());
+			prepareStatement.setDouble(9, 0);
+			prepareStatement.setDouble(10, 0);
+			prepareStatement.setString(11, exam.getType().toString());
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				System.out.print("Exam Saved Succuessfully");
@@ -765,6 +745,7 @@ public class DatabaseController {
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.print("Error occurred, Exam has not been saved ");
 			return false;
 		}
@@ -778,23 +759,19 @@ public class DatabaseController {
 
 		try {
 			Statement statement = conn.createStatement();
-			String executedExamQuery = "SELECT examID,executeDate,type,executeTeacherID FROM executedExam WHERE executeTeacherID=\""
-					+ loggedInTeacherId + "\";";
+			String executedExamQuery = "SELECT * FROM executedExam WHERE executeTeacherID=\"" + loggedInTeacherId
+					+ "\";";
 			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
 			while (rsExecutedExam.next()) {
 				String examID = rsExecutedExam.getString("ExamID");
+				String subject = rsExecutedExam.getString("subject");
+				String course = rsExecutedExam.getString("course");
 				String executeDate = rsExecutedExam.getString("executeDate");
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
-				List<String> examDetails = getExamDetailsByExamId(examID);
-				if (examDetails != null) {
-					String subject = examDetails.get(0);
-					String course = examDetails.get(1);
-					String teacherName = getExecutorTeacherName(executeTeacherID);
-					ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate,
-							type);
-					examList.add(executedExam);
-				}
+				String teacherName = getUserName(executeTeacherID);
+				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate, type);
+				examList.add(executedExam);
 			}
 
 		} catch (SQLException e) {
@@ -810,23 +787,19 @@ public class DatabaseController {
 
 		try {
 			Statement statement = conn.createStatement();
-			String executedExamQuery = "SELECT examID,executeDate,type,executeTeacherID FROM executedExam WHERE creatorTeacherID=\""
-					+ loggedInTeacherId + "\";";
+			String executedExamQuery = "SELECT * FROM executedExam WHERE creatorTeacherID=\"" + loggedInTeacherId
+					+ "\";";
 			ResultSet rsExecutedExam = statement.executeQuery(executedExamQuery);
 			while (rsExecutedExam.next()) {
 				String examID = rsExecutedExam.getString("ExamID");
+				String subject = rsExecutedExam.getString("subject");
+				String course = rsExecutedExam.getString("course");
 				String executeDate = rsExecutedExam.getString("executeDate");
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
-				List<String> examDetails = getExamDetailsByExamId(examID);
-				if (examDetails != null) {
-					String subject = examDetails.get(0);
-					String course = examDetails.get(1);
-					String teacherName = getExecutorTeacherName(executeTeacherID);
-					ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate,
-							type);
-					examList.add(executedExam);
-				}
+				String teacherName = getUserName(executeTeacherID);
+				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate, type);
+				examList.add(executedExam);
 			}
 
 		} catch (SQLException e) {
@@ -835,48 +808,6 @@ public class DatabaseController {
 		}
 
 		return examList;
-	}
-
-	private String getExecutorTeacherName(String loggedInTeacherId) {
-		try {
-			Statement statement = conn.createStatement();
-			String sql = ("SELECT * FROM User WHERE userID=" + loggedInTeacherId + ";");
-			ResultSet resultSet = statement.executeQuery(sql);
-			if (resultSet.next()) {
-				String firstName = resultSet.getString("firstName");
-				String lastName = resultSet.getString("lastName");
-
-				return firstName + " " + lastName;
-			}
-		} catch (SQLException e) {
-			System.err.println("User not found");
-		}
-
-		return null;
-	}
-
-	private List<String> getExamDetailsByExamId(String examID) {
-		try {
-			Statement statement = conn.createStatement();
-			String examQuery = "SELECT * FROM Exam WHERE examID=\"" + examID + "\";";
-			ResultSet rsExam = statement.executeQuery(examQuery);
-			if (rsExam.next()) {
-				List<String> examDetails = new ArrayList<>();
-				String subject = rsExam.getString("Subject");
-				String course = rsExam.getString("Course");
-				String teacher = rsExam.getString("teacherID");
-				examDetails.add(subject);
-				examDetails.add(course);
-				examDetails.add(teacher);
-				return examDetails;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("ERROR #223688 - ERROR LOADING EXAM FROM DATABASE");
-		}
-
-		return null;
 	}
 
 	private String getCreatorTeacherID(String examID) {
@@ -895,16 +826,32 @@ public class DatabaseController {
 		}
 		return null;
 	}
-/*
-	public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam executedExam) {
-		List<StudentExecutedExam> studentList = new ArrayList<>();
-		studentList.add(new StudentExecutedExam("0001", "arik zagdon", "100", "90%"));
-		return studentList;
+
+	private String getUserName(String userID) {
+		try {
+			Statement statement = conn.createStatement();
+			String examQuery = "SELECT * FROM User WHERE userID=\"" + userID + "\";";
+			ResultSet rsExam = statement.executeQuery(examQuery);
+			if (rsExam.next()) {
+				String firstName = rsExam.getString("FirstName");
+				String lastName = rsExam.getString("LastName");
+				return firstName + " " + lastName;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #2245688 - ERROR LOADING USER INFO FROM DATABASE");
+		}
+		return null;
 	}
-*/
-	
-	public void updateAlertValue(String studentID, String examID, String AlertPercent)
-	{
+	/*
+	 * public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam
+	 * executedExam) { List<StudentExecutedExam> studentList = new ArrayList<>();
+	 * studentList.add(new StudentExecutedExam("0001", "arik zagdon", "100",
+	 * "90%")); return studentList; }
+	 */
+
+	public void updateAlertValue(String studentID, String examID, String AlertPercent) {
 		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ?;";
 
 		try {
