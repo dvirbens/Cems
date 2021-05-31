@@ -3,6 +3,7 @@ package server;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -10,6 +11,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -17,11 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import common.ModelWrapper.Operation;
 import common.SubjectCourseCollection;
 import models.Database;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import models.Exam;
 import models.ExamProcess;
 import models.ExamProcess.ExamType;
+import models.*;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
@@ -355,6 +362,39 @@ public class DatabaseController {
 
 		return questionList;
 	}
+	
+    //Belong to overall statisti - Statistic by course:
+    // (i should change to ll 3 statuse by enum operation)
+    public List<Statistics> getGradesForStatisticByCourse(){
+            List<Statistics> set = new ArrayList<Statistics>();
+            try {
+                    Statement statement = conn.createStatement();
+                    String courseStatistic = "select user.userID, user.FirstName, user.LastName, executedexambystudent.Grade\r\n"
+                                    + "from executedexambystudent, user\r\n"
+                                    + "where executedexambystudent.studentID=user.userID && Course=\"Algebra\" && ExecDate=\"12/05/22\";";
+                    ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
+                    while (rsGtadeStatisticByCourse.next()) {
+                            String userID =rsGtadeStatisticByCourse.getString("userID");
+                            String FirstName = rsGtadeStatisticByCourse.getString("FirstName");
+                            String LastName = rsGtadeStatisticByCourse.getString("LastName");
+                            String Grade = rsGtadeStatisticByCourse.getString("Grade");
+                            Statistics statisticByCourse = new Statistics(userID, FirstName, LastName, Grade);
+                            
+//                            if(Statistics==Operation.STATISTIC_BY_COURSE_X) {
+//                                    
+//                            }
+//                            else if(Statistics==Operation.STATISTIC_BY_COURSE_Y) {
+//                                    String Grade = rsGtadeStatisticByCourse.getString("Grade");	
+//                                    Statistics statisticByCourse = new Statistics(Grades);	
+//                            }
+                           
+                            set.add(statisticByCourse);
+                    }
+            }catch (SQLException e) {	
+                    System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");
+            }	
+            return set;	
+    }
 
 	public List<Exam> getExamListBySubject(String subject) {
 		List<Exam> examList = new ArrayList<>();

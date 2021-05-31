@@ -18,8 +18,11 @@ import models.Exam;
 import models.ExamExtension;
 import models.ExamProcess;
 import models.ExamQuestion;
-import models.ExecutedExam;
+import models.ExecutedExam;	
+import javafx.scene.chart.XYChart;	
+import javafx.scene.chart.XYChart.Series;
 import models.Question;
+import models.Statistics;
 import models.StudentExecutedExam;
 import models.StudentInExam;
 import models.User;
@@ -111,6 +114,15 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+		 case STATISTIC_BY_COURSE_X:
+			 List<Statistics> set = databaseController.getGradesForStatisticByCourse();
+			 modelWrapperToClient = new ModelWrapper<>(set, STATISTIC_BY_COURSE_X);
+			 try {
+			 client.sendToClient(modelWrapperToClient);
+			 } catch (IOException e) {
+			 e.printStackTrace();
+			 }
+			 break;
 
 		case GET_QUESTION_LIST_BY_EXAM_ID:
 			String examID = (String) modelWrapperFromClient.getElement();

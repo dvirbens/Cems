@@ -13,6 +13,8 @@ import models.Question;
 import models.StudentExecutedExam;
 import models.User;
 import ocsf.client.AbstractClient;
+import javafx.scene.chart.XYChart.Series;
+import models.Statistics;
 
 //
 /**
@@ -42,6 +44,12 @@ public class Client extends AbstractClient {
 	 * value that hold exam id of specific test
 	 */
 	private static String examID;
+    /**
+		
+     * value that hold Grades for different statistic chart bar
+		
+     */	
+	private static List<Statistics> set;
 	/**
 	 * value that hold last exam code
 	 */
@@ -107,6 +115,9 @@ public class Client extends AbstractClient {
 		if (msg != null) {
 			ModelWrapper<?> modelWrapperFromServer = (ModelWrapper<?>) msg;
 			switch (modelWrapperFromServer.getOperation()) {
+			case STATISTIC_BY_COURSE_X:
+				set = (List<Statistics>) modelWrapperFromServer.getElements();
+				break;
 
 			case GET_QUESTION_LIST:
 				questions = (List<Question>) modelWrapperFromServer.getElements();
@@ -352,7 +363,9 @@ public class Client extends AbstractClient {
 	public static void setExam(Exam exam) {
 		Client.exam = exam;
 	}
-
+	public static List<Statistics> getSet() {
+		 return set;
+	}
 	public static long getTimeExtension() {
 		return timeExtension;
 	}
@@ -384,5 +397,10 @@ public class Client extends AbstractClient {
 	public static void setExecutedExamStudentList(List<StudentExecutedExam> executedExamStudentList) {
 		Client.executedExamStudentList = executedExamStudentList;
 	}
+	
+	public static void setSet(List<Statistics> set) {
+		Client.set = set;
+	}
+
 
 }

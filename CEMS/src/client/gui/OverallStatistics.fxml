@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.Cursor?>
@@ -13,14 +14,14 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="PaneOverallStatistic" prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.OverallStatistic">
+<Pane fx:id="PaneOverallStatistic" prefHeight="677.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.OverallStatistic">
    <children>
       <Label layoutX="235.0" layoutY="219.0" prefHeight="27.0" prefWidth="60.0" text="Average:">
          <font>
@@ -42,7 +43,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <HBox fx:id="hBoxSelection" alignment="CENTER" layoutY="54.0" prefHeight="27.0" prefWidth="754.0">
+      <HBox fx:id="hBoxSelection" alignment="CENTER" layoutY="54.0" prefHeight="27.0" prefWidth="754.0" stylesheets="@../../../GuiPrototype/PrincipleScreen/styleSelection.css">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistic by:" wrappingWidth="71.25000970065594">
                <font>
@@ -71,9 +72,8 @@
             </Group>
          </children>
       </HBox>
-      <JFXTextField fx:id="teacherFiltter" layoutX="300.0" layoutY="140.0" onAction="#teacherFiltteringBy" text="Teacher" />
-      <JFXComboBox fx:id="courseSelect" layoutX="300.0" layoutY="140.0" onAction="#additional_filterByCourse" prefHeight="25.0" prefWidth="145.0" promptText="Course" />
-      <JFXTextField fx:id="studentFiltter" layoutX="300.0" layoutY="140.0" onAction="#studentFiltteringBy" text="Student" />
+      <JFXComboBox fx:id="courseSelect" layoutX="300.0" layoutY="140.0" onAction="#statisticByCourse" prefHeight="25.0" prefWidth="145.0" promptText="Course" />
+      <JFXTextField fx:id="studentFiltter" layoutX="300.0" layoutY="140.0" onAction="#statisticByStudent" text="Student" />
       <JFXButton fx:id="displayBtn" layoutX="488.0" layoutY="128.0" onAction="#diplayGrapgh" prefHeight="46.0" prefWidth="95.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Display" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Italic" size="19.0" />
@@ -84,11 +84,12 @@
             <Font name="System Italic" size="12.0" />
          </font>
       </Text>
-      <VBox fx:id="VboxGraph" layoutX="80.0" layoutY="258.0" onMousePressed="#diplayGrapgh" prefHeight="409.0" prefWidth="596.0">
-         <children>
-            <BarChart fx:id="graph" alternativeColumnFillVisible="true" barGap="20.0" blendMode="SRC_ATOP" cache="true" cacheHint="SCALE" categoryGap="20.0" depthTest="DISABLE" focusTraversable="true" minWidth="-Infinity" mouseTransparent="true" prefHeight="441.0" prefWidth="596.0" titleSide="BOTTOM">
+      <JFXTextField fx:id="teacherFiltter" layoutX="300.0" layoutY="140.0" onAction="#statisticByTeacher" text="Teacher" />
+      <ScrollPane layoutX="109.0" layoutY="257.0" prefHeight="302.0" prefWidth="536.0">
+         <content>
+            <BarChart fx:id="graph" alternativeColumnFillVisible="true" barGap="20.0" blendMode="SRC_ATOP" cache="true" cacheHint="SCALE" categoryGap="20.0" depthTest="DISABLE" focusTraversable="true" maxWidth="20000.0" mouseTransparent="true" prefHeight="288.0" prefWidth="484.0" titleSide="BOTTOM">
                <xAxis>
-                  <CategoryAxis endMargin="20.0" label="Exams" nodeOrientation="LEFT_TO_RIGHT" prefWidth="407.0" side="LEFT" startMargin="20.0" tickLabelGap="5.0" tickLabelRotation="40.0" fx:id="x_Exam">
+                  <CategoryAxis endMargin="20.0" label="Exams" nodeOrientation="LEFT_TO_RIGHT" side="LEFT" startMargin="20.0" tickLabelGap="5.0" tickLabelRotation="40.0" fx:id="x_Exam">
                      <opaqueInsets>
                         <Insets left="30.0" right="30.0" />
                      </opaqueInsets>
@@ -110,8 +111,12 @@
                   <Insets left="20.0" right="20.0" />
                </padding>
             </BarChart>
-            <JFXTextArea fx:id="statisticNavigation" />
-         </children>
-      </VBox>
+         </content>
+      </ScrollPane>
+      <JFXTextArea fx:id="statisticNavigation" layoutX="127.0" layoutY="582.0" prefHeight="36.0" prefWidth="466.0" />
    </children>
+   <stylesheets>
+      <URL value="@style.css" />
+      <URL value="@principle%20selection.css" />
+   </stylesheets>
 </Pane>

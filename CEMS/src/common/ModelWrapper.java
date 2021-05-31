@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import models.WordFile;
-
+import javafx.scene.chart.XYChart.Series;
 /**
  * Generic class that wrap all of CEMS Projects model, in order to make
  * transfers between client and server available and indicate which operation
@@ -39,6 +39,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	public enum Operation {
 		CREATE_EXAM, UPDATE_TEST, ENTERED_WRONG_ID, ERROR, LOAD_TEST, LOAD_QUESTION_LIST, OVERALL_STATISTICS,
+		STATISTIC_BY_COURSE_X,STATISTIC_BY_COURSE_Y, STATISTIC_BY_TEACHER, STATISTIC_BY_STUDENT,
 		EXAM_EXTENSION_REQUEST, EXAM_EXECUTE, CREATE_QUESTION, START_EXAM, TEST_STATISTICS, GET_USER,
 		GET_SUBJECT_COURSE_LIST, GET_COURSE_LIST, GET_QUESTION_LIST, GET_EXAMS_LIST_BY_SUBJECT,
 		GET_EXAMS_LIST_BY_COURSE, GET_EXAMS_LIST, CLOSE_EXAM, GET_QUESTION_LIST_BY_SUBJECT, EXTENSION_REQUEST,
