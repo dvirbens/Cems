@@ -896,7 +896,7 @@ public class DatabaseController {
 			stmt.setString(3, examID);
 
 			stmt.executeUpdate();
-			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got Alert " + AlertPercent);
+			//System.out.println("Student ID: " + studentID + " in examID: " + examID + " got Alert " + AlertPercent);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
