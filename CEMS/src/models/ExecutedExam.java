@@ -10,22 +10,11 @@ public class ExecutedExam implements Serializable {
 	private String id;
 	private String subject;
 	private String course;
-	private String TeacherId;
+	private String teacherID;
 	private String executorTeacherName;
 	private String execDate;
 	private String testType;
-	private int grade;
-	private JFXButton getCopy;
 	private JFXButton questionList;
-
-	public JFXButton getQuestionList() {
-		return questionList;
-	}
-
-	public void setQuestionList(JFXButton questionList) {
-		this.questionList = questionList;
-	}
-
 	private JFXButton gradeApproval;
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
@@ -35,15 +24,15 @@ public class ExecutedExam implements Serializable {
 		this.course = course;
 		this.execDate = execDate;
 		this.testType = testType;
-		this.grade = grade;
 	}
 
-	public ExecutedExam(String id, String executorTeacherName, String subject, String course, String execDate,
-			String testType) {
+	public ExecutedExam(String id, String executorTeacherName, String teacherID, String subject, String course,
+			String execDate, String testType) {
 		super();
 		this.executorTeacherName = executorTeacherName;
 		this.id = id;
 		this.subject = subject;
+		this.teacherID = teacherID;
 		this.course = course;
 		this.execDate = execDate;
 		this.testType = testType;
@@ -89,40 +78,16 @@ public class ExecutedExam implements Serializable {
 		this.testType = testType;
 	}
 
-	public int getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
-
-	public JFXButton getGetCopy() {
-		return getCopy;
-	}
-
-	public void setGetCopy(JFXButton getCopy) {
-		this.getCopy = getCopy;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getTeacherId() {
-		return TeacherId;
+	public String getTeacherID() {
+		return teacherID;
 	}
 
-	public void setTeacherId(String teacherId) {
-		TeacherId = teacherId;
-	}
-
-	public JFXButton getGradeApproval() {
-		return gradeApproval;
-	}
-
-	public void setGradeApproval(JFXButton gradeApproval) {
-		this.gradeApproval = gradeApproval;
+	public void setTeacherID(String teacherID) {
+		this.teacherID = teacherID;
 	}
 
 	public String getExecutorTeacherName() {
@@ -133,10 +98,31 @@ public class ExecutedExam implements Serializable {
 		this.executorTeacherName = executorTeacherName;
 	}
 
+	public void setQuestionList(JFXButtonSerializeable questionList) {
+		this.questionList = questionList;
+	}
+
+	public JFXButton getQuestionList() {
+		return questionList;
+	}
+
+	public void setQuestionList(JFXButton questionList) {
+		this.questionList = questionList;
+	}
+
+	public JFXButton getGradeApproval() {
+		return gradeApproval;
+	}
+
+	public void setGradeApproval(JFXButton gradeApproval) {
+		this.gradeApproval = gradeApproval;
+	}
+
 	@Override
 	public String toString() {
-		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", TeacherId=" + TeacherId
-				+ ", execDate=" + execDate + ", testType=" + testType + ", grade=" + grade + "]";
+		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", teacherID=" + teacherID
+				+ ", executorTeacherName=" + executorTeacherName + ", execDate=" + execDate + ", testType=" + testType
+				+ ", questionList=" + questionList + ", gradeApproval=" + gradeApproval + "]";
 	}
 
 }

@@ -18,8 +18,8 @@ import models.Exam;
 import models.ExamExtension;
 import models.ExamProcess;
 import models.ExamQuestion;
-import models.ExecutedExam;	
-import javafx.scene.chart.XYChart;	
+import models.ExecutedExam;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import models.Question;
 import models.Statistics;
@@ -60,7 +60,7 @@ public class Server extends AbstractServer {
 	private static Map<String, List<ExamExtension>> examsExtensions;
 
 	private static Map<String, List<StudentInExam>> studentInExam;
-	
+
 	/**
 	 * Indicate if the server is connected
 	 */
@@ -114,15 +114,15 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-		 case STATISTIC_BY_COURSE_X:
-			 List<Statistics> set = databaseController.getGradesForStatisticByCourse();
-			 modelWrapperToClient = new ModelWrapper<>(set, STATISTIC_BY_COURSE_X);
-			 try {
-			 client.sendToClient(modelWrapperToClient);
-			 } catch (IOException e) {
-			 e.printStackTrace();
-			 }
-			 break;
+		case STATISTIC_BY_COURSE_X:
+			List<Statistics> set = databaseController.getGradesForStatisticByCourse();
+			modelWrapperToClient = new ModelWrapper<>(set, STATISTIC_BY_COURSE_X);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
 
 		case GET_QUESTION_LIST_BY_EXAM_ID:
 			String examID = (String) modelWrapperFromClient.getElement();
@@ -183,7 +183,7 @@ public class Server extends AbstractServer {
 			examID = examsInProcess.get(code).getExamId();
 			databaseController.saveExecutedExam(examsInProcess.get(code));
 			examsInProcess.remove(code);
-			//checkAlert(code, examID);
+			// checkAlert(code, examID);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -315,7 +315,7 @@ public class Server extends AbstractServer {
 			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			studentID = elements.get(0);
 			String userCode = elements.get(1);
-			String type = elements.get(2);	
+			String type = elements.get(2);
 			if (examsInProcess.containsKey(userCode)) {
 				List<StudentInExam> temp = studentInExam.get(userCode);
 
@@ -377,20 +377,18 @@ public class Server extends AbstractServer {
 			break;
 
 		case INSERT_STUDENT_ANSWERS:
-		
+
 			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
 			String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
 			studentID = elements.get(0);
 			userCode = elements.get(1);
 
-			for (StudentInExam student : studentInExam.get(userCode))
-			{
-				if (student.getStudentID() == studentID)
-				{
+			for (StudentInExam student : studentInExam.get(userCode)) {
+				if (student.getStudentID() == studentID) {
 					student.setSolution(AnswersArr);
 				}
 			}
-			
+
 			modelWrapperToClient = new ModelWrapper<>(INSERT_STUDENT_GRADE);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -410,10 +408,13 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-/*
+
 		case GET_EXECUTED_EXAM_STUDENT_LIST:
-			ExecutedExam executedExam = (ExecutedExam) modelWrapperFromClient.getElement();
-			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(executedExam);
+			List<String> parameters = (List<String>) modelWrapperFromClient.getElements();
+			String examId = parameters.get(0);
+			String date = parameters.get(1);
+			String teacherID = parameters.get(2);
+			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(examId,date,teacherID);
 			modelWrapperToClient = new ModelWrapper<>(studentList, GET_EXECUTED_EXAM_STUDENT_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -421,7 +422,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-*/
+
 		default:
 			break;
 
@@ -480,11 +481,11 @@ public class Server extends AbstractServer {
 	}
 
 	/*
-	 * Function that check all students answers when test finished and insert to DB the alert percentage
+	 * Function that check all students answers when test finished and insert to DB
+	 * the alert percentage
 	 */
-	public void checkAlert(String code, String examID)
-	{
-		
+	public void checkAlert(String code, String examID) {
+
 		int length = studentInExam.get(code).size();
 		int numOfQuestions = studentInExam.get(code).get(0).getSolution().length;
 		List<StudentInExam> studentsList = studentInExam.get(code);
@@ -492,26 +493,23 @@ public class Server extends AbstractServer {
 		Integer AlertPercent = 0;
 		Exam exam = databaseController.GetExamByExamID(examID);
 
-		for (int i=0; i < length; i++)
-		{
+		for (int i = 0; i < length; i++) {
 			Integer[] diff_arr = new Integer[length];
-			for (int k=0; k < numOfQuestions; k++)
-			{
-				if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k).getCorrectAnswer())
-				{
+			for (int k = 0; k < numOfQuestions; k++) {
+				if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k)
+						.getCorrectAnswer()) {
 					diff_arr[i]++;
 				}
 			}
 			diff = Collections.max(Arrays.asList(diff_arr));
-			AlertPercent = 100 - 1/(numOfQuestions) * diff * 100;
-			
+			AlertPercent = 100 - 1 / (numOfQuestions) * diff * 100;
+
 			databaseController.updateAlertValue(studentsList.get(i).getStudentID(), examID, AlertPercent.toString());
 			studentsList.get(i).setFinished(true);
 		}
-		
+
 	}
-	
-	
+
 	public static boolean isConnected() {
 		return isConnected;
 	}

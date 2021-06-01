@@ -28,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamQuestion;
 import models.ExecutedExam;
+import models.JFXButtonSerializeable;
 
 public class ExamStatisticController implements Initializable {
 

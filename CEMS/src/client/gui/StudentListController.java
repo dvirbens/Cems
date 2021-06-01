@@ -1,9 +1,8 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
-
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +11,7 @@ import com.jfoenix.controls.JFXButton;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,13 +51,13 @@ public class StudentListController implements Initializable {
 	@FXML
 	private JFXButton btnBack;
 
-	private ExecutedExam executedExam;
+	private static ExecutedExam executedExam;
 
 	public StudentListController() {
 	}
 
 	public StudentListController(ExecutedExam executedExam) {
-		this.executedExam = executedExam;
+		StudentListController.executedExam = executedExam;
 	}
 
 	public void start() {
@@ -76,7 +76,13 @@ public class StudentListController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ModelWrapper<ExecutedExam> modelWrapper = new ModelWrapper<>(executedExam, GET_EXECUTED_EXAM_STUDENT_LIST);
+
+		String examID = executedExam.getId();
+		String date = executedExam.getExecDate();
+		String teacherID = executedExam.getTeacherID();
+		List<String> parameters = Arrays.asList(examID, date, teacherID);
+
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(parameters, GET_EXECUTED_EXAM_STUDENT_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		tcExamId.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));

@@ -772,7 +772,8 @@ public class DatabaseController {
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
 				String teacherName = getUserName(executeTeacherID);
-				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate, type);
+				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, executeTeacherID, subject, course,
+						executeDate, type);
 				examList.add(executedExam);
 			}
 
@@ -800,7 +801,8 @@ public class DatabaseController {
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
 				String teacherName = getUserName(executeTeacherID);
-				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, subject, course, executeDate, type);
+				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, executeTeacherID, subject, course,
+						executeDate, type);
 				examList.add(executedExam);
 			}
 
@@ -847,16 +849,17 @@ public class DatabaseController {
 		return null;
 	}
 
-	public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam executedExam) {
+	public List<StudentExecutedExam> getExecutedExamStudentList(String examID, String date, String executerTeacher) {
 		List<StudentExecutedExam> studentList = new ArrayList<>();
 
 		try {
 			Statement statement = conn.createStatement();
-			String examID = executedExam.getId();
-			String date = executedExam.getExecDate();
-			String executerTeacher = executedExam.getTeacherId();
+
 			String studentListQuery = "SELECT * FROM ExecutedExamByStudent WHERE examID=\"" + examID
 					+ "\" AND ExecDate=\"" + date + "\" AND teacherID=\"" + executerTeacher + "\";";
+			System.out.println(examID);
+			System.out.println(date);
+			System.out.println(executerTeacher);
 			ResultSet rs = statement.executeQuery(studentListQuery);
 			while (rs.next()) {
 				String studentID = rs.getString("studentID");
@@ -867,13 +870,15 @@ public class DatabaseController {
 				String testType = rs.getString("TestType");
 				String grade = rs.getString("Grade");
 				Blob blob = rs.getBlob("Copy");
-				InputStream inputStream = blob.getBinaryStream();
+				// InputStream inputStream = blob.getBinaryStream();
 				WordFile copy = new WordFile();
 				boolean approved = rs.getBoolean("Approved");
 				String alert = rs.getString("Alert");
 
 				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentID, teacherID, subject,
 						course, execDate, testType, grade, copy, approved, alert);
+
+				studentList.add(executedStudent);
 			}
 
 		} catch (SQLException e) {

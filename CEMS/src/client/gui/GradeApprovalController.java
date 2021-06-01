@@ -68,6 +68,7 @@ public class GradeApprovalController implements Initializable {
 	}
 
 	private List<ExecutedExam> setExecutedExamsListGradeApprovalButtons(List<ExecutedExam> executedExamsList) {
+
 		for (ExecutedExam exam : executedExamsList) {
 			JFXButton gradeApprovalButton = new JFXButton();
 			gradeApprovalButton.setPrefSize(90, 15);
