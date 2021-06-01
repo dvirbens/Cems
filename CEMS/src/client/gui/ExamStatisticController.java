@@ -13,7 +13,6 @@ import com.jfoenix.controls.JFXComboBox;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +27,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamQuestion;
 import models.ExecutedExam;
-import models.JFXButtonSerializeable;
 
 public class ExamStatisticController implements Initializable {
 

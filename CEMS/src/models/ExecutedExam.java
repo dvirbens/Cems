@@ -98,10 +98,6 @@ public class ExecutedExam implements Serializable {
 		this.executorTeacherName = executorTeacherName;
 	}
 
-	public void setQuestionList(JFXButtonSerializeable questionList) {
-		this.questionList = questionList;
-	}
-
 	public JFXButton getQuestionList() {
 		return questionList;
 	}

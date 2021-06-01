@@ -857,9 +857,6 @@ public class DatabaseController {
 
 			String studentListQuery = "SELECT * FROM ExecutedExamByStudent WHERE examID=\"" + examID
 					+ "\" AND ExecDate=\"" + date + "\" AND teacherID=\"" + executerTeacher + "\";";
-			System.out.println(examID);
-			System.out.println(date);
-			System.out.println(executerTeacher);
 			ResultSet rs = statement.executeQuery(studentListQuery);
 			while (rs.next()) {
 				String studentID = rs.getString("studentID");
@@ -874,8 +871,9 @@ public class DatabaseController {
 				WordFile copy = new WordFile();
 				boolean approved = rs.getBoolean("Approved");
 				String alert = rs.getString("Alert");
+				String studentName = getUserName(studentID);
 
-				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentID, teacherID, subject,
+				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentName, teacherID, subject,
 						course, execDate, testType, grade, copy, approved, alert);
 
 				studentList.add(executedStudent);

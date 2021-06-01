@@ -1,8 +1,6 @@
 package models;
 
-import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Blob;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -14,6 +12,7 @@ public class StudentExecutedExam implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String examID;
 	private String studentID;
+	private String studentName;
 	private String TeacherId;
 	private String subject;
 	private String course;
@@ -26,11 +25,11 @@ public class StudentExecutedExam implements Serializable {
 
 	private JFXButton getCopy;
 
-	public StudentExecutedExam(String examID, String studentID, String teacherId, String subject, String course,
+	public StudentExecutedExam(String examID, String studentName, String teacherId, String subject, String course,
 			String execDate, String testType, String grade, WordFile copy, boolean approved, String alert) {
 		super();
 		this.examID = examID;
-		this.studentID = studentID;
+		this.studentName = studentName;
 		TeacherId = teacherId;
 		this.subject = subject;
 		this.course = course;
@@ -142,9 +141,12 @@ public class StudentExecutedExam implements Serializable {
 		this.copy = copy;
 	}
 
+	public String getStudentName() {
+		return studentName;
+	}
 
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
 
-	
-
-	
 }
