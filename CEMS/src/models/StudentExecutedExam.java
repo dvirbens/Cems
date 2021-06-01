@@ -21,13 +21,13 @@ public class StudentExecutedExam implements Serializable {
 	private String testType;
 	private String grade;
 	private WordFile copy;
-	private String approved;
+	private boolean approved;
 	private String Alert;
 
 	private JFXButton getCopy;
 
 	public StudentExecutedExam(String examID, String studentID, String teacherId, String subject, String course,
-			String execDate, String testType, String grade, WordFile copy, String approved, String alert) {
+			String execDate, String testType, String grade, WordFile copy, boolean approved, String alert) {
 		super();
 		this.examID = examID;
 		this.studentID = studentID;
@@ -106,11 +106,11 @@ public class StudentExecutedExam implements Serializable {
 		this.grade = grade;
 	}
 
-	public String getApproved() {
+	public boolean isApproved() {
 		return approved;
 	}
 
-	public void setApproved(String approved) {
+	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
 

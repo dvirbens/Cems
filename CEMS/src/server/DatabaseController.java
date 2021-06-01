@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jfoenix.controls.JFXButton;
+
 import common.ModelWrapper.Operation;
 import common.SubjectCourseCollection;
 import models.Database;
@@ -531,7 +533,7 @@ public class DatabaseController {
 				String execDate = rsQuestionOfCourse.getString("ExecDate");
 				String testType = rsQuestionOfCourse.getString("TestType");
 				String grade = rsQuestionOfCourse.getString("Grade");
-				String approval = rsQuestionOfCourse.getString("Approved");
+				boolean approval = rsQuestionOfCourse.getBoolean("Approved");
 				Blob copy = rsQuestionOfCourse.getBlob("Copy");
 				String alert = rsQuestionOfCourse.getString("Alert");
 
@@ -730,7 +732,7 @@ public class DatabaseController {
 			prepareStatement.setString(1, exam.getExamId());
 			prepareStatement.setString(2, exam.getTeacherID());
 			prepareStatement.setString(3, creatorTeacherID);
-			prepareStatement.setString(4,exam.getSubject());
+			prepareStatement.setString(4, exam.getSubject());
 			prepareStatement.setString(5, exam.getCourse());
 			prepareStatement.setString(6, exam.getDuration());
 			prepareStatement.setString(7, exam.getDate());
@@ -844,16 +846,46 @@ public class DatabaseController {
 		}
 		return null;
 	}
-	/*
-	 * public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam
-	 * executedExam) { List<StudentExecutedExam> studentList = new ArrayList<>();
-	 * studentList.add(new StudentExecutedExam("0001", "arik zagdon", "100",
-	 * "90%")); return studentList; }
-	 */
+
+	public List<StudentExecutedExam> getExecutedExamStudentList(ExecutedExam executedExam) {
+		List<StudentExecutedExam> studentList = new ArrayList<>();
+
+		try {
+			Statement statement = conn.createStatement();
+			String examID = executedExam.getId();
+			String date = executedExam.getExecDate();
+			String executerTeacher = executedExam.getTeacherId();
+			String studentListQuery = "SELECT * FROM ExecutedExamByStudent WHERE examID=\"" + examID
+					+ "\" AND ExecDate=\"" + date + "\" AND teacherID=\"" + executerTeacher + "\";";
+			ResultSet rs = statement.executeQuery(studentListQuery);
+			while (rs.next()) {
+				String studentID = rs.getString("studentID");
+				String teacherID = rs.getString("teacherID");
+				String subject = rs.getString("Subject");
+				String course = rs.getString("Course");
+				String execDate = rs.getString("ExecDate");
+				String testType = rs.getString("TestType");
+				String grade = rs.getString("Grade");
+				Blob blob = rs.getBlob("Copy");
+				InputStream inputStream = blob.getBinaryStream();
+				WordFile copy = new WordFile();
+				boolean approved = rs.getBoolean("Approved");
+				String alert = rs.getString("Alert");
+
+				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentID, teacherID, subject,
+						course, execDate, testType, grade, copy, approved, alert);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #2245688 - ERROR LOADING USER INFO FROM DATABASE");
+		}
+
+		return studentList;
+	}
 
 	public void updateAlertValue(String studentID, String examID, String AlertPercent) {
 		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ?;";
-
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, AlertPercent);
