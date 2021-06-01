@@ -85,10 +85,12 @@ public class ExecutedExamsController implements Initializable {
 		exams.addAll(Client.getExecutedExamStudentList());
 		for (StudentExecutedExam exam : exams)
 		{
-			if (exam.getApproved().equals("0"))
+			/*
+			if (exam.getApproved())
 			{
 				exam.setGrade("Not checked");
 			}
+			*/
 		}
 		tvExExams.setItems(exams);
 
