@@ -149,4 +149,12 @@ public class StudentExecutedExam implements Serializable {
 		this.studentName = studentName;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentExecutedExam [examID=" + examID + ", studentID=" + studentID + ", studentName=" + studentName
+				+ ", TeacherId=" + TeacherId + ", subject=" + subject + ", course=" + course + ", execDate=" + execDate
+				+ ", testType=" + testType + ", grade=" + grade + ", copy=" + copy + ", approved=" + approved
+				+ ", Alert=" + Alert + ", getCopy=" + getCopy + "]";
+	}
+	
 }

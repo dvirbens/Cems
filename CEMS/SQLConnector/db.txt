@@ -114,6 +114,12 @@ INSERT INTO  User VALUES ("308315035","1234","Dvir","Ben-simon","Dvirbens@gmail.
 INSERT INTO  User VALUES ("409024902","1234","Shehav","Hezi","Hezi@gmail.com",'Principal');
 INSERT INTO  User VALUES ("312423847","1234","Shoola","Ben-zaken","Sholaz@gmail.com",'Teacher');
 
+INSERT INTO  User VALUES ("1","1234","Nir","Pokimon","Arikz15@gmail.com",'Student');
+INSERT INTO  User VALUES ("2","1234","Or","Man","Dvirbens@gmail.com",'Student');
+INSERT INTO  User VALUES ("3","1234","Amitkaheshet","Halabi","Hezi@gmail.com",'Student');
+INSERT INTO  User VALUES ("4","1234","Amulehelet","Katz","Sholaz@gmail.com",'Student');
+INSERT INTO  User VALUES ("5","1234","noora","Haj","Sholaz@gmail.com",'Student');
+
 INSERT INTO question VALUES ("123", "Mathermatics", "Simpe question", "a", "b", "c", "d", 1, "Bla");
 INSERT INTO question VALUES ("124", "Mathermatics", "Simpe question22", "a", "b", "c", "d", 1, "Bla");
 INSERT INTO question VALUES ("125", "Mathermatics", "Simpe question23", "a", "b", "c", "d", 1, "Bla");

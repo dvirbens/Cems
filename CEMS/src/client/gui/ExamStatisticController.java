@@ -1,9 +1,11 @@
 package client.gui;
 
 import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
 import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,6 +15,7 @@ import com.jfoenix.controls.JFXComboBox;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamQuestion;
 import models.ExecutedExam;
+import models.StudentExecutedExam;
 
 public class ExamStatisticController implements Initializable {
 
@@ -78,9 +82,10 @@ public class ExamStatisticController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String teacherID = Client.getUser().getUserID();
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID, GET_EXECUTED_EXAM_LIST_BY_CREATOR);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		String loggendInTeacherID = Client.getUser().getUserID();
+		ModelWrapper<String> modelWrapperExecutedExams = new ModelWrapper<>(loggendInTeacherID,
+				GET_EXECUTED_EXAM_LIST_BY_CREATOR);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapperExecutedExams);
 
 		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
 		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("executorTeacherName"));
@@ -97,31 +102,33 @@ public class ExamStatisticController implements Initializable {
 
 		tvExecutedExams.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
-				System.out.println(newSelection.getId());
+				Platform.runLater(new Runnable() {
 
-				XYChart.Series<String, Integer> newStats = new XYChart.Series<>();
-				newStats.setName("Algebra exam");
-				newStats.getData().add(new XYChart.Data<>("Arik Zagdon", 20));
-				newStats.getData().add(new XYChart.Data<>("Aviel Turgeman", 40));
-				newStats.getData().add(new XYChart.Data<>("Dvir ben simon", 100));
-				newStats.getData().add(new XYChart.Data<>("Shenhav Hezi", 90));
-				newStats.getData().add(new XYChart.Data<>("Yakov Shitrit", 30));
+					@Override
+					public void run() {
+						bcExamStatistic.getData().clear();
+						String examID = newSelection.getId();
+						String date = newSelection.getExecDate();
+						String teacherID = newSelection.getTeacherID();
+						List<String> parameters = Arrays.asList(examID, date, teacherID);
 
-				bcExamStatistic.getData().add(newStats);
-				bcExamStatistic.getData().clear();
+						ModelWrapper<String> modelWrapper = new ModelWrapper<>(parameters,
+								GET_EXECUTED_EXAM_STUDENT_LIST);
+						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+						List<StudentExecutedExam> studentList = Client.getExecutedExamStudentList();
 
+						XYChart.Series<String, Integer> newStats = new XYChart.Series<>();
+						newStats.setName(newSelection.getSubject() + " " + newSelection.getCourse());
+
+						for (StudentExecutedExam sutdent : studentList) {
+							newStats.getData().add(new XYChart.Data<>(sutdent.getStudentName(), Integer.parseInt(sutdent.getGrade())));
+						}
+
+						bcExamStatistic.getData().add(newStats);
+					}
+				});
 			}
 		});
-
-		XYChart.Series<String, Integer> stats = new XYChart.Series<>();
-		stats.setName("Math exam");
-		stats.getData().add(new XYChart.Data<>("Arik Zagdon", 90));
-		stats.getData().add(new XYChart.Data<>("Aviel Turgeman", 60));
-		stats.getData().add(new XYChart.Data<>("Dvir ben simon", 100));
-		stats.getData().add(new XYChart.Data<>("Shenhav Hezi", 70));
-		stats.getData().add(new XYChart.Data<>("Yakov Shitrit", 50));
-
-		bcExamStatistic.getData().add(stats);
 	}
 
 	private List<ExecutedExam> setExecutedExamsListQuestionListButtons(List<ExecutedExam> executedExamsList) {
