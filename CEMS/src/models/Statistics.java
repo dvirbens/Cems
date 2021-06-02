@@ -6,55 +6,53 @@ public class Statistics implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String userID = null;
-	private String FirstName = null;
-	private String LastName = null;
-	private String Grade = null;
+	private String examID = null;
+	private String executeTeacherID = null;
+	private String avg = null;
+	private String median = null;
 	
 	public Statistics(String userID, String FirstName, String LastName, String Grade) {
 		super();
-		this.userID = userID;
-		this.FirstName = FirstName;
-		this.LastName = LastName;
-		this.Grade = Grade;
+		this.examID = userID;
+		this.executeTeacherID = FirstName;
+		this.avg = LastName;
+		this.median = Grade;
 	}
 
-//	constructor statistics by courses:
-	public Statistics(String userID, String Grade) {
-		super();
-		this.userID = userID;
-		this.Grade = Grade;
-	}
-	public String getUserID() {
-		return userID;
+	public String getExamID() {
+		return examID;
 	}
 
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setExamID(String examID) {
+		this.examID = examID;
 	}
 
-	public String getFirstName() {
-		return FirstName;
-	}
-	
-	public void setFirstName(String firstName) {
-		FirstName = firstName;
+	public String getExecuteTeacherID() {
+		return executeTeacherID;
 	}
 
-	public String getLastName() {
-		return LastName;
+	public void setExecuteTeacherID(String executeTeacherID) {
+		this.executeTeacherID = executeTeacherID;
 	}
 
-	public void setLastName(String lastName) {
-		LastName = lastName;
+	public String getAvg() {
+		return avg;
 	}
 
-	public String getGrade() {
-		return Grade;
+	public void setAvg(String avg) {
+		this.avg = avg;
 	}
 
-	public void setGrade(String grade) {
-		Grade = grade;
+	public String getMedian() {
+		return median;
 	}
-	
+
+	public void setMedian(String median) {
+		this.median = median;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

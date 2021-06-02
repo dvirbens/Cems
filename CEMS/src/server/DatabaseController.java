@@ -371,25 +371,18 @@ public class DatabaseController {
 		List<Statistics> set = new ArrayList<Statistics>();
 		try {
 			Statement statement = conn.createStatement();
-			String courseStatistic = "select user.userID, user.FirstName, user.LastName, executedexambystudent.Grade\r\n"
-					+ "from executedexambystudent, user\r\n"
-					+ "where executedexambystudent.studentID=user.userID && Course="+ course_select +"&& ExecDate=\"12/05/22\";";
+			String courseStatistic = "\r\n"
+					+ "select examID, executeTeacherID, sum(avg), sum(median)\r\n"
+					+ "from cems.executedexam\r\n"
+					+ "where cems.executedexam.course=" + course_select + "\r\n"
+					+ "group by examID;";
 			ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
 			while (rsGtadeStatisticByCourse.next()) {
-				String userID = rsGtadeStatisticByCourse.getString("userID");
-				String FirstName = rsGtadeStatisticByCourse.getString("FirstName");
-				String LastName = rsGtadeStatisticByCourse.getString("LastName");
-				String Grade = rsGtadeStatisticByCourse.getString("Grade");
-				Statistics statisticByCourse = new Statistics(userID, FirstName, LastName, Grade);
-
-//                            if(Statistics==Operation.STATISTIC_BY_COURSE_X) {
-//                                    
-//                            }
-//                            else if(Statistics==Operation.STATISTIC_BY_COURSE_Y) {
-//                                    String Grade = rsGtadeStatisticByCourse.getString("Grade");	
-//                                    Statistics statisticByCourse = new Statistics(Grades);	
-//                            }
-
+				String examID = rsGtadeStatisticByCourse.getString("examID");
+				String executeTeacherID = rsGtadeStatisticByCourse.getString("executeTeacherID");
+				String avg = rsGtadeStatisticByCourse.getString("avg");
+				String median = rsGtadeStatisticByCourse.getString("median");
+				Statistics statisticByCourse = new Statistics(examID, executeTeacherID, avg, median);
 				set.add(statisticByCourse);
 			}
 		} catch (SQLException e) {

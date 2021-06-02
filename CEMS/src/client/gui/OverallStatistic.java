@@ -160,16 +160,17 @@ public class OverallStatistic implements Initializable{
 					case COURSE:
 						Statistics st;
 						String Together = new String();
-						Number grade;
+						Number avg;
+						Number median;
 						String course_select = (String) courseSelect.getValue();
 						ModelWrapper<String> modelWrapper = new ModelWrapper<>((String)course_select,STATISTIC_BY_COURSE_X);
 						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 						List <Statistics> statisticList = Client.getSet();
 						for(int i=0;i<statisticList.size();i++) {
 							st = statisticList.get(i);
-							grade = Integer.parseInt(st.getGrade());
-							Together = "ID:" + st.getUserID() +"\n"+ st.getFirstName() + " " + st.getLastName();
-							set.getData().add(new XYChart.Data<String,Number>(Together.toString(), grade));
+							avg = Integer.parseInt(st.getAvg());
+							Together = "ID:" + st.getExamID() +"\n"+ st.getExecuteTeacherID();
+							set.getData().add(new XYChart.Data<String,Number>(Together.toString(), avg));	
 						}
 						if(!statisticList.isEmpty())statisticList.clear();
 						x_Exam.setTickLabelRotation(45);
