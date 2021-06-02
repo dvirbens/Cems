@@ -10,7 +10,7 @@
 
 <Pane prefHeight="600.0" prefWidth="270.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.TeacherMenuController">
 	<children>
-		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="30.0" onMouseClicked="#OnclickLogo" pickOnBounds="true" preserveRatio="true">
 			<image>
 				<Image url="@../../../images/logo3.jpeg" />
 			</image>
