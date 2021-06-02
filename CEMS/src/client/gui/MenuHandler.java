@@ -31,7 +31,9 @@ public class MenuHandler {
 	public void setTeacherMenu() {
 		try {
 			Pane teacherMenuPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherMenu.fxml"));
+			Pane teacherLoginLogoPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherLoginHomePage.fxml"));
 			mainFrame.setLeft(teacherMenuPane);
+			mainFrame.setCenter(teacherLoginLogoPane);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
