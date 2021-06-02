@@ -96,8 +96,6 @@ CREATE TABLE StudentUploadManualTest (
 );
 
 
-INSERT INTO ExecutedExam VALUES ("308315035", "020303" , "Mathematics", "Algebra", STR_TO_DATE('17/5/2021', '%d/%m/%Y'), "Computerized", "100", null);
-
 INSERT INTO  Subject VALUES ("01","Social Studies");
 INSERT INTO  Subject VALUES ("02","Mathematics");
 INSERT INTO  Subject VALUES ("03","Language");
@@ -123,7 +121,3 @@ INSERT INTO  User VALUES ("5","1234","noora","Haj","Sholaz@gmail.com",'Student')
 INSERT INTO question VALUES ("123", "Mathermatics", "Simpe question", "a", "b", "c", "d", 1, "Bla");
 INSERT INTO question VALUES ("124", "Mathermatics", "Simpe question22", "a", "b", "c", "d", 1, "Bla");
 INSERT INTO question VALUES ("125", "Mathermatics", "Simpe question23", "a", "b", "c", "d", 1, "Bla");
-
-INSERT INTO examquestion VALUES ("123", "abc", 100, "121212", "None");
-INSERT INTO examquestion VALUES ("124", "abc", 100, "121212", "None");
-INSERT INTO examquestion VALUES ("125", "abc", 100, "121212", "None");

@@ -117,6 +117,7 @@ public class Client extends AbstractClient {
 			switch (modelWrapperFromServer.getOperation()) {
 			case STATISTIC_BY_COURSE_X:
 				set = (List<Statistics>) modelWrapperFromServer.getElements();
+				modelWrapperFromServer.getElement();
 				break;
 
 			case GET_QUESTION_LIST:

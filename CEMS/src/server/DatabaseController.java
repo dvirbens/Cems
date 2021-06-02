@@ -367,13 +367,13 @@ public class DatabaseController {
 
 	// Belong to overall statisti - Statistic by course:
 	// (i should change to ll 3 statuse by enum operation)
-	public List<Statistics> getGradesForStatisticByCourse() {
+	public List<Statistics> getGradesForStatisticByCourse(String course_select) {
 		List<Statistics> set = new ArrayList<Statistics>();
 		try {
 			Statement statement = conn.createStatement();
 			String courseStatistic = "select user.userID, user.FirstName, user.LastName, executedexambystudent.Grade\r\n"
 					+ "from executedexambystudent, user\r\n"
-					+ "where executedexambystudent.studentID=user.userID && Course=\"Algebra\" && ExecDate=\"12/05/22\";";
+					+ "where executedexambystudent.studentID=user.userID && Course="+ course_select +"&& ExecDate=\"12/05/22\";";
 			ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
 			while (rsGtadeStatisticByCourse.next()) {
 				String userID = rsGtadeStatisticByCourse.getString("userID");
@@ -397,6 +397,7 @@ public class DatabaseController {
 		}
 		return set;
 	}
+	
 
 	public List<Exam> getExamListBySubject(String subject) {
 		List<Exam> examList = new ArrayList<>();

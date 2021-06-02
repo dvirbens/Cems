@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import static common.ModelWrapper.Operation.STATISTIC_BY_COURSE_X;
 
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -160,7 +161,8 @@ public class OverallStatistic implements Initializable{
 						Statistics st;
 						String Together = new String();
 						Number grade;
-						ModelWrapper<String> modelWrapper = new ModelWrapper<>(STATISTIC_BY_COURSE_X);
+						String course_select = (String) courseSelect.getValue();
+						ModelWrapper<String> modelWrapper = new ModelWrapper<>((String)course_select,STATISTIC_BY_COURSE_X);
 						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 						List <Statistics> statisticList = Client.getSet();
 						for(int i=0;i<statisticList.size();i++) {

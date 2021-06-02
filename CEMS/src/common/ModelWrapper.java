@@ -117,6 +117,9 @@ public class ModelWrapper<E> implements Serializable {
 	public List<E> getElements() {
 		return elements;
 	}
+	public E getAdditonalElement() {
+		return element;
+	}
 
 	public void setElements(List<E> elements) {
 		this.elements = elements;

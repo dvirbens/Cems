@@ -115,7 +115,7 @@ public class Server extends AbstractServer {
 			}
 			break;
 		case STATISTIC_BY_COURSE_X:
-			List<Statistics> set = databaseController.getGradesForStatisticByCourse();
+			List<Statistics> set = databaseController.getGradesForStatisticByCourse((String)modelWrapperFromClient.getElement());
 			modelWrapperToClient = new ModelWrapper<>(set, STATISTIC_BY_COURSE_X);
 			try {
 				client.sendToClient(modelWrapperToClient);

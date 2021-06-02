@@ -46,12 +46,12 @@
          <children>
             <HBox spacing="10.0">
                <children>
-            		<JFXComboBox fx:id="cbExamSubject" focusColor="#48a832" onAction="#onClickExamSubject" promptText="Exam Subject" style="-fx-alignment: center;">
+            		<JFXComboBox fx:id="cbExamSubject" focusColor="#48a832" onAction="#onSubjectSelected" promptText="Exam Subject" style="-fx-alignment: center;">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </JFXComboBox>
-            		<JFXComboBox fx:id="cbExamCourse" focusColor="#48a832" promptText="Exam Course" style="-fx-alignment: center;">
+            		<JFXComboBox fx:id="cbExamCourse" focusColor="#48a832" onAction="#onClickExamSubject" promptText="Exam Course" style="-fx-alignment: center;">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
