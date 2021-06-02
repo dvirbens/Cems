@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 public class StudentMenuController implements Initializable {
 
@@ -70,5 +71,12 @@ public class StudentMenuController implements Initializable {
 		String LabelPrint="Welcome, "+name;
 		labelWelcome.setText(LabelPrint);
 	}
+	
+
+    @FXML
+    void onLogoClicked(MouseEvent event) {
+    	MainGuiController.getMenuHandler().setStudentlMenu();
+
+    }
 
 }

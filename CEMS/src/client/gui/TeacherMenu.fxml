@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,14 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="600.0" prefWidth="270.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.TeacherMenuController">
+<Pane prefHeight="768.0" prefWidth="270.0" style="-fx-background-color: #333333;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.TeacherMenuController">
 	<children>
 		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="30.0" onMouseClicked="#OnclickLogo" pickOnBounds="true" preserveRatio="true">
 			<image>
 				<Image url="@../../../images/logo3.jpeg" />
 			</image>
 		</ImageView>
-		<VBox layoutY="150.0" prefHeight="450.0" prefWidth="270.0" style="-fx-background-color: #333333;">
+		<VBox layoutY="150.0" prefHeight="582.0" prefWidth="270.0" style="-fx-background-color: #333333;">
 			<children>
 				<JFXButton fx:id="btnCreateExam" onAction="#onClickCreateExam" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Exam" textFill="WHITE">
 					<graphic>
@@ -62,7 +63,7 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
-            <JFXButton fx:id="btnLogout" onAction="#onClickLogout" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Logout" textFill="WHITE">
+            <JFXButton fx:id="btnLogout" onAction="#onClickLogout" prefHeight="68.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Logout" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -70,6 +71,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <padding>
+                  <Insets top="90.0" />
+               </padding>
             </JFXButton>
 			</children>
 		</VBox>

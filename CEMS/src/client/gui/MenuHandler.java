@@ -31,9 +31,9 @@ public class MenuHandler {
 	public void setTeacherMenu() {
 		try {
 			Pane teacherMenuPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherMenu.fxml"));
-			Pane teacherLoginLogoPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherLoginHomePage.fxml"));
+			Pane teacherHomePage = (Pane) FXMLLoader.load(getClass().getResource("TeacherLoginHomePage.fxml"));
 			mainFrame.setLeft(teacherMenuPane);
-			mainFrame.setCenter(teacherLoginLogoPane);
+			mainFrame.setCenter(teacherHomePage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,7 +42,10 @@ public class MenuHandler {
 	public void setPrincipalMenu() {
 		try {
 			Pane principalMenuPane = (Pane) FXMLLoader.load(getClass().getResource("PrincipalMenu.fxml"));
+			Pane principalHomePage = (Pane) FXMLLoader.load(getClass().getResource("PrincipalHomePage.fxml"));
+
 			mainFrame.setLeft(principalMenuPane);
+			mainFrame.setCenter(principalHomePage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +54,9 @@ public class MenuHandler {
 	public void setStudentlMenu() {
 		try {
 			Pane sutdentMenuPane = (Pane) FXMLLoader.load(getClass().getResource("StudentMenu.fxml"));
+			Pane studentHomePage = (Pane) FXMLLoader.load(getClass().getResource("StudentHomePage.fxml"));
 			mainFrame.setLeft(sutdentMenuPane);
+			mainFrame.setCenter(studentHomePage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

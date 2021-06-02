@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 public class PrincipalMenuController implements Initializable {
 
@@ -107,5 +108,14 @@ public class PrincipalMenuController implements Initializable {
 		labelWelcome.setText(LabelPrint);
 
 	}
+	
+	
+
+    @FXML
+    void onLogoClicked(MouseEvent event) {
+
+    	MainGuiController.getMenuHandler().setPrincipalMenu();
+
+    }
 
 }
