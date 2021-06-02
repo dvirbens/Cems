@@ -55,6 +55,8 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
+//
+
 
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
