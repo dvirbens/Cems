@@ -114,9 +114,9 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-		
+
 		case GET_EXECUTED_EXAM_LIST_BY_COURSE:
-			String course_name = (String)modelWrapperFromClient.getElement();
+			String course_name = (String) modelWrapperFromClient.getElement();
 			List<ExecutedExam> set = databaseController.getGradesForStatisticByCourse(course_name);
 			modelWrapperToClient = new ModelWrapper<>(set, GET_EXECUTED_EXAM_LIST_BY_COURSE);
 			try {
@@ -185,7 +185,8 @@ public class Server extends AbstractServer {
 			examID = examsInProcess.get(code).getExamId();
 			databaseController.saveExecutedExam(examsInProcess.get(code));
 			examsInProcess.remove(code);
-			checkAlert(code, examID);
+			if (!studentInExam.get(code).isEmpty())
+				checkAlert(code, examID);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -384,10 +385,8 @@ public class Server extends AbstractServer {
 			studentID = elements.get(0);
 			userCode = elements.get(1);
 
-			for (StudentInExam student : studentInExam.get(userCode))
-			{
-				if (student.getStudentID().equals(studentID))
-				{
+			for (StudentInExam student : studentInExam.get(userCode)) {
+				if (student.getStudentID().equals(studentID)) {
 					student.setSolution(AnswersArr);
 				}
 			}
@@ -417,7 +416,8 @@ public class Server extends AbstractServer {
 			String examId = parameters.get(0);
 			String date = parameters.get(1);
 			String teacherID = parameters.get(2);
-			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(examId,date,teacherID);
+			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(examId, date,
+					teacherID);
 			modelWrapperToClient = new ModelWrapper<>(studentList, GET_EXECUTED_EXAM_STUDENT_LIST);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -484,10 +484,10 @@ public class Server extends AbstractServer {
 	}
 
 	/*
-	 * Function that check all students answers when test finished and insert to DB the alert percentage
+	 * Function that check all students answers when test finished and insert to DB
+	 * the alert percentage
 	 */
-	public void checkAlert(String code, String examID)
-	{
+	public void checkAlert(String code, String examID) {
 		int numOfStudents = studentInExam.get(code).size();
 		int numOfQuestions = studentInExam.get(code).get(0).getSolution().length;
 		List<StudentInExam> studentsList = studentInExam.get(code);
@@ -495,37 +495,35 @@ public class Server extends AbstractServer {
 		Integer AlertPercent = 0;
 		Exam exam = databaseController.GetExamByExamID(examID);
 
-		if (numOfStudents == 0)
-		{
+		if (numOfStudents == 0) {
 			databaseController.updateAlertValue(studentsList.get(0).getStudentID(), examID, "0%");
 			studentsList.get(0).setFinished(true);
 			return;
 		}
-		
-		for (int i=0; i < numOfStudents; i++)
-		{
+
+		for (int i = 0; i < numOfStudents; i++) {
 			Integer[] diff_arr = new Integer[numOfStudents];
 			Arrays.fill(diff_arr, new Integer(0));
-			for (int k=0; k < numOfQuestions; k++)
-			{
-				for (int j=0; j < numOfStudents; j++)
-				{
-					if (j==i)
+			for (int k = 0; k < numOfQuestions; k++) {
+				for (int j = 0; j < numOfStudents; j++) {
+					if (j == i)
 						continue;
 
-					if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k).getCorrectAnswer()
-							&& ((studentsList.get(i).getSolution())[k]).equals((studentsList.get(j).getSolution())[k]))
-					{
+					if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k)
+							.getCorrectAnswer()
+							&& ((studentsList.get(i).getSolution())[k])
+									.equals((studentsList.get(j).getSolution())[k])) {
 						diff_arr[j]++;
 					}
 				}
 			}
 			wrong_match = Collections.max(Arrays.asList(diff_arr));
-			AlertPercent = (wrong_match * 100)/(numOfQuestions);
-			databaseController.updateAlertValue(studentsList.get(i).getStudentID(), examID, AlertPercent.toString()+"%");
+			AlertPercent = (wrong_match * 100) / (numOfQuestions);
+			databaseController.updateAlertValue(studentsList.get(i).getStudentID(), examID,
+					AlertPercent.toString() + "%");
 			studentsList.get(i).setFinished(true);
 		}
-	
+
 	}
 
 	public static boolean isConnected() {
