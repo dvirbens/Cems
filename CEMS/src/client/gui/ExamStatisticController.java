@@ -106,7 +106,9 @@ public class ExamStatisticController implements Initializable {
 
 					@Override
 					public void run() {
+						bcExamStatistic.setAnimated(false);
 						bcExamStatistic.getData().clear();
+
 						String examID = newSelection.getId();
 						String date = newSelection.getExecDate();
 						String teacherID = newSelection.getTeacherID();
@@ -121,7 +123,8 @@ public class ExamStatisticController implements Initializable {
 						newStats.setName(newSelection.getSubject() + " " + newSelection.getCourse());
 
 						for (StudentExecutedExam sutdent : studentList) {
-							newStats.getData().add(new XYChart.Data<>(sutdent.getStudentName(), Integer.parseInt(sutdent.getGrade())));
+							newStats.getData().add(
+									new XYChart.Data<>(sutdent.getStudentName(), Integer.parseInt(sutdent.getGrade())));
 						}
 
 						bcExamStatistic.getData().add(newStats);

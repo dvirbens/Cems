@@ -13,6 +13,7 @@ public class ExecutedExam implements Serializable {
 	private String teacherID;
 	private String executorTeacherName;
 	private String execDate;
+	private String execTime;
 	private String testType;
 	private JFXButton questionList;
 	private JFXButton gradeApproval;
@@ -39,7 +40,18 @@ public class ExecutedExam implements Serializable {
 		this.execDate = execDate;
 		this.testType = testType;
 	}
-	
+
+	public ExecutedExam(String id, String teacherID, String executorTeacherName, String execDate, String execTime,
+			double avg, double median) {
+		this.id = id;
+		this.teacherID = teacherID;
+		this.avg = avg;
+		this.execDate = execDate;
+		this.execTime = execTime;
+		this.executorTeacherName = executorTeacherName;
+		this.median = median;
+	}
+
 	public double getAvg() {
 		return avg;
 	}
@@ -54,13 +66,6 @@ public class ExecutedExam implements Serializable {
 
 	public void setMedian(double median) {
 		this.median = median;
-	}
-
-	public ExecutedExam(String id,  String teacherID, double avg, double median) {
-		this.id=id;
-		this.teacherID=teacherID;
-		this.avg=avg;
-		this.median=median;
 	}
 
 	public String getId() {
@@ -139,11 +144,20 @@ public class ExecutedExam implements Serializable {
 		this.gradeApproval = gradeApproval;
 	}
 
+	public String getExecTime() {
+		return execTime;
+	}
+
+	public void setExecTime(String execTime) {
+		this.execTime = execTime;
+	}
+
 	@Override
 	public String toString() {
 		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", teacherID=" + teacherID
 				+ ", executorTeacherName=" + executorTeacherName + ", execDate=" + execDate + ", testType=" + testType
-				+ ", questionList=" + questionList + ", gradeApproval=" + gradeApproval + "]";
+				+ ", questionList=" + questionList + ", gradeApproval=" + gradeApproval + ", avg=" + avg + ", median="
+				+ median + "]";
 	}
 
 }

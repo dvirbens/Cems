@@ -114,10 +114,11 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-		case STATISTIC_BY_COURSE_X:
+		
+		case GET_EXECUTED_EXAM_LIST_BY_COURSE:
 			String course_name = (String)modelWrapperFromClient.getElement();
 			List<ExecutedExam> set = databaseController.getGradesForStatisticByCourse(course_name);
-			modelWrapperToClient = new ModelWrapper<>(set, STATISTIC_BY_COURSE_X);
+			modelWrapperToClient = new ModelWrapper<>(set, GET_EXECUTED_EXAM_LIST_BY_COURSE);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {

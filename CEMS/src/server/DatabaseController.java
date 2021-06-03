@@ -371,26 +371,29 @@ public class DatabaseController {
 		List<ExecutedExam> set = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
-			String courseStatistic = "\r\n"
-					+ "select examID, executeTeacherID, avg, median\r\n"
-					+ "from cems.executedexam\r\n"
-					+ "where cems.executedexam.course=" + course_select + "\r\n"
-					+ "group by examID;";
+			String courseStatistic = "select *\r\n" + "from executedexam\r\n" + "where course = \"" + course_select
+					+ "\";";
 			ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
 			while (rsGtadeStatisticByCourse.next()) {
 				String examID = rsGtadeStatisticByCourse.getString("examID");
 				String executeTeacherID = rsGtadeStatisticByCourse.getString("executeTeacherID");
+				String teacherName = getUserName(executeTeacherID);
+				String date = rsGtadeStatisticByCourse.getString("executeDate");
+				String time = rsGtadeStatisticByCourse.getString("executeTime");
+				System.out.println(date);
+				System.out.println(time);
 				double avg = rsGtadeStatisticByCourse.getDouble("avg");
 				double median = rsGtadeStatisticByCourse.getDouble("median");
-				ExecutedExam ExamListByCourse = new ExecutedExam(examID, executeTeacherID, avg, median);
+				ExecutedExam ExamListByCourse = new ExecutedExam(examID, executeTeacherID, teacherName, date, time, avg,
+						median);
 				set.add(ExamListByCourse);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");
 		}
 		return set;
 	}
-	
 
 	public List<Exam> getExamListBySubject(String subject) {
 		List<Exam> examList = new ArrayList<>();
@@ -890,7 +893,8 @@ public class DatabaseController {
 			stmt.setString(3, examID);
 
 			stmt.executeUpdate();
-			//System.out.println("Student ID: " + studentID + " in examID: " + examID + " got Alert " + AlertPercent);
+			// System.out.println("Student ID: " + studentID + " in examID: " + examID + "
+			// got Alert " + AlertPercent);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
