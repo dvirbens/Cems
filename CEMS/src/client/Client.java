@@ -44,12 +44,7 @@ public class Client extends AbstractClient {
 	 * value that hold exam id of specific test
 	 */
 	private static String examID;
-    /**
-		
-     * value that hold Grades for different statistic chart bar
-		
-     */	
-	private static List<Statistics> set;
+
 	/**
 	 * value that hold last exam code
 	 */
@@ -116,7 +111,7 @@ public class Client extends AbstractClient {
 			ModelWrapper<?> modelWrapperFromServer = (ModelWrapper<?>) msg;
 			switch (modelWrapperFromServer.getOperation()) {
 			case STATISTIC_BY_COURSE_X:
-				set = (List<Statistics>) modelWrapperFromServer.getElements();
+				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				modelWrapperFromServer.getElement();
 				break;
 
@@ -364,9 +359,7 @@ public class Client extends AbstractClient {
 	public static void setExam(Exam exam) {
 		Client.exam = exam;
 	}
-	public static List<Statistics> getSet() {
-		 return set;
-	}
+
 	public static long getTimeExtension() {
 		return timeExtension;
 	}
@@ -399,9 +392,6 @@ public class Client extends AbstractClient {
 		Client.executedExamStudentList = executedExamStudentList;
 	}
 	
-	public static void setSet(List<Statistics> set) {
-		Client.set = set;
-	}
 
 
 }

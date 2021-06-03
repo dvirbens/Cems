@@ -120,6 +120,7 @@ public class MenuHandler {
 		try {
 			Pane gradeApprovalPane = (Pane) FXMLLoader.load(getClass().getResource("GradeApproval.fxml"));
 			mainFrame.setCenter(gradeApprovalPane);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

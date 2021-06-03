@@ -367,12 +367,12 @@ public class DatabaseController {
 
 	// Belong to overall statisti - Statistic by course:
 	// (i should change to ll 3 statuse by enum operation)
-	public List<Statistics> getGradesForStatisticByCourse(String course_select) {
-		List<Statistics> set = new ArrayList<Statistics>();
+	public List<ExecutedExam> getGradesForStatisticByCourse(String course_select) {
+		List<ExecutedExam> set = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
 			String courseStatistic = "\r\n"
-					+ "select examID, executeTeacherID, sum(avg), sum(median)\r\n"
+					+ "select examID, executeTeacherID, avg, median\r\n"
 					+ "from cems.executedexam\r\n"
 					+ "where cems.executedexam.course=" + course_select + "\r\n"
 					+ "group by examID;";
@@ -380,10 +380,10 @@ public class DatabaseController {
 			while (rsGtadeStatisticByCourse.next()) {
 				String examID = rsGtadeStatisticByCourse.getString("examID");
 				String executeTeacherID = rsGtadeStatisticByCourse.getString("executeTeacherID");
-				String avg = rsGtadeStatisticByCourse.getString("avg");
-				String median = rsGtadeStatisticByCourse.getString("median");
-				Statistics statisticByCourse = new Statistics(examID, executeTeacherID, avg, median);
-				set.add(statisticByCourse);
+				double avg = rsGtadeStatisticByCourse.getDouble("avg");
+				double median = rsGtadeStatisticByCourse.getDouble("median");
+				ExecutedExam ExamListByCourse = new ExecutedExam(examID, executeTeacherID, avg, median);
+				set.add(ExamListByCourse);
 			}
 		} catch (SQLException e) {
 			System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");

@@ -16,6 +16,8 @@ public class ExecutedExam implements Serializable {
 	private String testType;
 	private JFXButton questionList;
 	private JFXButton gradeApproval;
+	private double avg;
+	private double median;
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
 		super();
@@ -36,6 +38,29 @@ public class ExecutedExam implements Serializable {
 		this.course = course;
 		this.execDate = execDate;
 		this.testType = testType;
+	}
+	
+	public double getAvg() {
+		return avg;
+	}
+
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+
+	public double getMedian() {
+		return median;
+	}
+
+	public void setMedian(double median) {
+		this.median = median;
+	}
+
+	public ExecutedExam(String id,  String teacherID, double avg, double median) {
+		this.id=id;
+		this.teacherID=teacherID;
+		this.avg=avg;
+		this.median=median;
 	}
 
 	public String getId() {

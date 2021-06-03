@@ -41,6 +41,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import models.Exam;
+import models.ExecutedExam;
 import models.Statistics;
 import server.DatabaseController;
 import sun.util.resources.cldr.uz.CalendarData_uz_Arab_AF;
@@ -158,20 +159,23 @@ public class OverallStatistic implements Initializable{
 
 		    	switch (op) {
 					case COURSE:
-						Statistics st;
+//						Statistics st;
 						String Together = new String();
 						Number avg;
 						Number median;
-						String course_select = (String) courseSelect.getValue();
-						ModelWrapper<String> modelWrapper = new ModelWrapper<>((String)course_select,STATISTIC_BY_COURSE_X);
+						String course_select = courseSelect.getSelectionModel().getSelectedItem();
+						ModelWrapper<String> modelWrapper = new ModelWrapper<>(course_select,STATISTIC_BY_COURSE_X);
 						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-						List <Statistics> statisticList = Client.getSet();
-						for(int i=0;i<statisticList.size();i++) {
-							st = statisticList.get(i);
-							avg = Integer.parseInt(st.getAvg());
-							Together = "ID:" + st.getExamID() +"\n"+ st.getExecuteTeacherID();
-							set.getData().add(new XYChart.Data<String,Number>(Together.toString(), avg));	
+						List <ExecutedExam> statisticList = Client.getExecExams();
+						for(ExecutedExam exams : statisticList) {
+							set.getData().add(new XYChart.Data<String, Number>(exams.getId(), (Number) exams.getAvg()));
 						}
+//						for(int i=0;i<statisticList.size();i++) {
+//							st = statisticList.get(i);
+//							avg = Integer.parseInt(st.getAvg());
+//							Together = "ID:" + st.getExamID() +"\n"+ st.getExecuteTeacherID();
+//							set.getData().add(new XYChart.Data<String,Number>(Together.toString(), avg));	
+//						}
 						if(!statisticList.isEmpty())statisticList.clear();
 						x_Exam.setTickLabelRotation(45);
 						// Set Font
