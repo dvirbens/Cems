@@ -491,9 +491,11 @@ public class Server extends AbstractServer {
 
 	}
 
-	/*
-	 * Function that check all students answers when test finished and insert to DB
-	 * the alert percentage
+	/**
+	 * Calculate and saving the alert value for each student after executed the exams.
+	 * 
+	 * @param code, examID check for each exam that has been executed.
+	 * @return 
 	 */
 	public void checkAlert(String code, String examID) {
 		int numOfStudents = studentInExam.get(code).size();

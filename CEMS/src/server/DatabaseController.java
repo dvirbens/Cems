@@ -157,8 +157,7 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param question that's connected to specific exam that needed to be save on database
-	 * @return boolean value{true = question saved successfully,false = can't save
-	 *         question}
+	 * @return
 	 */
 	private void saveExamQuestion(ExamQuestion examQuestion, String examID) {
 		PreparedStatement prepareStatement;
@@ -222,6 +221,14 @@ public class DatabaseController {
 		return false;
 	}
 
+	/**
+	 * Get the last digits of the question using appropriate query by prepared
+	 * statement.
+	 * 
+	 * @param subject,  get the last digits of the question by subject given.
+	 * @return String {return last digits of the question} 
+	 * Else {return error - can't find last digits of the question }.
+	 */
 	private String getQuestionLastId(String subject) {
 		try {
 			Statement statement = conn.createStatement();
@@ -239,6 +246,14 @@ public class DatabaseController {
 		return null;
 	}
 
+	/**
+	 * Get the last digits of the examID using appropriate query by prepared
+	 * statement.
+	 * 
+	 * @param subject, course get the last digits of the examID by subject and course given.
+	 * @return String {return last digits of the examID} 
+	 * Else {return error - can't find last digits of the examID }.
+	 */
 	private String getExamLastId(String subject, String course) {
 		try {
 			Statement statement = conn.createStatement();
@@ -672,8 +687,7 @@ public class DatabaseController {
 	 * 
 	 * @param studentExam, file - save all the needed information of the student in a specific exam
 	 * 		including word file with his answers.
-	 * @return boolean value{true = manual test uploaded successfully, false = can't save
-	 *      the word file of the student}.
+	 * @return 
 	 */
 	public void UploadFile(StudentExecutedExam studentExam, WordFile file) {
 		String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
@@ -798,8 +812,7 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param studentID, examID, grade - save the grade of the student who's executed the exam.
-	 * @return boolean value{true = student grade saved successfully, false = can't save
-	 *         grade}
+	 * @return 
 	 */
 	public void insertStudentGrade(String studentID, String examID, String grade) {
 		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ?;";
@@ -1035,8 +1048,7 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param specific studentId who's executed specific exam (ExamId) and the alert percent.
-	 * @return boolean value{true = update successfully alert,	false = can't update
-	 *         alert in the DB table}
+	 * @return 
 	 */
 	public void updateAlertValue(String studentID, String examID, String AlertPercent) {
 		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ?;";
