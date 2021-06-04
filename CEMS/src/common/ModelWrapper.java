@@ -5,6 +5,7 @@ import java.util.List;
 
 import models.WordFile;
 import javafx.scene.chart.XYChart.Series;
+
 /**
  * Generic class that wrap all of CEMS Projects model, in order to make
  * transfers between client and server available and indicate which operation
@@ -39,14 +40,14 @@ public class ModelWrapper<E> implements Serializable {
 
 	public enum Operation {
 		CREATE_EXAM, UPDATE_TEST, ENTERED_WRONG_ID, ERROR, LOAD_TEST, LOAD_QUESTION_LIST, OVERALL_STATISTICS,
-		GET_EXECUTED_EXAM_LIST_BY_COURSE,STATISTIC_BY_COURSE_Y, STATISTIC_BY_TEACHER, STATISTIC_BY_STUDENT,
+		GET_EXECUTED_EXAM_LIST_BY_COURSE, STATISTIC_BY_COURSE_Y, STATISTIC_BY_TEACHER, STATISTIC_BY_STUDENT,
 		EXAM_EXTENSION_REQUEST, EXAM_EXECUTE, CREATE_QUESTION, START_EXAM, TEST_STATISTICS, GET_USER,
 		GET_SUBJECT_COURSE_LIST, GET_COURSE_LIST, GET_QUESTION_LIST, GET_EXAMS_LIST_BY_SUBJECT,
 		GET_EXAMS_LIST_BY_COURSE, GET_EXAMS_LIST, CLOSE_EXAM, GET_QUESTION_LIST_BY_SUBJECT, EXTENSION_REQUEST,
 		UPLOAD_FILE, GET_EXAM_ID, GET_QUESTION_LIST_BY_EXAM_ID, INSERT_STUDENT_TO_EXAM, GET_EXAM_BY_EXAM_ID,
 		START_EXAM_SUCCESS, START_EXAM_FAILD, GET_EXECUTED_EXAM_LIST_BY_CREATOR, ERROR_INSERT_STUDENT_TO_EXAM,
 		STUDENT_TIME_EXTENSION, INSERT_STUDENT_GRADE, INSERT_STUDENT_ANSWERS, GET_EXECUTED_EXAM_LIST_BY_EXECUTOR,
-		GET_EXAM_IN_PROCESS, GET_EXECUTED_EXAM_STUDENT_LIST
+		GET_EXAM_IN_PROCESS, GET_EXECUTED_EXAM_STUDENT_LIST, SAVE_APPROVED_STUDENTS
 	};
 
 	/**
@@ -90,7 +91,7 @@ public class ModelWrapper<E> implements Serializable {
 		this.elements2 = elements2;
 		this.operation = operation;
 	}
-	
+
 	public ModelWrapper(WordFile elements1, E elements2, Operation operation) {
 		super();
 		this.file = elements1;
@@ -117,6 +118,7 @@ public class ModelWrapper<E> implements Serializable {
 	public List<E> getElements() {
 		return elements;
 	}
+
 	public E getAdditonalElement() {
 		return element;
 	}
@@ -133,8 +135,6 @@ public class ModelWrapper<E> implements Serializable {
 		this.elements2 = elements2;
 	}
 
-	
-	
 	public WordFile getFile() {
 		return file;
 	}

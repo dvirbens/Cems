@@ -1,9 +1,10 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -48,9 +49,6 @@ public class StudentListController implements Initializable {
 	private TableColumn<StudentExecutedExam, String> tcCopyPercentage;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, JFXButton> tcCopy;
-
-	@FXML
 	private TableColumn<StudentExecutedExam, CheckBox> tcApproval;
 
 	@FXML
@@ -89,11 +87,22 @@ public class StudentListController implements Initializable {
 
 	@FXML
 	void onClickSave(ActionEvent event) {
+		List<StudentExecutedExam> approvedStudent = new ArrayList<>();
+
 		for (StudentExecutedExam student : executedExamStudentList) {
 			if (student.isApproved()) {
+				approvedStudent.add(student);
 				System.out.println(student.getStudentName());
 			}
 		}
+		
+		//Not Serializeable because of buttons
+		
+		//ModelWrapper<StudentExecutedExam> modelWrapper = new ModelWrapper<>(approvedStudent, SAVE_APPROVED_STUDENTS);
+		//ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		//String serverMessage = Client.getServerMessages();
+		//messageLabel.setStyle("-fx-text-fill: GREEN;");
+		//messageLabel.setText(serverMessage);
 	}
 
 	@Override
@@ -110,8 +119,7 @@ public class StudentListController implements Initializable {
 		tcExamId.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
 		tcStudent.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("studentName"));
 		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("grade"));
-		tcCopyPercentage.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("CopyPercentage"));
-		tcCopy.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, JFXButton>("copy"));
+		tcCopyPercentage.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("Alert"));
 		tcApproval.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, CheckBox>("gradeApproval"));
 
 		ObservableList<StudentExecutedExam> executedExam = FXCollections.observableArrayList();
@@ -123,7 +131,6 @@ public class StudentListController implements Initializable {
 	}
 
 	private void setExecutedExamStudentListCheckBoxes() {
-
 		for (StudentExecutedExam student : executedExamStudentList) {
 			CheckBox approveGrade = new CheckBox();
 			approveGrade.selectedProperty().addListener(new ChangeListener<Boolean>() {

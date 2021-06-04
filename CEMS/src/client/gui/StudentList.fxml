@@ -16,12 +16,11 @@
       </Label>
       <TableView fx:id="tvSutdents" layoutX="27.0" layoutY="84.0" prefHeight="600.0" prefWidth="700.0">
         <columns>
-          <TableColumn fx:id="tcExamId" prefWidth="77.0" style="-fx-alignment: center;" text="Exam ID" />
-          <TableColumn fx:id="tcStudent" prefWidth="181.0" style="-fx-alignment: center;" text="Student" />
-            <TableColumn fx:id="tcGrade" prefWidth="69.0" style="-fx-alignment: center;" text="Grade" />
-            <TableColumn fx:id="tcCopyPercentage" prefWidth="153.0" style="-fx-alignment: center;" text="Copy Percentage" />
-            <TableColumn fx:id="tcCopy" prefWidth="93.0" style="-fx-alignment: center;" text="Copy" />
-            <TableColumn fx:id="tcApproval" prefWidth="122.0" style="-fx-alignment: center;" text="Approval" />
+          <TableColumn fx:id="tcExamId" prefWidth="140.0" style="-fx-alignment: center;" text="Exam ID" />
+          <TableColumn fx:id="tcStudent" prefWidth="237.0" style="-fx-alignment: center;" text="Student" />
+            <TableColumn fx:id="tcGrade" prefWidth="104.0" style="-fx-alignment: center;" text="Grade" />
+            <TableColumn fx:id="tcCopyPercentage" prefWidth="134.0" style="-fx-alignment: center;" text="Copy Percentage" />
+            <TableColumn fx:id="tcApproval" prefWidth="83.0" style="-fx-alignment: center;" text="Approval" />
         </columns>
       </TableView>
       <JFXButton fx:id="btnBack" layoutX="39.0" layoutY="31.0" onAction="#onClickBack" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back" textFill="WHITE" />

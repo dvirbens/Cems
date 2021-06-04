@@ -899,4 +899,12 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 	}
+
+	public boolean saveApprovedStudents(List<StudentExecutedExam> approvedStudents) {
+
+		// Need to figured out what is the primary key
+		// UPDATE SET Approved = true where studentID="308315035" AND
+		String query = "UPDATE SET ";
+		return true;
+	}
 }

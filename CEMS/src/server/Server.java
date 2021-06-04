@@ -161,7 +161,15 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case TEST_STATISTICS:
+		case SAVE_APPROVED_STUDENTS:
+			List<StudentExecutedExam> approvedStudents = (List<StudentExecutedExam>) modelWrapperFromClient
+					.getElements();
+			databaseController.saveApprovedStudents(approvedStudents);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		case START_EXAM:

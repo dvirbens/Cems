@@ -125,7 +125,8 @@ public class Client extends AbstractClient {
 			case ENTERED_WRONG_ID:
 				break;
 
-			case TEST_STATISTICS:
+			case SAVE_APPROVED_STUDENTS:
+				setServerMessages("Students has been approved suucessfully");
 				break;
 
 			case GET_EXECUTED_EXAM_LIST_BY_EXECUTOR:
@@ -134,7 +135,6 @@ public class Client extends AbstractClient {
 
 			case START_EXAM_SUCCESS:
 				setServerMessages("Exam has been started");
-
 				break;
 			case START_EXAM_FAILD:
 				setServerMessages("Can't start exam");
@@ -391,7 +391,5 @@ public class Client extends AbstractClient {
 	public static void setExecutedExamStudentList(List<StudentExecutedExam> executedExamStudentList) {
 		Client.executedExamStudentList = executedExamStudentList;
 	}
-	
-
 
 }
