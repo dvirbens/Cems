@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.scene.control.CheckBox;
+
 public class StudentExecutedExam implements Serializable {
 
 	/**
@@ -22,6 +24,7 @@ public class StudentExecutedExam implements Serializable {
 	private WordFile copy;
 	private boolean approved;
 	private String Alert;
+	private CheckBox gradeApproval;
 
 	private JFXButton getCopy;
 
@@ -149,6 +152,14 @@ public class StudentExecutedExam implements Serializable {
 		this.studentName = studentName;
 	}
 
+	public CheckBox getGradeApproval() {
+		return gradeApproval;
+	}
+
+	public void setGradeApproval(CheckBox gradeApproval) {
+		this.gradeApproval = gradeApproval;
+	}
+
 	@Override
 	public String toString() {
 		return "StudentExecutedExam [examID=" + examID + ", studentID=" + studentID + ", studentName=" + studentName
@@ -156,5 +167,5 @@ public class StudentExecutedExam implements Serializable {
 				+ ", testType=" + testType + ", grade=" + grade + ", copy=" + copy + ", approved=" + approved
 				+ ", Alert=" + Alert + ", getCopy=" + getCopy + "]";
 	}
-	
+
 }

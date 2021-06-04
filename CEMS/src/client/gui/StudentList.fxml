@@ -25,5 +25,7 @@
         </columns>
       </TableView>
       <JFXButton fx:id="btnBack" layoutX="39.0" layoutY="31.0" onAction="#onClickBack" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back" textFill="WHITE" />
+      <JFXButton fx:id="btnSave" layoutX="321.0" layoutY="696.0" onAction="#onClickSave" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Save Changes" textFill="WHITE" />
+      <Label fx:id="messageLabel" layoutX="359.0" layoutY="733.0" text="Label" />
    </children>
 </Pane>
