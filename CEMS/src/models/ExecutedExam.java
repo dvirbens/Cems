@@ -15,10 +15,23 @@ public class ExecutedExam implements Serializable {
 	private String execDate;
 	private String execTime;
 	private String testType;
-	private JFXButton questionList;
-	private JFXButton gradeApproval;
 	private double avg;
 	private double median;
+
+	public ExecutedExam(String id, String subject, String course, String teacherID, String executorTeacherName,
+			String execDate, String execTime, String testType, double avg, double median) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.course = course;
+		this.teacherID = teacherID;
+		this.executorTeacherName = executorTeacherName;
+		this.execDate = execDate;
+		this.execTime = execTime;
+		this.testType = testType;
+		this.avg = avg;
+		this.median = median;
+	}
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
 		super();
@@ -49,6 +62,19 @@ public class ExecutedExam implements Serializable {
 		this.execDate = execDate;
 		this.execTime = execTime;
 		this.executorTeacherName = executorTeacherName;
+		this.median = median;
+	}
+
+	public ExecutedExam(String id, String subject, String course, String teacherID, String execDate, String testType,
+			double avg, double median) {
+		super();
+		this.id = id;
+		this.subject = subject;
+		this.course = course;
+		this.teacherID = teacherID;
+		this.execDate = execDate;
+		this.testType = testType;
+		this.avg = avg;
 		this.median = median;
 	}
 
@@ -128,22 +154,6 @@ public class ExecutedExam implements Serializable {
 		this.executorTeacherName = executorTeacherName;
 	}
 
-	public JFXButton getQuestionList() {
-		return questionList;
-	}
-
-	public void setQuestionList(JFXButton questionList) {
-		this.questionList = questionList;
-	}
-
-	public JFXButton getGradeApproval() {
-		return gradeApproval;
-	}
-
-	public void setGradeApproval(JFXButton gradeApproval) {
-		this.gradeApproval = gradeApproval;
-	}
-
 	public String getExecTime() {
 		return execTime;
 	}
@@ -155,9 +165,8 @@ public class ExecutedExam implements Serializable {
 	@Override
 	public String toString() {
 		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", teacherID=" + teacherID
-				+ ", executorTeacherName=" + executorTeacherName + ", execDate=" + execDate + ", testType=" + testType
-				+ ", questionList=" + questionList + ", gradeApproval=" + gradeApproval + ", avg=" + avg + ", median="
-				+ median + "]";
+				+ ", executorTeacherName=" + executorTeacherName + ", execDate=" + execDate + ", execTime=" + execTime
+				+ ", testType=" + testType + ", avg=" + avg + ", median=" + median + "]";
 	}
 
 }

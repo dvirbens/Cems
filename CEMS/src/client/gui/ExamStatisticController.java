@@ -1,10 +1,9 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,6 +29,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamQuestion;
 import models.ExecutedExam;
+import models.ExecutedExamUI;
 import models.StudentExecutedExam;
 
 public class ExamStatisticController implements Initializable {
@@ -41,25 +41,25 @@ public class ExamStatisticController implements Initializable {
 	private JFXComboBox<String> cbExamSubject;
 
 	@FXML
-	private TableView<ExecutedExam> tvExecutedExams;
+	private TableView<ExecutedExamUI> tvExecutedExams;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcID;
+	private TableColumn<ExecutedExamUI, String> tcID;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcSubject;
+	private TableColumn<ExecutedExamUI, String> tcSubject;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcCourse;
+	private TableColumn<ExecutedExamUI, String> tcCourse;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcDate;
+	private TableColumn<ExecutedExamUI, String> tcDate;
 
 	@FXML
-	private TableColumn<ExecutedExam, JFXButton> tcDetails;
+	private TableColumn<ExecutedExamUI, JFXButton> tcDetails;
 
 	@FXML
-	private TableColumn<ExecutedExam, String> tcTeacher;
+	private TableColumn<ExecutedExamUI, String> tcTeacher;
 
 	@FXML
 	private Label avgLabel;
@@ -87,16 +87,15 @@ public class ExamStatisticController implements Initializable {
 				GET_EXECUTED_EXAM_LIST_BY_CREATOR);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperExecutedExams);
 
-		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
-		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("executorTeacherName"));
-		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
-		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
-		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
-		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("questionList"));
+		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("id"));
+		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("executorTeacherName"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("course"));
+		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("execDate"));
+		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, JFXButton>("questionList"));
 
-		ObservableList<ExecutedExam> executedExam = FXCollections.observableArrayList();
-		List<ExecutedExam> executedExamList = Client.getExecExams();
-		executedExamList = setExecutedExamsListQuestionListButtons(executedExamList);
+		ObservableList<ExecutedExamUI> executedExam = FXCollections.observableArrayList();
+		List<ExecutedExamUI> executedExamList = setExecutedExamsListUI(Client.getExecExams());
 		executedExam.addAll(executedExamList);
 		tvExecutedExams.setItems(executedExam);
 
@@ -134,8 +133,10 @@ public class ExamStatisticController implements Initializable {
 		});
 	}
 
-	private List<ExecutedExam> setExecutedExamsListQuestionListButtons(List<ExecutedExam> executedExamsList) {
-		for (ExecutedExam exam : executedExamsList) {
+	private List<ExecutedExamUI> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
+		List<ExecutedExamUI> executedExamsUIList = new ArrayList<>();
+		for (ExecutedExam executedExam : executedExamsList) {
+			ExecutedExamUI executedExamUI = new ExecutedExamUI(executedExam);
 			JFXButton questionListButton = new JFXButton();
 			questionListButton.setPrefSize(90, 15);
 			questionListButton
@@ -145,7 +146,8 @@ public class ExamStatisticController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					ModelWrapper<String> modelWrapper = new ModelWrapper<>(exam.getId(), GET_QUESTION_LIST_BY_EXAM_ID);
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(executedExam.getId(),
+							GET_QUESTION_LIST_BY_EXAM_ID);
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 					List<ExamQuestion> questionList = Client.getExamQuestions();
 					MainGuiController.getMenuHandler().setQuestionListScreen(questionList, "ExamStatisticController");
@@ -153,10 +155,11 @@ public class ExamStatisticController implements Initializable {
 				}
 			});
 
-			exam.setQuestionList(questionListButton);
+			executedExamUI.setQuestionList(questionListButton);
+			executedExamsUIList.add(executedExamUI);
 		}
 
-		return executedExamsList;
+		return executedExamsUIList;
 	}
 
 }

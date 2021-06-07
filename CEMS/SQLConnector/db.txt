@@ -87,6 +87,7 @@ CREATE TABLE ExecutedExamByStudent (
     Copy blob,
     Approved boolean,
     Alert varchar(255)
+   	PRIMARY KEY(studentID,examID,executeDate)
 );
 
 CREATE TABLE StudentUploadManualTest (

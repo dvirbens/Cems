@@ -162,8 +162,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case SAVE_APPROVED_STUDENTS:
-			List<StudentExecutedExam> approvedStudents = (List<StudentExecutedExam>) modelWrapperFromClient
-					.getElements();
+			List<StudentExecutedExam> approvedStudents = (List<StudentExecutedExam>) modelWrapperFromClient.getElements();
 			databaseController.saveApprovedStudents(approvedStudents);
 			try {
 				client.sendToClient(modelWrapperFromClient);
@@ -216,6 +215,7 @@ public class Server extends AbstractServer {
 			String studentID = (String) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> testArray = databaseController.getExecutedExamListByStudentID(studentID);
 			modelWrapperToClient = new ModelWrapper<StudentExecutedExam>(testArray, EXAM_EXECUTE);
+			System.out.println(testArray);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -434,6 +434,16 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case UPDATE_EXAM_STATISTIC:
+			ExecutedExam executedExam = (ExecutedExam) modelWrapperFromClient.getElement();
+			databaseController.updateStatistic(executedExam);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		default:
 			break;
 
@@ -492,10 +502,11 @@ public class Server extends AbstractServer {
 	}
 
 	/**
-	 * Calculate and saving the alert value for each student after executed the exams.
+	 * Calculate and saving the alert value for each student after executed the
+	 * exams.
 	 * 
 	 * @param code, examID check for each exam that has been executed.
-	 * @return 
+	 * @return
 	 */
 	public void checkAlert(String code, String examID) {
 		int numOfStudents = studentInExam.get(code).size();

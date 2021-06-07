@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,20 +16,17 @@ import com.jfoenix.controls.JFXButton;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.StudentExecutedExam;
-import models.WordFile;
+import models.StudentExecutedExamUI;
 
 public class ExecutedExamsController implements Initializable {
 
@@ -39,87 +37,76 @@ public class ExecutedExamsController implements Initializable {
 	private URL location;
 
 	@FXML
-	private TableView<StudentExecutedExam> tvExExams;
+	private TableView<StudentExecutedExamUI> tvExExams;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcStudentID;
+	private TableColumn<StudentExecutedExamUI, String> tcStudentID;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcExamID;
+	private TableColumn<StudentExecutedExamUI, String> tcExamID;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcSubject;
+	private TableColumn<StudentExecutedExamUI, String> tcSubject;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcCourse;
+	private TableColumn<StudentExecutedExamUI, String> tcCourse;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcExecDate;
+	private TableColumn<StudentExecutedExamUI, String> tcExecDate;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcTestType;
+	private TableColumn<StudentExecutedExamUI, String> tcTestType;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcGrade;
+	private TableColumn<StudentExecutedExamUI, String> tcGrade;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
-	
+	private TableColumn<StudentExecutedExamUI, JFXButton> tcGetTest;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
-		tcSubject.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("subject"));
-		tcCourse.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("course"));
-		tcExecDate.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("execDate"));
-		tcTestType.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("testType"));
-		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("grade"));
-		tcGetTest.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, JFXButton>("getCopy"));
+		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, String>("examID"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, String>("course"));
+		tcExecDate.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, String>("execDate"));
+		tcTestType.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, String>("testType"));
+		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, String>("grade"));
+		tcGetTest.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, JFXButton>("getCopy"));
 
 		String userID = Client.getUser().getUserID();
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-		ObservableList<StudentExecutedExam> exams = FXCollections.observableArrayList();
-		
-		exams.addAll(Client.getExecutedExamStudentList());
-		for (StudentExecutedExam exam : exams)
-		{
-			
-			if (exam.isApproved() == false)
-			{
-				exam.setGrade("Not checked");
-			}
-			
-		}
+		ObservableList<StudentExecutedExamUI> exams = FXCollections.observableArrayList();
+		List<StudentExecutedExamUI> studentList = setStudentsUI(Client.getExecutedExamStudentList());
+		System.out.println(studentList);
+		exams.addAll(studentList);
 		tvExExams.setItems(exams);
-
-		setExamGetCopyButtons(Client.getExecutedExamStudentList());
 	}
-	
-	private void setExamGetCopyButtons(List<StudentExecutedExam> exams) {
 
-		for (StudentExecutedExam exam : exams) {
-			if (exam.getTestType().equals("Manual") && (exam.getCopy().getSize() != 0))
-			{
+	private List<StudentExecutedExamUI> setStudentsUI(List<StudentExecutedExam> executedExamStudentList) {
+		List<StudentExecutedExamUI> studentList = new ArrayList<>();
+		for (StudentExecutedExam studentExam : executedExamStudentList) {
+			StudentExecutedExamUI studenExamUI = new StudentExecutedExamUI(studentExam);
+			if (studentExam.getTestType().equals("Manual")) {
 				JFXButton getCopyButton = new JFXButton();
 				getCopyButton.setPrefSize(90, 15);
-				getCopyButton
-						.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				getCopyButton.setStyle(
+						"-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 				getCopyButton.setText("Get Copy");
-				
+
 				getCopyButton.setOnAction(new EventHandler<ActionEvent>() {
-	
+
 					@Override
 					public void handle(ActionEvent event) {
 
 						String path = System.getProperty("user.home") + "/Desktop";
-						
+
 						File outputFile = new File(path + "/TestAfterCheck.docx");
 						try {
 							FileOutputStream fos = new FileOutputStream(outputFile);
 							BufferedOutputStream bos = new BufferedOutputStream(fos);
-							bos.write(exam.getCopy().getMybytearray(), 0, exam.getCopy().getSize());
+							bos.write(studentExam.getCopy().getMybytearray(), 0, studentExam.getCopy().getSize());
 							bos.flush();
 							fos.flush();
 							bos.close();
@@ -127,13 +114,18 @@ public class ExecutedExamsController implements Initializable {
 							e.printStackTrace();
 						}
 					}
-	
+
 				});
-				exam.setGetCopy(getCopyButton);
+				studenExamUI.setGetCopy(getCopyButton);
 			}
-			
+
+			if (!studentExam.isApproved())
+				studenExamUI.setGrade("Not Checked");
+
+			studentList.add(studenExamUI);
+
 		}
+		return studentList;
 	}
-	
 
 }

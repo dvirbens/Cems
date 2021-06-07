@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 
 public class StudentExecutedExam implements Serializable {
 
@@ -21,17 +22,29 @@ public class StudentExecutedExam implements Serializable {
 	private String execDate;
 	private String testType;
 	private String grade;
-	private WordFile copy;
 	private boolean approved;
-	private String Alert;
-	private CheckBox gradeApproval;
+	private WordFile copy;
 
-	private JFXButton getCopy;
+	public StudentExecutedExam(StudentExecutedExamUI studentUI, String newGrade) {
+		super();
+		examID = studentUI.getExamID();
+		studentID = studentUI.getStudentID();
+		studentName = studentUI.getStudentName();
+		TeacherId = studentUI.getTeacherId();
+		subject = studentUI.getSubject();
+		course = studentUI.getCourse();
+		execDate = studentUI.getExecDate();
+		testType = studentUI.getTestType();
+		grade = studentUI.getGrade();
+		approved = studentUI.isApproved();
+		grade = newGrade;
+	}
 
-	public StudentExecutedExam(String examID, String studentName, String teacherId, String subject, String course,
-			String execDate, String testType, String grade, WordFile copy, boolean approved, String alert) {
+	public StudentExecutedExam(String examID, String studentID, String studentName, String teacherId, String subject,
+			String course, String execDate, String testType, String grade, boolean approved) {
 		super();
 		this.examID = examID;
+		this.studentID = studentID;
 		this.studentName = studentName;
 		TeacherId = teacherId;
 		this.subject = subject;
@@ -39,9 +52,7 @@ public class StudentExecutedExam implements Serializable {
 		this.execDate = execDate;
 		this.testType = testType;
 		this.grade = grade;
-		this.copy = copy;
 		this.approved = approved;
-		Alert = alert;
 	}
 
 	public String getExamID() {
@@ -108,42 +119,6 @@ public class StudentExecutedExam implements Serializable {
 		this.grade = grade;
 	}
 
-	public boolean isApproved() {
-		return approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
-	public String getAlert() {
-		return Alert;
-	}
-
-	public void setAlert(String alert) {
-		Alert = alert;
-	}
-
-	public JFXButton getGetCopy() {
-		return getCopy;
-	}
-
-	public void setGetCopy(JFXButton getCopy) {
-		this.getCopy = getCopy;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public WordFile getCopy() {
-		return copy;
-	}
-
-	public void setCopy(WordFile copy) {
-		this.copy = copy;
-	}
-
 	public String getStudentName() {
 		return studentName;
 	}
@@ -152,20 +127,27 @@ public class StudentExecutedExam implements Serializable {
 		this.studentName = studentName;
 	}
 
-	public CheckBox getGradeApproval() {
-		return gradeApproval;
+	public boolean isApproved() {
+		return approved;
 	}
 
-	public void setGradeApproval(CheckBox gradeApproval) {
-		this.gradeApproval = gradeApproval;
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+	
+	public WordFile getCopy() {
+		return copy;
+	}
+
+	public void setCopy(WordFile copy) {
+		this.copy = copy;
 	}
 
 	@Override
 	public String toString() {
 		return "StudentExecutedExam [examID=" + examID + ", studentID=" + studentID + ", studentName=" + studentName
 				+ ", TeacherId=" + TeacherId + ", subject=" + subject + ", course=" + course + ", execDate=" + execDate
-				+ ", testType=" + testType + ", grade=" + grade + ", copy=" + copy + ", approved=" + approved
-				+ ", Alert=" + Alert + ", getCopy=" + getCopy + "]";
+				+ ", testType=" + testType + ", grade=" + grade + ", approved=" + approved + "]";
 	}
 
 }

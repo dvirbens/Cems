@@ -156,7 +156,8 @@ public class DatabaseController {
 	 * Saving question to the given exam using appropriate query by prepared
 	 * statement.
 	 * 
-	 * @param question that's connected to specific exam that needed to be save on database
+	 * @param question that's connected to specific exam that needed to be save on
+	 *                 database
 	 * @return
 	 */
 	private void saveExamQuestion(ExamQuestion examQuestion, String examID) {
@@ -225,9 +226,9 @@ public class DatabaseController {
 	 * Get the last digits of the question using appropriate query by prepared
 	 * statement.
 	 * 
-	 * @param subject,  get the last digits of the question by subject given.
-	 * @return String {return last digits of the question} 
-	 * Else {return error - can't find last digits of the question }.
+	 * @param subject, get the last digits of the question by subject given.
+	 * @return String {return last digits of the question} Else {return error -
+	 *         can't find last digits of the question }.
 	 */
 	private String getQuestionLastId(String subject) {
 		try {
@@ -250,9 +251,10 @@ public class DatabaseController {
 	 * Get the last digits of the examID using appropriate query by prepared
 	 * statement.
 	 * 
-	 * @param subject, course get the last digits of the examID by subject and course given.
-	 * @return String {return last digits of the examID} 
-	 * Else {return error - can't find last digits of the examID }.
+	 * @param subject, course get the last digits of the examID by subject and
+	 *                 course given.
+	 * @return String {return last digits of the examID} Else {return error - can't
+	 *         find last digits of the examID }.
 	 */
 	private String getExamLastId(String subject, String course) {
 		try {
@@ -354,12 +356,12 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all questions which is related wit a specific subject using appropriate query by prepared
-	 * statement.
+	 * Get all questions which is related wit a specific subject using appropriate
+	 * query by prepared statement.
 	 * 
 	 * @param subject, the subject which we want to find all the questions by.
-	 * @return List<> {return all the questions by a specific subject} 
-	 * Else {return error - can't find the question in DB}
+	 * @return List<> {return all the questions by a specific subject} Else {return
+	 *         error - can't find the question in DB}
 	 */
 	public List<Question> getQuestionList(String subject) {
 		List<Question> questionList = new ArrayList<>();
@@ -427,12 +429,12 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all exams who's has a specific subject using appropriate query by prepared
-	 * statement.
+	 * Get all exams who's has a specific subject using appropriate query by
+	 * prepared statement.
 	 * 
 	 * @param subject, the subject which we want to find all the exams by.
-	 * @return List<> {return all the exams by a specific subject} 
-	 * Else {return error - can't find the exam in DB}
+	 * @return List<> {return all the exams by a specific subject} Else {return
+	 *         error - can't find the exam in DB}
 	 */
 	public List<Exam> getExamListBySubject(String subject) {
 		List<Exam> examList = new ArrayList<>();
@@ -465,8 +467,8 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param course, the course which we want to find all the exams by.
-	 * @return List<> {return all the exams by a specific course} 
-	 * Else {return error - can't find the exam in DB}
+	 * @return List<> {return all the exams by a specific course} Else {return error
+	 *         - can't find the exam in DB}
 	 */
 	public List<Exam> getExamListByCourse(String course) {
 		List<Exam> examList = new ArrayList<>();
@@ -499,8 +501,8 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param examID the id which we want to find all the questions by.
-	 * @return List<> {return all the questions of the specific exam} 
-	 * Else {return error - can't find the questions in DB}
+	 * @return List<> {return all the questions of the specific exam} Else {return
+	 *         error - can't find the questions in DB}
 	 */
 	public List<ExamQuestion> getExamQuestionsList(String examID) {
 
@@ -543,12 +545,11 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all the exams using appropriate query by prepared
-	 * statement.
+	 * Get all the exams using appropriate query by prepared statement.
 	 * 
-	 * @param 
-	 * @return List<> {return all the exams} 
-	 * Else {return error - can't find the exam in DB}
+	 * @param
+	 * @return List<> {return all the exams} Else {return error - can't find the
+	 *         exam in DB}
 	 */
 	public List<Exam> getExamList() {
 		List<Exam> examList = new ArrayList<>();
@@ -578,12 +579,12 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all the executed exams by the specific student using appropriate query by prepared
-	 * statement.
+	 * Get all the executed exams by the specific student using appropriate query by
+	 * prepared statement.
 	 * 
 	 * @param studentID the id which we want to find all the executed exams by.
-	 * @return List<> {return all the executed exams of the specific student} 
-	 * Else {return error - can't find the studentID in DB}
+	 * @return List<> {return all the executed exams of the specific student} Else
+	 *         {return error - can't find the studentID in DB}
 	 */
 	public List<StudentExecutedExam> getExecutedExamListByStudentID(String studentID) {
 		List<StudentExecutedExam> examList = new ArrayList<>();
@@ -629,9 +630,9 @@ public class DatabaseController {
 					checked_file.setSize(arr.length);
 					checked_file.setMybytearray(arr);
 				}
-
-				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, teacherID, subject, course,
-						execDate, testType, grade, checked_file, approval, alert);
+				String studentName = getUserName(studentID);
+				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, studentName, teacherID, subject,
+						course, execDate, testType, grade, approval);
 
 				examList.add(exam);
 			}
@@ -682,12 +683,12 @@ public class DatabaseController {
 	 */
 
 	/**
-	 * Saving the word file of specific student who's uploaded word file appropriate query by prepared
-	 * statement.
+	 * Saving the word file of specific student who's uploaded word file appropriate
+	 * query by prepared statement.
 	 * 
-	 * @param studentExam, file - save all the needed information of the student in a specific exam
-	 * 		including word file with his answers.
-	 * @return 
+	 * @param studentExam, file - save all the needed information of the student in
+	 *                     a specific exam including word file with his answers.
+	 * @return
 	 */
 	public void UploadFile(StudentExecutedExam studentExam, WordFile file) {
 		String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
@@ -708,15 +709,15 @@ public class DatabaseController {
 		}
 
 	}
-	
+
 	/**
-	 * Saving specific student and exam information which has entered to the specific exam using appropriate query by prepared
-	 * statement.
+	 * Saving specific student and exam information which has entered to the
+	 * specific exam using appropriate query by prepared statement.
 	 * 
-	 * @param studentID, exam - save the student with the specific exam information of the student who's
-	 *  	entered the exam.
-	 * @return boolean value{true = student saved to specific exam successfully, false = can't save
-	 *      student who's entered to specific exam}.
+	 * @param studentID, exam - save the student with the specific exam information
+	 *                   of the student who's entered the exam.
+	 * @return boolean value{true = student saved to specific exam successfully,
+	 *         false = can't save student who's entered to specific exam}.
 	 */
 	public boolean insertToExecutedExamByStudent(String studentID, ExamProcess exam) {
 		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?);";
@@ -751,8 +752,8 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param userCode we want to get the examID with the user code.
-	 * @return String {get the examID by the specific userCode} 
-	 * Else {return error - can't find the examID in DB}
+	 * @return String {get the examID by the specific userCode} Else {return error -
+	 *         can't find the examID in DB}
 	 */
 	public String GetExamID(String userCode) {
 		String sql = "SELECT examID FROM examprocess WHERE code = " + userCode;
@@ -777,8 +778,8 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param examID we want to get the Exam with the examID.
-	 * @return Exam {get the exactly exam with the specific examID} 
-	 * Else {return error - can't find the examID in DB}
+	 * @return Exam {get the exactly exam with the specific examID} Else {return
+	 *         error - can't find the examID in DB}
 	 */
 	public Exam GetExamByExamID(String examID) {
 		Exam exam;
@@ -806,13 +807,14 @@ public class DatabaseController {
 
 		return null;
 	}
-	
+
 	/**
-	 * Saving student grade to specific student in a specific exam using appropriate query by prepared
-	 * statement.
+	 * Saving student grade to specific student in a specific exam using appropriate
+	 * query by prepared statement.
 	 * 
-	 * @param studentID, examID, grade - save the grade of the student who's executed the exam.
-	 * @return 
+	 * @param studentID, examID, grade - save the grade of the student who's
+	 *                   executed the exam.
+	 * @return
 	 */
 	public void insertStudentGrade(String studentID, String examID, String grade) {
 		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ?;";
@@ -832,8 +834,8 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Saving executed exam with the exam which has been executed using appropriate query by prepared
-	 * statement.
+	 * Saving executed exam with the exam which has been executed using appropriate
+	 * query by prepared statement.
 	 * 
 	 * @param exam to save the exam which has been executed.
 	 * @return boolean value{true = Exam saved successfully, false = can't save
@@ -871,14 +873,15 @@ public class DatabaseController {
 		return true;
 
 	}
-	
+
 	/**
-	 * Get all the executed exams by the specific executor teacher using appropriate query by prepared
-	 * statement.
+	 * Get all the executed exams by the specific executor teacher using appropriate
+	 * query by prepared statement.
 	 * 
-	 * @param loggedInTeacherId the id which we want to find all the executed exams by.
-	 * @return List<> {return all the executed exams of the specific teacher who's executed by} 
-	 * Else {return error - can't find the teacherID in DB}
+	 * @param loggedInTeacherId the id which we want to find all the executed exams
+	 *                          by.
+	 * @return List<> {return all the executed exams of the specific teacher who's
+	 *         executed by} Else {return error - can't find the teacherID in DB}
 	 */
 	public List<ExecutedExam> getExecutedExamListByExecutorTeacherID(String loggedInTeacherId) {
 		List<ExecutedExam> examList = new ArrayList<>();
@@ -910,12 +913,13 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all the executed exams by the specific teacher who's created the exams using appropriate query by prepared
-	 * statement.
+	 * Get all the executed exams by the specific teacher who's created the exams
+	 * using appropriate query by prepared statement.
 	 * 
-	 * @param loggedInTeacherId the id which we want to find all the executed exams by.
-	 * @return List<> {return all the executed exams of the specific teacher who's created by} 
-	 * Else {return error - can't find the teacherID in DB}
+	 * @param loggedInTeacherId the id which we want to find all the executed exams
+	 *                          by.
+	 * @return List<> {return all the executed exams of the specific teacher who's
+	 *         created by} Else {return error - can't find the teacherID in DB}
 	 */
 	public List<ExecutedExam> getExecutedExamListByCreatorTeacherID(String loggedInTeacherId) {
 		List<ExecutedExam> examList = new ArrayList<>();
@@ -951,8 +955,7 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param examID we want to get the teacherID who's created by.
-	 * @return String {TeacherID} 
-	 * Else {return error - can't find the exam in DB}
+	 * @return String {TeacherID} Else {return error - can't find the exam in DB}
 	 */
 	private String getCreatorTeacherID(String examID) {
 		try {
@@ -976,8 +979,8 @@ public class DatabaseController {
 	 * statement.
 	 * 
 	 * @param UserID that we want to get his full name.
-	 * @return String {User first name + User last name} 
-	 * Else {return error - can't find the user in DB}
+	 * @return String {User first name + User last name} Else {return error - can't
+	 *         find the user in DB}
 	 */
 	private String getUserName(String userID) {
 		try {
@@ -998,12 +1001,13 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Get all the students who's executed a specific exam using appropriate query by prepared
-	 * statement.
+	 * Get all the students who's executed a specific exam using appropriate query
+	 * by prepared statement.
 	 * 
-	 * @param examID, date, executerTeacher to get all the students from the specific exam
-	 * @return List<> {return all the students who's executed the specific exam} 
-	 * Else {return error - can't find the examID in DB}
+	 * @param examID, date, executerTeacher to get all the students from the
+	 *                specific exam
+	 * @return List<> {return all the students who's executed the specific exam}
+	 *         Else {return error - can't find the examID in DB}
 	 */
 	public List<StudentExecutedExam> getExecutedExamStudentList(String examID, String date, String executerTeacher) {
 		List<StudentExecutedExam> studentList = new ArrayList<>();
@@ -1029,8 +1033,8 @@ public class DatabaseController {
 				String alert = rs.getString("Alert");
 				String studentName = getUserName(studentID);
 
-				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentName, teacherID, subject,
-						course, execDate, testType, grade, copy, approved, alert);
+				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentID, studentName, teacherID,
+						subject, course, execDate, testType, grade, approved);
 
 				studentList.add(executedStudent);
 			}
@@ -1044,11 +1048,12 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Update alert chance to a specific student in specific exam using appropriate query by prepared
-	 * statement.
+	 * Update alert chance to a specific student in specific exam using appropriate
+	 * query by prepared statement.
 	 * 
-	 * @param specific studentId who's executed specific exam (ExamId) and the alert percent.
-	 * @return 
+	 * @param specific studentId who's executed specific exam (ExamId) and the alert
+	 *                 percent.
+	 * @return
 	 */
 	public void updateAlertValue(String studentID, String examID, String AlertPercent) {
 		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ?;";
@@ -1068,9 +1073,37 @@ public class DatabaseController {
 
 	public boolean saveApprovedStudents(List<StudentExecutedExam> approvedStudents) {
 
-		// Need to figured out what is the primary key
-		// UPDATE SET Approved = true where studentID="308315035" AND
-		String query = "UPDATE SET ";
+		String query = "UPDATE executedexambystudent SET Approved = ?, Grade=? WHERE studentID = ? AND examID = ? AND ExecDate= ?;";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
+			for (StudentExecutedExam student : approvedStudents) {
+				stmt.setBoolean(1, true);
+				stmt.setString(2, student.getGrade());
+				stmt.setString(3, student.getStudentID());
+				stmt.setString(4, student.getExamID());
+				stmt.setString(5, student.getExecDate());
+				stmt.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return true;
+	}
+
+	public void updateStatistic(ExecutedExam executedExam) {
+		System.out.println(executedExam);
+		/*
+		 * String query =
+		 * "UPDATE executedexam SET avg = ?, median=? WHERE studentID = ? AND examID = ? AND ExecDate= ?;"
+		 * ; try { PreparedStatement stmt = conn.prepareStatement(query); for (String[]
+		 * parameters : approvedStudents) { stmt.setBoolean(1, true); stmt.setString(2,
+		 * parameters[3]); stmt.setString(3, parameters[0]); stmt.setString(4,
+		 * parameters[1]); stmt.setString(5, parameters[2]); stmt.executeUpdate(); }
+		 * 
+		 * } catch (SQLException e) { e.printStackTrace(); }
+		 * 
+		 */
 	}
 }
