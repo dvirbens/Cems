@@ -935,11 +935,16 @@ public class DatabaseController {
 				String subject = rsExecutedExam.getString("subject");
 				String course = rsExecutedExam.getString("course");
 				String executeDate = rsExecutedExam.getString("executeDate");
+				String executeTime = rsExecutedExam.getString("executeTime");
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
+				double avg = rsExecutedExam.getDouble("avg");
+				double median = rsExecutedExam.getDouble("median");
 				String teacherName = getUserName(executeTeacherID);
-				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, executeTeacherID, subject, course,
-						executeDate, type);
+
+				ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeTeacherID, teacherName,
+						executeDate, executeTime, type, avg, median);
+
 				examList.add(executedExam);
 			}
 

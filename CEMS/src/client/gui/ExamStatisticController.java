@@ -112,7 +112,10 @@ public class ExamStatisticController implements Initializable {
 						String date = newSelection.getExecDate();
 						String teacherID = newSelection.getTeacherID();
 						List<String> parameters = Arrays.asList(examID, date, teacherID);
-
+						String avg = String.valueOf(newSelection.getAvg());
+						String median = String.valueOf(newSelection.getMedian());
+						avgLabel.setText(avg);
+						medLabel.setText(median);
 						ModelWrapper<String> modelWrapper = new ModelWrapper<>(parameters,
 								GET_EXECUTED_EXAM_STUDENT_LIST);
 						ClientUI.getClientController().sendClientUIRequest(modelWrapper);

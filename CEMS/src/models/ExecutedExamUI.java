@@ -41,4 +41,14 @@ public class ExecutedExamUI extends ExecutedExam {
 		this.gradeApproval = gradeApproval;
 	}
 
+	@Override
+	public String toString() {
+		return "ExecutedExamUI [questionList=" + questionList + ", gradeApproval=" + gradeApproval + ", getAvg()="
+				+ getAvg() + ", getMedian()=" + getMedian() + ", getId()=" + getId() + ", getSubject()=" + getSubject()
+				+ ", getCourse()=" + getCourse() + ", getExecDate()=" + getExecDate() + ", getTestType()="
+				+ getTestType() + ", getTeacherID()=" + getTeacherID() + ", getExecutorTeacherName()="
+				+ getExecutorTeacherName() + ", getExecTime()=" + getExecTime() + ", toString()=" + super.toString()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + "]";
+	}
+
 }
