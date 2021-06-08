@@ -29,13 +29,17 @@ public class StudentEnterExamController {
 	@FXML
 	void OnClickEnterManualExam(ActionEvent event) {
 		String code = tfCode.getText();
-		MainGuiController.getMenuHandler().setManualTestScreen(code);
+		int ret = EnterExam("Manual");
+		if (ret != -1)
+			MainGuiController.getMenuHandler().setManualTestScreen(code);
 	}
 
 	@FXML
 	void OnClickEnterComputerizedExam(ActionEvent event) {
 		String code = tfCode.getText();
-		MainGuiController.getMenuHandler().setComputerizedTestScreen(code);
+		int ret = EnterExam("Computerized");
+		if (ret != -1)
+			MainGuiController.getMenuHandler().setComputerizedTestScreen(code);
 	}
 	
 	

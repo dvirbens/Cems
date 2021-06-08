@@ -153,12 +153,13 @@ public class ExecuteManualExamController implements Initializable {
 
 	@FXML
 	void onChooseFileClick(ActionEvent event) {
-		btUpload.setVisible(true);
 		FileChooser fc = new FileChooser();
 		newFile = fc.showOpenDialog(null);
 		if (newFile != null) {
+			btUpload.setVisible(true);
 			tfFileName.setText(newFile.getName());
 		} else {
+			btUpload.setVisible(false);
 			System.out.println("File is not valid");
 		}
 	}
