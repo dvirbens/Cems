@@ -1,27 +1,6 @@
 package server;
 
-import static common.ModelWrapper.Operation.ERROR_INSERT_STUDENT_TO_EXAM;
-import static common.ModelWrapper.Operation.EXAM_EXECUTE;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
-import static common.ModelWrapper.Operation.GET_EXAM_BY_CODE;
-import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_EXAM_IN_PROCESS;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_COURSE;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_EXECUTOR;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_CODE;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
-import static common.ModelWrapper.Operation.GET_USER;
-import static common.ModelWrapper.Operation.INSERT_FINISHED_STUDENT;
-import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
-import static common.ModelWrapper.Operation.START_EXAM_FAILD;
-import static common.ModelWrapper.Operation.START_EXAM_SUCCESS;
-import static common.ModelWrapper.Operation.STUDENT_TIME_EXTENSION;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -119,7 +98,7 @@ public class Server extends AbstractServer {
 	@Override
 	protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		ModelWrapper<?> modelWrapperFromClient = (ModelWrapper<?>) msg;
-		ModelWrapper<?> modelWrapperToClient;
+		ModelWrapper<?> modelWrapperToClient = null;
 
 		switch (modelWrapperFromClient.getOperation()) {
 
@@ -393,6 +372,44 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 
+			break;
+			
+		case CHECK_CODE_BEFORE_INSERTION:
+			//get code and check if there is exam
+			userInfo = (List<String>) modelWrapperFromClient.getElements();
+			examCode = (String) userInfo.get(0);
+			studentID = (String) userInfo.get(1);
+			ExamProcess examProc = examsInProcess.get(examCode);
+			if (examProc == null)
+			{
+				modelWrapperToClient = new ModelWrapper<>(ERROR_EXAM_NOT_EXIST);
+			}
+			else
+			{
+				//check if student already did the test
+				List<StudentInExam> studentList = studentInExam.get(examCode);
+				if (studentList != null )
+				{
+					for (StudentInExam student : studentList)
+					{
+						if (student.getStudentID().equals(studentID))
+						{
+							modelWrapperToClient = new ModelWrapper<>(ERROR_STUDENT_ALREADY_IN_EXAM);
+						}
+					}
+				}
+				else
+				{
+					modelWrapperToClient = new ModelWrapper<>(SUCCESSFUL_INSERT_CHECK);
+				}
+				
+			}
+			
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 
 		case GET_EXAM_ID:

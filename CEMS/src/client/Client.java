@@ -238,6 +238,18 @@ public class Client extends AbstractClient {
 			case GET_EXECUTED_EXAM_STUDENT_LIST:
 				executedExamStudentList = (List<StudentExecutedExam>) modelWrapperFromServer.getElements();
 				break;
+				
+			case SUCCESSFUL_INSERT_CHECK:
+				setServerMessages("Check passed successfully.");
+				break;
+				
+			case ERROR_STUDENT_ALREADY_IN_EXAM:
+				setServerMessages("Student already did this exam.");
+				break;
+				
+			case ERROR_EXAM_NOT_EXIST:
+				setServerMessages("Invalid code.");
+				break;
 
 			default:
 				break;

@@ -126,8 +126,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	private static String code;
 
-	public ExecuteComputerizedExamController() {
 
+	
+	
+	public ExecuteComputerizedExamController() {
 	}
 
 	public ExecuteComputerizedExamController(String code) {
