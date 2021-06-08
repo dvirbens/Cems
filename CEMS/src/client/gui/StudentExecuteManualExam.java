@@ -24,17 +24,19 @@ import common.ModelWrapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import models.Exam;
 import models.ExamProcess;
 import models.WordFile;
 
-public class StudentExecuteManualTest implements Initializable, Serializable {
+public class StudentExecuteManualExam implements Initializable, Serializable {
 
 	/**
 	 * 
@@ -76,6 +78,25 @@ public class StudentExecuteManualTest implements Initializable, Serializable {
 	private ExamProcess examProcess;
 
 	private Exam exam;
+
+	private String code;
+
+	StudentExecuteManualExam() {
+
+	}
+
+	StudentExecuteManualExam(String code) {
+		this.code = code;
+	}
+
+	public void start() {
+		try {
+			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
+			MainGuiController.getMenuHandler().getMainFrame().setCenter(manualTestPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

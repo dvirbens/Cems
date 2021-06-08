@@ -1,7 +1,6 @@
 package server;
 
 import static common.ModelWrapper.Operation.*;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,10 +18,7 @@ import models.ExamExtension;
 import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExecutedExam;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 import models.Question;
-import models.Statistics;
 import models.StudentExecutedExam;
 import models.StudentInExam;
 import models.User;
@@ -137,6 +133,19 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case GET_QUESTION_LIST_BY_CODE:
+			String examCode = (String) modelWrapperFromClient.getElement();
+			ExamProcess examInProcess = examsInProcess.get(examCode);
+
+			questionListByExamID = databaseController.getExamQuestionsList(examInProcess.getExamId());
+			modelWrapperToClient = new ModelWrapper<ExamQuestion>(questionListByExamID, GET_QUESTION_LIST_BY_CODE);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		case GET_EXECUTED_EXAM_LIST_BY_EXECUTOR:
 			String currentTeacherID = (String) modelWrapperFromClient.getElement();
 			List<ExecutedExam> executedExamListByExecutor = databaseController
@@ -162,7 +171,8 @@ public class Server extends AbstractServer {
 			break;
 
 		case SAVE_APPROVED_STUDENTS:
-			List<StudentExecutedExam> approvedStudents = (List<StudentExecutedExam>) modelWrapperFromClient.getElements();
+			List<StudentExecutedExam> approvedStudents = (List<StudentExecutedExam>) modelWrapperFromClient
+					.getElements();
 			databaseController.saveApprovedStudents(approvedStudents);
 			try {
 				client.sendToClient(modelWrapperFromClient);
@@ -174,6 +184,7 @@ public class Server extends AbstractServer {
 		case START_EXAM:
 			try {
 				ExamProcess examProcess = (ExamProcess) modelWrapperFromClient.getElement();
+				System.out.println(examProcess);
 				if (!examsInProcess.containsKey(examProcess.getCode())) {
 					examsInProcess.put(examProcess.getCode(), examProcess);
 					modelWrapperToClient = new ModelWrapper<>(START_EXAM_SUCCESS);
@@ -192,13 +203,19 @@ public class Server extends AbstractServer {
 			examID = examsInProcess.get(code).getExamId();
 			databaseController.saveExecutedExam(examsInProcess.get(code));
 			examsInProcess.remove(code);
+			// TODO NEED TO CHECK IF THE EXAM IS EMPTY, HAVE NO STUDENT !!!
+
+			System.out.println(studentInExam);
+
 			if (!studentInExam.get(code).isEmpty())
 				checkAlert(code, examID);
+
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			break;
 
 		case CREATE_QUESTION:
@@ -322,22 +339,21 @@ public class Server extends AbstractServer {
 
 		case INSERT_STUDENT_TO_EXAM:
 			// Get code and check if examID exist, if so insert student to exam in DB
+			StudentExecutedExam newStudent = (StudentExecutedExam) modelWrapperFromClient.getElement();
+			code = newStudent.getCode();
+			studentID = newStudent.getStudentID();
 
-			ArrayList<String> elements = (ArrayList<String>) modelWrapperFromClient.getElements();
-			studentID = elements.get(0);
-			String userCode = elements.get(1);
-			String type = elements.get(2);
-			if (examsInProcess.containsKey(userCode)) {
-				List<StudentInExam> temp = studentInExam.get(userCode);
+			if (examsInProcess.containsKey(code)) {
+				List<StudentInExam> temp = studentInExam.get(code);
 
 				if (temp == null) {
 					temp = new ArrayList<>();
 				}
 				StudentInExam student = new StudentInExam(studentID, client);
 				temp.add(student);
-				studentInExam.put(userCode, temp);
+				studentInExam.put(code, temp);
 
-				ExamProcess examProcess = examsInProcess.get(userCode);
+				ExamProcess examProcess = examsInProcess.get(code);
 				databaseController.insertToExecutedExamByStudent(studentID, examProcess);
 				modelWrapperToClient = new ModelWrapper<>(examProcess, INSERT_STUDENT_TO_EXAM);
 			} else {
@@ -352,7 +368,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_EXAM_ID:
-			String examCode = (String) modelWrapperFromClient.getElement();
+			examCode = (String) modelWrapperFromClient.getElement();
 			examID = databaseController.GetExamID(examCode);
 			modelWrapperToClient = new ModelWrapper<>(examID, GET_EXAM_ID);
 			try {
@@ -373,13 +389,12 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case INSERT_STUDENT_GRADE:
-			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
-			studentID = elements.get(0);
-			examID = elements.get(1);
-			String grade = elements.get(2);
-			databaseController.insertStudentGrade(studentID, examID, grade);
-			modelWrapperToClient = new ModelWrapper<>(INSERT_STUDENT_GRADE);
+		case GET_EXAM_BY_CODE:
+			code = (String) modelWrapperFromClient.getElement();
+			ExamProcess examProcess = examsInProcess.get(code);
+			exam = databaseController.GetExamByExamID(examProcess.getExamId());
+			System.out.println(exam);
+			modelWrapperToClient = new ModelWrapper<>(exam, GET_EXAM_BY_CODE);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -387,43 +402,55 @@ public class Server extends AbstractServer {
 			}
 			break;
 
-		case INSERT_STUDENT_ANSWERS:
-			elements = (ArrayList<String>) modelWrapperFromClient.getElements();
-			String[] AnswersArr = (String[]) modelWrapperFromClient.getElements2();
-			studentID = elements.get(0);
-			userCode = elements.get(1);
+		case INSERT_FINISHED_STUDENT:
+			StudentInExam finishedStudent = (StudentInExam) modelWrapperFromClient.getElement();
+			code = finishedStudent.getCode();
+			examInProcess = examsInProcess.get(code);
+			examID = examsInProcess.get(code).getExamId();
+			studentID = finishedStudent.getStudentID();
+			String finalGrade = finishedStudent.getGrade();
+			String teacherID = examInProcess.getTeacherID();
 
-			for (StudentInExam student : studentInExam.get(userCode)) {
+			List<StudentInExam> studentsInExam = studentInExam.get(code);
+
+			for (StudentInExam student : studentsInExam) {
 				if (student.getStudentID().equals(studentID)) {
-					student.setSolution(AnswersArr);
+					String[] solution = finishedStudent.getSolution();
+					System.out.println(solution);
+					student.setSolution(solution);
+					System.out.println(student.getSolution());
 				}
 			}
 
-			modelWrapperToClient = new ModelWrapper<>(INSERT_STUDENT_GRADE);
+			System.out.println(studentInExam);
+
+			databaseController.insertFinishedStudent(studentID, examID, teacherID, finalGrade);
+			modelWrapperToClient = new ModelWrapper<>(INSERT_FINISHED_STUDENT);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			break;
 
 		case GET_EXAM_IN_PROCESS:
-			userCode = (String) modelWrapperFromClient.getElement();
-
-			modelWrapperToClient = new ModelWrapper<>(examsInProcess.get(userCode), GET_EXAM_IN_PROCESS);
-
-			try {
-				client.sendToClient(modelWrapperToClient);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			/*
+			 * userCode = (String) modelWrapperFromClient.getElement();
+			 * 
+			 * modelWrapperToClient = new ModelWrapper<>(examsInProcess.get(userCode),
+			 * GET_EXAM_IN_PROCESS);
+			 * 
+			 * try { client.sendToClient(modelWrapperToClient); } catch (IOException e) {
+			 * e.printStackTrace(); }
+			 */
 			break;
 
 		case GET_EXECUTED_EXAM_STUDENT_LIST:
 			List<String> parameters = (List<String>) modelWrapperFromClient.getElements();
 			String examId = parameters.get(0);
 			String date = parameters.get(1);
-			String teacherID = parameters.get(2);
+			teacherID = parameters.get(2);
 			List<StudentExecutedExam> studentList = databaseController.getExecutedExamStudentList(examId, date,
 					teacherID);
 			modelWrapperToClient = new ModelWrapper<>(studentList, GET_EXECUTED_EXAM_STUDENT_LIST);
@@ -511,13 +538,17 @@ public class Server extends AbstractServer {
 	public void checkAlert(String code, String examID) {
 		int numOfStudents = studentInExam.get(code).size();
 		int numOfQuestions = studentInExam.get(code).get(0).getSolution().length;
+
 		List<StudentInExam> studentsList = studentInExam.get(code);
 		int wrong_match = 0;
 		Integer AlertPercent = 0;
 		Exam exam = databaseController.GetExamByExamID(examID);
+		System.out.println(exam);
 
 		if (numOfStudents == 0) {
-			databaseController.updateAlertValue(studentsList.get(0).getStudentID(), examID, "0%");
+			String studentID = studentsList.get(0).getStudentID();
+			String teacherID = exam.getTeacherID();
+			databaseController.updateAlertValue(studentID, examID, teacherID, "0%");
 			studentsList.get(0).setFinished(true);
 			return;
 		}
@@ -540,8 +571,11 @@ public class Server extends AbstractServer {
 			}
 			wrong_match = Collections.max(Arrays.asList(diff_arr));
 			AlertPercent = (wrong_match * 100) / (numOfQuestions);
-			databaseController.updateAlertValue(studentsList.get(i).getStudentID(), examID,
-					AlertPercent.toString() + "%");
+			String studentID = studentsList.get(i).getStudentID();
+			String alert = AlertPercent.toString() + "%";
+			String teacherID = exam.getTeacherID();
+
+			databaseController.updateAlertValue(studentID, examID, teacherID, alert);
 			studentsList.get(i).setFinished(true);
 		}
 

@@ -22,6 +22,8 @@ public class StudentExecutedExam implements Serializable {
 	private String execDate;
 	private String testType;
 	private String grade;
+	private String code;
+	private String alert;
 	private boolean approved;
 	private WordFile copy;
 
@@ -41,7 +43,7 @@ public class StudentExecutedExam implements Serializable {
 	}
 
 	public StudentExecutedExam(String examID, String studentID, String studentName, String teacherId, String subject,
-			String course, String execDate, String testType, String grade, boolean approved) {
+			String course, String execDate, String testType, String grade, String alert, boolean approved) {
 		super();
 		this.examID = examID;
 		this.studentID = studentID;
@@ -53,6 +55,15 @@ public class StudentExecutedExam implements Serializable {
 		this.testType = testType;
 		this.grade = grade;
 		this.approved = approved;
+		this.alert = alert;
+	}
+
+	public StudentExecutedExam(String examID, String studentID, String code, String teacherId) {
+		super();
+		this.examID = examID;
+		this.studentID = studentID;
+		TeacherId = teacherId;
+		this.code = code;
 	}
 
 	public String getExamID() {
@@ -134,13 +145,29 @@ public class StudentExecutedExam implements Serializable {
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
-	
+
 	public WordFile getCopy() {
 		return copy;
 	}
 
 	public void setCopy(WordFile copy) {
 		this.copy = copy;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	public String getAlert() {
+		return alert;
+	}
+
+	public void setAlert(String alert) {
+		this.alert = alert;
 	}
 
 	@Override

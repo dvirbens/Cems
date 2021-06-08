@@ -34,7 +34,7 @@ import models.ExecutedExam;
 import models.StudentExecutedExam;
 import models.StudentExecutedExamUI;
 
-public class StudentListController implements Initializable {
+public class GradeApproveStudentListController implements Initializable {
 
 	@FXML
 	private TableView<StudentExecutedExamUI> tvSutdents;
@@ -67,11 +67,11 @@ public class StudentListController implements Initializable {
 
 	private static List<StudentExecutedExamUI> executedExamStudentList;
 
-	public StudentListController() {
+	public GradeApproveStudentListController() {
 	}
 
-	public StudentListController(ExecutedExam executedExam) {
-		StudentListController.executedExam = executedExam;
+	public GradeApproveStudentListController(ExecutedExam executedExam) {
+		GradeApproveStudentListController.executedExam = executedExam;
 	}
 
 	public void start() {
@@ -108,7 +108,7 @@ public class StudentListController implements Initializable {
 		String teacherID = approvedStudents.get(0).getTeacherId();
 		String execDate = approvedStudents.get(0).getExecDate();
 		String testType = approvedStudents.get(0).getTestType();
-		
+
 		double avg = avgAndMedian[0];
 		double median = avgAndMedian[1];
 
@@ -179,7 +179,6 @@ public class StudentListController implements Initializable {
 		tcApproval.setCellValueFactory(new PropertyValueFactory<StudentExecutedExamUI, CheckBox>("gradeApproval"));
 
 		ObservableList<StudentExecutedExamUI> executedExam = FXCollections.observableArrayList();
-
 		executedExamStudentList = changeToUIStudent(Client.getExecutedExamStudentList());
 		executedExam.addAll(executedExamStudentList);
 		tvSutdents.setItems(executedExam);
@@ -188,10 +187,10 @@ public class StudentListController implements Initializable {
 
 	private List<StudentExecutedExamUI> changeToUIStudent(List<StudentExecutedExam> executedExamStudentList) {
 		List<StudentExecutedExamUI> studentsUI = new ArrayList<>();
-		for (StudentExecutedExam student : executedExamStudentList) {
-			StudentExecutedExamUI studentUI = new StudentExecutedExamUI(student);
+		for (StudentExecutedExam studentExecutedExam : executedExamStudentList) {
+			StudentExecutedExamUI studentUI = new StudentExecutedExamUI(studentExecutedExam);
 
-			TextField tfGrade = new TextField(student.getGrade());
+			TextField tfGrade = new TextField(studentExecutedExam.getGrade());
 			studentUI.setTfGrade(tfGrade);
 
 			CheckBox approveGrade = new CheckBox();
@@ -206,7 +205,11 @@ public class StudentListController implements Initializable {
 					}
 				}
 			});
+
 			studentUI.setGradeApproval(approveGrade);
+
+			if (studentUI.isApproved())
+				studentUI.getGradeApproval().selectedProperty().set(true);
 			studentsUI.add(studentUI);
 		}
 

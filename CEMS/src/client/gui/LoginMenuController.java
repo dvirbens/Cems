@@ -49,7 +49,7 @@ public class LoginMenuController implements Initializable {
 		if (!ClientUI.isServerStatus()) {
 			lWrongInput.setText("Cant connect to server");
 			lWrongInput.setVisible(true);
-			
+
 		} else {
 
 			if (userID.isEmpty() || password.isEmpty()) {
@@ -60,7 +60,6 @@ public class LoginMenuController implements Initializable {
 				List<String> userInfo = new ArrayList<>();
 				userInfo.add(userID);
 				userInfo.add(password);
-
 				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
 				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 

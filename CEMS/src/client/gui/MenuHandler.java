@@ -120,7 +120,7 @@ public class MenuHandler {
 		try {
 			Pane gradeApprovalPane = (Pane) FXMLLoader.load(getClass().getResource("GradeApproval.fxml"));
 			mainFrame.setCenter(gradeApprovalPane);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -136,26 +136,19 @@ public class MenuHandler {
 	}
 
 	public void setStudentListsScreen(ExecutedExam executedExam) {
-		StudentListController studentListController = new StudentListController(executedExam);
+		GradeApproveStudentListController studentListController = new GradeApproveStudentListController(executedExam);
 		studentListController.start();
 	}
 
-	public void setManualTestScreen() {
-		try {
-			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
-			mainFrame.setCenter(manualTestPane);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void setManualTestScreen(String code) {
+		StudentExecuteManualExam studentExecuteManualExam = new StudentExecuteManualExam(code);
+		studentExecuteManualExam.start();
+
 	}
 
-	public void setComputerizedTestScreen() {
-		try {
-			Pane computerizedTestPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedTest.fxml"));
-			mainFrame.setCenter(computerizedTestPane);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void setComputerizedTestScreen(String code) {
+		StudentExecuteComputerizedExam studentExecuteComputerizedExam = new StudentExecuteComputerizedExam(code);
+		studentExecuteComputerizedExam.start();
 	}
 
 	public void setEnterExamScreen() {

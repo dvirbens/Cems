@@ -1,10 +1,11 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.INSERT_STUDENT_ANSWERS;
-import static common.ModelWrapper.Operation.INSERT_STUDENT_GRADE;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_CODE;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_CODE;
+import static common.ModelWrapper.Operation.INSERT_FINISHED_STUDENT;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -40,12 +42,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import models.Exam;
 import models.ExamQuestion;
 import models.ExamQuestion.NoteType;
+import models.StudentExecutedExam;
+import models.StudentInExam;
 
-public class StudentExecComputerizedTest implements Initializable {
+public class StudentExecuteComputerizedExam implements Initializable {
 
 	@FXML
 	private TableView<ExamQuestion> tvQuestions;
@@ -119,22 +124,50 @@ public class StudentExecComputerizedTest implements Initializable {
 
 	private String examID;
 
-	public void initialize(URL location, ResourceBundle resources) {
-		// Start time counter
-		startTime = System.currentTimeMillis();
-		setRemainingTime();
+	private static String code;
 
-		// Get ExamID
-		examID = Client.getExamProcess().getExamId();
+	public StudentExecuteComputerizedExam() {
+
+	}
+
+	public StudentExecuteComputerizedExam(String code) {
+		StudentExecuteComputerizedExam.code = code;
+
+	}
+
+	public void start() {
+		try {
+			Pane computerizedTestPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedTest.fxml"));
+			MainGuiController.getMenuHandler().getMainFrame().setCenter(computerizedTestPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void initialize(URL location, ResourceBundle resources) {
+
+		// Start time counter
+		// startTime = System.currentTimeMillis();
+		// setRemainingTime();
 
 		// Get questions
-		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(examID, GET_QUESTION_LIST_BY_EXAM_ID);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		ModelWrapper<String> modelWrapperQuestionList = new ModelWrapper<>(code, GET_QUESTION_LIST_BY_CODE);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapperQuestionList);
 
 		// Get exam
-		modelWrapper = new ModelWrapper<String>(examID, GET_EXAM_BY_EXAM_ID);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		ModelWrapper<String> modelWrapperEaxmDetails = new ModelWrapper<>(code, GET_EXAM_BY_CODE);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapperEaxmDetails);
+
 		exam = Client.getExam();
+
+		String examID = exam.getId();
+		String userID = Client.getUser().getUserID();
+		String teacherID = exam.getTeacherID();
+
+		StudentExecutedExam newStudent = new StudentExecutedExam(examID, userID, code, teacherID);
+		ModelWrapper<StudentExecutedExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent,
+				INSERT_STUDENT_TO_EXAM);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapperInsertStudent);
 
 		answersArr = new String[exam.getExamQuestions().size()];
 
@@ -235,7 +268,7 @@ public class StudentExecComputerizedTest implements Initializable {
 	}
 
 	public long calcTime() {
-		long elapsedTime = duration  * 1000 - (System.currentTimeMillis() - startTime);
+		long elapsedTime = duration * 1000 - (System.currentTimeMillis() - startTime);
 		long elapsedSeconds = elapsedTime / 1000;
 		long secondsDisplay = elapsedSeconds % 60;
 		long elapsedMinutes = elapsedSeconds / 60;
@@ -308,21 +341,13 @@ public class StudentExecComputerizedTest implements Initializable {
 				}
 			}
 		}
-		// Insert grade to DB
-		ArrayList<String> elements = new ArrayList<>();
-		elements.add(Client.getUser().getUserID());
-		elements.add(examID);
-		elements.add(grade.toString());
 
-		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(elements, INSERT_STUDENT_GRADE);
+		String userID = Client.getUser().getUserID();
+		String finalGrade = grade.toString();
+
+		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, answersArr);
+		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
-		ArrayList<String> elements2 = new ArrayList<>();
-		elements2.add(Client.getUser().getUserID());
-		elements2.add(Client.getExamCode());
-
-		ModelWrapper<String> modelWrapper2 = new ModelWrapper<String>(elements2, answersArr, INSERT_STUDENT_ANSWERS);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper2);
 		MainGuiController.getMenuHandler().setMainScreen();
 	}
 

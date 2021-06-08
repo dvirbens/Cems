@@ -55,10 +55,6 @@ CREATE TABLE Course (
     PRIMARY KEY(courseID,subjectID)
 );
 
-//
-//
-
-
 CREATE TABLE ExecutedExam (
 	examID varchar(255),
 	executeTeacherID varchar(255),
@@ -86,8 +82,8 @@ CREATE TABLE ExecutedExamByStudent (
     Grade varchar(3),
     Copy blob,
     Approved boolean,
-    Alert varchar(255)
-   	PRIMARY KEY(studentID,examID,executeDate)
+    Alert varchar(255),
+   	PRIMARY KEY(studentID,examID,ExecDate)
 );
 
 CREATE TABLE StudentUploadManualTest (

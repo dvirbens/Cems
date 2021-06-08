@@ -632,7 +632,7 @@ public class DatabaseController {
 				}
 				String studentName = getUserName(studentID);
 				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, studentName, teacherID, subject,
-						course, execDate, testType, grade, approval);
+						course, execDate, testType, grade, alert, approval);
 
 				examList.add(exam);
 			}
@@ -816,14 +816,15 @@ public class DatabaseController {
 	 *                   executed the exam.
 	 * @return
 	 */
-	public void insertStudentGrade(String studentID, String examID, String grade) {
-		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ?;";
+	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade) {
+		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
 
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, grade);
 			stmt.setString(2, studentID);
 			stmt.setString(3, examID);
+			stmt.setString(4, teacherID);
 
 			stmt.executeUpdate();
 			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade " + grade);
@@ -1034,7 +1035,7 @@ public class DatabaseController {
 				String studentName = getUserName(studentID);
 
 				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentID, studentName, teacherID,
-						subject, course, execDate, testType, grade, approved);
+						subject, course, execDate, testType, grade, alert, approved);
 
 				studentList.add(executedStudent);
 			}
@@ -1055,13 +1056,14 @@ public class DatabaseController {
 	 *                 percent.
 	 * @return
 	 */
-	public void updateAlertValue(String studentID, String examID, String AlertPercent) {
-		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ?;";
+	public void updateAlertValue(String studentID, String examID, String teacherID, String AlertPercent) {
+		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, AlertPercent);
 			stmt.setString(2, studentID);
 			stmt.setString(3, examID);
+			stmt.setString(4, teacherID);
 
 			stmt.executeUpdate();
 			// System.out.println("Student ID: " + studentID + " in examID: " + examID + "
@@ -1077,7 +1079,7 @@ public class DatabaseController {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			for (StudentExecutedExam student : approvedStudents) {
-				stmt.setBoolean(1, true);
+				stmt.setBoolean(1, student.isApproved());
 				stmt.setString(2, student.getGrade());
 				stmt.setString(3, student.getStudentID());
 				stmt.setString(4, student.getExamID());
@@ -1093,17 +1095,18 @@ public class DatabaseController {
 	}
 
 	public void updateStatistic(ExecutedExam executedExam) {
-		System.out.println(executedExam);
-		/*
-		 * String query =
-		 * "UPDATE executedexam SET avg = ?, median=? WHERE studentID = ? AND examID = ? AND ExecDate= ?;"
-		 * ; try { PreparedStatement stmt = conn.prepareStatement(query); for (String[]
-		 * parameters : approvedStudents) { stmt.setBoolean(1, true); stmt.setString(2,
-		 * parameters[3]); stmt.setString(3, parameters[0]); stmt.setString(4,
-		 * parameters[1]); stmt.setString(5, parameters[2]); stmt.executeUpdate(); }
-		 * 
-		 * } catch (SQLException e) { e.printStackTrace(); }
-		 * 
-		 */
+		String query = "UPDATE executedexam SET avg = ?, median=? WHERE examID = ? AND executeDate = ? AND executeTeacherID= ?;";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setDouble(1, executedExam.getAvg());
+			stmt.setDouble(2, executedExam.getMedian());
+			stmt.setString(3, executedExam.getId());
+			stmt.setString(4, executedExam.getExecDate());
+			stmt.setString(5, executedExam.getTeacherID());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

@@ -100,6 +100,7 @@ public class CreateExamController implements Initializable {
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST_BY_SUBJECT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+
 		addQuestionList();
 
 	}
@@ -208,7 +209,7 @@ public class CreateExamController implements Initializable {
 		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
 		cbExamCourse.getItems().clear();
 		cbExamCourse.getItems().addAll(Client.getSubjectCollection().getCourseListBySubject(subject));
-
+	
 	}
 
 	/**

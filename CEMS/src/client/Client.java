@@ -209,15 +209,20 @@ public class Client extends AbstractClient {
 				examQuestions = (List<ExamQuestion>) modelWrapperFromServer.getElements();
 				break;
 
+			case GET_QUESTION_LIST_BY_CODE:
+				examQuestions = (List<ExamQuestion>) modelWrapperFromServer.getElements();
+				break;
+
 			case GET_EXAM_BY_EXAM_ID:
+				Client.setExam((Exam) modelWrapperFromServer.getElement());
+				break;
+
+			case GET_EXAM_BY_CODE:
 				Client.setExam((Exam) modelWrapperFromServer.getElement());
 				break;
 
 			case STUDENT_TIME_EXTENSION:
 				Client.setTimeExtension(Long.parseLong((String) modelWrapperFromServer.getElement()));
-				break;
-
-			case INSERT_STUDENT_GRADE:
 				break;
 
 			case GET_EXECUTED_EXAM_LIST_BY_CREATOR:

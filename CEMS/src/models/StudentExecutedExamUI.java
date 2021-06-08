@@ -13,24 +13,22 @@ public class StudentExecutedExamUI extends StudentExecutedExam {
 	private String examID;
 	private String studentName;
 	private WordFile copy;
-	private boolean approved;
-	private String Alert;
 	private CheckBox gradeApproval;
 	private TextField tfGrade;
 	private JFXButton getCopy;
 
-	public StudentExecutedExamUI(StudentExecutedExam student) {
-		super(student.getExamID(), student.getStudentID(), student.getStudentName(), student.getTeacherId(),
-				student.getSubject(), student.getCourse(), student.getExecDate(), student.getTestType(),
-				student.getGrade(), student.isApproved());
-		System.out.println(student.getExamID());
-		this.examID = student.getExamID();
-		this.studentName = student.getStudentName();
+	public StudentExecutedExamUI(StudentExecutedExam studentExecutedExam) {
+		super(studentExecutedExam.getExamID(), studentExecutedExam.getStudentID(), studentExecutedExam.getStudentName(),
+				studentExecutedExam.getTeacherId(), studentExecutedExam.getSubject(), studentExecutedExam.getCourse(),
+				studentExecutedExam.getExecDate(), studentExecutedExam.getTestType(), studentExecutedExam.getGrade(),
+				studentExecutedExam.getAlert(), studentExecutedExam.isApproved());
+		this.examID = studentExecutedExam.getExamID();
+		this.studentName = studentExecutedExam.getStudentName();
 	}
 
 	public StudentExecutedExamUI(String examID, String studentID, String studentName, String teacherId, String subject,
-			String course, String execDate, String testType, String grade, boolean approved) {
-		super(examID, studentID, studentName, teacherId, subject, course, execDate, testType, grade, approved);
+			String course, String execDate, String testType, String grade, String alert, boolean approved) {
+		super(examID, studentID, studentName, teacherId, subject, course, execDate, testType, grade, alert, approved);
 	}
 
 	public WordFile getCopy() {
@@ -39,22 +37,6 @@ public class StudentExecutedExamUI extends StudentExecutedExam {
 
 	public void setCopy(WordFile copy) {
 		this.copy = copy;
-	}
-
-	public boolean isApproved() {
-		return approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
-	public String getAlert() {
-		return Alert;
-	}
-
-	public void setAlert(String alert) {
-		Alert = alert;
 	}
 
 	public CheckBox getGradeApproval() {
@@ -100,8 +82,7 @@ public class StudentExecutedExamUI extends StudentExecutedExam {
 	@Override
 	public String toString() {
 		return "StudentExecutedExamUI [examID=" + examID + ", studentName=" + studentName + ", copy=" + copy
-				+ ", approved=" + approved + ", Alert=" + Alert + ", gradeApproval=" + gradeApproval + ", tfGrade="
-				+ tfGrade + ", getCopy=" + getCopy + "]";
+				+ ", gradeApproval=" + gradeApproval + ", tfGrade=" + tfGrade + ", getCopy=" + getCopy + "]";
 	}
 
 }
