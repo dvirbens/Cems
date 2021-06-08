@@ -1,6 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_COURSE;
+import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
 import java.util.List;
@@ -23,6 +23,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -60,6 +61,12 @@ public class OverallStatistic implements Initializable {
 
 	@FXML
 	private NumberAxis y_Grades;
+	
+	@FXML
+	private Label avg;
+
+	@FXML
+	private Label median;
 
 	@FXML
 	private BarChart<String, Double> graph;
@@ -128,32 +135,30 @@ public class OverallStatistic implements Initializable {
 
 					List<ExecutedExam> statisticList = Client.getExecExams();
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
+					int sum_avg = 0;
 					for (ExecutedExam exams : statisticList) {
 						String newData = exams.getExecutorTeacherName() + "\n" + exams.getExecDate() + "\n"
 								+ exams.getExecTime();
-						series.getData().add(new XYChart.Data<String, Double>(newData, Double.valueOf(exams.getAvg())));
+						series.getData().add(new XYChart.Data<String, Double>(newData, Double.valueOf(sum_avg += exams.getAvg())));
 					}
-
+					int half = (int)statisticList.size();
+					sum_avg /= half;
+					if(half%2 != 0) 
+						median.setText(Double.toString(statisticList.get(half/2+1).getAvg()));
+					else 
+						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
+					avg.setText(Integer.toString(sum_avg));
 					graph.getData().addAll(series);
 				}
 			});
-
-			// x_Exam.setTickLabelRotation(45);
-			// Set Font
-			// x_Exam.setTickLabelFont(new Font("Arial", 12));
-			// x_Exam.setAnimated(false);
-
 			break;
 		case STUDENT:
-			/*
-			 * set.getData().add(new XYChart.Data<String, Double>("JACOB", 85.0));
-			 * set.getData().add(new XYChart.Data<String, Double>("ARIK", 90.0));
-			 * set.getData().add(new XYChart.Data<String, Double>("DVIR", 100.0));
-			 * set.getData().add(new XYChart.Data<String, Double>("SHENHAV", 70.0));
-			 * set.getData().add(new XYChart.Data<String, Double>("AVIEL", 80.0));
-			 * graph.getData().addAll(set);
-			 */
-
+			graph.setAnimated(false);
+			graph.getData().clear();
+			
+			String student_select = studentFiltter.getText();
+			ModelWrapper<String> modelWrapper = new ModelWrapper<>(student_select,GET_EXECUTED_EXAM_LIST_BY_STUDENT);
+			
 			break;
 		case TEACHER:
 			/*

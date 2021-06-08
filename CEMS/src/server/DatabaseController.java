@@ -427,6 +427,17 @@ public class DatabaseController {
 		}
 		return set;
 	}
+	
+	public List<ExecutedExam> getGradesForStatisticByStudent(String student_select){
+		List<ExecutedExam> set = new ArrayList<>();
+//		try {
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");
+//		}
+		return set;
+		
+	}
 
 	/**
 	 * Get all exams who's has a specific subject using appropriate query by

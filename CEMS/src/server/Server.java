@@ -122,6 +122,17 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+			
+		case GET_EXECUTED_EXAM_LIST_BY_STUDENT:
+			String student_name = (String) modelWrapperFromClient.getElement();
+			List<ExecutedExam> set1 = databaseController.getGradesForStatisticByStudent(student_name);
+			modelWrapperToClient = new ModelWrapper<>(set1, GET_EXECUTED_EXAM_LIST_BY_STUDENT);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
 
 		case GET_QUESTION_LIST_BY_EXAM_ID:
 			String examID = (String) modelWrapperFromClient.getElement();

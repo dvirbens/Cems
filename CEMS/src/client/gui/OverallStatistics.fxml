@@ -57,7 +57,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label prefHeight="27.0" prefWidth="60.0" text="78">
+            <Label fx:id="avg" prefHeight="27.0" prefWidth="60.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label prefHeight="27.0" prefWidth="60.0" text="67">
+            <Label fx:id="median" prefHeight="27.0" prefWidth="60.0">
                <font>
                   <Font size="14.0" />
                </font>
