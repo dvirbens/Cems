@@ -141,13 +141,13 @@ public class MenuHandler {
 	}
 
 	public void setManualTestScreen(String code) {
-		StudentExecuteManualExam studentExecuteManualExam = new StudentExecuteManualExam(code);
+		ExecuteManualExamController studentExecuteManualExam = new ExecuteManualExamController(code);
 		studentExecuteManualExam.start();
 
 	}
 
 	public void setComputerizedTestScreen(String code) {
-		StudentExecuteComputerizedExam studentExecuteComputerizedExam = new StudentExecuteComputerizedExam(code);
+		ExecuteComputerizedExamController studentExecuteComputerizedExam = new ExecuteComputerizedExamController(code);
 		studentExecuteComputerizedExam.start();
 	}
 

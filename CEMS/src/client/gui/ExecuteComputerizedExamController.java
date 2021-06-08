@@ -50,7 +50,7 @@ import models.ExamQuestion.NoteType;
 import models.StudentExecutedExam;
 import models.StudentInExam;
 
-public class StudentExecuteComputerizedExam implements Initializable {
+public class ExecuteComputerizedExamController implements Initializable {
 
 	@FXML
 	private TableView<ExamQuestion> tvQuestions;
@@ -126,12 +126,12 @@ public class StudentExecuteComputerizedExam implements Initializable {
 
 	private static String code;
 
-	public StudentExecuteComputerizedExam() {
+	public ExecuteComputerizedExamController() {
 
 	}
 
-	public StudentExecuteComputerizedExam(String code) {
-		StudentExecuteComputerizedExam.code = code;
+	public ExecuteComputerizedExamController(String code) {
+		ExecuteComputerizedExamController.code = code;
 
 	}
 

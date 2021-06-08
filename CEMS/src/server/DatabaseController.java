@@ -691,7 +691,7 @@ public class DatabaseController {
 	 * @return
 	 */
 	public void UploadFile(StudentExecutedExam studentExam, WordFile file) {
-		String sql = "INSERT INTO StudentUploadManualTest VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO ExecutedExamByStudent VALUES (?,?,?,?,?,?)";
 
 		try {
 			InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());

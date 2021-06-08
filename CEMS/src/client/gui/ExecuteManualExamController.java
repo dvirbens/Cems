@@ -1,7 +1,7 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXAM_IN_PROCESS;
+import static common.ModelWrapper.Operation.UPLOAD_FILE;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -10,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,12 +35,7 @@ import models.Exam;
 import models.ExamProcess;
 import models.WordFile;
 
-public class StudentExecuteManualExam implements Initializable, Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class ExecuteManualExamController implements Initializable {
 
 	@FXML
 	private Button btDownload;
@@ -73,20 +67,16 @@ public class StudentExecuteManualExam implements Initializable, Serializable {
 
 	private long duration;
 
-	private String examID;
-
 	private ExamProcess examProcess;
 
-	private Exam exam;
+	private static String code;
 
-	private String code;
-
-	StudentExecuteManualExam() {
+	public ExecuteManualExamController() {
 
 	}
 
-	StudentExecuteManualExam(String code) {
-		this.code = code;
+	public ExecuteManualExamController(String code) {
+		ExecuteManualExamController.code = code;
 	}
 
 	public void start() {
@@ -96,24 +86,23 @@ public class StudentExecuteManualExam implements Initializable, Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		btChooseFile.setVisible(false);
 		tfFileName.setVisible(false);
 		btUpload.setVisible(false);
 
-		// Start time counter
+		// Start time counter 
 		startTime = System.currentTimeMillis();
 		setRemainingTime();
 
-		// Get ExamID
-		examID = Client.getExamProcess().getExamId();
-
-		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(Client.getExamCode(), GET_EXAM_IN_PROCESS);
+		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(code, GET_EXAM_IN_PROCESS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		// exam = Client.getExam();
+
 		examProcess = Client.getExamProcess();
 
 		String teacherTime = Client.getExamProcess().getTime();
