@@ -3,6 +3,8 @@ package client.gui;
 import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,6 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import models.ExecutedExam;
+import models.StudentExecutedExam;
 
 public class OverallStatistic implements Initializable {
 
@@ -132,18 +135,19 @@ public class OverallStatistic implements Initializable {
 					ModelWrapper<String> modelWrapper = new ModelWrapper<>(course_select,
 							GET_EXECUTED_EXAM_LIST_BY_COURSE);
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
+					int sum_avg = 0;
 					List<ExecutedExam> statisticList = Client.getExecExams();
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
-					int sum_avg = 0;
 					for (ExecutedExam exams : statisticList) {
 						String newData = exams.getExecutorTeacherName() + "\n" + exams.getExecDate() + "\n"
 								+ exams.getExecTime();
 						series.getData().add(new XYChart.Data<String, Double>(newData, Double.valueOf(sum_avg += exams.getAvg())));
 					}
 					int half = (int)statisticList.size();
-					sum_avg /= half;
+					sum_avg = half/2;
 					if(half%2 != 0) 
+//						Collections.sort(statisticList);
+//				
 						median.setText(Double.toString(statisticList.get(half/2+1).getAvg()));
 					else 
 						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
@@ -152,13 +156,32 @@ public class OverallStatistic implements Initializable {
 				}
 			});
 			break;
+			
 		case STUDENT:
-			graph.setAnimated(false);
-			graph.getData().clear();
-			
-			String student_select = studentFiltter.getText();
-			ModelWrapper<String> modelWrapper = new ModelWrapper<>(student_select,GET_EXECUTED_EXAM_LIST_BY_STUDENT);
-			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					graph.setAnimated(false);
+					graph.getData().clear();
+					
+					String student_select = studentFiltter.getText();
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(student_select,GET_EXECUTED_EXAM_LIST_BY_STUDENT);
+					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+					List<StudentExecutedExam> statisticList = Client.getExecutedExamStudentList();
+					XYChart.Series<String, Double> series = new XYChart.Series<>();
+					for (StudentExecutedExam student_exams : statisticList) {
+						series.getData().add(new XYChart.Data<String, Double>(student_exams.getCourse() , Double.parseDouble(student_exams.getGrade())));
+					}
+					int half = (int)statisticList.size();
+					int sum_avg = half/2;
+					if(half%2 != 0) 
+//						median.setText(Double.toString(statisticList.get(half/2+1).getGrade()));
+//					else 
+//						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
+					avg.setText(Integer.toString(sum_avg));
+					graph.getData().addAll(series);
+				}
+			});
 			break;
 		case TEACHER:
 			/*
@@ -223,5 +246,14 @@ public class OverallStatistic implements Initializable {
 		StatisticNoteNavigation(event);
 
 		op = Operation.TEACHER;
+	}
+	
+	class StatisticByCourseComparator implements Comparator<ExecutedExam> {
+
+	    @Override
+	    public int compare(ExecutedExam o1, ExecutedExam o2) {
+//	        return o1.getAvg().compareTo(o2.getAvg());
+	    	return 0;
+	    }
 	}
 }

@@ -21,7 +21,7 @@
 
 <Pane fx:id="PaneOverallStatistic" prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.OverallStatistic">
    <children>
-      <HBox fx:id="hBoxSelection" alignment="CENTER" layoutY="54.0" prefHeight="27.0" prefWidth="754.0" stylesheets="@../../../GuiPrototype/PrincipleScreen/styleSelection.css">
+      <HBox fx:id="hBoxSelection" alignment="CENTER" layoutY="54.0" prefHeight="27.0" prefWidth="754.0">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Statistic by:" wrappingWidth="71.25000970065594">
                <font>
@@ -89,8 +89,8 @@
          </font>
       </Text>
       <JFXComboBox fx:id="courseSelect" layoutX="305.0" layoutY="125.0" onAction="#statisticByCourse" prefHeight="25.0" prefWidth="145.0" promptText="Course" />
-      <JFXTextField fx:id="studentFiltter" layoutX="310.0" layoutY="125.0" onAction="#statisticByStudent" text="Student" />
-      <JFXTextField fx:id="teacherFiltter" layoutX="310.0" layoutY="125.0" onAction="#statisticByTeacher" text="Teacher" />
+      <JFXTextField fx:id="studentFiltter" layoutX="310.0" layoutY="125.0" onAction="#statisticByStudent" text="StudentID" />
+      <JFXTextField fx:id="teacherFiltter" layoutX="310.0" layoutY="125.0" onAction="#statisticByTeacher" text="TeacherID" />
       <JFXButton fx:id="displayBtn" layoutX="497.0" layoutY="114.0" onAction="#diplayGrapgh" prefHeight="46.0" prefWidth="95.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Display" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Italic" size="19.0" />

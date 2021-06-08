@@ -110,6 +110,11 @@ public class Client extends AbstractClient {
 		if (msg != null) {
 			ModelWrapper<?> modelWrapperFromServer = (ModelWrapper<?>) msg;
 			switch (modelWrapperFromServer.getOperation()) {
+			case GET_EXECUTED_EXAM_LIST_BY_STUDENT:
+				executedExamStudentList = (List<StudentExecutedExam>) modelWrapperFromServer.getElements();
+				modelWrapperFromServer.getElement();
+				break;
+				
 			case GET_EXECUTED_EXAM_LIST_BY_COURSE:
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				modelWrapperFromServer.getElement();

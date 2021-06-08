@@ -26,6 +26,12 @@ public class StudentExecutedExam implements Serializable {
 	private String alert;
 	private boolean approved;
 	private WordFile copy;
+	
+	public StudentExecutedExam(String course, String grade) {
+		super();
+		this.course = course;
+		this.grade = grade;
+	}
 
 	public StudentExecutedExam(StudentExecutedExamUI studentUI, String newGrade) {
 		super();

@@ -406,17 +406,15 @@ public class DatabaseController {
 			Statement statement = conn.createStatement();
 			String courseStatistic = "select *\r\n" + "from executedexam\r\n" + "where course = \"" + course_select
 					+ "\";";
-			ResultSet rsGtadeStatisticByCourse = statement.executeQuery(courseStatistic);
-			while (rsGtadeStatisticByCourse.next()) {
-				String examID = rsGtadeStatisticByCourse.getString("examID");
-				String executeTeacherID = rsGtadeStatisticByCourse.getString("executeTeacherID");
+			ResultSet rsGetStatisticByCourse = statement.executeQuery(courseStatistic);
+			while (rsGetStatisticByCourse.next()) {
+				String examID = rsGetStatisticByCourse.getString("examID");
+				String executeTeacherID = rsGetStatisticByCourse.getString("executeTeacherID");
 				String teacherName = getUserName(executeTeacherID);
-				String date = rsGtadeStatisticByCourse.getString("executeDate");
-				String time = rsGtadeStatisticByCourse.getString("executeTime");
-				System.out.println(date);
-				System.out.println(time);
-				double avg = rsGtadeStatisticByCourse.getDouble("avg");
-				double median = rsGtadeStatisticByCourse.getDouble("median");
+				String date = rsGetStatisticByCourse.getString("executeDate");
+				String time = rsGetStatisticByCourse.getString("executeTime");
+				double avg = rsGetStatisticByCourse.getDouble("avg");
+				double median = rsGetStatisticByCourse.getDouble("median");
 				ExecutedExam ExamListByCourse = new ExecutedExam(examID, executeTeacherID, teacherName, date, time, avg,
 						median);
 				set.add(ExamListByCourse);
@@ -428,15 +426,24 @@ public class DatabaseController {
 		return set;
 	}
 	
-	public List<ExecutedExam> getGradesForStatisticByStudent(String student_select){
-		List<ExecutedExam> set = new ArrayList<>();
-//		try {
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.err.println("ERROR #23142 - ERROR LOADING EXAM FROM DATABASE");
-//		}
+	public List<StudentExecutedExam> getGradeStatisticByStudent(String studentID_select){
+		List<StudentExecutedExam> set = new ArrayList<>();
+		try {
+			Statement statement = conn.createStatement();
+			String studentStatistic = "select *\r\n" + "from executedexam\r\n" + "where course = \"" + studentID_select
+					+ "\";";
+			ResultSet rsGtadeStatisticByStudent = statement.executeQuery(studentStatistic);
+			while(rsGtadeStatisticByStudent.next()) {
+				String Course = rsGtadeStatisticByStudent.getString("Course");
+				String Grade = rsGtadeStatisticByStudent.getString("Grade");
+				StudentExecutedExam ExamListByStudent = new StudentExecutedExam(Course, Grade);
+				set.add(ExamListByStudent);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #23143 - ERROR LOADING StudenExactutedExam FROM DATABASE");
+		}
 		return set;
-		
 	}
 
 	/**
