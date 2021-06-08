@@ -141,6 +141,7 @@ public class Client extends AbstractClient {
 				break;
 
 			case CLOSE_EXAM:
+				System.out.println("Client: " + user.getFirstName());
 				setServerMessages("Exam has been stopped");
 				break;
 
@@ -223,6 +224,7 @@ public class Client extends AbstractClient {
 
 			case STUDENT_TIME_EXTENSION:
 				Client.setTimeExtension(Long.parseLong((String) modelWrapperFromServer.getElement()));
+				System.out.println(getTimeExtension());
 				break;
 
 			case GET_EXECUTED_EXAM_LIST_BY_CREATOR:

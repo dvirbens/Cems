@@ -26,7 +26,7 @@
       <Label fx:id="lblSelectedQuestion" layoutX="28.0" layoutY="377.0" text="Question Description:" />
       <JFXButton fx:id="btnSaveAnswer" layoutX="130.0" layoutY="706.0" onAction="#onSaveClick" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Save Answer" textFill="WHITE" />
       <TextArea fx:id="taSelectedQuestion" layoutX="153.0" layoutY="375.0" prefHeight="80.0" prefWidth="568.0" />
-      <JFXButton fx:id="btnSubmitTest" layoutX="624.0" layoutY="706.0" onAction="#checkTest" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Submit Test" textFill="WHITE" />
+      <JFXButton fx:id="btnSubmitTest" layoutX="624.0" layoutY="706.0" onAction="#onClickSubmit" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Submit Test" textFill="WHITE" />
       <Label fx:id="lblPossibleAnswers1" layoutX="34.0" layoutY="526.0" text="Possible Answers:" />
       <JFXRadioButton fx:id="radio1" layoutX="158.0" layoutY="530.0" text="a">
          <toggleGroup>

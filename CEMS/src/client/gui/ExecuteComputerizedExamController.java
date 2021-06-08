@@ -147,8 +147,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		// Start time counter
-		// startTime = System.currentTimeMillis();
-		// setRemainingTime();
+		startTime = System.currentTimeMillis();
+		setRemainingTime();
+
+		StudentMenuController.setLocked(true);
 
 		// Get questions
 		ModelWrapper<String> modelWrapperQuestionList = new ModelWrapper<>(code, GET_QUESTION_LIST_BY_CODE);
@@ -252,7 +254,12 @@ public class ExecuteComputerizedExamController implements Initializable {
 				}
 				long timeInSeconds = calcTime();
 				long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
-				if (Client.getTimeExtension() != 0) {
+				long timeExtension = Client.getTimeExtension();
+				if (timeExtension == -1) {
+					Platform.runLater(() -> {
+						MainGuiController.getMenuHandler().setMainScreen();
+					});
+				} else if (timeExtension != 0) {
 					minutes += Client.getTimeExtension();
 					Client.setTimeExtension(0);
 				}
@@ -332,7 +339,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	public void checkTest(ActionEvent event) {
+	@FXML
+	void onClickSubmit(ActionEvent event) {
+		StudentMenuController.setLocked(false);
 		Integer grade = 0;
 		for (int i = 0; i < exam.getExamQuestions().size(); i++) {
 			if (answersArr[i] != null) {
@@ -348,7 +357,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, answersArr);
 		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		MainGuiController.getMenuHandler().setMainScreen();
+
 	}
 
 }

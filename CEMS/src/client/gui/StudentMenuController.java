@@ -22,10 +22,11 @@ public class StudentMenuController implements Initializable {
 
 	@FXML
 	private JFXButton btnLogout;
-	
 
-    @FXML
-    private Label labelWelcome;
+	@FXML
+	private Label labelWelcome;
+
+	private static boolean locked;
 
 	enum Buttons {
 		EXECUTED_EXAMS, ENTER_EXAM
@@ -33,19 +34,26 @@ public class StudentMenuController implements Initializable {
 
 	@FXML
 	void onClickExecutedExams(ActionEvent event) {
-		paintSelectedButton(Buttons.EXECUTED_EXAMS);
-		MainGuiController.getMenuHandler().setExecutedExamsScreen();
+		if (!locked) {
+			paintSelectedButton(Buttons.EXECUTED_EXAMS);
+			MainGuiController.getMenuHandler().setExecutedExamsScreen();
+		}
+
 	}
 
 	@FXML
 	void onClickEnterExam(ActionEvent event) {
-		paintSelectedButton(Buttons.ENTER_EXAM);
-		MainGuiController.getMenuHandler().setEnterExamScreen();
+		if (!locked) {
+			paintSelectedButton(Buttons.ENTER_EXAM);
+			MainGuiController.getMenuHandler().setEnterExamScreen();
+		}
 	}
 
 	@FXML
 	void onClickLogout(ActionEvent event) {
-		MainGuiController.getMenuHandler().setLoginMenu();
+		if (!locked) {
+			MainGuiController.getMenuHandler().setLoginMenu();
+		}
 	}
 
 	private void paintSelectedButton(Buttons button) {
@@ -67,16 +75,22 @@ public class StudentMenuController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		String name = Client.getUser().getFirstName()+" "+Client.getUser().getLastName();
-		String LabelPrint="Welcome, "+name;
+		String name = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+		String LabelPrint = "Welcome, " + name;
 		labelWelcome.setText(LabelPrint);
 	}
-	
 
-    @FXML
-    void onLogoClicked(MouseEvent event) {
-    	MainGuiController.getMenuHandler().setStudentlMenu();
+	@FXML
+	void onLogoClicked(MouseEvent event) {
+		MainGuiController.getMenuHandler().setStudentlMenu();
+	}
 
-    }
+	public static boolean isLocked() {
+		return locked;
+	}
+
+	public static void setLocked(boolean locked) {
+		StudentMenuController.locked = locked;
+	}
 
 }

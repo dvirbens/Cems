@@ -1,6 +1,28 @@
 package server;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.ERROR_INSERT_STUDENT_TO_EXAM;
+import static common.ModelWrapper.Operation.EXAM_EXECUTE;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_CODE;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXAM_IN_PROCESS;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_COURSE;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_EXECUTOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_CODE;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
+import static common.ModelWrapper.Operation.GET_USER;
+import static common.ModelWrapper.Operation.INSERT_FINISHED_STUDENT;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
+import static common.ModelWrapper.Operation.START_EXAM_FAILD;
+import static common.ModelWrapper.Operation.START_EXAM_SUCCESS;
+import static common.ModelWrapper.Operation.STUDENT_TIME_EXTENSION;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -202,19 +224,25 @@ public class Server extends AbstractServer {
 			String code = (String) modelWrapperFromClient.getElement();
 			examID = examsInProcess.get(code).getExamId();
 			databaseController.saveExecutedExam(examsInProcess.get(code));
-			examsInProcess.remove(code);
+
 			// TODO NEED TO CHECK IF THE EXAM IS EMPTY, HAVE NO STUDENT !!!
 
-			System.out.println(studentInExam);
-
-			if (!studentInExam.get(code).isEmpty())
-				checkAlert(code, examID);
-
+			/*
+			 * if (!studentInExam.get(code).isEmpty()) checkAlert(code, examID);
+			 */
 			try {
+				List<StudentInExam> studentList = studentInExam.get(code);
+				modelWrapperToClient = new ModelWrapper<>("-1", STUDENT_TIME_EXTENSION);
+				for (StudentInExam student : studentList) {
+					ConnectionToClient studentClient = student.getClient();
+					studentClient.sendToClient(modelWrapperToClient);
+				}
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
+			examsInProcess.remove(code);
 
 			break;
 
@@ -410,19 +438,15 @@ public class Server extends AbstractServer {
 			studentID = finishedStudent.getStudentID();
 			String finalGrade = finishedStudent.getGrade();
 			String teacherID = examInProcess.getTeacherID();
-
+			
 			List<StudentInExam> studentsInExam = studentInExam.get(code);
 
 			for (StudentInExam student : studentsInExam) {
 				if (student.getStudentID().equals(studentID)) {
 					String[] solution = finishedStudent.getSolution();
-					System.out.println(solution);
 					student.setSolution(solution);
-					System.out.println(student.getSolution());
 				}
 			}
-
-			System.out.println(studentInExam);
 
 			databaseController.insertFinishedStudent(studentID, examID, teacherID, finalGrade);
 			modelWrapperToClient = new ModelWrapper<>(INSERT_FINISHED_STUDENT);
