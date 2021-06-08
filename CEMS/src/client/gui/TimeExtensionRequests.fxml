@@ -6,12 +6,14 @@
 
 <Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutX="97.0" layoutY="166.0" prefHeight="436.0" prefWidth="560.0" style="-fx-selection-bar: #48a832; -fx-border-color: #48a832; -fx-focus-color: #48a832;">
+      <TableView fx:id="tvExtension" layoutX="52.0" layoutY="134.0" prefHeight="500.0" prefWidth="650.0" style="-fx-selection-bar: #48a832; -fx-border-color: #48a832; -fx-focus-color: #48a832;">
          <columns>
-            <TableColumn prefWidth="150.0" text="Teacher's name" />
-            <TableColumn prefWidth="148.0" text="Test Duration" />
-            <TableColumn prefWidth="150.0" text="Time Extension" />
-            <TableColumn minWidth="0.0" prefWidth="110.0" text="View" />
+            <TableColumn fx:id="tcExamID" prefWidth="77.0" text="Exam ID" />
+            <TableColumn fx:id="tcTeacherName" prefWidth="132.0" text="Teacher's name" />
+            <TableColumn fx:id="tcDuration" prefWidth="77.0" text="Duration" />
+            <TableColumn fx:id="tcExtension" prefWidth="83.0" text="Extension" />
+            <TableColumn fx:id="tcCause" minWidth="0.0" prefWidth="195.0" text="Casue" />
+            <TableColumn fx:id="tcConfirm" minWidth="0.0" prefWidth="81.0" text="Confirm" />
          </columns>
       </TableView>
    </children>

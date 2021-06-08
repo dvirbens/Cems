@@ -26,11 +26,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.ExamExtension;
+import models.ExamProcess;
 
 public class ExamManagementWindow {
 
-	private String code;
-	private int minutes;
 	private Stopwatch sw;
 	private JFXButton freezeExam;
 	private JFXButton askForExstension;
@@ -39,11 +38,11 @@ public class ExamManagementWindow {
 	private Label timerLabel;
 	private HBox requestSection;
 	private boolean requestFlag;
-	private boolean isClosed=false;
+	private boolean isClosed = false;
+	private static ExamProcess examProcess;
 
-	public ExamManagementWindow(String code, int minutes) {
-		this.code = code;
-		this.minutes = minutes;
+	public ExamManagementWindow(ExamProcess examProcess) {
+		ExamManagementWindow.examProcess = examProcess;
 	}
 
 	public void open() {
@@ -69,8 +68,9 @@ public class ExamManagementWindow {
 	}
 
 	private void setVBoxComponents(VBox examManagement) {
-
-		timerLabel = new Label(String.format("%02d:%02d\n", minutes, 0));
+		String duration = examProcess.getDuration();
+		String code = examProcess.getCode();
+		timerLabel = new Label(String.format("%02d:%02d\n", Integer.valueOf(duration), 0));
 		timerLabel.setFont(new Font("Agency FB", 100));
 		timerLabel.setPrefSize(600, 128);
 		timerLabel.setStyle("-fx-background-color:#333333;" + "-fx-text-fill:white;");
@@ -136,11 +136,16 @@ public class ExamManagementWindow {
 
 			@Override
 			public void handle(ActionEvent event) {
-				String cause = taCause.getText();
-				String time = ((JFXTextField) requestSection.getChildren().get(0)).getText();
-				String teacherName = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+				String examID = examProcess.getExamId();
+				String code = examProcess.getCode();
 				String teacherID = Client.getUser().getUserID();
-				ExamExtension extesnion = new ExamExtension(code, teacherID, teacherName, time, cause);
+				String teacherName = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+				String timeExtension = ((JFXTextField) requestSection.getChildren().get(0)).getText();
+				String examDuration = examProcess.getDuration();
+				String cause = taCause.getText();
+
+				ExamExtension extesnion = new ExamExtension(examID, code, teacherID, teacherName, timeExtension,
+						examDuration, cause);
 				ModelWrapper<ExamExtension> modelWrapper = new ModelWrapper<>(extesnion, EXTENSION_REQUEST);
 				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			}
@@ -161,23 +166,24 @@ public class ExamManagementWindow {
 		examManagement.getChildren().add(taCause);
 		examManagement.getChildren().add(requestSection);
 
-		sw = new Stopwatch(minutes, timerLabel);
+		sw = new Stopwatch(Integer.valueOf(duration), timerLabel);
 		sw.startTime();
 
 	}
 
 	public void stopExam() {
-		if(!isClosed) {
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(code, CLOSE_EXAM);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		sw.stopTime();
-		freezeExam.setVisible(false);
-		askForExstension.setVisible(false);
-		timerLabel.setFont(new Font(50));
-		timerLabel.setText("Exam Finished");
-		isClosed=true;
-	}
-		
+		if (!isClosed) {
+			String code = examProcess.getCode();
+			ModelWrapper<String> modelWrapper = new ModelWrapper<>(code, CLOSE_EXAM);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			sw.stopTime();
+			freezeExam.setVisible(false);
+			askForExstension.setVisible(false);
+			timerLabel.setFont(new Font(50));
+			timerLabel.setText("Exam Finished");
+			isClosed = true;
+		}
+
 	}
 
 	public class Stopwatch {

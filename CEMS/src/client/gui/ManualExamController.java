@@ -101,7 +101,7 @@ public class ManualExamController implements Initializable {
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-			ExamManagementWindow examManagementWindow = new ExamManagementWindow(code, Integer.valueOf(duration));
+			ExamManagementWindow examManagementWindow = new ExamManagementWindow(examProcess);
 			examManagementWindow.open();
 
 		}

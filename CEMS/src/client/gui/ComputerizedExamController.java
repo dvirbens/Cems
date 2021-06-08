@@ -176,8 +176,7 @@ public class ComputerizedExamController implements Initializable {
 
 			for (Exam exam : Client.getExams()) {
 				if (exam.getId().equals(examID)) {
-					ExamManagementWindow examManagementWindow = new ExamManagementWindow(code,
-							Integer.valueOf(exam.getDuration()));
+					ExamManagementWindow examManagementWindow = new ExamManagementWindow(examProcess);
 					examManagementWindow.open();
 				}
 			}
