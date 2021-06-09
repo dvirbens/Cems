@@ -30,7 +30,7 @@
 				<TableColumn fx:id="tcTeacherSelected" prefWidth="138.0" style="-fx-alignment: center;" text="Teacher" />
             <TableColumn fx:id="tcPointsSelected" prefWidth="65.0" style="-fx-alignment: center;" text="Points" />
 				<TableColumn fx:id="tcDetailsSelected" prefWidth="154.0" style="-fx-alignment: center;" text="Details" />
-            <TableColumn fx:id="tcNoteSelected" prefWidth="110.0" style="-fx-alignment: center;" text="Note" />
+            <TableColumn fx:id="tcRemove" prefWidth="110.0" style="-fx-alignment: center;" text="Remove" />
 			</columns>
 		</TableView>
 		<Label layoutX="27.0" layoutY="81.0" text="Question pool:" textFill="#333333">

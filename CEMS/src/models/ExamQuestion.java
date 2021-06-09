@@ -11,6 +11,8 @@ public class ExamQuestion extends Question {
 	private int points;
 	private NoteType noteType;
 	private JFXButton noteDetails;
+	private JFXButton removeButton;
+	private JFXButton addButton;
 	private ImageView checkImage;
 
 	public enum NoteType {
@@ -24,6 +26,7 @@ public class ExamQuestion extends Question {
 		this.note = note;
 		this.points = points;
 		this.noteType = noteType;
+		
 	}
 
 	public String getNote() {
@@ -69,6 +72,14 @@ public class ExamQuestion extends Question {
 	public void setVisibleImage()
 	{
 		this.checkImage.setVisible(true);
+	}
+
+	public JFXButton getRemoveButton() {
+		return removeButton;
+	}
+
+	public void setRemoveButton(JFXButton removeButton) {
+		this.removeButton = removeButton;
 	}
 	
 	

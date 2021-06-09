@@ -66,7 +66,7 @@ public class CreateExamController implements Initializable {
 	private TableColumn<ExamQuestion, String> tcTeacherSelected;
 
 	@FXML
-	private TableColumn<ExamQuestion, JFXButton> tcNoteSelected;
+	private TableColumn<ExamQuestion, JFXButton> tcRemove;
 
 	@FXML
 	private TableColumn<ExamQuestion, JFXButton> tcDetailsSelected;
@@ -133,21 +133,7 @@ public class CreateExamController implements Initializable {
 			addButton.setPrefSize(70, 15);
 			addButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			addButton.setText("Add");
-			addButton.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-					if (!AddQuestionController.isWindowOpend()) {
-						AddQuestionController addQuestionController = new AddQuestionController();
-						AddQuestionController.setQuestion(question);
-						AddQuestionController.setTvQuestionPull(tvQuestionPool);
-						AddQuestionController.setTvSelectedQuestion(tvSelectedQuestion);
-						addQuestionController.start();
-					}
-
-				}
-			});
-
+			addButton.setOnAction(new AddButtonEvent(question, tvQuestionPool, tvSelectedQuestion));
 			question.setAddButton(addButton);
 		}
 	}
@@ -209,7 +195,7 @@ public class CreateExamController implements Initializable {
 		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
 		cbExamCourse.getItems().clear();
 		cbExamCourse.getItems().addAll(Client.getSubjectCollection().getCourseListBySubject(subject));
-	
+
 	}
 
 	/**
@@ -238,7 +224,7 @@ public class CreateExamController implements Initializable {
 		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("subject"));
 		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
 		tcPointsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
-		tcNoteSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("noteDetails"));
+		tcRemove.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("removeButton"));
 		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
 	}
@@ -260,6 +246,33 @@ public class CreateExamController implements Initializable {
 			return false;
 		}
 		return true;
+	}
+
+	public class AddButtonEvent implements EventHandler<ActionEvent> {
+
+		private Question question;
+		private TableView<Question> tvQuestionPool;
+		private TableView<ExamQuestion> tvSelectedQuestion;
+
+		public AddButtonEvent(Question question, TableView<Question> tvQuestionPool,
+				TableView<ExamQuestion> tvSelectedQuestion) {
+			this.question = question;
+			this.tvQuestionPool = tvQuestionPool;
+			this.tvSelectedQuestion = tvSelectedQuestion;
+		}
+
+		@Override
+		public void handle(ActionEvent event) {
+			if (!AddQuestionController.isWindowOpend()) {
+				AddQuestionController addQuestionController = new AddQuestionController();
+				AddQuestionController.setQuestion(question);
+				AddQuestionController.setTvQuestionPull(tvQuestionPool);
+				AddQuestionController.setTvSelectedQuestion(tvSelectedQuestion);
+				addQuestionController.start();
+			}
+
+		}
+
 	}
 
 }
