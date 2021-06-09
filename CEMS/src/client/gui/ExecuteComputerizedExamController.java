@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import com.jfoenix.controls.JFXButton;
@@ -19,6 +20,7 @@ import com.jfoenix.controls.JFXRadioButton;
 
 import client.Client;
 import client.ClientUI;
+import client.gui.ExamManagementWindow.Stopwatch;
 import common.ModelWrapper;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -112,6 +114,11 @@ public class ExecuteComputerizedExamController implements Initializable {
 	@FXML
 	private Label lblNote;
 
+	@FXML
+	private Label timeLabel;
+
+	private StudentStopwatch sw;
+
 	private long startTime;
 
 	private Exam exam;
@@ -145,10 +152,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// Start time counter
-		startTime = System.currentTimeMillis();
-		setRemainingTime();
-
 		StudentMenuController.setLocked(true);
 
 		// Get questions
@@ -160,6 +163,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperEaxmDetails);
 
 		exam = Client.getExam();
+		int duration = Integer.parseInt(exam.getDuration());
 
 		String examID = exam.getId();
 		String userID = Client.getUser().getUserID();
@@ -183,7 +187,11 @@ public class ExecuteComputerizedExamController implements Initializable {
 			Date date2 = format.parse(teacherTime);
 			long difference = date1.getTime() - date2.getTime();
 			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(Client.getExam().getDuration()));
-			duration = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
+			long durationInSecond = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
+			int minutes = (int) durationInSecond / 60;
+			int second = (int) durationInSecond % 60;
+			sw = new StudentStopwatch(minutes, second, timeLabel);
+			sw.startTime();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -240,46 +248,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 				onRowClick();
 			}
 		});
-
-	}
-
-	public void setRemainingTime() {
-		Thread timerThread = new Thread(() -> {
-			while (true) {
-				try {
-					Thread.sleep(1000); // 1 second
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				long timeInSeconds = calcTime();
-				long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
-				long timeExtension = Client.getTimeExtension();
-				if (timeExtension == -1) {
-					Platform.runLater(() -> {
-						MainGuiController.getMenuHandler().setMainScreen();
-					});
-				} else if (timeExtension != 0) {
-					minutes += Client.getTimeExtension();
-					Client.setTimeExtension(0);
-				}
-				long seconds = timeInSeconds % 60;
-
-				final String time = Long.toString(minutes) + ":" + Long.toString(seconds);
-				Platform.runLater(() -> {
-					tfRemainingTime.setText(time);
-				});
-			}
-		});
-		timerThread.start();
-	}
-
-	public long calcTime() {
-		long elapsedTime = duration * 1000 - (System.currentTimeMillis() - startTime);
-		long elapsedSeconds = elapsedTime / 1000;
-		long secondsDisplay = elapsedSeconds % 60;
-		long elapsedMinutes = elapsedSeconds / 60;
-
-		return elapsedSeconds;
 
 	}
 
@@ -357,6 +325,58 @@ public class ExecuteComputerizedExamController implements Initializable {
 		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		MainGuiController.getMenuHandler().setLoginMenu();
+
+	}
+
+	public class StudentStopwatch {
+		private int min;
+		private int sec;
+		private Timer timer;
+		private Label label;
+
+		public StudentStopwatch(int min, int sec, Label label) {
+			this.min = min;
+			this.sec = sec;
+			this.label = label;
+		}
+
+		public void startTime() {
+			int delay = 1000;
+			int period = 1000;
+			timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+
+				public void run() {
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							long timeExtension = Client.getTimeExtension();
+							if (timeExtension == -1) {
+								label.setText("Exam is freezed or closed");
+							} else if (timeExtension != 0) {
+								min += (int) timeExtension;
+								Client.setTimeExtension(0);
+							}
+							label.setText(String.format("%02d:%02d\n", min, sec));
+							if (min == 0 && sec == 0) {
+								MainGuiController.getMenuHandler().setMainScreen();
+								timer.cancel();
+							} else if (sec == 0) {
+								min--;
+								sec = 59;
+							} else {
+								sec--;
+							}
+						}
+					});
+				}
+			}, delay, period);
+		}
+
+		public void stopTime() {
+			timer.cancel();
+		}
 
 	}
 

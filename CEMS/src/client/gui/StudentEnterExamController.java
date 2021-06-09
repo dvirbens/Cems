@@ -29,16 +29,16 @@ public class StudentEnterExamController {
 	@FXML
 	void OnClickEnterManualExam(ActionEvent event) {
 		String code = tfCode.getText();
-		int ret = EnterExam();
-		if (ret != -1)
+		//int ret = EnterExam();
+		//if (ret != -1)
 			MainGuiController.getMenuHandler().setManualTestScreen(code);
 	}
 
 	@FXML
 	void OnClickEnterComputerizedExam(ActionEvent event) {
 		String code = tfCode.getText();
-		int ret = EnterExam();
-		if (ret != -1)
+		//int ret = EnterExam();
+		//if (ret != -1)
 			MainGuiController.getMenuHandler().setComputerizedTestScreen(code);
 	}
 	
@@ -53,6 +53,7 @@ public class StudentEnterExamController {
 			ModelWrapper<String> modelWrapper = new ModelWrapper<String>(elements, CHECK_CODE_BEFORE_INSERTION);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			
+			/*
 			if (Client.getServerMessages().equals("Check passed successfully."))
 			{
 				Client.setExamCode(tfCode.getText());
@@ -68,6 +69,7 @@ public class StudentEnterExamController {
 				lbl_Status.setText("You already did this exam.");
 				return -1;
 			}
+			*/
 			
 		}
 		lbl_Status.setText("Please enter code.");

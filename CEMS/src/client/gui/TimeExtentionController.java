@@ -81,6 +81,9 @@ public class TimeExtentionController implements Initializable {
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 				}
 			});
+			confirmButton.setPrefSize(90, 15);
+			confirmButton.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			confirmButton.setText("Confirm");
 			extensionUI.setConfirmButton(confirmButton);
 			extensionUIList.add(extensionUI);
 		}

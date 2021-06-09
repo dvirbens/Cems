@@ -38,15 +38,11 @@
       <JFXRadioButton fx:id="radio4" layoutX="158.0" layoutY="657.0" text="d" toggleGroup="$AnswersGroup" />
       <TextField fx:id="tfNote" layoutX="153.0" layoutY="468.0" prefHeight="46.0" prefWidth="568.0" />
       <Label fx:id="lblNote" layoutX="66.0" layoutY="470.0" text="Note:" />
-      <HBox layoutX="499.0" layoutY="19.0" prefHeight="30.0" prefWidth="222.0">
-         <children>
-            <Label fx:id="lblRemainingTime" text="Remaining Time:">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="tfRemainingTime" prefHeight="25.0" prefWidth="75.0" />
-         </children>
-      </HBox>
+      <HBox layoutX="281.0" layoutY="30.0" />
+      <Label fx:id="timeLabel" layoutX="349.0" layoutY="23.0" text="10:00">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

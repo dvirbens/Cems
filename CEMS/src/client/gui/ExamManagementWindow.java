@@ -183,7 +183,6 @@ public class ExamManagementWindow {
 			timerLabel.setText("Exam Finished");
 			isClosed = true;
 		}
-
 	}
 
 	public class Stopwatch {
@@ -198,7 +197,6 @@ public class ExamManagementWindow {
 		}
 
 		public void startTime() {
-
 			int delay = 1000;
 			int period = 1000;
 			timer = new Timer();
@@ -209,13 +207,14 @@ public class ExamManagementWindow {
 
 						@Override
 						public void run() {
-							if (Client.getTimeExtension() != 0) {
-								min += (int) Client.getTimeExtension();
+							long timeExtension = Client.getTimeExtension();
+							if (timeExtension != 0) {
+								min += (int) timeExtension;
 								Client.setTimeExtension(0);
 							}
 							label.setText(String.format("%02d:%02d\n", min, sec));
 							if (min == 0 && sec == 0) {
-								stopExam();
+								MainGuiController.getMenuHandler().setMainScreen();
 								timer.cancel();
 							} else if (sec == 0) {
 								min--;

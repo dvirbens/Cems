@@ -235,7 +235,10 @@ public class Client extends AbstractClient {
 
 			case STUDENT_TIME_EXTENSION:
 				Client.setTimeExtension(Long.parseLong((String) modelWrapperFromServer.getElement()));
-				System.out.println(getTimeExtension());
+				break;
+
+			case EXTENSION_CONFIRM:
+				setServerMessages("Time Extension has been confirmed");
 				break;
 
 			case GET_EXECUTED_EXAM_LIST_BY_CREATOR:

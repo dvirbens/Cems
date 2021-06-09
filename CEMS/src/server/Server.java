@@ -129,6 +129,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case EXTENSION_CONFIRM:
+			System.out.println("confirm");
 			ExamExtension extension = (ExamExtension) modelWrapperFromClient.getElement();
 			try {
 				List<StudentInExam> studentList = studentInExam.get(extension.getCode());
