@@ -112,6 +112,22 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case GET_EXTENSION_REQUESTS:
+			List<ExamExtension> examExtensionList = new ArrayList<>();
+			for (Map.Entry<String, List<ExamExtension>> entry : examsExtensions.entrySet()) {
+				List<ExamExtension> examExtension = entry.getValue();
+				for (ExamExtension exam : examExtension) {
+					examExtensionList.add(exam);
+				}
+			}
+			modelWrapperToClient = new ModelWrapper<>(examExtensionList, GET_EXTENSION_REQUESTS);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		case GET_EXECUTED_EXAM_LIST_BY_COURSE:
 			String course_name = (String) modelWrapperFromClient.getElement();
 			List<ExecutedExam> set = databaseController.getGradesForStatisticByCourse(course_name);
@@ -122,7 +138,7 @@ public class Server extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GET_EXECUTED_EXAM_LIST_BY_STUDENT:
 			String student_name = (String) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> set1 = databaseController.getGradeStatisticByStudent(student_name);
@@ -384,38 +400,30 @@ public class Server extends AbstractServer {
 			}
 
 			break;
-			
+
 		case CHECK_CODE_BEFORE_INSERTION:
-			//get code and check if there is exam
+			// get code and check if there is exam
 			userInfo = (List<String>) modelWrapperFromClient.getElements();
 			examCode = (String) userInfo.get(0);
 			studentID = (String) userInfo.get(1);
 			ExamProcess examProc = examsInProcess.get(examCode);
-			if (examProc == null)
-			{
+			if (examProc == null) {
 				modelWrapperToClient = new ModelWrapper<>(ERROR_EXAM_NOT_EXIST);
-			}
-			else
-			{
-				//check if student already did the test
+			} else {
+				// check if student already did the test
 				List<StudentInExam> studentList = studentInExam.get(examCode);
-				if (studentList != null )
-				{
-					for (StudentInExam student : studentList)
-					{
-						if (student.getStudentID().equals(studentID))
-						{
+				if (studentList != null) {
+					for (StudentInExam student : studentList) {
+						if (student.getStudentID().equals(studentID)) {
 							modelWrapperToClient = new ModelWrapper<>(ERROR_STUDENT_ALREADY_IN_EXAM);
 						}
 					}
-				}
-				else
-				{
+				} else {
 					modelWrapperToClient = new ModelWrapper<>(SUCCESSFUL_INSERT_CHECK);
 				}
-				
+
 			}
-			
+
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -466,7 +474,7 @@ public class Server extends AbstractServer {
 			studentID = finishedStudent.getStudentID();
 			String finalGrade = finishedStudent.getGrade();
 			String teacherID = examInProcess.getTeacherID();
-			
+
 			List<StudentInExam> studentsInExam = studentInExam.get(code);
 
 			for (StudentInExam student : studentsInExam) {

@@ -192,7 +192,7 @@ public class MenuHandler {
 	public void setTimeExtensionRequestsScreen() {
 		try {
 			Pane timeExtensionRequestsPane = (Pane) FXMLLoader
-					.load(getClass().getResource("TimeExtensionRequests.fxml"));
+					.load(getClass().getResource("TimeExtension.fxml"));
 			mainFrame.setCenter(timeExtensionRequestsPane);
 		} catch (IOException e) {
 			e.printStackTrace();

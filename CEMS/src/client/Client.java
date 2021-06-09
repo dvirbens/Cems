@@ -6,6 +6,7 @@ import java.util.List;
 import common.ModelWrapper;
 import common.SubjectCourseCollection;
 import models.Exam;
+import models.ExamExtension;
 import models.ExamProcess;
 import models.ExamQuestion;
 import models.ExecutedExam;
@@ -65,6 +66,8 @@ public class Client extends AbstractClient {
 
 	private static List<ExamQuestion> examQuestions;
 
+	private static List<ExamExtension> examExtensions;
+
 	/**
 	 * Value that hold the test the will be shown on editTest user interface.
 	 */
@@ -114,7 +117,7 @@ public class Client extends AbstractClient {
 				executedExamStudentList = (List<StudentExecutedExam>) modelWrapperFromServer.getElements();
 				modelWrapperFromServer.getElement();
 				break;
-				
+
 			case GET_EXECUTED_EXAM_LIST_BY_COURSE:
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				modelWrapperFromServer.getElement();
@@ -125,6 +128,10 @@ public class Client extends AbstractClient {
 				break;
 
 			case LOAD_QUESTION_LIST:
+				break;
+
+			case GET_EXTENSION_REQUESTS:
+				examExtensions = (List<ExamExtension>) modelWrapperFromServer.getElements();
 				break;
 
 			case ENTERED_WRONG_ID:
@@ -243,15 +250,15 @@ public class Client extends AbstractClient {
 			case GET_EXECUTED_EXAM_STUDENT_LIST:
 				executedExamStudentList = (List<StudentExecutedExam>) modelWrapperFromServer.getElements();
 				break;
-				
+
 			case SUCCESSFUL_INSERT_CHECK:
 				setServerMessages("Check passed successfully.");
 				break;
-				
+
 			case ERROR_STUDENT_ALREADY_IN_EXAM:
 				setServerMessages("Student already did this exam.");
 				break;
-				
+
 			case ERROR_EXAM_NOT_EXIST:
 				setServerMessages("Invalid code.");
 				break;
@@ -402,6 +409,14 @@ public class Client extends AbstractClient {
 
 	public static ExamProcess getExamProcess() {
 		return examProcess;
+	}
+
+	public static List<ExamExtension> getExamExtensions() {
+		return examExtensions;
+	}
+
+	public static void setExamExtensions(List<ExamExtension> examExtensions) {
+		Client.examExtensions = examExtensions;
 	}
 
 	public static void setExamProcess(ExamProcess examProcess) {
