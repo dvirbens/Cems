@@ -128,6 +128,21 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case EXTENSION_CONFIRM:
+			ExamExtension extension = (ExamExtension) modelWrapperFromClient.getElement();
+			try {
+				List<StudentInExam> studentList = studentInExam.get(extension.getCode());
+				modelWrapperToClient = new ModelWrapper<>(extension.getTimeExtension(), STUDENT_TIME_EXTENSION);
+				for (StudentInExam student : studentList) {
+					ConnectionToClient studentClient = student.getClient();
+					studentClient.sendToClient(modelWrapperToClient);
+				}
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		case GET_EXECUTED_EXAM_LIST_BY_COURSE:
 			String course_name = (String) modelWrapperFromClient.getElement();
 			List<ExecutedExam> set = databaseController.getGradesForStatisticByCourse(course_name);

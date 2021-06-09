@@ -153,7 +153,6 @@ public class Client extends AbstractClient {
 				break;
 
 			case CLOSE_EXAM:
-				System.out.println("Client: " + user.getFirstName());
 				setServerMessages("Exam has been stopped");
 				break;
 
