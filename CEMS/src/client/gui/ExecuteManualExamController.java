@@ -83,6 +83,8 @@ public class ExecuteManualExamController implements Initializable {
 	private ExamProcess examProcess;
 
 	private static String code;
+	
+	private volatile boolean shutdown = false;
 
 	public ExecuteManualExamController() {
 
@@ -104,7 +106,8 @@ public class ExecuteManualExamController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		shutdown = false;
+		StudentMenuController.setLocked(true);
 		btChooseFile.setVisible(false);
 		tfFileName.setVisible(false);
 		btUpload.setVisible(false);
@@ -169,7 +172,10 @@ public class ExecuteManualExamController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		shutdown = true;
+		MainGuiController.getMenuHandler().setStudentlMenu();
+		StudentMenuController.setLocked(false);
 	}
 
 	@FXML
@@ -208,7 +214,7 @@ public class ExecuteManualExamController implements Initializable {
 	public void set2MinutesLeft()
 	{
 		Thread timerThread = new Thread(() -> {
-			while (true) {
+			while (!shutdown) {
 				if (sw.getMin() == 2 && sw.getSec() == 0)
 				{
 					Platform.runLater(new Runnable() {
@@ -278,33 +284,43 @@ public class ExecuteManualExamController implements Initializable {
 
 				public void run() {
 
-							long timeExtension = Client.getTimeExtension();
-							if (timeExtension == -1) {
-								setFreezePopup();
-								timer.cancel();
-						        return;
-							} else if (timeExtension != 0) {
-								min += (int) timeExtension;
-								Client.setTimeExtension(0);
-							}
-							Platform.runLater(new Runnable() {
+					long timeExtension = Client.getTimeExtension();
+					if (StudentMenuController.isClosed()) {
+						timer.cancel();
+						shutdown = true;
+						StudentMenuController.setClosed(false);
+						return;
+					}
 
-								@Override
-								public void run() {
-									label.setText(String.format("%02d:%02d\n", min, sec));
-								}
-							});
+					if (timeExtension == -1) {
+						setFreezePopup();
+						shutdown = true;
+						timer.cancel();
+						return;
+					} else if (timeExtension != 0) {
+						min += (int) timeExtension;
+						Client.setTimeExtension(0);
+					}
+					Platform.runLater(new Runnable() {
 
-							if (min == 0 && sec == 0) {
-								MainGuiController.getMenuHandler().setMainScreen();
-								timer.cancel();
-							} else if (sec == 0) {
-								min--;
-								sec = 59;
-							} else {
-								sec--;
-							}
-						
+						@Override
+						public void run() {
+							label.setText(String.format("%02d:%02d\n", min, sec));
+						}
+					});
+
+					if (min == 0 && sec == 0) {
+						timer.cancel();
+						shutdown = true;
+						MainGuiController.getMenuHandler().setMainScreen();
+
+					} else if (sec == 0) {
+						min--;
+						sec = 59;
+					} else {
+						sec--;
+					}
+
 				}
 			}, delay, period);
 		}

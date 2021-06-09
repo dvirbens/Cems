@@ -135,6 +135,8 @@ public class ExecuteComputerizedExamController implements Initializable {
 	private String examID;
 
 	private static String code;
+	
+	private volatile boolean shutdown = false;
 
 	public ExecuteComputerizedExamController() {
 	}
@@ -156,7 +158,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		StudentMenuController.setLocked(true);
-
+		shutdown = false;
 		// Get questions
 		ModelWrapper<String> modelWrapperQuestionList = new ModelWrapper<>(code, GET_QUESTION_LIST_BY_CODE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperQuestionList);
@@ -328,14 +330,15 @@ public class ExecuteComputerizedExamController implements Initializable {
 		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, answersArr);
 		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		MainGuiController.getMenuHandler().setLoginMenu();
+		shutdown = true;
+		MainGuiController.getMenuHandler().setStudentlMenu();
 
 	}
 
 	public void set2MinutesLeft()
 	{
 		Thread timerThread = new Thread(() -> {
-			while (true) {
+			while (!shutdown) {
 				if (sw.getMin() == 2 && sw.getSec() == 0)
 				{
 					Platform.runLater(new Runnable() {
@@ -406,8 +409,18 @@ public class ExecuteComputerizedExamController implements Initializable {
 				public void run() {
 
 							long timeExtension = Client.getTimeExtension();
+							if (StudentMenuController.isClosed())
+							{
+								timer.cancel();
+								shutdown = true;
+								StudentMenuController.setClosed(false);
+								return;
+							}
+							
+							
 							if (timeExtension == -1) {
 								setFreezePopup();
+								shutdown = true;
 								timer.cancel();
 						        return;
 							} else if (timeExtension != 0) {
@@ -423,8 +436,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 							});
 
 							if (min == 0 && sec == 0) {
-								MainGuiController.getMenuHandler().setMainScreen();
 								timer.cancel();
+								shutdown = true;
+								MainGuiController.getMenuHandler().setMainScreen();
+								
 							} else if (sec == 0) {
 								min--;
 								sec = 59;
