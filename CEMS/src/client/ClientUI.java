@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  * the graphic user interface component.
  * 
  * @author Arikz ,Dvir ben simon
- *
+ *A
  */
 public class ClientUI extends Application {
 
