@@ -315,6 +315,8 @@ public class ExecuteComputerizedExamController implements Initializable {
 	@FXML
 	void onClickSubmit(ActionEvent event) {
 		StudentMenuController.setLocked(false);
+		shutdown = true;
+		sw.stopTime();
 		Integer grade = 0;
 		for (int i = 0; i < exam.getExamQuestions().size(); i++) {
 			if (answersArr[i] != null) {
@@ -330,9 +332,8 @@ public class ExecuteComputerizedExamController implements Initializable {
 		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, answersArr);
 		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		shutdown = true;
 		MainGuiController.getMenuHandler().setStudentlMenu();
-
+		
 	}
 
 	public void set2MinutesLeft()

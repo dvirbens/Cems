@@ -190,6 +190,17 @@ public class MenuHandler {
 
 	}
 	
+	public void setStudentComputerizedTestReportScreen()
+	{
+		try {
+			Pane studentComputerizedTestReport = (Pane) FXMLLoader.load(getClass().getResource("StudentComputerizedTestReport.fxml"));
+			mainFrame.setCenter(studentComputerizedTestReport);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public void setOverallStatisticsScreen() {
 		try {
 			Pane overallStatisticsPane = (Pane) FXMLLoader.load(getClass().getResource("OverallStatistics.fxml"));

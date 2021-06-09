@@ -79,7 +79,7 @@ public class ExecutedExamsController implements Initializable {
 
 		ObservableList<StudentExecutedExamUI> exams = FXCollections.observableArrayList();
 		List<StudentExecutedExamUI> studentList = setStudentsUI(Client.getExecutedExamStudentList());
-		System.out.println(studentList);
+		//System.out.println(studentList);
 		exams.addAll(studentList);
 		tvExExams.setItems(exams);
 	}
@@ -99,20 +99,7 @@ public class ExecutedExamsController implements Initializable {
 
 					@Override
 					public void handle(ActionEvent event) {
-
-						String path = System.getProperty("user.home") + "/Desktop";
-
-						File outputFile = new File(path + "/TestAfterCheck.docx");
-						try {
-							FileOutputStream fos = new FileOutputStream(outputFile);
-							BufferedOutputStream bos = new BufferedOutputStream(fos);
-							bos.write(studentExam.getCopy().getMybytearray(), 0, studentExam.getCopy().getSize());
-							bos.flush();
-							fos.flush();
-							bos.close();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen();
 					}
 
 				});
