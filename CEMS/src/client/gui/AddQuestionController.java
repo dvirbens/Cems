@@ -101,7 +101,7 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 
 			System.out.println(getTvQuestionPool().getItems());
 			getTvQuestionPool().getItems().remove(getQuestion());
-
+//
 			ExamQuestion newQuestion = new ExamQuestion(getQuestion(), note, Integer.valueOf(points), type);
 			String selecteddQuestionID = newQuestion.getQuestionID();
 			JFXButton removeButton = new JFXButton();
