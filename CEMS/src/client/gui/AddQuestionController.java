@@ -98,10 +98,8 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 		}
 
 		if (!points.isEmpty() && isNumeric(points) && typeNotPicked) {
-
-			System.out.println(getTvQuestionPool().getItems());
 			getTvQuestionPool().getItems().remove(getQuestion());
-//
+
 			ExamQuestion newQuestion = new ExamQuestion(getQuestion(), note, Integer.valueOf(points), type);
 			String selecteddQuestionID = newQuestion.getQuestionID();
 			JFXButton removeButton = new JFXButton();
@@ -146,6 +144,7 @@ public class AddQuestionController implements EventHandler<WindowEvent>, Initial
 			removeButton.setShape(new Circle(2));
 			removeButton.setMaxSize(2, 2);
 			removeButton.setText("-");
+			
 
 			newQuestion.setRemoveButton(removeButton);
 			getTvSelectedQuestion().getItems().add(newQuestion);

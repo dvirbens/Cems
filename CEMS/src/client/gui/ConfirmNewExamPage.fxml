@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="768.0" prefWidth="754.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ConfirmExamController">
+   <children>
+      <Label layoutX="253.0" layoutY="32.0" text="Create Exam" textFill="#3d9a26">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvQuestions" layoutX="27.0" layoutY="126.0" prefHeight="558.0" prefWidth="700.0">
+         <columns>
+            <TableColumn fx:id="tcID" prefWidth="77.0" style="-fx-alignment: center;" text="ID" />
+            <TableColumn fx:id="tcSubject" prefWidth="141.0" style="-fx-alignment: center;" text="Subject" />
+            <TableColumn fx:id="tcTeacher" prefWidth="138.0" style="-fx-alignment: center;" text="Teacher" />
+            <TableColumn fx:id="tcPoints" prefWidth="95.0" style="-fx-alignment: center;" text="Points" />
+            <TableColumn fx:id="tcDetails" prefWidth="128.0" style="-fx-alignment: center;" text="Details" />
+            <TableColumn fx:id="tcNote" prefWidth="116.0" style="-fx-alignment: center;" text="Note" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="btnBack" layoutX="39.0" layoutY="704.0" onAction="#onClickBack" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back to edit" textFill="WHITE" />
+      <Label layoutX="30.0" layoutY="100.0" text="Exam questions:" textFill="#333333">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnCreate" layoutX="595.0" layoutY="704.0" onAction="#onClickCreate" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create Exam" textFill="WHITE" />
+   </children>
+</Pane>

@@ -180,6 +180,16 @@ public class MenuHandler {
 
 	}
 
+	public void setCreateExamSucceeded() {
+		try {
+			Pane examCreateSucceeded = (Pane) FXMLLoader.load(getClass().getResource("ExamCreateSucceeded.fxml"));
+			mainFrame.setCenter(examCreateSucceeded);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public void setOverallStatisticsScreen() {
 		try {
 			Pane overallStatisticsPane = (Pane) FXMLLoader.load(getClass().getResource("OverallStatistics.fxml"));

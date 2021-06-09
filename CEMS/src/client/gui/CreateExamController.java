@@ -153,10 +153,10 @@ public class CreateExamController implements Initializable {
 			course = cbExamCourse.getSelectionModel().getSelectedItem();
 		}
 		duration = tfDuration.getText();
-		List<ExamQuestion> examQuestion = getExamQuestionList();
+		List<ExamQuestion> examQuestions = getExamQuestionList();
 		messageLabel.setStyle("-fx-text-fill: RED;");
 
-		if (examQuestion.isEmpty()) {
+		if (examQuestions.isEmpty()) {
 			messageLabel.setText("Question list is empty, please insert question");
 		} else if (subject.isEmpty()) {
 			messageLabel.setText("Please select exam subject");
@@ -168,15 +168,16 @@ public class CreateExamController implements Initializable {
 			messageLabel.setText("Duration must to be number value");
 		}
 
-		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestion != null
+		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestions != null
 				&& isNumeric(duration)) {
 			deletExamQuestionListButtons();
-			Exam newExam = new Exam(subject, Client.getUser().getUserID(), course, duration, examQuestion);
+			Exam newExam = new Exam(subject, Client.getUser().getUserID(), course, duration, examQuestions);
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
-			ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(newExam, CREATE_EXAM);
-			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-			messageLabel.setStyle("-fx-text-fill: GREEN;");
-			messageLabel.setText(Client.getServerMessages());
+			
+			ConfirmExamController confirmPage=new ConfirmExamController(newExam);
+			confirmPage.start();
+			
+
 		}
 
 	}

@@ -1,10 +1,12 @@
 package models;
 
+import java.io.Serializable;
+
 import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.image.ImageView;
 
-public class ExamQuestion extends Question {
+public class ExamQuestion extends Question implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String note;
@@ -12,7 +14,6 @@ public class ExamQuestion extends Question {
 	private NoteType noteType;
 	private JFXButton noteDetails;
 	private JFXButton removeButton;
-	private JFXButton addButton;
 	private ImageView checkImage;
 
 	public enum NoteType {
