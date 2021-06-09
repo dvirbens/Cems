@@ -66,6 +66,9 @@ public class ExamStatisticController implements Initializable {
 
 	@FXML
 	private Label medLabel;
+	
+    @FXML
+    private Label numOfStudentLabel;
 
 	@FXML
 	private BarChart<String, Integer> bcExamStatistic;
@@ -128,7 +131,8 @@ public class ExamStatisticController implements Initializable {
 							newStats.getData().add(
 									new XYChart.Data<>(sutdent.getStudentName(), Integer.parseInt(sutdent.getGrade())));
 						}
-
+						String numOfStudents =String.valueOf(studentList.size());
+						numOfStudentLabel.setText(numOfStudents);
 						bcExamStatistic.getData().add(newStats);
 					}
 				});
