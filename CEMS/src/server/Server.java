@@ -419,6 +419,7 @@ public class Server extends AbstractServer {
 
 		case CHECK_CODE_BEFORE_INSERTION:
 			// get code and check if there is exam
+			boolean isFound = false;
 			userInfo = (List<String>) modelWrapperFromClient.getElements();
 			examCode = (String) userInfo.get(0);
 			studentID = (String) userInfo.get(1);
@@ -432,9 +433,12 @@ public class Server extends AbstractServer {
 					for (StudentInExam student : studentList) {
 						if (student.getStudentID().equals(studentID)) {
 							modelWrapperToClient = new ModelWrapper<>(ERROR_STUDENT_ALREADY_IN_EXAM);
+							isFound = true;
 						}
+						
 					}
-				} else {
+				}  
+				if (isFound == false) {
 					modelWrapperToClient = new ModelWrapper<>(SUCCESSFUL_INSERT_CHECK);
 				}
 

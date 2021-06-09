@@ -64,11 +64,11 @@ public class StudentExecutedExam implements Serializable {
 		this.alert = alert;
 	}
 
-	public StudentExecutedExam(String examID, String studentID, String code, String teacherId) {
+	public StudentExecutedExam(String examID, String studentID, String code, String execDate) {
 		super();
 		this.examID = examID;
 		this.studentID = studentID;
-		TeacherId = teacherId;
+		this.execDate = execDate;
 		this.code = code;
 	}
 

@@ -1,6 +1,7 @@
 package client.gui;
 
 import static common.ModelWrapper.Operation.GET_EXAM_IN_PROCESS;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
 import static common.ModelWrapper.Operation.UPLOAD_FILE;
 
 import java.io.BufferedInputStream;
@@ -33,6 +34,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import models.Exam;
 import models.ExamProcess;
+import models.StudentExecutedExam;
 import models.WordFile;
 
 public class ExecuteManualExamController implements Initializable {
@@ -105,6 +107,11 @@ public class ExecuteManualExamController implements Initializable {
 
 		examProcess = Client.getExamProcess();
 
+		StudentExecutedExam newStudent = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(), code, examProcess.getTeacherID());
+		ModelWrapper<StudentExecutedExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent,
+				INSERT_STUDENT_TO_EXAM);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapperInsertStudent);
+		
 		String teacherTime = Client.getExamProcess().getTime();
 		Date date = new Date();
 		SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
@@ -138,7 +145,9 @@ public class ExecuteManualExamController implements Initializable {
 			file.initArray(mybytearray.length);
 			file.setSize(mybytearray.length);
 			bufferIn.read(file.getMybytearray(), 0, mybytearray.length);
-			ModelWrapper<WordFile> modelWrapper = new ModelWrapper<>(file, UPLOAD_FILE);
+			
+			StudentExecutedExam student = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(), code, examProcess.getDate());
+			ModelWrapper<StudentExecutedExam> modelWrapper = new ModelWrapper<>(file,student, UPLOAD_FILE);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			bufferIn.close();
 		} catch (FileNotFoundException e) {

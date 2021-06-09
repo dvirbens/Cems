@@ -709,18 +709,19 @@ public class DatabaseController {
 	 * @return
 	 */
 	public void UploadFile(StudentExecutedExam studentExam, WordFile file) {
-		String sql = "INSERT INTO ExecutedExamByStudent VALUES (?,?,?,?,?,?)";
+		String sql = "UPDATE ExecutedExamByStudent SET Copy = ? WHERE studentID = ? AND examID = ? AND execDate = ?;";
 
 		try {
 			InputStream targetStream = new ByteArrayInputStream(file.getMybytearray());
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, studentExam.getStudentID());
-			stmt.setString(2, studentExam.getExamID());
-			stmt.setString(3, studentExam.getSubject());
-			stmt.setString(4, studentExam.getCourse());
-			stmt.setString(5, studentExam.getExecDate());
-			stmt.setBlob(6, targetStream);
-			stmt.execute();
+			stmt.setBlob(1, targetStream);
+			stmt.setString(2, studentExam.getStudentID());
+			stmt.setString(3, studentExam.getExamID());
+			stmt.setString(4, studentExam.getExecDate());
+			int resultSet = stmt.executeUpdate();
+			if (resultSet == 1) {
+				System.out.println("Student uploded exam file");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
