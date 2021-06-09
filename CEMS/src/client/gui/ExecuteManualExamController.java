@@ -16,10 +16,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import client.Client;
 import client.ClientUI;
+import client.gui.ExecuteComputerizedExamController.StudentStopwatch;
 import common.ModelWrapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -27,9 +30,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import models.Exam;
@@ -62,6 +68,11 @@ public class ExecuteManualExamController implements Initializable {
 
 	@FXML
 	private Label lblRemainingTime;
+	
+	@FXML
+	private Label timeLabel;
+
+	private StudentStopwatch sw;
 
 	private File newFile;
 
@@ -98,10 +109,6 @@ public class ExecuteManualExamController implements Initializable {
 		tfFileName.setVisible(false);
 		btUpload.setVisible(false);
 
-		// Start time counter 
-		startTime = System.currentTimeMillis();
-		setRemainingTime();
-
 		ModelWrapper<String> modelWrapper = new ModelWrapper<String>(code, GET_EXAM_IN_PROCESS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
@@ -123,7 +130,12 @@ public class ExecuteManualExamController implements Initializable {
 			Date date2 = format.parse(teacherTime);
 			long difference = date1.getTime() - date2.getTime();
 			long examDuration = TimeUnit.MINUTES.toSeconds(Long.parseLong(examProcess.getDuration()));
-			duration = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
+			long durationInSecond = examDuration - TimeUnit.MILLISECONDS.toSeconds(difference);
+			int minutes = (int) durationInSecond / 60;
+			int second = (int) durationInSecond % 60;
+			sw = new StudentStopwatch(minutes, second, timeLabel);
+			sw.startTime();
+			set2MinutesLeft();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -193,39 +205,125 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	public void setRemainingTime() {
+	public void set2MinutesLeft()
+	{
 		Thread timerThread = new Thread(() -> {
 			while (true) {
-				try {
-					Thread.sleep(1000); // 1 second
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				long timeInSeconds = calcTime();
-				long minutes = TimeUnit.SECONDS.toMinutes(timeInSeconds);
-				if (Client.getTimeExtension() != 0) {
-					minutes += Client.getTimeExtension();
-					Client.setTimeExtension(0);
-				}
-				long seconds = timeInSeconds % 60;
+				if (sw.getMin() == 2 && sw.getSec() == 0)
+				{
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+						      //Creating a dialog
+						      Dialog<String> dialog = new Dialog<String>();
+						      //Setting the title
+						      dialog.setTitle("Warning");
+						      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+						      //Setting the content of the dialog
+						      dialog.setContentText("Warning: You have 2 minutes left!");
+						      //Adding buttons to the dialog pane
+						      dialog.getDialogPane().getButtonTypes().add(type);
+						      
+						      dialog.showAndWait();
+						}
+					});
 
-				final String time = Long.toString(minutes) + ":" + Long.toString(seconds);
-				Platform.runLater(() -> {
-					tfRemainingTime.setText(time);
-				});
+			      break;
+				}
 			}
-		});
+			});
 		timerThread.start();
 	}
+	
+	public void setFreezePopup()
+	{
+		Platform.runLater(new Runnable() {
 
-	public long calcTime() {
-		long elapsedTime = duration * 1000 - (System.currentTimeMillis() - startTime);
-		long elapsedSeconds = elapsedTime / 1000;
-		long secondsDisplay = elapsedSeconds % 60;
-		long elapsedMinutes = elapsedSeconds / 60;
+			@Override
+			public void run() {
+			  MainGuiController.getMenuHandler().setMainScreen();
+		      //Creating a dialog
+		      Dialog<String> dialog = new Dialog<String>();
+		      //Setting the title
+		      dialog.setTitle("Exam closed");
+		      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+		      //Setting the content of the dialog
+		      dialog.setContentText("The exam has been closed by your teacher");
+		      //Adding buttons to the dialog pane
+		      dialog.getDialogPane().getButtonTypes().add(type);
+		      
+		      dialog.showAndWait();
+			}
+		});
 
-		return elapsedSeconds;
+	}
+	
+	public class StudentStopwatch {
+		private int min;
+		private int sec;
+		private Timer timer;
+		private Label label;
 
+		public StudentStopwatch(int min, int sec, Label label) {
+			this.min = min;
+			this.sec = sec;
+			this.label = label;
+		}
+
+		public void startTime() {
+			int delay = 1000;
+			int period = 1000;
+			timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+
+				public void run() {
+
+							long timeExtension = Client.getTimeExtension();
+							if (timeExtension == -1) {
+								setFreezePopup();
+								timer.cancel();
+						        return;
+							} else if (timeExtension != 0) {
+								min += (int) timeExtension;
+								Client.setTimeExtension(0);
+							}
+							Platform.runLater(new Runnable() {
+
+								@Override
+								public void run() {
+									label.setText(String.format("%02d:%02d\n", min, sec));
+								}
+							});
+
+							if (min == 0 && sec == 0) {
+								MainGuiController.getMenuHandler().setMainScreen();
+								timer.cancel();
+							} else if (sec == 0) {
+								min--;
+								sec = 59;
+							} else {
+								sec--;
+							}
+						
+				}
+			}, delay, period);
+		}
+		
+		
+
+		public int getMin() {
+			return min;
+		}
+
+		public int getSec() {
+			return sec;
+		}
+
+
+		public void stopTime() {
+			timer.cancel();
+		}
+		
 	}
 
 }

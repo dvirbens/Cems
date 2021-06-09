@@ -32,12 +32,9 @@
          </font>
       </TextArea>
       <TextField fx:id="tfFileName" layoutX="454.0" layoutY="409.0" />
-      <TextField fx:id="tfRemainingTime" layoutX="585.0" layoutY="158.0" prefHeight="25.0" prefWidth="70.0" />
-      <Label fx:id="lblRemainingTime" layoutX="477.0" layoutY="162.0" text="Remaining Time:">
+      <Label fx:id="timeLabel" layoutX="328.0" layoutY="136.0">
          <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="657.0" layoutY="162.0" text="Minutes" />
+            <Font size="36.0" />
+         </font></Label>
    </children>
 </Pane>
