@@ -126,9 +126,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	private static String code;
 
-
-	
-	
 	public ExecuteComputerizedExamController() {
 	}
 
@@ -359,6 +356,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, answersArr);
 		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		MainGuiController.getMenuHandler().setLoginMenu();
 
 	}
 
