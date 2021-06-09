@@ -32,6 +32,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -192,6 +195,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 			int second = (int) durationInSecond % 60;
 			sw = new StudentStopwatch(minutes, second, timeLabel);
 			sw.startTime();
+			set2MinutesLeft();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -328,6 +332,59 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
+	public void set2MinutesLeft()
+	{
+		Thread timerThread = new Thread(() -> {
+			while (true) {
+				if (sw.getMin() == 2 && sw.getSec() == 0)
+				{
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+						      //Creating a dialog
+						      Dialog<String> dialog = new Dialog<String>();
+						      //Setting the title
+						      dialog.setTitle("Warning");
+						      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+						      //Setting the content of the dialog
+						      dialog.setContentText("Warning: You have 2 minutes left!");
+						      //Adding buttons to the dialog pane
+						      dialog.getDialogPane().getButtonTypes().add(type);
+						      
+						      dialog.showAndWait();
+						}
+					});
+
+			      break;
+				}
+			}
+			});
+		timerThread.start();
+	}
+	
+	public void setFreezePopup()
+	{
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+			  MainGuiController.getMenuHandler().setMainScreen();
+		      //Creating a dialog
+		      Dialog<String> dialog = new Dialog<String>();
+		      //Setting the title
+		      dialog.setTitle("Exam closed");
+		      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+		      //Setting the content of the dialog
+		      dialog.setContentText("The exam has been closed by your teacher");
+		      //Adding buttons to the dialog pane
+		      dialog.getDialogPane().getButtonTypes().add(type);
+		      
+		      dialog.showAndWait();
+			}
+		});
+
+	}
+	
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
@@ -347,18 +404,24 @@ public class ExecuteComputerizedExamController implements Initializable {
 			timer.scheduleAtFixedRate(new TimerTask() {
 
 				public void run() {
-					Platform.runLater(new Runnable() {
 
-						@Override
-						public void run() {
 							long timeExtension = Client.getTimeExtension();
 							if (timeExtension == -1) {
-								label.setText("Exam is freezed or closed");
+								setFreezePopup();
+								timer.cancel();
+						        return;
 							} else if (timeExtension != 0) {
 								min += (int) timeExtension;
 								Client.setTimeExtension(0);
 							}
-							label.setText(String.format("%02d:%02d\n", min, sec));
+							Platform.runLater(new Runnable() {
+
+								@Override
+								public void run() {
+									label.setText(String.format("%02d:%02d\n", min, sec));
+								}
+							});
+
 							if (min == 0 && sec == 0) {
 								MainGuiController.getMenuHandler().setMainScreen();
 								timer.cancel();
@@ -368,16 +431,26 @@ public class ExecuteComputerizedExamController implements Initializable {
 							} else {
 								sec--;
 							}
-						}
-					});
+						
 				}
 			}, delay, period);
 		}
+		
+		
+
+		public int getMin() {
+			return min;
+		}
+
+		public int getSec() {
+			return sec;
+		}
+
 
 		public void stopTime() {
 			timer.cancel();
 		}
-
+		
 	}
 
 }

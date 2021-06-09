@@ -39,7 +39,7 @@
       <TextField fx:id="tfNote" layoutX="153.0" layoutY="468.0" prefHeight="46.0" prefWidth="568.0" />
       <Label fx:id="lblNote" layoutX="66.0" layoutY="470.0" text="Note:" />
       <HBox layoutX="281.0" layoutY="30.0" />
-      <Label fx:id="timeLabel" layoutX="349.0" layoutY="23.0" text="10:00">
+      <Label fx:id="timeLabel" layoutX="349.0" layoutY="23.0">
          <font>
             <Font size="36.0" />
          </font>
