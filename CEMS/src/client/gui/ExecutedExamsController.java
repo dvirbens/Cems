@@ -63,11 +63,6 @@ public class ExecutedExamsController implements Initializable {
 	@FXML
 	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
 	
-	private static ImageView imageview_correct;
-	
-	private static ImageView imageview_wrong;
-	
-
 
 	public void initialize(URL location, ResourceBundle resources) {
 					
@@ -91,23 +86,7 @@ public class ExecutedExamsController implements Initializable {
 	}
 
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
-		/**
-		imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
-		imageview_wrong = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
-		imageview_correct.setFitHeight(30);
-		imageview_correct.setFitWidth(30);
-		
-
-		imageview_wrong.setFitHeight(30);
-		imageview_wrong.setFitWidth(30);
-		**/
-		/**
-		Image imProfile = new Image(getClass().getResourceAsStream("/images/correct.png"));
-		ImageView imageview_correct=new ImageView(imProfile);
-		Image imProfile2 = new Image(getClass().getResourceAsStream("/images/wrong.png"));
-		ImageView imageview_wrong=new ImageView(imProfile2);
-		**/
-		
+	
 		for (StudentExecutedExam studentExam : executedExamStudentList) {
 			JFXButton getCopyButton = new JFXButton();
 			getCopyButton.setPrefSize(90, 15);
@@ -133,14 +112,22 @@ public class ExecutedExamsController implements Initializable {
 			for (int i=0; i < numOfQuestions; i++)
 			{
 				ComputerizedTestReport questionReport;
-				if (Client.getSelectedAnswers().split("")[i] == Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()))
+				System.out.println(Client.getSelectedAnswers().split("")[i]
+				+ " " + Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()));
+				if (Client.getSelectedAnswers().split("")[i].equals(Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer())))
 				{
+							final ImageView imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
+							imageview_correct.setFitHeight(30);
+							imageview_correct.setFitWidth(30);
 							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
 							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
 							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct);
 				}
 				else
 				{
+							final ImageView imageview_wrong = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
+							imageview_wrong.setFitHeight(30);
+							imageview_wrong.setFitWidth(30);
 							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
 							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
 							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong);
