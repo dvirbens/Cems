@@ -26,25 +26,28 @@ public class StudentExecutedExam implements Serializable {
 	private String alert;
 	private boolean approved;
 	private WordFile copy;
-	
+	private CheckBox gradeApproval;
+	private TextField tfGrade;
+	private JFXButton getCopy;
+
 	public StudentExecutedExam(String course, String grade) {
 		super();
 		this.course = course;
 		this.grade = grade;
 	}
 
-	public StudentExecutedExam(StudentExecutedExamUI studentUI, String newGrade) {
+	public StudentExecutedExam(StudentExecutedExam executedStudentExam, String newGrade) {
 		super();
-		examID = studentUI.getExamID();
-		studentID = studentUI.getStudentID();
-		studentName = studentUI.getStudentName();
-		TeacherId = studentUI.getTeacherId();
-		subject = studentUI.getSubject();
-		course = studentUI.getCourse();
-		execDate = studentUI.getExecDate();
-		testType = studentUI.getTestType();
-		grade = studentUI.getGrade();
-		approved = studentUI.isApproved();
+		examID = executedStudentExam.getExamID();
+		studentID = executedStudentExam.getStudentID();
+		studentName = executedStudentExam.getStudentName();
+		TeacherId = executedStudentExam.getTeacherId();
+		subject = executedStudentExam.getSubject();
+		course = executedStudentExam.getCourse();
+		execDate = executedStudentExam.getExecDate();
+		testType = executedStudentExam.getTestType();
+		grade = executedStudentExam.getGrade();
+		approved = executedStudentExam.isApproved();
 		grade = newGrade;
 	}
 
@@ -167,13 +170,37 @@ public class StudentExecutedExam implements Serializable {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public String getAlert() {
 		return alert;
 	}
 
 	public void setAlert(String alert) {
 		this.alert = alert;
+	}
+
+	public CheckBox getGradeApproval() {
+		return gradeApproval;
+	}
+
+	public void setGradeApproval(CheckBox gradeApproval) {
+		this.gradeApproval = gradeApproval;
+	}
+
+	public TextField getTfGrade() {
+		return tfGrade;
+	}
+
+	public void setTfGrade(TextField tfGrade) {
+		this.tfGrade = tfGrade;
+	}
+
+	public JFXButton getGetCopy() {
+		return getCopy;
+	}
+
+	public void setGetCopy(JFXButton getCopy) {
+		this.getCopy = getCopy;
 	}
 
 	@Override

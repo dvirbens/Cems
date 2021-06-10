@@ -17,6 +17,8 @@ public class ExecutedExam implements Serializable {
 	private String testType;
 	private double avg;
 	private double median;
+	private JFXButton questionList;
+	private JFXButton gradeApproval;
 
 	public ExecutedExam(String id, String subject, String course, String teacherID, String executorTeacherName,
 			String execDate, String execTime, String testType, double avg, double median) {
@@ -160,6 +162,22 @@ public class ExecutedExam implements Serializable {
 
 	public void setExecTime(String execTime) {
 		this.execTime = execTime;
+	}
+	
+	public JFXButton getQuestionList() {
+		return questionList;
+	}
+
+	public void setQuestionList(JFXButton questionList) {
+		this.questionList = questionList;
+	}
+
+	public JFXButton getGradeApproval() {
+		return gradeApproval;
+	}
+
+	public void setGradeApproval(JFXButton gradeApproval) {
+		this.gradeApproval = gradeApproval;
 	}
 
 	@Override

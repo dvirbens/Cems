@@ -1,9 +1,10 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,7 +30,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamQuestion;
 import models.ExecutedExam;
-import models.ExecutedExamUI;
 import models.StudentExecutedExam;
 
 public class ExamStatisticController implements Initializable {
@@ -41,34 +41,34 @@ public class ExamStatisticController implements Initializable {
 	private JFXComboBox<String> cbExamSubject;
 
 	@FXML
-	private TableView<ExecutedExamUI> tvExecutedExams;
+	private TableView<ExecutedExam> tvExecutedExams;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcID;
+	private TableColumn<ExecutedExam, String> tcID;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcSubject;
+	private TableColumn<ExecutedExam, String> tcSubject;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcCourse;
+	private TableColumn<ExecutedExam, String> tcCourse;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcDate;
+	private TableColumn<ExecutedExam, String> tcDate;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, JFXButton> tcDetails;
+	private TableColumn<ExecutedExam, JFXButton> tcDetails;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcTeacher;
+	private TableColumn<ExecutedExam, String> tcTeacher;
 
 	@FXML
 	private Label avgLabel;
 
 	@FXML
 	private Label medLabel;
-	
-    @FXML
-    private Label numOfStudentLabel;
+
+	@FXML
+	private Label numOfStudentLabel;
 
 	@FXML
 	private BarChart<String, Integer> bcExamStatistic;
@@ -90,15 +90,15 @@ public class ExamStatisticController implements Initializable {
 				GET_EXECUTED_EXAM_LIST_BY_CREATOR);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperExecutedExams);
 
-		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("id"));
-		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("executorTeacherName"));
-		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("subject"));
-		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("course"));
-		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("execDate"));
-		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, JFXButton>("questionList"));
+		tcID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
+		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("executorTeacherName"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
+		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
+		tcDetails.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("questionList"));
 
-		ObservableList<ExecutedExamUI> executedExam = FXCollections.observableArrayList();
-		List<ExecutedExamUI> executedExamList = setExecutedExamsListUI(Client.getExecExams());
+		ObservableList<ExecutedExam> executedExam = FXCollections.observableArrayList();
+		List<ExecutedExam> executedExamList = setExecutedExamsListUI(Client.getExecExams());
 		executedExam.addAll(executedExamList);
 		tvExecutedExams.setItems(executedExam);
 
@@ -131,7 +131,7 @@ public class ExamStatisticController implements Initializable {
 							newStats.getData().add(
 									new XYChart.Data<>(sutdent.getStudentName(), Integer.parseInt(sutdent.getGrade())));
 						}
-						String numOfStudents =String.valueOf(studentList.size());
+						String numOfStudents = String.valueOf(studentList.size());
 						numOfStudentLabel.setText(numOfStudents);
 						bcExamStatistic.getData().add(newStats);
 					}
@@ -140,10 +140,8 @@ public class ExamStatisticController implements Initializable {
 		});
 	}
 
-	private List<ExecutedExamUI> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
-		List<ExecutedExamUI> executedExamsUIList = new ArrayList<>();
+	private List<ExecutedExam> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
 		for (ExecutedExam executedExam : executedExamsList) {
-			ExecutedExamUI executedExamUI = new ExecutedExamUI(executedExam);
 			JFXButton questionListButton = new JFXButton();
 			questionListButton.setPrefSize(90, 15);
 			questionListButton
@@ -161,12 +159,10 @@ public class ExamStatisticController implements Initializable {
 
 				}
 			});
-
-			executedExamUI.setQuestionList(questionListButton);
-			executedExamsUIList.add(executedExamUI);
+			executedExam.setQuestionList(questionListButton);
 		}
 
-		return executedExamsUIList;
+		return executedExamsList;
 	}
 
 }

@@ -3,7 +3,6 @@ package client.gui;
 import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_EXECUTOR;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,57 +21,53 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExecutedExam;
-import models.ExecutedExamUI;
 
 public class GradeApprovalController implements Initializable {
 
 	@FXML
-	private TableView<ExecutedExamUI> tvExecutedExams;
+	private TableView<ExecutedExam> tvExecutedExams;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcExamID;
+	private TableColumn<ExecutedExam, String> tcExamID;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcSubject;
+	private TableColumn<ExecutedExam, String> tcSubject;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcCourse;
+	private TableColumn<ExecutedExam, String> tcCourse;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcDate;
+	private TableColumn<ExecutedExam, String> tcDate;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, String> tcType;
+	private TableColumn<ExecutedExam, String> tcType;
 
 	@FXML
-	private TableColumn<ExecutedExamUI, JFXButton> tcStudentList;
+	private TableColumn<ExecutedExam, JFXButton> tcStudentList;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
-		tcExamID.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("id"));
-		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("subject"));
-		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("course"));
-		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("execDate"));
-		tcType.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, String>("testType"));
-		tcStudentList.setCellValueFactory(new PropertyValueFactory<ExecutedExamUI, JFXButton>("gradeApproval"));
+		tcExamID.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("id"));
+		tcSubject.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("subject"));
+		tcCourse.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("course"));
+		tcDate.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("execDate"));
+		tcType.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("testType"));
+		tcStudentList.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("gradeApproval"));
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(Client.getUser().getUserID(),
 				GET_EXECUTED_EXAM_LIST_BY_EXECUTOR);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-		ObservableList<ExecutedExamUI> executedExams = FXCollections.observableArrayList();
-		List<ExecutedExamUI> executedExamsList = setExecutedExamsListUI(Client.getExecExams());
+		ObservableList<ExecutedExam> executedExams = FXCollections.observableArrayList();
+		List<ExecutedExam> executedExamsList = setExecutedExamsListButtons(Client.getExecExams());
 		executedExams.addAll(executedExamsList);
 		tvExecutedExams.setItems(executedExams);
 
 	}
 
-	private List<ExecutedExamUI> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
-		List<ExecutedExamUI> executedExamsUIList = new ArrayList<>();
-		
+	private List<ExecutedExam> setExecutedExamsListButtons(List<ExecutedExam> executedExamsList) {
 		for (ExecutedExam executedExam : executedExamsList) {
-			ExecutedExamUI executedExamUI = new ExecutedExamUI(executedExam);
 			JFXButton gradeApprovalButton = new JFXButton();
 			gradeApprovalButton.setPrefSize(90, 15);
 			gradeApprovalButton
@@ -85,12 +80,10 @@ public class GradeApprovalController implements Initializable {
 					MainGuiController.getMenuHandler().setStudentListsScreen(executedExam);
 				}
 			});
-
-			executedExamUI.setGradeApproval(gradeApprovalButton);
-			executedExamsUIList.add(executedExamUI);
+			executedExam.setGradeApproval(gradeApprovalButton);
 		}
 
-		return executedExamsUIList;
+		return executedExamsList;
 	}
 
 }
