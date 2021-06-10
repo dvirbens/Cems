@@ -428,6 +428,7 @@ public class DatabaseController {
 
 	public List<StudentExecutedExam> getGradeStatisticByStudent(String studentID_select) {
 		List<StudentExecutedExam> set = new ArrayList<>();
+		int i=0;
 		try {
 			Statement statement = conn.createStatement();
 			String studentStatistic = "SELECT * FROM executedexambystudent where studentID = \"1\";";

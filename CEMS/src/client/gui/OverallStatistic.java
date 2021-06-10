@@ -210,7 +210,7 @@ public class OverallStatistic implements Initializable {
 						series.getData().add(new XYChart.Data<String, Double>(student_exams.getCourse() , Double.parseDouble(student_exams.getGrade())));
 					}
 					
-					
+					int i=0;
 //					int half = (int)statisticList.size();
 //					int sum_avg = half/2;
 //					Collections.sort(statisticList);

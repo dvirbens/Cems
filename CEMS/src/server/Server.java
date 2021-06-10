@@ -159,6 +159,7 @@ public class Server extends AbstractServer {
 			break;
 
 		case GET_EXECUTED_EXAM_LIST_BY_STUDENT:
+			int i=0;
 			String student_name = (String) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> set1 = databaseController.getGradeStatisticByStudent(student_name);
 			modelWrapperToClient = new ModelWrapper<>(set1, GET_EXECUTED_EXAM_LIST_BY_STUDENT);
