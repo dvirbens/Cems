@@ -80,24 +80,21 @@ public class ExecutedExamsController implements Initializable {
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
 
 		for (StudentExecutedExam studentExam : executedExamStudentList) {
+			JFXButton getCopyButton = new JFXButton();
+			getCopyButton.setPrefSize(90, 15);
+			getCopyButton
+					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			getCopyButton.setText("Get Copy");
 
-			if (studentExam.getTestType().equals("Manual")) {
-				JFXButton getCopyButton = new JFXButton();
-				getCopyButton.setPrefSize(90, 15);
-				getCopyButton.setStyle(
-						"-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-				getCopyButton.setText("Get Copy");
+			getCopyButton.setOnAction(new EventHandler<ActionEvent>() {
 
-				getCopyButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen();
+				}
 
-					@Override
-					public void handle(ActionEvent event) {
-						MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen();
-					}
-
-				});
-				studentExam.setGetCopy(getCopyButton);
-			}
+			});
+			studentExam.setGetCopy(getCopyButton);
 
 			if (!studentExam.isApproved())
 				studentExam.setGrade("Not Checked");
