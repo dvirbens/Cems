@@ -91,6 +91,16 @@ CREATE TABLE ExecutedExamByStudent (
    	PRIMARY KEY(studentID,examID,ExecDate)
 );
 
+
+CREATE TABLE StudentComputerizedAnswers (
+	studentID varchar(255),
+	examID varchar(255),
+	ExecDate varchar(255),
+	Answers varchar(255),
+	PRIMARY KEY(studentID,examID,ExecDate)
+);
+
+/**************************
 CREATE TABLE StudentUploadManualTest (
 	studentID varchar(255),
     examID varchar(255),
@@ -99,7 +109,7 @@ CREATE TABLE StudentUploadManualTest (
     ExecDate varchar(255),
     WordFile blob
 );
-
+****************************/
 
 INSERT INTO  Subject VALUES ("01","Social Studies");
 INSERT INTO  Subject VALUES ("02","Mathematics");

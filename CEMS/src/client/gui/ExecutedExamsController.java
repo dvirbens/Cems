@@ -1,8 +1,9 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.EXAM_EXECUTE;
+import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import models.ComputerizedTestReport;
 import models.StudentExecutedExam;
 
 public class ExecutedExamsController implements Initializable {
@@ -90,7 +92,20 @@ public class ExecutedExamsController implements Initializable {
 
 				@Override
 				public void handle(ActionEvent event) {
-					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen();
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(), GET_QUESTION_LIST_BY_EXAM_ID);
+					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+					
+					List<String> elements = new ArrayList<>();
+					elements.add(studentExam.getStudentID());
+					elements.add(studentExam.getExamID());
+					elements.add(studentExam.getExecDate());
+					modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
+					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+					
+					ComputerizedTestReport report = new ComputerizedTestReport(studentExam.getSubject(),
+							studentExam.getCourse(), Client.getSelectedAnswers().split(""), Client.getExamQuestions());
+					
+					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen(report);
 				}
 
 			});

@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import models.ComputerizedTestReport;
 import models.ExamQuestion;
 import models.ExecutedExam;
 
@@ -190,14 +191,10 @@ public class MenuHandler {
 
 	}
 	
-	public void setStudentComputerizedTestReportScreen()
+	public void setStudentComputerizedTestReportScreen(ComputerizedTestReport exam)
 	{
-		try {
-			Pane studentComputerizedTestReport = (Pane) FXMLLoader.load(getClass().getResource("StudentComputerizedTestReport.fxml"));
-			mainFrame.setCenter(studentComputerizedTestReport);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		StudentComputerizedTestReportController studentComputerizedTestReportController = new StudentComputerizedTestReportController(exam);
+		studentComputerizedTestReportController.start();
 	}
 	
 	

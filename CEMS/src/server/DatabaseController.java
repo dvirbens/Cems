@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -842,8 +843,8 @@ public class DatabaseController {
 	 */
 	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade,
 			String execDuration) {
-		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
-
+		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND ExecDate = ?;";
+		System.out.println("EXEC DURATION: " + execDuration);
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, grade);
@@ -1153,6 +1154,60 @@ public class DatabaseController {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public boolean insertStudentAnswers(List<StudentInExam> studentList, String code)
+	{
+		PreparedStatement prepareStatement;
+
+		try {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+			LocalDateTime now = LocalDateTime.now();  
+			for (StudentInExam student : studentList)
+			{
+				System.out.println(student.getStudentID());
+				prepareStatement = conn.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
+				prepareStatement.setString(1, student.getStudentID());
+				prepareStatement.setString(2, Server.getExamsInProcess().get(code).getExamId());
+				prepareStatement.setString(3, dtf.format(now));
+				prepareStatement.setString(4, Arrays.toString(student.getSolution()));
+				System.out.println(Arrays.toString(student.getSolution()));
+				int resultSet = prepareStatement.executeUpdate();
+				if (resultSet == 1) {
+					System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
+					
+				}
+			}
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.print("Error occurred, Answers has not been saved ");
+			return false;
+		}
+
+		return true;
+	}
+	
+	public String getSelectedAnswers(String studentID, String examID, String date)
+	{
+		String selectedAnswers = null;
+		try {
+			Statement statement = conn.createStatement();
+
+			String studentTestReport = "SELECT * FROM StudentComputerizedAnswers WHERE studentID = \"" + studentID + "\" AND examID=\"" + examID
+					+ "\" AND ExecDate=\"" + date + "\";";
+			ResultSet rs = statement.executeQuery(studentTestReport);
+			while (rs.next()) {
+				selectedAnswers = rs.getString("Answers");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("ERROR #5555 - ERROR LOADING USER INFO FROM DATABASE");
+		}
+
+		return selectedAnswers;
 	}
 
 }

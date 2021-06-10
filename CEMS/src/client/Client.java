@@ -14,8 +14,6 @@ import models.Question;
 import models.StudentExecutedExam;
 import models.User;
 import ocsf.client.AbstractClient;
-import javafx.scene.chart.XYChart.Series;
-import models.Statistics;
 
 //
 /**
@@ -30,6 +28,9 @@ public class Client extends AbstractClient {
 	 * listening on "HandleMessageFromClientUI method.
 	 */
 	public static boolean awaitResponse = false;
+	
+	private static String SelectedAnswers;
+	
 	/**
 	 * Value the holds the list of test that will be shown on table user interface.
 	 */
@@ -265,6 +266,11 @@ public class Client extends AbstractClient {
 				setServerMessages("Invalid code.");
 				break;
 
+			case GET_SELECTED_ANSWERS:
+				SelectedAnswers = (String) modelWrapperFromServer.getElement();
+				break;
+
+				
 			default:
 				break;
 
@@ -432,5 +438,15 @@ public class Client extends AbstractClient {
 	public static void setExecutedExamStudentList(List<StudentExecutedExam> executedExamStudentList) {
 		Client.executedExamStudentList = executedExamStudentList;
 	}
+
+	public static String getSelectedAnswers() {
+		return SelectedAnswers;
+	}
+
+	public static void setSelectedAnswers(String selectedAnswers) {
+		SelectedAnswers = selectedAnswers;
+	}
+	
+	
 
 }
