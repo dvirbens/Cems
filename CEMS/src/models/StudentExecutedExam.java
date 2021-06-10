@@ -25,11 +25,12 @@ public class StudentExecutedExam implements Serializable {
 	private String code;
 	private String alert;
 	private String execDuration;
+	private String comment;
 	private boolean finished;
 	private boolean approved;
 	private WordFile copy;
-	private CheckBox gradeApproval;
 	private TextField tfGrade;
+	private TextField tfComment;
 	private JFXButton getCopy;
 
 	public StudentExecutedExam(String course, String grade) {
@@ -181,14 +182,6 @@ public class StudentExecutedExam implements Serializable {
 		this.alert = alert;
 	}
 
-	public CheckBox getGradeApproval() {
-		return gradeApproval;
-	}
-
-	public void setGradeApproval(CheckBox gradeApproval) {
-		this.gradeApproval = gradeApproval;
-	}
-
 	public TextField getTfGrade() {
 		return tfGrade;
 	}
@@ -219,6 +212,22 @@ public class StudentExecutedExam implements Serializable {
 
 	public void setFinished(boolean finished) {
 		this.finished = finished;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public TextField getTfComment() {
+		return tfComment;
+	}
+
+	public void setTfComment(TextField tfComment) {
+		this.tfComment = tfComment;
 	}
 
 	@Override

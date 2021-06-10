@@ -15,6 +15,7 @@ public class ExamProcess implements Serializable {
 	private String subject;
 	private String course;
 	private String duration;
+	private String finishedStudentsCount;
 	private ConnectionToClient teacherClient;
 	private WordFile manualFile;
 	private ExamType type;
@@ -151,6 +152,14 @@ public class ExamProcess implements Serializable {
 
 	public void setTeacherClient(ConnectionToClient teacherClient) {
 		this.teacherClient = teacherClient;
+	}
+
+	public String getFinishedStudentsCount() {
+		return finishedStudentsCount;
+	}
+
+	public void setFinishedStudentsCount(String finishedStudentsCount) {
+		this.finishedStudentsCount = finishedStudentsCount;
 	}
 
 	@Override

@@ -50,10 +50,10 @@ public class GradeApproveStudentListController implements Initializable {
 	private TableColumn<StudentExecutedExam, TextField> tcGrade;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, String> tcCopyPercentage;
+	private TableColumn<StudentExecutedExam, String> tcCopyAlert;
 
 	@FXML
-	private TableColumn<StudentExecutedExam, CheckBox> tcApproval;
+	private TableColumn<StudentExecutedExam, TextField> tcComment;
 
 	@FXML
 	private JFXButton btnBack;
@@ -91,34 +91,40 @@ public class GradeApproveStudentListController implements Initializable {
 
 	@FXML
 	void onClickSave(ActionEvent event) {
-		List<StudentExecutedExam> approvedStudents = new ArrayList<>();
 
-		for (StudentExecutedExam student : executedExamStudentList) {
-			if (student.isApproved()) {
-				StudentExecutedExam approvedStudent = new StudentExecutedExam(student, student.getTfGrade().getText());
-				approvedStudents.add(approvedStudent);
-			}
+		if (executedExamStudentList.size() != 0) {
+
+			double[] avgAndMedian = getAvarageAndMedian();
+			StudentExecutedExam sampleExecutedExamStudent = executedExamStudentList.get(0);
+			String examID = sampleExecutedExamStudent.getExamID();
+			String subject = sampleExecutedExamStudent.getSubject();
+			String course = sampleExecutedExamStudent.getCourse();
+			String teacherID = sampleExecutedExamStudent.getTeacherId();
+			String execDate = sampleExecutedExamStudent.getExecDate();
+			String testType = sampleExecutedExamStudent.getTestType();
+
+			double avg = avgAndMedian[0];
+			double median = avgAndMedian[1];
+
+			ExecutedExam executedExam = new ExecutedExam(examID, subject, course, teacherID, execDate, testType, avg,
+					median);
+
+			ModelWrapper<ExecutedExam> modelWrapper1 = new ModelWrapper<>(executedExam, UPDATE_EXAM_STATISTIC);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper1);
 		}
 
-		double[] avgAndMedian = getAvarageAndMedian();
+		for (StudentExecutedExam executedExamStudent : executedExamStudentList) {
+			String comment = executedExamStudent.getTfComment().getText();
+			executedExamStudent.setComment(comment);
+			executedExamStudent.setApproved(true);
+			executedExamStudent.setGetCopy(null);
+			executedExamStudent.setTfGrade(null);
+			executedExamStudent.setTfComment(null);
 
-		String examID = approvedStudents.get(0).getExamID();
-		String subject = approvedStudents.get(0).getSubject();
-		String course = approvedStudents.get(0).getCourse();
-		String teacherID = approvedStudents.get(0).getTeacherId();
-		String execDate = approvedStudents.get(0).getExecDate();
-		String testType = approvedStudents.get(0).getTestType();
+		}
 
-		double avg = avgAndMedian[0];
-		double median = avgAndMedian[1];
-
-		ExecutedExam executedExam = new ExecutedExam(examID, subject, course, teacherID, execDate, testType, avg,
-				median);
-
-		ModelWrapper<ExecutedExam> modelWrapper1 = new ModelWrapper<>(executedExam, UPDATE_EXAM_STATISTIC);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper1);
-
-		ModelWrapper<StudentExecutedExam> modelWrapper2 = new ModelWrapper<>(approvedStudents, SAVE_APPROVED_STUDENTS);
+		ModelWrapper<StudentExecutedExam> modelWrapper2 = new ModelWrapper<>(executedExamStudentList,
+				SAVE_APPROVED_STUDENTS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper2);
 
 		String serverMessage = Client.getServerMessages();
@@ -131,11 +137,9 @@ public class GradeApproveStudentListController implements Initializable {
 		int sum = 0;
 
 		for (StudentExecutedExam student : executedExamStudentList) {
-			if (student.isApproved()) {
-				int studentGrade = Integer.valueOf(student.getGrade());
-				studentsGrade.add(studentGrade);
-				sum += studentGrade;
-			}
+			int studentGrade = Integer.valueOf(student.getGrade());
+			studentsGrade.add(studentGrade);
+			sum += studentGrade;
 		}
 
 		studentsGrade.sort(new Comparator<Integer>() {
@@ -175,8 +179,8 @@ public class GradeApproveStudentListController implements Initializable {
 		tcExamId.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
 		tcStudent.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("studentName"));
 		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, TextField>("tfGrade"));
-		tcCopyPercentage.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("Alert"));
-		tcApproval.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, CheckBox>("gradeApproval"));
+		tcCopyAlert.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("alert"));
+		tcComment.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, TextField>("tfComment"));
 
 		ObservableList<StudentExecutedExam> executedExam = FXCollections.observableArrayList();
 		executedExamStudentList = addApproveButton(Client.getExecutedExamStudentList());
@@ -189,25 +193,9 @@ public class GradeApproveStudentListController implements Initializable {
 
 		for (StudentExecutedExam executedStudentExam : executedExamStudentList) {
 			TextField tfGrade = new TextField(executedStudentExam.getGrade());
+			TextField tfComment = new TextField();
+			executedStudentExam.setTfComment(tfComment);
 			executedStudentExam.setTfGrade(tfGrade);
-
-			CheckBox approveGrade = new CheckBox();
-			approveGrade.selectedProperty().addListener(new ChangeListener<Boolean>() {
-
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if (newValue) {
-						executedStudentExam.setApproved(true);
-					} else {
-						executedStudentExam.setApproved(false);
-					}
-				}
-			});
-
-			executedStudentExam.setGradeApproval(approveGrade);
-
-			if (executedStudentExam.isApproved())
-				executedStudentExam.getGradeApproval().selectedProperty().set(true);
 		}
 
 		return executedExamStudentList;

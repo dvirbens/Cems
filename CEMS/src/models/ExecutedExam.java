@@ -15,13 +15,15 @@ public class ExecutedExam implements Serializable {
 	private String execDate;
 	private String execTime;
 	private String testType;
+	private String finishedStudentsCount;
 	private double avg;
 	private double median;
 	private JFXButton questionList;
 	private JFXButton gradeApproval;
 
 	public ExecutedExam(String id, String subject, String course, String teacherID, String executorTeacherName,
-			String execDate, String execTime, String testType, double avg, double median) {
+			String execDate, String execTime, String finishedStudentsCount, String testType, double avg,
+			double median) {
 		super();
 		this.id = id;
 		this.subject = subject;
@@ -30,6 +32,7 @@ public class ExecutedExam implements Serializable {
 		this.executorTeacherName = executorTeacherName;
 		this.execDate = execDate;
 		this.execTime = execTime;
+		this.finishedStudentsCount = finishedStudentsCount;
 		this.testType = testType;
 		this.avg = avg;
 		this.median = median;
@@ -163,7 +166,7 @@ public class ExecutedExam implements Serializable {
 	public void setExecTime(String execTime) {
 		this.execTime = execTime;
 	}
-	
+
 	public JFXButton getQuestionList() {
 		return questionList;
 	}
@@ -180,11 +183,20 @@ public class ExecutedExam implements Serializable {
 		this.gradeApproval = gradeApproval;
 	}
 
+	public String getFinishedStudentsCount() {
+		return finishedStudentsCount;
+	}
+
+	public void setFinishedStudentsCount(String finishedStudentsCount) {
+		this.finishedStudentsCount = finishedStudentsCount;
+	}
+
 	@Override
 	public String toString() {
 		return "ExecutedExam [id=" + id + ", subject=" + subject + ", course=" + course + ", teacherID=" + teacherID
 				+ ", executorTeacherName=" + executorTeacherName + ", execDate=" + execDate + ", execTime=" + execTime
-				+ ", testType=" + testType + ", avg=" + avg + ", median=" + median + "]";
+				+ ", testType=" + testType + ", finishedStudentsCount=" + finishedStudentsCount + ", avg=" + avg
+				+ ", median=" + median + ", questionList=" + questionList + ", gradeApproval=" + gradeApproval + "]";
 	}
 
 }

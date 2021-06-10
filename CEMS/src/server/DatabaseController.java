@@ -739,7 +739,7 @@ public class DatabaseController {
 	 *         false = can't save student who's entered to specific exam}.
 	 */
 	public boolean insertToExecutedExamByStudent(String studentID, ExamProcess exam) {
-		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, studentID);
@@ -755,6 +755,7 @@ public class DatabaseController {
 			stmt.setBoolean(11, false);
 			stmt.setBoolean(12, false);
 			stmt.setString(13, null);
+			stmt.setString(14, null);
 			int resultSet = stmt.executeUpdate();
 			if (resultSet == 1) {
 				System.out.println("Student entered exam");
@@ -837,7 +838,8 @@ public class DatabaseController {
 	 *                   executed the exam.
 	 * @return
 	 */
-	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade,String execDuration) {
+	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade,
+			String execDuration) {
 		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
 
 		try {
@@ -869,7 +871,7 @@ public class DatabaseController {
 		String creatorTeacherID = getCreatorTeacherID(exam.getExamId());
 		creatorTeacherID = creatorTeacherID != null ? creatorTeacherID : "";
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+			prepareStatement = conn.prepareStatement("INSERT INTO ExecutedExam VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);");
 			prepareStatement.setString(1, exam.getExamId());
 			prepareStatement.setString(2, exam.getTeacherID());
 			prepareStatement.setString(3, creatorTeacherID);
@@ -878,9 +880,11 @@ public class DatabaseController {
 			prepareStatement.setString(6, exam.getDuration());
 			prepareStatement.setString(7, exam.getDate());
 			prepareStatement.setString(8, exam.getTime());
-			prepareStatement.setDouble(9, 0);
-			prepareStatement.setDouble(10, 0);
-			prepareStatement.setString(11, exam.getType().toString());
+			prepareStatement.setString(9, exam.getFinishedStudentsCount());
+			prepareStatement.setBoolean(10, false);
+			prepareStatement.setDouble(11, 0);
+			prepareStatement.setDouble(12, 0);
+			prepareStatement.setString(13, exam.getType().toString());
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				System.out.print("Exam Saved Succuessfully");
@@ -960,12 +964,13 @@ public class DatabaseController {
 				String executeTime = rsExecutedExam.getString("executeTime");
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
+				String finishedStudentsCount = rsExecutedExam.getString("finishedStudentsCount");
 				double avg = rsExecutedExam.getDouble("avg");
 				double median = rsExecutedExam.getDouble("median");
 				String teacherName = getUserName(executeTeacherID);
 
 				ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeTeacherID, teacherName,
-						executeDate, executeTime, type, avg, median);
+						executeDate, executeTime, finishedStudentsCount, type, avg, median);
 
 				examList.add(executedExam);
 			}
@@ -1102,15 +1107,16 @@ public class DatabaseController {
 
 	public boolean saveApprovedStudents(List<StudentExecutedExam> approvedStudents) {
 
-		String query = "UPDATE executedexambystudent SET Approved = ?, Grade=? WHERE studentID = ? AND examID = ? AND ExecDate= ?;";
+		String query = "UPDATE executedexambystudent SET Approved = ?, Grade = ? ,comment = ? WHERE studentID = ? AND examID = ? AND ExecDate= ?;";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			for (StudentExecutedExam student : approvedStudents) {
 				stmt.setBoolean(1, student.isApproved());
 				stmt.setString(2, student.getGrade());
-				stmt.setString(3, student.getStudentID());
-				stmt.setString(4, student.getExamID());
-				stmt.setString(5, student.getExecDate());
+				stmt.setString(3, student.getComment());
+				stmt.setString(4, student.getStudentID());
+				stmt.setString(5, student.getExamID());
+				stmt.setString(6, student.getExecDate());
 				stmt.executeUpdate();
 			}
 

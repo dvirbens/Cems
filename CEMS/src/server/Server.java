@@ -248,7 +248,6 @@ public class Server extends AbstractServer {
 		case CLOSE_EXAM:
 			String code = (String) modelWrapperFromClient.getElement();
 			examID = examsInProcess.get(code).getExamId();
-			databaseController.saveExecutedExam(examsInProcess.get(code));
 
 			// TODO NEED TO CHECK IF THE EXAM IS EMPTY, HAVE NO STUDENT !!!
 
@@ -256,12 +255,19 @@ public class Server extends AbstractServer {
 			 * if (!studentInExam.get(code).isEmpty()) checkAlert(code, examID);
 			 */
 			try {
+				ExamProcess examInProcessTemp = examsInProcess.get(code);
 				List<StudentInExam> studentList = studentInExam.get(code);
+				int finishedStudent = 0;
 				modelWrapperToClient = new ModelWrapper<>("-1", STUDENT_TIME_EXTENSION);
 				for (StudentInExam student : studentList) {
+					if (student.isFinished())
+						finishedStudent++;
+
 					ConnectionToClient studentClient = student.getClient();
 					studentClient.sendToClient(modelWrapperToClient);
 				}
+				examInProcessTemp.setFinishedStudentsCount(String.valueOf(finishedStudent));
+				databaseController.saveExecutedExam(examInProcessTemp);
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -511,6 +517,7 @@ public class Server extends AbstractServer {
 
 			for (StudentInExam student : studentsInExam) {
 				if (student.getStudentID().equals(studentID)) {
+					student.setFinished(true);
 					String[] solution = finishedStudent.getSolution();
 					student.setSolution(solution);
 				}

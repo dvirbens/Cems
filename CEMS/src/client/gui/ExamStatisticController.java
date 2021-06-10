@@ -68,7 +68,13 @@ public class ExamStatisticController implements Initializable {
 	private Label medLabel;
 
 	@FXML
-	private Label numOfStudentLabel;
+	private Label labelTotalStudents;
+
+	@FXML
+	private Label labelFinishedStudents;
+
+	@FXML
+	private Label labelUnfinishedStudents;
 
 	@FXML
 	private BarChart<String, Integer> bcExamStatistic;
@@ -114,6 +120,7 @@ public class ExamStatisticController implements Initializable {
 						String examID = newSelection.getId();
 						String date = newSelection.getExecDate();
 						String teacherID = newSelection.getTeacherID();
+						String finishedStudentCount = newSelection.getFinishedStudentsCount();
 						List<String> parameters = Arrays.asList(examID, date, teacherID);
 						String avg = String.valueOf(newSelection.getAvg());
 						String median = String.valueOf(newSelection.getMedian());
@@ -131,8 +138,15 @@ public class ExamStatisticController implements Initializable {
 							newStats.getData().add(
 									new XYChart.Data<>(sutdent.getStudentName(), Integer.parseInt(sutdent.getGrade())));
 						}
+
 						String numOfStudents = String.valueOf(studentList.size());
-						numOfStudentLabel.setText(numOfStudents);
+						labelTotalStudents.setText(numOfStudents);
+						labelFinishedStudents.setText(finishedStudentCount);
+						int totalStudentCount = studentList.size();
+						int finishedStudentSize = Integer.valueOf(finishedStudentCount);
+						int unfinishedStudentCount = totalStudentCount - finishedStudentSize;
+						labelUnfinishedStudents.setText(String.valueOf(unfinishedStudentCount));
+
 						bcExamStatistic.getData().add(newStats);
 					}
 				});
