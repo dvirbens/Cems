@@ -505,6 +505,7 @@ public class Server extends AbstractServer {
 			studentID = finishedStudent.getStudentID();
 			String finalGrade = finishedStudent.getGrade();
 			String teacherID = examInProcess.getTeacherID();
+			String execDuration = finishedStudent.getExecDuration();
 
 			List<StudentInExam> studentsInExam = studentInExam.get(code);
 
@@ -515,7 +516,7 @@ public class Server extends AbstractServer {
 				}
 			}
 
-			databaseController.insertFinishedStudent(studentID, examID, teacherID, finalGrade);
+			databaseController.insertFinishedStudent(studentID, examID, teacherID, finalGrade, execDuration);
 			modelWrapperToClient = new ModelWrapper<>(INSERT_FINISHED_STUDENT);
 			try {
 				client.sendToClient(modelWrapperToClient);

@@ -24,6 +24,8 @@ public class StudentExecutedExam implements Serializable {
 	private String grade;
 	private String code;
 	private String alert;
+	private String execDuration;
+	private boolean finished;
 	private boolean approved;
 	private WordFile copy;
 	private CheckBox gradeApproval;
@@ -201,6 +203,22 @@ public class StudentExecutedExam implements Serializable {
 
 	public void setGetCopy(JFXButton getCopy) {
 		this.getCopy = getCopy;
+	}
+
+	public String getExecDuration() {
+		return execDuration;
+	}
+
+	public void setExecDuration(String execDuration) {
+		this.execDuration = execDuration;
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 
 	@Override

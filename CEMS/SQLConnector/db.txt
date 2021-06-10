@@ -81,6 +81,8 @@ CREATE TABLE ExecutedExamByStudent (
     TestType varchar(255),
     Grade varchar(3),
     Copy blob,
+    ExecDuration varchar(255),
+    finished boolean, 
     Approved boolean,
     Alert varchar(255),
    	PRIMARY KEY(studentID,examID,ExecDate)

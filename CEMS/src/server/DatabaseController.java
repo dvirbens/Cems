@@ -425,21 +425,21 @@ public class DatabaseController {
 		}
 		return set;
 	}
-	
-	public List<StudentExecutedExam> getGradeStatisticByStudent(String studentID_select){
+
+	public List<StudentExecutedExam> getGradeStatisticByStudent(String studentID_select) {
 		List<StudentExecutedExam> set = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
 			String studentStatistic = "select *\r\n" + "from executedexam\r\n" + "where course = \"" + studentID_select
 					+ "\";";
 			ResultSet rsGtadeStatisticByStudent = statement.executeQuery(studentStatistic);
-			while(rsGtadeStatisticByStudent.next()) {
+			while (rsGtadeStatisticByStudent.next()) {
 				String Course = rsGtadeStatisticByStudent.getString("Course");
 				String Grade = rsGtadeStatisticByStudent.getString("Grade");
 				StudentExecutedExam ExamListByStudent = new StudentExecutedExam(Course, Grade);
 				set.add(ExamListByStudent);
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("ERROR #23143 - ERROR LOADING StudenExactutedExam FROM DATABASE");
 		}
@@ -739,7 +739,7 @@ public class DatabaseController {
 	 *         false = can't save student who's entered to specific exam}.
 	 */
 	public boolean insertToExecutedExamByStudent(String studentID, ExamProcess exam) {
-		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO executedexambystudent VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, studentID);
@@ -751,8 +751,10 @@ public class DatabaseController {
 			stmt.setString(7, exam.getType().toString());
 			stmt.setString(8, "0");
 			stmt.setString(9, null);
-			stmt.setBoolean(10, false);
-			stmt.setString(11, null);
+			stmt.setString(10, "0");
+			stmt.setBoolean(11, false);
+			stmt.setBoolean(12, false);
+			stmt.setString(13, null);
 			int resultSet = stmt.executeUpdate();
 			if (resultSet == 1) {
 				System.out.println("Student entered exam");
@@ -835,15 +837,16 @@ public class DatabaseController {
 	 *                   executed the exam.
 	 * @return
 	 */
-	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade) {
-		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
+	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade,String execDuration) {
+		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
 
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, grade);
-			stmt.setString(2, studentID);
-			stmt.setString(3, examID);
-			stmt.setString(4, teacherID);
+			stmt.setString(2, execDuration);
+			stmt.setString(3, studentID);
+			stmt.setString(4, examID);
+			stmt.setString(5, teacherID);
 
 			stmt.executeUpdate();
 			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade " + grade);

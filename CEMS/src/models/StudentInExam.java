@@ -14,15 +14,17 @@ public class StudentInExam implements Serializable {
 	private String studentID;
 	private String code;
 	private String grade;
+	private String execDuration;
 	private ConnectionToClient client;
 	private String[] solution;
 	private boolean finished;
 
-	public StudentInExam(String studentID, String code, String grade, String[] solution) {
+	public StudentInExam(String studentID, String code, String grade, String execDuration, String[] solution) {
 		super();
 		this.studentID = studentID;
 		this.code = code;
 		this.grade = grade;
+		this.execDuration = execDuration;
 		this.solution = solution;
 	}
 
@@ -78,6 +80,14 @@ public class StudentInExam implements Serializable {
 
 	public void setGrade(String grade) {
 		this.grade = grade;
+	}
+	
+	public String getExecDuration() {
+		return execDuration;
+	}
+
+	public void setExecDuration(String execDuration) {
+		this.execDuration = execDuration;
 	}
 
 	@Override

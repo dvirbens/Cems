@@ -135,7 +135,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 	private String examID;
 
 	private static String code;
-	
+
 	private volatile boolean shutdown = false;
 
 	public ExecuteComputerizedExamController() {
@@ -206,7 +206,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		ObservableList<ExamQuestion> questions = FXCollections.observableArrayList();
 
 		for (ExamQuestion q : exam.getExamQuestions()) {
-			final ImageView imageview = new ImageView(new Image(getClass().getResource("check.jpg").toExternalForm()));
+			final ImageView imageview = new ImageView(new Image(getClass().getResource("check.jpeg").toExternalForm()));
 			imageview.setFitHeight(30);
 			imageview.setFitWidth(30);
 			imageview.setVisible(false);
@@ -328,67 +328,67 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 		String userID = Client.getUser().getUserID();
 		String finalGrade = grade.toString();
-
-		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, answersArr);
+		int examDuration = Integer.parseInt(Client.getExam().getDuration());
+		int minutes = sw.getMin();
+		int execDuration = examDuration - minutes;
+		StudentInExam finishedStudent = new StudentInExam(userID, code, finalGrade, String.valueOf(execDuration),
+				answersArr);
 		ModelWrapper<StudentInExam> modelWrapper = new ModelWrapper<>(finishedStudent, INSERT_FINISHED_STUDENT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		MainGuiController.getMenuHandler().setStudentlMenu();
-		
+
 	}
 
-	public void set2MinutesLeft()
-	{
+	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
-				if (sw.getMin() == 2 && sw.getSec() == 0)
-				{
+				if (sw.getMin() == 2 && sw.getSec() == 0) {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-						      //Creating a dialog
-						      Dialog<String> dialog = new Dialog<String>();
-						      //Setting the title
-						      dialog.setTitle("Warning");
-						      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-						      //Setting the content of the dialog
-						      dialog.setContentText("Warning: You have 2 minutes left!");
-						      //Adding buttons to the dialog pane
-						      dialog.getDialogPane().getButtonTypes().add(type);
-						      
-						      dialog.showAndWait();
+							// Creating a dialog
+							Dialog<String> dialog = new Dialog<String>();
+							// Setting the title
+							dialog.setTitle("Warning");
+							ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+							// Setting the content of the dialog
+							dialog.setContentText("Warning: You have 2 minutes left!");
+							// Adding buttons to the dialog pane
+							dialog.getDialogPane().getButtonTypes().add(type);
+
+							dialog.showAndWait();
 						}
 					});
 
-			      break;
+					break;
 				}
 			}
-			});
+		});
 		timerThread.start();
 	}
-	
-	public void setFreezePopup()
-	{
+
+	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
-			  MainGuiController.getMenuHandler().setMainScreen();
-		      //Creating a dialog
-		      Dialog<String> dialog = new Dialog<String>();
-		      //Setting the title
-		      dialog.setTitle("Exam closed");
-		      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-		      //Setting the content of the dialog
-		      dialog.setContentText("The exam has been closed by your teacher");
-		      //Adding buttons to the dialog pane
-		      dialog.getDialogPane().getButtonTypes().add(type);
-		      
-		      dialog.showAndWait();
+				MainGuiController.getMenuHandler().setMainScreen();
+				// Creating a dialog
+				Dialog<String> dialog = new Dialog<String>();
+				// Setting the title
+				dialog.setTitle("Exam closed");
+				ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+				// Setting the content of the dialog
+				dialog.setContentText("The exam has been closed by your teacher");
+				// Adding buttons to the dialog pane
+				dialog.getDialogPane().getButtonTypes().add(type);
+
+				dialog.showAndWait();
 			}
 		});
 
 	}
-	
+
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
@@ -409,50 +409,46 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 				public void run() {
 
-							long timeExtension = Client.getTimeExtension();
-							if (StudentMenuController.isClosed())
-							{
-								timer.cancel();
-								shutdown = true;
-								StudentMenuController.setClosed(false);
-								return;
-							}
-							
-							
-							if (timeExtension == -1) {
-								setFreezePopup();
-								shutdown = true;
-								timer.cancel();
-						        return;
-							} else if (timeExtension != 0) {
-								min += (int) timeExtension;
-								Client.setTimeExtension(0);
-							}
-							Platform.runLater(new Runnable() {
+					long timeExtension = Client.getTimeExtension();
+					if (StudentMenuController.isClosed()) {
+						timer.cancel();
+						shutdown = true;
+						StudentMenuController.setClosed(false);
+						return;
+					}
 
-								@Override
-								public void run() {
-									label.setText(String.format("%02d:%02d\n", min, sec));
-								}
-							});
+					if (timeExtension == -1) {
+						setFreezePopup();
+						shutdown = true;
+						timer.cancel();
+						return;
+					} else if (timeExtension != 0) {
+						min += (int) timeExtension;
+						Client.setTimeExtension(0);
+					}
+					Platform.runLater(new Runnable() {
 
-							if (min == 0 && sec == 0) {
-								timer.cancel();
-								shutdown = true;
-								MainGuiController.getMenuHandler().setMainScreen();
-								
-							} else if (sec == 0) {
-								min--;
-								sec = 59;
-							} else {
-								sec--;
-							}
-						
+						@Override
+						public void run() {
+							label.setText(String.format("%02d:%02d\n", min, sec));
+						}
+					});
+
+					if (min == 0 && sec == 0) {
+						timer.cancel();
+						shutdown = true;
+						MainGuiController.getMenuHandler().setMainScreen();
+
+					} else if (sec == 0) {
+						min--;
+						sec = 59;
+					} else {
+						sec--;
+					}
+
 				}
 			}, delay, period);
 		}
-		
-		
 
 		public int getMin() {
 			return min;
@@ -462,11 +458,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 			return sec;
 		}
 
-
 		public void stopTime() {
 			timer.cancel();
 		}
-		
+
 	}
 
 }
