@@ -395,6 +395,8 @@ public class Server extends AbstractServer {
 			StudentExecutedExam newStudent = (StudentExecutedExam) modelWrapperFromClient.getElement();
 			code = newStudent.getCode();
 			studentID = newStudent.getStudentID();
+			ExamProcess examProcessTemp = null;
+			ConnectionToClient teacherClient = null;
 
 			if (examsInProcess.containsKey(code)) {
 				List<StudentInExam> temp = studentInExam.get(code);
@@ -406,14 +408,20 @@ public class Server extends AbstractServer {
 				temp.add(student);
 				studentInExam.put(code, temp);
 
-				ExamProcess examProcess = examsInProcess.get(code);
-				databaseController.insertToExecutedExamByStudent(studentID, examProcess);
-				modelWrapperToClient = new ModelWrapper<>(examProcess, INSERT_STUDENT_TO_EXAM);
+				examProcessTemp = examsInProcess.get(code);
+				databaseController.insertToExecutedExamByStudent(studentID, examProcessTemp);
+
+				teacherClient = examProcessTemp.getTeacherClient();
+				examProcessTemp.setTeacherClient(null);
+				modelWrapperToClient = new ModelWrapper<>(examProcessTemp, INSERT_STUDENT_TO_EXAM);
 			} else {
 				modelWrapperToClient = new ModelWrapper<>(ERROR_INSERT_STUDENT_TO_EXAM);
 			}
 			try {
+
 				client.sendToClient(modelWrapperToClient);
+				if (examProcessTemp != null)
+					examProcessTemp.setTeacherClient(teacherClient);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
