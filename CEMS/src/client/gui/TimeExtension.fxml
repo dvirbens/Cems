@@ -8,12 +8,12 @@
    <children>
       <TableView fx:id="tvExtension" layoutX="52.0" layoutY="134.0" prefHeight="500.0" prefWidth="650.0" style="-fx-selection-bar: #48a832; -fx-border-color: #48a832; -fx-focus-color: #48a832;">
          <columns>
-            <TableColumn fx:id="tcExamID" prefWidth="77.0" text="Exam ID" />
-            <TableColumn fx:id="tcTeacherName" prefWidth="132.0" text="Teacher's name" />
-            <TableColumn fx:id="tcDuration" prefWidth="77.0" text="Duration" />
-            <TableColumn fx:id="tcExtension" prefWidth="83.0" text="Extension" />
-            <TableColumn fx:id="tcCause" minWidth="0.0" prefWidth="195.0" text="Casue" />
-            <TableColumn fx:id="tcConfirm" minWidth="0.0" prefWidth="81.0" text="Confirm" />
+            <TableColumn fx:id="tcExamID" prefWidth="77.0" style="-fx-alignment: center;" text="Exam ID" />
+            <TableColumn fx:id="tcTeacherName" prefWidth="132.0" style="-fx-alignment: center;" text="Teacher's name" />
+            <TableColumn fx:id="tcDuration" prefWidth="77.0" style="-fx-alignment: center;" text="Duration" />
+            <TableColumn fx:id="tcExtension" prefWidth="83.0" style="-fx-alignment: center;" text="Extension" />
+            <TableColumn fx:id="tcCause" minWidth="0.0" prefWidth="115.0" style="-fx-alignment: center;" text="Casue" />
+            <TableColumn fx:id="tcConfirm" minWidth="0.0" prefWidth="161.0" style="-fx-alignment: center;" text="Confirm" />
          </columns>
       </TableView>
    </children>
