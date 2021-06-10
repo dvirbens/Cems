@@ -926,9 +926,14 @@ public class DatabaseController {
 				String type = rsExecutedExam.getString("type");
 				String executeTeacherID = rsExecutedExam.getString("executeTeacherID");
 				String teacherName = getUserName(executeTeacherID);
-				ExecutedExam executedExam = new ExecutedExam(examID, teacherName, executeTeacherID, subject, course,
-						executeDate, type);
-				examList.add(executedExam);
+				boolean approved = rsExecutedExam.getBoolean("Approved");
+
+				if (!approved) {
+					ExecutedExam executedExam = new ExecutedExam(examID, teacherName, executeTeacherID, subject, course,
+							executeDate, type);
+					examList.add(executedExam);
+				}
+
 			}
 
 		} catch (SQLException e) {
@@ -968,11 +973,15 @@ public class DatabaseController {
 				double avg = rsExecutedExam.getDouble("avg");
 				double median = rsExecutedExam.getDouble("median");
 				String teacherName = getUserName(executeTeacherID);
+				boolean approved = rsExecutedExam.getBoolean("Approved");
 
-				ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeTeacherID, teacherName,
-						executeDate, executeTime, finishedStudentsCount, type, avg, median);
+				if (approved) {
+					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeTeacherID, teacherName,
+							executeDate, executeTime, finishedStudentsCount, type, avg, median);
 
-				examList.add(executedExam);
+					examList.add(executedExam);
+				}
+
 			}
 
 		} catch (SQLException e) {
@@ -1128,18 +1137,20 @@ public class DatabaseController {
 	}
 
 	public void updateStatistic(ExecutedExam executedExam) {
-		String query = "UPDATE executedexam SET avg = ?, median=? WHERE examID = ? AND executeDate = ? AND executeTeacherID= ?;";
+		String query = "UPDATE executedexam SET avg = ?, median = ? , Approved = ? WHERE examID = ? AND executeDate = ? AND executeTeacherID= ?;";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setDouble(1, executedExam.getAvg());
 			stmt.setDouble(2, executedExam.getMedian());
-			stmt.setString(3, executedExam.getId());
-			stmt.setString(4, executedExam.getExecDate());
-			stmt.setString(5, executedExam.getTeacherID());
+			stmt.setBoolean(3, true);
+			stmt.setString(4, executedExam.getId());
+			stmt.setString(5, executedExam.getExecDate());
+			stmt.setString(6, executedExam.getTeacherID());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
+
 }

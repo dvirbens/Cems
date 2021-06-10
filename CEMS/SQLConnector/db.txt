@@ -64,6 +64,8 @@ CREATE TABLE ExecutedExam (
     duration varchar(255),
     executeDate varchar(255),
     executeTime varchar(255),
+    finishedStudentsCount varchar(255),
+    Approved boolean,
 	median double,
 	avg double,
 	type ENUM('Manual','Computerized'),
@@ -84,6 +86,7 @@ CREATE TABLE ExecutedExamByStudent (
     ExecDuration varchar(255),
     finished boolean, 
     Approved boolean,
+    comment varchar(255),
     Alert varchar(255),
    	PRIMARY KEY(studentID,examID,ExecDate)
 );
