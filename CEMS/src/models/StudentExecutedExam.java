@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
-public class StudentExecutedExam implements Serializable {
+public class StudentExecutedExam implements Serializable, Comparable<StudentExecutedExam> {
 
 	/**
 	 * 
@@ -32,7 +32,12 @@ public class StudentExecutedExam implements Serializable {
 	private TextField tfGrade;
 	private TextField tfComment;
 	private JFXButton getCopy;
-
+	
+	public int compareTo(StudentExecutedExam other) {
+		//comparison by the grade:
+		return Integer.compare(Integer.parseInt(this.grade),Integer.parseInt(other.grade));
+	}
+	
 	public StudentExecutedExam(String course, String grade) {
 		super();
 		this.course = course;

@@ -3,6 +3,7 @@ package client.gui;
 import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -105,6 +106,8 @@ public class OverallStatistic implements Initializable {
 
 	private Operation op = Operation.COURSE;
 
+	private Object executedExamStudentList;
+
 	public enum StatisticBy {
 		StatisticByCourse, StatisticByTeacher, StatisticByStudent
 	};
@@ -118,7 +121,38 @@ public class OverallStatistic implements Initializable {
 		studentFiltter.setVisible(false);
 		courseSelect.setVisible(false);
 	}
+	private double[] getAvarageAndMedian(List<StudentExecutedExam> list) {
+		List<Integer> studentsGrade = new ArrayList<>();
+		int sum = 0;
 
+		for (StudentExecutedExam student : list) {
+			int studentGrade = Integer.valueOf(student.getGrade());
+			studentsGrade.add(studentGrade);
+			sum += studentGrade;
+		}
+
+		studentsGrade.sort(new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1 - o2;
+			}
+		});
+
+		double avg = sum / studentsGrade.size();
+		double median;
+
+		int n = studentsGrade.size();
+		if (n % 2 == 0) {
+			int firstStudentGrade = studentsGrade.get((n / 2) - 1);
+			int secondStudentGrade = studentsGrade.get((n / 2));
+			median = (firstStudentGrade + secondStudentGrade) / 2;
+		} else {
+			median = studentsGrade.get(((n + 1) / 2) - 1);
+		}
+		double[] avgAndMedian = { avg, median };
+		return avgAndMedian;
+	}
 	@SuppressWarnings("unchecked")
 	@FXML
 	void diplayGrapgh(ActionEvent event) {
@@ -153,6 +187,8 @@ public class OverallStatistic implements Initializable {
 						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
 					avg.setText(Integer.toString(sum_avg));
 					graph.getData().addAll(series);
+					
+					
 				}
 			});
 			break;
@@ -168,17 +204,22 @@ public class OverallStatistic implements Initializable {
 					ModelWrapper<String> modelWrapper = new ModelWrapper<>(student_select,GET_EXECUTED_EXAM_LIST_BY_STUDENT);
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 					List<StudentExecutedExam> statisticList = Client.getExecutedExamStudentList();
+					System.out.println(statisticList);
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
 					for (StudentExecutedExam student_exams : statisticList) {
 						series.getData().add(new XYChart.Data<String, Double>(student_exams.getCourse() , Double.parseDouble(student_exams.getGrade())));
 					}
-					int half = (int)statisticList.size();
-					int sum_avg = half/2;
-					if(half%2 != 0) 
-//						median.setText(Double.toString(statisticList.get(half/2+1).getGrade()));
+					
+					
+//					int half = (int)statisticList.size();
+//					int sum_avg = half/2;
+//					Collections.sort(statisticList);
+//					System.out.println(statisticList);
+//					if(half%2 != 0) 	
+//						median.setText(statisticList.get(half/2+1).getGrade());
 //					else 
 //						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
-					avg.setText(Integer.toString(sum_avg));
+//					avg.setText(Integer.toString(sum_avg));
 					graph.getData().addAll(series);
 				}
 			});

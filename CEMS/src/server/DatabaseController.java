@@ -430,14 +430,16 @@ public class DatabaseController {
 		List<StudentExecutedExam> set = new ArrayList<>();
 		try {
 			Statement statement = conn.createStatement();
-			String studentStatistic = "select *\r\n" + "from executedexam\r\n" + "where course = \"" + studentID_select
-					+ "\";";
+			String studentStatistic = "SELECT * FROM executedexambystudent where studentID = \"1\";";
+			System.out.println("trying insert the while. didn't succeded"
+					+ "\n the studentStatistic: " + studentStatistic);
 			ResultSet rsGtadeStatisticByStudent = statement.executeQuery(studentStatistic);
 			while (rsGtadeStatisticByStudent.next()) {
 				String Course = rsGtadeStatisticByStudent.getString("Course");
 				String Grade = rsGtadeStatisticByStudent.getString("Grade");
 				StudentExecutedExam ExamListByStudent = new StudentExecutedExam(Course, Grade);
 				set.add(ExamListByStudent);
+				System.out.println("the Course: " + Course);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
