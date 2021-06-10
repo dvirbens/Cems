@@ -1,6 +1,7 @@
 package client.gui;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -9,6 +10,8 @@ import com.jfoenix.controls.JFXRadioButton;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -98,16 +101,21 @@ public class StudentComputerizedTestReportController implements Initializable{
     @FXML
     private JFXButton btnBack;
 	    
-    private ComputerizedTestReport exam;
+    private static List<ComputerizedTestReport> exam;
 
+    private static String subject = "";
+    
+    private static String course = "";
 	    
     
     
 	    public StudentComputerizedTestReportController() {
 	    }
 
-		public StudentComputerizedTestReportController(ComputerizedTestReport exam) {
+		public StudentComputerizedTestReportController(List<ComputerizedTestReport> exam, String subject, String course) {
 			this.exam = exam;
+			this.subject = subject;
+			this.course = course;
 		}
 
 		public void start() {
@@ -125,63 +133,31 @@ public class StudentComputerizedTestReportController implements Initializable{
 			
 			set_Subject_Course();
 			
-			tcQuestionNumber
-			.setCellValueFactory(new Callback<CellDataFeatures<ComputerizedTestReport, Integer>, ObservableValue<Integer>>() {
+			// Setting the table
+			ObservableList<ComputerizedTestReport> questions = FXCollections.observableArrayList();
+
+			questions.addAll(exam);
+			tvQuestions.setItems((ObservableList<ComputerizedTestReport>) questions);
+			
+			tcQuestionNumber.setCellValueFactory(new Callback<CellDataFeatures<ComputerizedTestReport, Integer>, ObservableValue<Integer>>() {
 				@Override
 				public ObservableValue<Integer> call(CellDataFeatures<ComputerizedTestReport, Integer> p) {
 					return new ReadOnlyObjectWrapper(tvQuestions.getItems().indexOf(p.getValue()) + 1 + "");
 				}
 			});
-			
-			
-			tcSelectedAnswer
-			.setCellValueFactory(new Callback<CellDataFeatures<ComputerizedTestReport, String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<ComputerizedTestReport, String> p) {
-					return new ReadOnlyObjectWrapper((exam.getSelectedAnswers())[tvQuestions.getItems().indexOf(p.getValue())]);
-				}
-			});
-			
-			tcCorrectAnswer
-			.setCellValueFactory(new Callback<CellDataFeatures<ComputerizedTestReport, String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<ComputerizedTestReport, String> p) {
-					return new ReadOnlyObjectWrapper((exam.getCorrectAnswers()).get(tvQuestions.getItems().indexOf(p.getValue())));
-				}
-			});
-			
+			tcSelectedAnswer.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, String>("selectedAnswer"));
+			tcCorrectAnswer.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, String>("correctAnswer"));
 			tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, String>("points"));
 			tcCorrect.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, ImageView>("correctImg"));
-
-			for(int i=0; i < exam.getNumOfQuestions(); i++)
-			{
-				if (exam.getSelectedAnswers()[i] == exam.getCorrectAnswers().get(i))
-				{
-					final ImageView imageview = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
-					imageview.setFitHeight(30);
-					imageview.setFitWidth(30);
-				}
-				else
-				{
-					final ImageView imageview = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
-					imageview.setFitHeight(30);
-					imageview.setFitWidth(30);
-				}
-
-			}
 			
 		}
 		
 		public void set_Subject_Course()
 		{
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					//lbl_Subject.setText(exam.getSubject());
-					//lbl_Course.setText(exam.getCourse());	
-					System.out.println("Course: " + exam.getCourse());
-				}
-			});
+
+				lbl_Subject.setText(subject);
+				lbl_Course.setText(course);	
+				//System.out.println("Course: " + course);
 		}
 		
 		

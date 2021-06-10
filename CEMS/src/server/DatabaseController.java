@@ -1172,8 +1172,12 @@ public class DatabaseController {
 				prepareStatement.setString(1, student.getStudentID());
 				prepareStatement.setString(2, Server.getExamsInProcess().get(code).getExamId());
 				prepareStatement.setString(3, dtf.format(now));
-				prepareStatement.setString(4, Arrays.toString(student.getSolution()));
-				System.out.println(Arrays.toString(student.getSolution()));
+				StringBuilder stringBuilder = new StringBuilder();
+				for (int i = 0; i < student.getSolution().length; i++) {
+				    stringBuilder.append(student.getSolution()[i]);
+				}
+				prepareStatement.setString(4, stringBuilder.toString());
+				System.out.println(stringBuilder.toString());
 				int resultSet = prepareStatement.executeUpdate();
 				if (resultSet == 1) {
 					System.out.print(student.getStudentID() + " Answers Saved Succuessfully");

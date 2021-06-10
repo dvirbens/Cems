@@ -4,6 +4,7 @@ import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +13,7 @@ import com.jfoenix.controls.JFXButton;
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +23,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import models.ComputerizedTestReport;
 import models.StudentExecutedExam;
 
@@ -58,8 +62,15 @@ public class ExecutedExamsController implements Initializable {
 
 	@FXML
 	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
+	
+	private static ImageView imageview_correct;
+	
+	private static ImageView imageview_wrong;
+	
+
 
 	public void initialize(URL location, ResourceBundle resources) {
+					
 		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("course"));
@@ -80,7 +91,23 @@ public class ExecutedExamsController implements Initializable {
 	}
 
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
+		/**
+		imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
+		imageview_wrong = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
+		imageview_correct.setFitHeight(30);
+		imageview_correct.setFitWidth(30);
+		
 
+		imageview_wrong.setFitHeight(30);
+		imageview_wrong.setFitWidth(30);
+		**/
+		/**
+		Image imProfile = new Image(getClass().getResourceAsStream("/images/correct.png"));
+		ImageView imageview_correct=new ImageView(imProfile);
+		Image imProfile2 = new Image(getClass().getResourceAsStream("/images/wrong.png"));
+		ImageView imageview_wrong=new ImageView(imProfile2);
+		**/
+		
 		for (StudentExecutedExam studentExam : executedExamStudentList) {
 			JFXButton getCopyButton = new JFXButton();
 			getCopyButton.setPrefSize(90, 15);
@@ -88,24 +115,53 @@ public class ExecutedExamsController implements Initializable {
 					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			getCopyButton.setText("Get Copy");
 
-			getCopyButton.setOnAction(new EventHandler<ActionEvent>() {
+			ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(), GET_QUESTION_LIST_BY_EXAM_ID);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			
+			List<String> elements = new ArrayList<>();
+			elements.add(studentExam.getStudentID());
+			elements.add(studentExam.getExamID());
+			elements.add(studentExam.getExecDate());
+			modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			System.out.println("Subject: " + studentExam.getSubject());
+			System.out.println("Course: " + studentExam.getCourse());
+			System.out.println("Selected Answers: " + Client.getSelectedAnswers().split(""));
+			System.out.println("Questions: " + Client.getExamQuestions());
+			List<ComputerizedTestReport> questionsReport = new ArrayList<>();
+			int numOfQuestions = Client.getExamQuestions().size();
+			for (int i=0; i < numOfQuestions; i++)
+			{
+				ComputerizedTestReport questionReport;
+				if (Client.getSelectedAnswers().split("")[i] == Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()))
+				{
+							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
+							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
+							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct);
+				}
+				else
+				{
+							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
+							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
+							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong);
+				}
+				questionsReport.add(questionReport);
+			}
+			
+			
 
+			/*
+			report.setSubject(studentExam.getSubject());
+			report.setCourse(studentExam.getCourse());
+			report.setSelectedAnswers(Client.getSelectedAnswers().split(""));
+			report.setQuestions(Client.getExamQuestions());
+			*/
+			
+			getCopyButton.setOnAction(new EventHandler<ActionEvent>() {			
 				@Override
 				public void handle(ActionEvent event) {
-					ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(), GET_QUESTION_LIST_BY_EXAM_ID);
-					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-					
-					List<String> elements = new ArrayList<>();
-					elements.add(studentExam.getStudentID());
-					elements.add(studentExam.getExamID());
-					elements.add(studentExam.getExecDate());
-					modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
-					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-					
-					ComputerizedTestReport report = new ComputerizedTestReport(studentExam.getSubject(),
-							studentExam.getCourse(), Client.getSelectedAnswers().split(""), Client.getExamQuestions());
-					
-					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen(report);
+					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen(questionsReport, studentExam.getSubject(),
+							studentExam.getCourse());
 				}
 
 			});
