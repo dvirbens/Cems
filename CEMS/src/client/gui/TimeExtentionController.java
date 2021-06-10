@@ -1,9 +1,9 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.EXTENSION_CONFIRM;
+import static common.ModelWrapper.Operation.GET_EXTENSION_REQUESTS;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,72 +22,84 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamExtension;
-import models.ExamExtensionUI;
 
 public class TimeExtentionController implements Initializable {
 
 	@FXML
-	private TableView<ExamExtensionUI> tvExtension;
+	private TableView<ExamExtension> tvExtension;
 
 	@FXML
-	private TableColumn<ExamExtensionUI, String> tcExamID;
+	private TableColumn<ExamExtension, String> tcExamID;
 
 	@FXML
-	private TableColumn<ExamExtensionUI, String> tcTeacherName;
+	private TableColumn<ExamExtension, String> tcTeacherName;
 
 	@FXML
-	private TableColumn<ExamExtensionUI, String> tcDuration;
+	private TableColumn<ExamExtension, String> tcDuration;
 
 	@FXML
-	private TableColumn<ExamExtensionUI, String> tcExtension;
+	private TableColumn<ExamExtension, String> tcExtension;
 
 	@FXML
-	private TableColumn<ExamExtensionUI, String> tcCause;
+	private TableColumn<ExamExtension, String> tcCause;
 
 	@FXML
-	private TableColumn<ExamExtensionUI, JFXButton> tcConfirm;
+	private TableColumn<ExamExtension, JFXButton> tcConfirm;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("meow");
-		tcExamID.setCellValueFactory(new PropertyValueFactory<ExamExtensionUI, String>("examID"));
-		tcTeacherName.setCellValueFactory(new PropertyValueFactory<ExamExtensionUI, String>("teacherName"));
-		tcDuration.setCellValueFactory(new PropertyValueFactory<ExamExtensionUI, String>("examDuration"));
-		tcExtension.setCellValueFactory(new PropertyValueFactory<ExamExtensionUI, String>("timeExtension"));
-		tcCause.setCellValueFactory(new PropertyValueFactory<ExamExtensionUI, String>("casue"));
-		tcConfirm.setCellValueFactory(new PropertyValueFactory<ExamExtensionUI, JFXButton>("confirmButton"));
+		tcExamID.setCellValueFactory(new PropertyValueFactory<ExamExtension, String>("examID"));
+		tcTeacherName.setCellValueFactory(new PropertyValueFactory<ExamExtension, String>("teacherName"));
+		tcDuration.setCellValueFactory(new PropertyValueFactory<ExamExtension, String>("examDuration"));
+		tcExtension.setCellValueFactory(new PropertyValueFactory<ExamExtension, String>("timeExtension"));
+		tcCause.setCellValueFactory(new PropertyValueFactory<ExamExtension, String>("casue"));
+		tcConfirm.setCellValueFactory(new PropertyValueFactory<ExamExtension, JFXButton>("confirmButton"));
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(GET_EXTENSION_REQUESTS);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 		List<ExamExtension> examExtensionList = Client.getExamExtensions();
-		List<ExamExtensionUI> examExtensionUIList = convertToUI(examExtensionList);
-		ObservableList<ExamExtensionUI> examExtension = FXCollections.observableArrayList();
-		examExtension.addAll(examExtensionUIList);
-		tvExtension.setItems(examExtension);
+		ObservableList<ExamExtension> examExtensions = FXCollections.observableArrayList();
+		examExtensionList = addButtons(examExtensionList, examExtensions);
+		examExtensions.addAll(examExtensionList);
+		tvExtension.setItems(examExtensions);
 
 	}
 
-	private List<ExamExtensionUI> convertToUI(List<ExamExtension> examExtensionList) {
-		List<ExamExtensionUI> extensionUIList = new ArrayList<>();
-		for (ExamExtension extension : examExtensionList) {
-			ExamExtensionUI extensionUI = new ExamExtensionUI(extension);
-			JFXButton confirmButton = new JFXButton();
-			confirmButton.setOnAction(new EventHandler<ActionEvent>() {
+	private List<ExamExtension> addButtons(List<ExamExtension> examExtensionList,
+			ObservableList<ExamExtension> examExtensions) {
 
-				@Override
-				public void handle(ActionEvent event) {
-					ModelWrapper<ExamExtension> modelWrapper = new ModelWrapper<>(extension, EXTENSION_CONFIRM);
-					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-				}
-			});
+		for (ExamExtension extension : examExtensionList) {
+			JFXButton confirmButton = new JFXButton();
+			confirmButton.setOnAction(new OnClickConfirm(extension, tvExtension));
 			confirmButton.setPrefSize(90, 15);
-			confirmButton.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			confirmButton
+					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			confirmButton.setText("Confirm");
-			extensionUI.setConfirmButton(confirmButton);
-			extensionUIList.add(extensionUI);
+			extension.setConfirmButton(confirmButton);
+
 		}
-		return extensionUIList;
+		return examExtensionList;
+	}
+
+	private class OnClickConfirm implements EventHandler<ActionEvent> {
+
+		private ExamExtension extension;
+		private TableView<ExamExtension> tableView;
+
+		public OnClickConfirm(ExamExtension extension, TableView<ExamExtension> tableView) {
+			this.extension = extension;
+			this.tableView = tableView;
+		}
+
+		@Override
+		public void handle(ActionEvent event) {
+			tableView.getItems().remove(extension);
+			extension.setConfirmButton(null);
+			ModelWrapper<ExamExtension> modelWrapper = new ModelWrapper<>(extension, EXTENSION_CONFIRM);
+			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+		}
+
 	}
 
 }

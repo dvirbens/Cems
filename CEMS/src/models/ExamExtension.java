@@ -2,6 +2,8 @@ package models;
 
 import java.io.Serializable;
 
+import com.jfoenix.controls.JFXButton;
+
 public class ExamExtension implements Serializable {
 
 	/**
@@ -15,6 +17,7 @@ public class ExamExtension implements Serializable {
 	private String timeExtension;
 	private String examDuration;
 	private String casue;
+	private JFXButton confirmButton;
 
 	public ExamExtension(String examID, String code, String teacherID, String teacherName, String timeExtension,
 			String examDuration, String casue) {
@@ -82,6 +85,14 @@ public class ExamExtension implements Serializable {
 
 	public void setExamID(String examID) {
 		this.examID = examID;
+	}
+	
+	public JFXButton getConfirmButton() {
+		return confirmButton;
+	}
+
+	public void setConfirmButton(JFXButton confirmButton) {
+		this.confirmButton = confirmButton;
 	}
 
 	@Override

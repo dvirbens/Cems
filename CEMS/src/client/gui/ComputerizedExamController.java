@@ -168,7 +168,7 @@ public class ComputerizedExamController implements Initializable {
 			String subject = tvExamPool.getFocusModel().getFocusedItem().getSubject();
 			String course = tvExamPool.getFocusModel().getFocusedItem().getCourse();
 			String duration = tvExamPool.getFocusModel().getFocusedItem().getDuration();
-
+			
 			ExamProcess examProcess = new ExamProcess(examID, currentDate, currentTime, loggedInTeacherID, code,
 					subject, course, duration);
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);

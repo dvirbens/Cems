@@ -3,6 +3,8 @@ package models;
 import java.io.Serializable;
 import java.util.Random;
 
+import ocsf.server.ConnectionToClient;
+
 public class ExamProcess implements Serializable {
 
 	private String examId;
@@ -13,6 +15,7 @@ public class ExamProcess implements Serializable {
 	private String subject;
 	private String course;
 	private String duration;
+	private ConnectionToClient teacherClient;
 	private WordFile manualFile;
 	private ExamType type;
 
@@ -140,6 +143,14 @@ public class ExamProcess implements Serializable {
 
 	public void setDuration(String duration) {
 		this.duration = duration;
+	}
+
+	public ConnectionToClient getTeacherClient() {
+		return teacherClient;
+	}
+
+	public void setTeacherClient(ConnectionToClient teacherClient) {
+		this.teacherClient = teacherClient;
 	}
 
 	@Override

@@ -83,7 +83,6 @@ public class Server extends AbstractServer {
 		this.serverListener = logListener;
 		databaseController = new DatabaseController(database, logListener);
 		examsInProcess = new HashMap<>();
-		examsInProcess.put("555", null);
 		studentInExam = new HashMap<>();
 		examsExtensions = new HashMap<>();
 	}
@@ -129,15 +128,19 @@ public class Server extends AbstractServer {
 			break;
 
 		case EXTENSION_CONFIRM:
-			System.out.println("confirm");
 			ExamExtension extension = (ExamExtension) modelWrapperFromClient.getElement();
 			try {
 				List<StudentInExam> studentList = studentInExam.get(extension.getCode());
 				modelWrapperToClient = new ModelWrapper<>(extension.getTimeExtension(), STUDENT_TIME_EXTENSION);
-				for (StudentInExam student : studentList) {
-					ConnectionToClient studentClient = student.getClient();
-					studentClient.sendToClient(modelWrapperToClient);
+				if (studentList != null) {
+					for (StudentInExam student : studentList) {
+						ConnectionToClient studentClient = student.getClient();
+						studentClient.sendToClient(modelWrapperToClient);
+					}
 				}
+				ExamProcess examProcess = examsInProcess.get(extension.getCode());
+				ConnectionToClient teacherClient = examProcess.getTeacherClient();
+				teacherClient.sendToClient(modelWrapperToClient);
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -228,7 +231,7 @@ public class Server extends AbstractServer {
 		case START_EXAM:
 			try {
 				ExamProcess examProcess = (ExamProcess) modelWrapperFromClient.getElement();
-				System.out.println(examProcess);
+				examProcess.setTeacherClient(client);
 				if (!examsInProcess.containsKey(examProcess.getCode())) {
 					examsInProcess.put(examProcess.getCode(), examProcess);
 					modelWrapperToClient = new ModelWrapper<>(START_EXAM_SUCCESS);
@@ -435,9 +438,9 @@ public class Server extends AbstractServer {
 							modelWrapperToClient = new ModelWrapper<>(ERROR_STUDENT_ALREADY_IN_EXAM);
 							isFound = true;
 						}
-						
+
 					}
-				}  
+				}
 				if (isFound == false) {
 					modelWrapperToClient = new ModelWrapper<>(SUCCESSFUL_INSERT_CHECK);
 				}
