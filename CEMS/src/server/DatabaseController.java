@@ -846,12 +846,14 @@ public class DatabaseController {
 		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND ExecDate = ?;";
 		System.out.println("EXEC DURATION: " + execDuration);
 		try {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+			LocalDateTime now = LocalDateTime.now(); 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, grade);
 			stmt.setString(2, execDuration);
 			stmt.setString(3, studentID);
 			stmt.setString(4, examID);
-			stmt.setString(5, teacherID);
+			stmt.setString(5, dtf.format(now));
 
 			stmt.executeUpdate();
 			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade " + grade);
