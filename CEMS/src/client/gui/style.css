@@ -56,15 +56,11 @@
 	-fx-fill: black;
 }
 
-
-
 .combo-box-popup .list-view .list-cell:hover {
 	
     -fx-text-fill: white;
 	-fx-background-color:#48a832;
 
-
-	
 }
 
 .chart-bar { 

@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="768.0" prefWidth="754.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ConfirmExamController">
+<Pane prefHeight="768.0" prefWidth="754.0" style="-fx-background-color: 616161;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ConfirmExamController">
    <children>
       <Label layoutX="253.0" layoutY="32.0" text="Create Exam" textFill="#3d9a26">
          <font>
             <Font size="39.0" />
          </font>
       </Label>
-      <TableView fx:id="tvQuestions" layoutX="27.0" layoutY="126.0" prefHeight="558.0" prefWidth="700.0">
+      <TableView fx:id="tvQuestions" layoutX="27.0" layoutY="126.0" prefHeight="380.0" prefWidth="700.0">
          <columns>
             <TableColumn fx:id="tcID" prefWidth="110.0" style="-fx-alignment: center;" text="ID" />
             <TableColumn fx:id="tcSubject" prefWidth="176.0" style="-fx-alignment: center;" text="Subject" />
@@ -30,5 +33,19 @@
          </font>
       </Label>
       <JFXButton fx:id="btnCreate" layoutX="595.0" layoutY="704.0" onAction="#onClickCreate" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Create Exam" textFill="WHITE" />
+      <JFXTabPane layoutX="118.0" layoutY="518.0" prefHeight="172.0" prefWidth="537.0">
+         <tabs>
+            <Tab text="Teacher note">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="537.0" />
+              </content>
+            </Tab>
+            <Tab text="Student note">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
    </children>
 </Pane>

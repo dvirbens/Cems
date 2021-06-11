@@ -137,7 +137,7 @@ public class CreateExamController implements Initializable {
 			});
 
 			question.setDetailsButton(detailsButton);
-			
+
 			JFXButton addButton = new JFXButton();
 			addButton.setPrefSize(70, 15);
 			addButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
@@ -167,6 +167,17 @@ public class CreateExamController implements Initializable {
 		} else {
 			course = cbExamCourse.getSelectionModel().getSelectedItem();
 		}
+		boolean wrongInput = false;
+		for (ExamQuestion question : tvSelectedQuestion.getItems()) {
+
+			if (question.getTfPoints().getText().isEmpty())
+				wrongInput = true;
+
+			if (!isNumeric(question.getTfPoints().getText()))
+				wrongInput = true;
+
+		}
+
 		duration = tfDuration.getText();
 		List<ExamQuestion> examQuestions = createRegularList(tvSelectedQuestion.getItems());
 		messageLabel.setStyle("-fx-text-fill: RED;");
@@ -181,10 +192,12 @@ public class CreateExamController implements Initializable {
 			messageLabel.setText("Please insert exam duration");
 		} else if (!isNumeric(duration)) {
 			messageLabel.setText("Duration must to be number value");
+		} else if (wrongInput) {
+			messageLabel.setText("Please insert numric points for every question");
 		}
 
 		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestions != null
-				&& isNumeric(duration) && !examQuestions.isEmpty()) {
+				&& isNumeric(duration) && !examQuestions.isEmpty() && !wrongInput) {
 			examQuestions = addAllPoints(examQuestions);
 			String teacherID = Client.getUser().getUserID();
 			String teacherNote = getTeacherNote();
@@ -193,7 +206,6 @@ public class CreateExamController implements Initializable {
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
 			ConfirmExamController confirmPage = new ConfirmExamController(newExam);
 			confirmPage.start();
-
 		}
 
 	}
@@ -258,6 +270,7 @@ public class CreateExamController implements Initializable {
 			return false;
 		}
 		try {
+			double d = Double.parseDouble(strNum);
 		} catch (NumberFormatException nfe) {
 			return false;
 		}

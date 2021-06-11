@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
 
-import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.collections.FXCollections;
@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,7 +45,7 @@ public class ConfirmExamController implements Initializable {
 
 	@FXML
 	private TableColumn<ExamQuestion, JFXButton> tcDetails;
-
+	
 	@FXML
 	private JFXButton btnBack;
 
@@ -111,5 +112,6 @@ public class ConfirmExamController implements Initializable {
 		tvQuestions.setItems(examQuestions);
 
 	}
+
 
 }

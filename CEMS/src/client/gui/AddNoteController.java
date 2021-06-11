@@ -74,9 +74,7 @@ public class AddNoteController implements Initializable {
 
 			if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Teachers")) {
 				CreateExamController.setTeacherNote(note);
-				CreateExamController.setStudentNote("");
 			} else {
-				CreateExamController.setTeacherNote("");
 				CreateExamController.setStudentNote(note);
 			}
 
