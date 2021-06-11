@@ -16,6 +16,7 @@ public class ExecutedExam implements Serializable {
 	private String execTime;
 	private String testType;
 	private String finishedStudentsCount;
+	private boolean approved;
 	private double avg;
 	private double median;
 	private JFXButton questionList;
@@ -36,6 +37,7 @@ public class ExecutedExam implements Serializable {
 		this.testType = testType;
 		this.avg = avg;
 		this.median = median;
+
 	}
 
 	public ExecutedExam(String id, String subject, String course, String execDate, String testType, int grade) {
@@ -48,7 +50,7 @@ public class ExecutedExam implements Serializable {
 	}
 
 	public ExecutedExam(String id, String executorTeacherName, String teacherID, String subject, String course,
-			String execDate, String testType) {
+			String execDate, String execTime, String testType, boolean approved, double avg) {
 		super();
 		this.executorTeacherName = executorTeacherName;
 		this.id = id;
@@ -56,7 +58,10 @@ public class ExecutedExam implements Serializable {
 		this.teacherID = teacherID;
 		this.course = course;
 		this.execDate = execDate;
+		this.execTime = execTime;
 		this.testType = testType;
+		this.approved = approved;
+		this.avg = avg;
 	}
 
 	public ExecutedExam(String id, String teacherID, String executorTeacherName, String execDate, String execTime,
@@ -189,6 +194,14 @@ public class ExecutedExam implements Serializable {
 
 	public void setFinishedStudentsCount(String finishedStudentsCount) {
 		this.finishedStudentsCount = finishedStudentsCount;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 	@Override

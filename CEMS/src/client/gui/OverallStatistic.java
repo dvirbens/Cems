@@ -65,7 +65,7 @@ public class OverallStatistic implements Initializable {
 
 	@FXML
 	private NumberAxis y_Grades;
-	
+
 	@FXML
 	private Label avg;
 
@@ -121,6 +121,7 @@ public class OverallStatistic implements Initializable {
 		studentFiltter.setVisible(false);
 		courseSelect.setVisible(false);
 	}
+
 	private double[] getAvarageAndMedian(List<StudentExecutedExam> list) {
 		List<Integer> studentsGrade = new ArrayList<>();
 		int sum = 0;
@@ -153,6 +154,7 @@ public class OverallStatistic implements Initializable {
 		double[] avgAndMedian = { avg, median };
 		return avgAndMedian;
 	}
+
 	@SuppressWarnings("unchecked")
 	@FXML
 	void diplayGrapgh(ActionEvent event) {
@@ -172,44 +174,67 @@ public class OverallStatistic implements Initializable {
 					int sum_avg = 0;
 					List<ExecutedExam> statisticList = Client.getExecExams();
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
+
 					for (ExecutedExam exams : statisticList) {
 						String newData = exams.getExecutorTeacherName() + "\n" + exams.getExecDate() + "\n"
 								+ exams.getExecTime();
-						series.getData().add(new XYChart.Data<String, Double>(newData, Double.valueOf(sum_avg += exams.getAvg())));
+						series.getData().add(
+								new XYChart.Data<String, Double>(newData, Double.valueOf(sum_avg += exams.getAvg())));
 					}
-					int half = (int)statisticList.size();
-					sum_avg = half/2;
-					if(half%2 != 0) 
-//						Collections.sort(statisticList);
-//				
-						median.setText(Double.toString(statisticList.get(half/2+1).getAvg()));
-					else 
-						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
-					avg.setText(Integer.toString(sum_avg));
 					graph.getData().addAll(series);
-					
-					
+
 				}
 			});
 			break;
-			
+
 		case STUDENT:
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
 					graph.setAnimated(false);
 					graph.getData().clear();
-					
 					String student_select = studentFiltter.getText();
-					ModelWrapper<String> modelWrapper = new ModelWrapper<>(student_select,GET_EXECUTED_EXAM_LIST_BY_STUDENT);
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(student_select,
+							GET_EXECUTED_EXAM_LIST_BY_STUDENT);
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-					List<StudentExecutedExam> statisticList = Client.getExecutedExamStudentList();
-					System.out.println(statisticList);
+
+					List<StudentExecutedExam> executedExamsList = Client.getExecutedExamStudentList();
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
-					for (StudentExecutedExam student_exams : statisticList) {
-						series.getData().add(new XYChart.Data<String, Double>(student_exams.getCourse() , Double.parseDouble(student_exams.getGrade())));
+					System.out.println(executedExamsList);
+					for (StudentExecutedExam student_exams : executedExamsList) {
+						String newData = student_exams.getCourse() + "\n" + student_exams.getExecDate() + "\n"
+								+ student_exams.getGrade();
+						series.getData().add(new XYChart.Data<String, Double>(newData,
+								Double.parseDouble(student_exams.getGrade())));
 					}
 
+					graph.getData().addAll(series);
+				}
+			});
+			break;
+		case TEACHER:
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					graph.setAnimated(false);
+					graph.getData().clear();
+
+					String teacherID = teacherFiltter.getText();
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(teacherID,
+							GET_EXECUTED_EXAM_LIST_BY_TEACHER);
+					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+					List<ExecutedExam> executedExamList = Client.getExecExams();
+					System.out.println(executedExamList);
+					XYChart.Series<String, Double> series = new XYChart.Series<>();
+
+					for (ExecutedExam executedExam : executedExamList) {
+						if (executedExam.isApproved()) {
+							String newData = executedExam.getId() + "\n" + executedExam.getCourse() + "\n"
+									+ executedExam.getExecDate() + "\n" + executedExam.getExecTime();
+							series.getData().add(new XYChart.Data<String, Double>(newData, executedExam.getAvg()));
+						}
+
+					}
 
 //					int half = (int)statisticList.size();
 //					int sum_avg = half/2;
@@ -223,14 +248,6 @@ public class OverallStatistic implements Initializable {
 					graph.getData().addAll(series);
 				}
 			});
-			break;
-		case TEACHER:
-			/*
-			 * set.getData().add(new XYChart.Data<String, Double>("Avi", 80.0));
-			 * set.getData().add(new XYChart.Data<String, Double>("Katarina", 60.0));
-			 * set.getData().add(new XYChart.Data<String, Double>("Anat", 70.0));
-			 * graph.getData().addAll(set);
-			 */
 			break;
 		default:
 			break;
@@ -288,13 +305,13 @@ public class OverallStatistic implements Initializable {
 
 		op = Operation.TEACHER;
 	}
-	
+
 	class StatisticByCourseComparator implements Comparator<ExecutedExam> {
 
-	    @Override
-	    public int compare(ExecutedExam o1, ExecutedExam o2) {
+		@Override
+		public int compare(ExecutedExam o1, ExecutedExam o2) {
 //	        return o1.getAvg().compareTo(o2.getAvg());
-	    	return 0;
-	    }
+			return 0;
+		}
 	}
 }

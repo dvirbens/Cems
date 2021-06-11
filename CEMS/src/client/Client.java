@@ -1,5 +1,7 @@
 package client;
 
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_TEACHER;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class Client extends AbstractClient {
 	 * listening on "HandleMessageFromClientUI method.
 	 */
 	public static boolean awaitResponse = false;
-	
+
 	private static String SelectedAnswers;
-	
+
 	/**
 	 * Value the holds the list of test that will be shown on table user interface.
 	 */
@@ -121,7 +123,6 @@ public class Client extends AbstractClient {
 
 			case GET_EXECUTED_EXAM_LIST_BY_COURSE:
 				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
-				modelWrapperFromServer.getElement();
 				break;
 
 			case GET_QUESTION_LIST:
@@ -133,6 +134,10 @@ public class Client extends AbstractClient {
 
 			case GET_EXTENSION_REQUESTS:
 				examExtensions = (List<ExamExtension>) modelWrapperFromServer.getElements();
+				break;
+
+			case GET_EXECUTED_EXAM_LIST_BY_TEACHER:
+				execExams = (List<ExecutedExam>) modelWrapperFromServer.getElements();
 				break;
 
 			case ENTERED_WRONG_ID:
@@ -270,7 +275,6 @@ public class Client extends AbstractClient {
 				SelectedAnswers = (String) modelWrapperFromServer.getElement();
 				break;
 
-				
 			default:
 				break;
 
@@ -446,7 +450,5 @@ public class Client extends AbstractClient {
 	public static void setSelectedAnswers(String selectedAnswers) {
 		SelectedAnswers = selectedAnswers;
 	}
-	
-	
 
 }

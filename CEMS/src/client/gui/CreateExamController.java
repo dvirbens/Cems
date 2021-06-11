@@ -184,7 +184,7 @@ public class CreateExamController implements Initializable {
 		}
 
 		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestions != null
-				&& isNumeric(duration)) {
+				&& isNumeric(duration) && !examQuestions.isEmpty()) {
 			examQuestions = addAllPoints(examQuestions);
 			String teacherID = Client.getUser().getUserID();
 			String teacherNote = getTeacherNote();

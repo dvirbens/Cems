@@ -32,16 +32,17 @@ public class StudentExecutedExam implements Serializable, Comparable<StudentExec
 	private TextField tfGrade;
 	private TextField tfComment;
 	private JFXButton getCopy;
-	
+
 	public int compareTo(StudentExecutedExam other) {
-		//comparison by the grade:
-		return Integer.compare(Integer.parseInt(this.grade),Integer.parseInt(other.grade));
+		// comparison by the grade:
+		return Integer.compare(Integer.parseInt(this.grade), Integer.parseInt(other.grade));
 	}
-	
-	public StudentExecutedExam(String course, String grade) {
+
+	public StudentExecutedExam(String course, String grade, String execDate) {
 		super();
 		this.course = course;
 		this.grade = grade;
+		this.execDate = execDate;
 	}
 
 	public StudentExecutedExam(StudentExecutedExam executedStudentExam, String newGrade) {
@@ -235,7 +236,6 @@ public class StudentExecutedExam implements Serializable, Comparable<StudentExec
 		this.tfComment = tfComment;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "StudentExecutedExam [examID=" + examID + ", studentID=" + studentID + ", studentName=" + studentName
