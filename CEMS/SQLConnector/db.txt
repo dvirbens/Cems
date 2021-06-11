@@ -33,10 +33,8 @@ CREATE TABLE Question (
 
 CREATE TABLE ExamQuestion (
 		questionID varchar(255),
-		note varchar(255),
 		point int,
 		examID varchar(255),
-		type ENUM('Students','Teachers','None'),
 		FOREIGN KEY(examID) REFERENCES Exam(examID),
         PRIMARY KEY(questionID,examID)
 );

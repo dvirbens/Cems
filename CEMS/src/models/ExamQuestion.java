@@ -4,38 +4,31 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class ExamQuestion extends Question implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String note;
+	private String studentNote;
+	private String teacherNotes;
 	private int points;
-	private NoteType noteType;
 	private JFXButton noteDetails;
 	private JFXButton removeButton;
+	private TextField tfPoints;
 	private ImageView checkImage;
 
-	public enum NoteType {
-		Students, Teachers, None
-	}
-
-	public ExamQuestion(Question question, String note, int points, NoteType noteType) {
+	public ExamQuestion(Question question) {
 		super(question.getQuestionID(), question.getTeacherName(), question.getSubject(), question.getDetails(),
 				question.getAnswer1(), question.getAnswer2(), question.getAnswer3(), question.getAnswer4(),
 				question.getCorrectAnswer(), question.getDetailsButton());
-		this.note = note;
+	}
+
+	public ExamQuestion(Question question, int points) {
+		super(question.getQuestionID(), question.getTeacherName(), question.getSubject(), question.getDetails(),
+				question.getAnswer1(), question.getAnswer2(), question.getAnswer3(), question.getAnswer4(),
+				question.getCorrectAnswer(), question.getDetailsButton());
 		this.points = points;
-		this.noteType = noteType;
-		
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
 	}
 
 	public int getPoints() {
@@ -44,14 +37,6 @@ public class ExamQuestion extends Question implements Serializable {
 
 	public void setPoints(int points) {
 		this.points = points;
-	}
-
-	public NoteType getNoteType() {
-		return noteType;
-	}
-
-	public void setNoteType(NoteType noteType) {
-		this.noteType = noteType;
 	}
 
 	public JFXButton getNoteDetails() {
@@ -69,9 +54,8 @@ public class ExamQuestion extends Question implements Serializable {
 	public void setCheckImage(ImageView checkImage) {
 		this.checkImage = checkImage;
 	}
-	
-	public void setVisibleImage()
-	{
+
+	public void setVisibleImage() {
 		this.checkImage.setVisible(true);
 	}
 
@@ -82,7 +66,29 @@ public class ExamQuestion extends Question implements Serializable {
 	public void setRemoveButton(JFXButton removeButton) {
 		this.removeButton = removeButton;
 	}
-	
-	
 
+	public String getStudentNote() {
+		return studentNote;
+	}
+
+	public void setStudentNote(String studentNote) {
+		this.studentNote = studentNote;
+	}
+
+	public String getTeacherNotes() {
+		return teacherNotes;
+	}
+
+	public void setTeacherNotes(String teacherNotes) {
+		this.teacherNotes = teacherNotes;
+	}
+
+	public TextField getTfPoints() {
+		return tfPoints;
+	}
+
+	public void setTfPoints(TextField tfPoints) {
+		this.tfPoints = tfPoints;
+	}
+	
 }

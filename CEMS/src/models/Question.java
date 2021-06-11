@@ -18,11 +18,41 @@ public class Question implements Serializable {
 	private String answer4;
 	private int correctAnswer;
 	private JFXButton detailsButton;
-	private JFXButton addButton;
+	private JFXButton addRemoveButton;
 
-	public Question(String questionID, String teacherName, String subject, String details,
-			String answer1, String answer2, String answer3, String answer4, int correctAnswer,
-			JFXButton detailsButton) {
+	public Question(ExamQuestion question) {
+		super();
+		questionID = question.getQuestionID();
+		teacherName = question.getTeacherName();
+		subject = question.getSubject();
+		details = question.getDetails();
+		answer1 = question.getAnswer1();
+		answer2 = question.getAnswer2();
+		answer3 = question.getAnswer3();
+		answer4 = question.getAnswer4();
+		correctAnswer = question.getCorrectAnswer();
+		detailsButton = question.getDetailsButton();
+	}
+
+	public Question(String questionID, String teacherName, String subject, String details, String answer1,
+			String answer2, String answer3, String answer4, int correctAnswer, JFXButton detailsButton,
+			JFXButton addRemoveButton) {
+		super();
+		this.questionID = questionID;
+		this.teacherName = teacherName;
+		this.subject = subject;
+		this.details = details;
+		this.answer1 = answer1;
+		this.answer2 = answer2;
+		this.answer3 = answer3;
+		this.answer4 = answer4;
+		this.correctAnswer = correctAnswer;
+		this.detailsButton = detailsButton;
+		this.addRemoveButton = addRemoveButton;
+	}
+
+	public Question(String questionID, String teacherName, String subject, String details, String answer1,
+			String answer2, String answer3, String answer4, int correctAnswer, JFXButton detailsButton) {
 		super();
 		this.questionID = questionID;
 		this.teacherName = teacherName;
@@ -143,12 +173,12 @@ public class Question implements Serializable {
 		this.detailsButton = detailsButton;
 	}
 
-	public JFXButton getAddButton() {
-		return addButton;
+	public JFXButton getAddRemoveButton() {
+		return addRemoveButton;
 	}
 
-	public void setAddButton(JFXButton addButton) {
-		this.addButton = addButton;
+	public void setAddRemoveButton(JFXButton addRemoveButton) {
+		this.addRemoveButton = addRemoveButton;
 	}
 
 	@Override

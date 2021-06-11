@@ -124,6 +124,7 @@ public class QuestionListController implements Initializable {
 	}
 
 	private void setQuestionNoteButtons(List<ExamQuestion> questions) {
+		/*
 		for (ExamQuestion question : questions) {
 			JFXButton noteButton = new JFXButton();
 			noteButton.setPrefSize(90, 15);
@@ -139,5 +140,6 @@ public class QuestionListController implements Initializable {
 			});
 			question.setNoteDetails(noteButton);
 		}
+		*/
 	}
 }

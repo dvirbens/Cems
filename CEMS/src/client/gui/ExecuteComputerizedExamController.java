@@ -20,7 +20,6 @@ import com.jfoenix.controls.JFXRadioButton;
 
 import client.Client;
 import client.ClientUI;
-import client.gui.ExamManagementWindow.Stopwatch;
 import common.ModelWrapper;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -51,7 +50,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import models.Exam;
 import models.ExamQuestion;
-import models.ExamQuestion.NoteType;
 import models.StudentExecutedExam;
 import models.StudentInExam;
 
@@ -266,11 +264,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 			Integer currentSelectedAnswer = null;
 			if (answersArr[selectedRowIndex] != null)
 				currentSelectedAnswer = Integer.parseInt(answersArr[selectedRowIndex]);
-			if (selectedRow.getNoteType() == NoteType.Students) {
-				tfNote.setText(selectedRow.getNote());
-			} else {
-				tfNote.setText("");
-			}
 			if (currentSelectedAnswer != null) {
 				switch (currentSelectedAnswer) {
 				case 1:

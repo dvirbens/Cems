@@ -1,6 +1,5 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.CREATE_EXAM;
 import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
 import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_SUBJECT;
 
@@ -25,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamQuestion;
@@ -57,7 +57,7 @@ public class CreateExamController implements Initializable {
 	private TableColumn<ExamQuestion, String> tcIdSelected;
 
 	@FXML
-	private TableColumn<ExamQuestion, Integer> tcPointsSelected;
+	private TableColumn<ExamQuestion, TextField> tcPointsSelected;
 
 	@FXML
 	private TableColumn<ExamQuestion, String> tcSubjectSelected;
@@ -73,6 +73,9 @@ public class CreateExamController implements Initializable {
 
 	@FXML
 	private JFXButton btnSearch;
+
+	@FXML
+	private JFXButton btnNote;
 
 	@FXML
 	private JFXTextField tfDuration;
@@ -92,12 +95,13 @@ public class CreateExamController implements Initializable {
 	@FXML
 	private JFXComboBox<String> cbExamSubject;
 
-	private static List<ExamQuestion> examQuestionList;
+	enum Operation {
+		REMOVE, ADD
+	}
 
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
-
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST_BY_SUBJECT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
@@ -128,14 +132,20 @@ public class CreateExamController implements Initializable {
 				}
 
 			});
+
 			question.setDetailsButton(detailsButton);
 			JFXButton addButton = new JFXButton();
 			addButton.setPrefSize(70, 15);
 			addButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			addButton.setText("Add");
-			addButton.setOnAction(new AddButtonEvent(question, tvQuestionPool, tvSelectedQuestion));
-			question.setAddButton(addButton);
+			addButton.setOnAction(new AddRemoveEvenetHandler(Operation.ADD, question));
+			question.setAddRemoveButton(addButton);
 		}
+	}
+
+	@FXML
+	void onClickAddNote(ActionEvent event) {
+
 	}
 
 	@FXML
@@ -153,7 +163,7 @@ public class CreateExamController implements Initializable {
 			course = cbExamCourse.getSelectionModel().getSelectedItem();
 		}
 		duration = tfDuration.getText();
-		List<ExamQuestion> examQuestions = getExamQuestionList();
+		List<ExamQuestion> examQuestions = createRegularList(tvSelectedQuestion.getItems());
 		messageLabel.setStyle("-fx-text-fill: RED;");
 
 		if (examQuestions.isEmpty()) {
@@ -170,25 +180,32 @@ public class CreateExamController implements Initializable {
 
 		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestions != null
 				&& isNumeric(duration)) {
-			deletExamQuestionListButtons();
-			Exam newExam = new Exam(subject, Client.getUser().getUserID(), course, duration, examQuestions);
+			examQuestions = addAllPoints(examQuestions);
+			String teacherID = Client.getUser().getUserID();
+			Exam newExam = new Exam(subject, teacherID, course, duration, examQuestions);
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
-			
-			ConfirmExamController confirmPage=new ConfirmExamController(newExam);
+
+			ConfirmExamController confirmPage = new ConfirmExamController(newExam);
 			confirmPage.start();
-			
 
 		}
 
 	}
 
-	private void deletExamQuestionListButtons() {
-		List<ExamQuestion> examQuestions = getExamQuestionList();
-		for (ExamQuestion question : examQuestions) {
-			question.setAddButton(null);
-			question.setDetailsButton(null);
-			question.setNoteDetails(null);
+	private List<ExamQuestion> createRegularList(ObservableList<ExamQuestion> observableList) {
+		List<ExamQuestion> examQuestions = new ArrayList<>();
+		examQuestions.addAll(observableList);
+		return examQuestions;
+	}
+
+	private List<ExamQuestion> addAllPoints(List<ExamQuestion> examQuestions) {
+
+		for (ExamQuestion examQuestion : examQuestions) {
+			String finalPoint = examQuestion.getTfPoints().getText();
+			examQuestion.setPoints(Integer.valueOf(finalPoint));
 		}
+
+		return examQuestions;
 	}
 
 	@FXML
@@ -205,8 +222,6 @@ public class CreateExamController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		examQuestionList = new ArrayList<>();
-
 		ModelWrapper<Question> modelWrapper = new ModelWrapper<>(GET_QUESTION_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		addQuestionList();
@@ -218,24 +233,16 @@ public class CreateExamController implements Initializable {
 		tcIdPool.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
 		tcSubjectPool.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
 		tcTeacherPool.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
-		tcAddPool.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addButton"));
+		tcAddPool.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("addRemoveButton"));
 		tcDetailsPool.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("detailsButton"));
 
 		tcIdSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));
 		tcSubjectSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("subject"));
 		tcTeacherSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
-		tcPointsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
-		tcRemove.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("removeButton"));
+		tcPointsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, TextField>("tfPoints"));
+		tcRemove.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("addRemoveButton"));
 		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
-	}
-
-	public static List<ExamQuestion> getExamQuestionList() {
-		return examQuestionList;
-	}
-
-	public static void setExamQuestionList(List<ExamQuestion> examQuestionList) {
-		CreateExamController.examQuestionList = examQuestionList;
 	}
 
 	public static boolean isNumeric(String strNum) {
@@ -249,27 +256,52 @@ public class CreateExamController implements Initializable {
 		return true;
 	}
 
-	public class AddButtonEvent implements EventHandler<ActionEvent> {
+	public class AddRemoveEvenetHandler implements EventHandler<ActionEvent> {
 
+		private Operation operation;
 		private Question question;
-		private TableView<Question> tvQuestionPool;
-		private TableView<ExamQuestion> tvSelectedQuestion;
+		private ExamQuestion examQuestion;
 
-		public AddButtonEvent(Question question, TableView<Question> tvQuestionPool,
-				TableView<ExamQuestion> tvSelectedQuestion) {
+		public AddRemoveEvenetHandler(Operation operation, Question question) {
+			this.operation = operation;
 			this.question = question;
-			this.tvQuestionPool = tvQuestionPool;
-			this.tvSelectedQuestion = tvSelectedQuestion;
+		}
+
+		public AddRemoveEvenetHandler(Operation operation, ExamQuestion examQuestion) {
+			this.operation = operation;
+			this.examQuestion = examQuestion;
 		}
 
 		@Override
 		public void handle(ActionEvent event) {
-			if (!AddQuestionController.isWindowOpend()) {
-				AddQuestionController addQuestionController = new AddQuestionController();
-				AddQuestionController.setQuestion(question);
-				AddQuestionController.setTvQuestionPull(tvQuestionPool);
-				AddQuestionController.setTvSelectedQuestion(tvSelectedQuestion);
-				addQuestionController.start();
+
+			switch (operation) {
+
+			case ADD:
+				tvQuestionPool.getItems().remove(question);
+				examQuestion = new ExamQuestion(question);
+				JFXButton remove = new JFXButton();
+				remove.setPrefSize(70, 15);
+				remove.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				remove.setText("Remove");
+				remove.setOnAction(new AddRemoveEvenetHandler(Operation.REMOVE, examQuestion));
+				examQuestion.setAddRemoveButton(remove);
+				TextField tfPoints = new TextField();
+				examQuestion.setTfPoints(tfPoints);
+				tvSelectedQuestion.getItems().add(examQuestion);
+				break;
+
+			case REMOVE:
+				tvSelectedQuestion.getItems().remove(examQuestion);
+				question = new Question(examQuestion);
+				JFXButton add = new JFXButton();
+				add.setPrefSize(70, 15);
+				add.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				add.setText("Add");
+				add.setOnAction(new AddRemoveEvenetHandler(Operation.ADD, question));
+				question.setAddRemoveButton(add);
+				tvQuestionPool.getItems().add(question);
+				break;
 			}
 
 		}

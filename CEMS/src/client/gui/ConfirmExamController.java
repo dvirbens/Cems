@@ -4,6 +4,7 @@ import static common.ModelWrapper.Operation.CREATE_EXAM;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -79,15 +80,21 @@ public class ConfirmExamController implements Initializable {
 
 	@FXML
 	void onClickCreate(ActionEvent event) {
-		exam.setQuestionListButton(null);
-		for (ExamQuestion examQuestion : exam.getExamQuestions()) {
-			examQuestion.setDetailsButton(null);
-			examQuestion.setRemoveButton(null);
-		}
+		deletExamButtons();
 		ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(exam, CREATE_EXAM);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		MainGuiController.getMenuHandler().setCreateExamSucceeded();
 
+	}
+
+	private void deletExamButtons() {
+		exam.setQuestionListButton(null);
+		for (ExamQuestion question : exam.getExamQuestions()) {
+			question.setAddRemoveButton(null);
+			question.setDetailsButton(null);
+			question.setNoteDetails(null);
+			question.setTfPoints(null);
+		}
 	}
 
 	@Override

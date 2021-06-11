@@ -1,9 +1,7 @@
 package server;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -11,32 +9,24 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jfoenix.controls.JFXButton;
-
-import common.ModelWrapper.Operation;
 import common.SubjectCourseCollection;
 import models.Database;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 import models.Exam;
 import models.ExamProcess;
-import models.ExamProcess.ExamType;
-import models.*;
 import models.ExamQuestion;
-import models.ExamQuestion.NoteType;
 import models.ExecutedExam;
 import models.Question;
 import models.StudentExecutedExam;
+import models.StudentInExam;
 import models.User;
 import models.User.ErrorType;
 import models.User.UserType;
@@ -164,12 +154,10 @@ public class DatabaseController {
 	private void saveExamQuestion(ExamQuestion examQuestion, String examID) {
 		PreparedStatement prepareStatement;
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO ExamQuestion VALUES (?,?,?,?,?);");
+			prepareStatement = conn.prepareStatement("INSERT INTO ExamQuestion VALUES (?,?,?);");
 			prepareStatement.setString(1, examQuestion.getQuestionID());
-			prepareStatement.setString(2, examQuestion.getNote());
-			prepareStatement.setInt(3, examQuestion.getPoints());
-			prepareStatement.setString(4, examID);
-			prepareStatement.setString(5, examQuestion.getNoteType().toString());
+			prepareStatement.setInt(2, examQuestion.getPoints());
+			prepareStatement.setString(3, examID);
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				System.out.print("Question Saved Succuessfully");
@@ -432,8 +420,8 @@ public class DatabaseController {
 		try {
 			Statement statement = conn.createStatement();
 			String studentStatistic = "SELECT * FROM executedexambystudent where studentID = \"1\";";
-			System.out.println("trying insert the while. didn't succeded"
-					+ "\n the studentStatistic: " + studentStatistic);
+			System.out.println(
+					"trying insert the while. didn't succeded" + "\n the studentStatistic: " + studentStatistic);
 			ResultSet rsGtadeStatisticByStudent = statement.executeQuery(studentStatistic);
 			while (rsGtadeStatisticByStudent.next()) {
 				String Course = rsGtadeStatisticByStudent.getString("Course");
@@ -534,9 +522,7 @@ public class DatabaseController {
 			ResultSet rsexamQuestion = statement.executeQuery(examQuestionQuery);
 			while (rsexamQuestion.next()) {
 				String questionID = rsexamQuestion.getString("questionID");
-				String note = rsexamQuestion.getString("note");
 				int points = rsexamQuestion.getInt("point");
-				NoteType type = NoteType.valueOf(rsexamQuestion.getString("type"));
 
 				Statement statement2 = conn.createStatement();
 				String questionQuery = "SELECT * FROM question WHERE questionID=\"" + questionID + "\";";
@@ -553,7 +539,7 @@ public class DatabaseController {
 
 					Question question = new Question(questionID, teacherName, subject, details, answer1, answer2,
 							answer3, answer4, correctAnswer);
-					ExamQuestion examQuestion = new ExamQuestion(question, note, points, type);
+					ExamQuestion examQuestion = new ExamQuestion(question, points);
 					examQuestionsList.add(examQuestion);
 				}
 
@@ -846,8 +832,8 @@ public class DatabaseController {
 		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND ExecDate = ?;";
 		System.out.println("EXEC DURATION: " + execDuration);
 		try {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
-			LocalDateTime now = LocalDateTime.now(); 
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDateTime now = LocalDateTime.now();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, grade);
 			stmt.setString(2, execDuration);
@@ -1157,16 +1143,14 @@ public class DatabaseController {
 		}
 
 	}
-	
-	public boolean insertStudentAnswers(List<StudentInExam> studentList, String code)
-	{
+
+	public boolean insertStudentAnswers(List<StudentInExam> studentList, String code) {
 		PreparedStatement prepareStatement;
 
 		try {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
-			LocalDateTime now = LocalDateTime.now();  
-			for (StudentInExam student : studentList)
-			{
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDateTime now = LocalDateTime.now();
+			for (StudentInExam student : studentList) {
 				System.out.println(student.getStudentID());
 				prepareStatement = conn.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
 				prepareStatement.setString(1, student.getStudentID());
@@ -1174,17 +1158,16 @@ public class DatabaseController {
 				prepareStatement.setString(3, dtf.format(now));
 				StringBuilder stringBuilder = new StringBuilder();
 				for (int i = 0; i < student.getSolution().length; i++) {
-				    stringBuilder.append(student.getSolution()[i]);
+					stringBuilder.append(student.getSolution()[i]);
 				}
 				prepareStatement.setString(4, stringBuilder.toString());
 				System.out.println(stringBuilder.toString());
 				int resultSet = prepareStatement.executeUpdate();
 				if (resultSet == 1) {
 					System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
-					
+
 				}
 			}
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1194,15 +1177,14 @@ public class DatabaseController {
 
 		return true;
 	}
-	
-	public String getSelectedAnswers(String studentID, String examID, String date)
-	{
+
+	public String getSelectedAnswers(String studentID, String examID, String date) {
 		String selectedAnswers = null;
 		try {
 			Statement statement = conn.createStatement();
 
-			String studentTestReport = "SELECT * FROM StudentComputerizedAnswers WHERE studentID = \"" + studentID + "\" AND examID=\"" + examID
-					+ "\" AND ExecDate=\"" + date + "\";";
+			String studentTestReport = "SELECT * FROM StudentComputerizedAnswers WHERE studentID = \"" + studentID
+					+ "\" AND examID=\"" + examID + "\" AND ExecDate=\"" + date + "\";";
 			ResultSet rs = statement.executeQuery(studentTestReport);
 			while (rs.next()) {
 				selectedAnswers = rs.getString("Answers");
