@@ -1,18 +1,19 @@
 package models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
 //This class represent one question of Computerized test report
 public class ComputerizedTestReport implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String selectedAnswer;
 	private String correctAnswer;
 	private String points;

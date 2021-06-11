@@ -10,7 +10,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -51,7 +50,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import models.Exam;
 import models.ExamQuestion;
-import models.StudentExecutedExam;
 import models.StudentInExam;
 
 public class ExecuteComputerizedExamController implements Initializable {
@@ -124,17 +122,11 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	private StudentStopwatch sw;
 
-	private long startTime;
-
 	private Exam exam;
-
-	private long duration;
 
 	private String[] answersArr;
 
 	private Integer selectedRadio;
-
-	private String examID;
 
 	private static String code;
 

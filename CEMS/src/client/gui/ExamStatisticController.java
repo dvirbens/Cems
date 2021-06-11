@@ -1,6 +1,7 @@
 package client.gui;
 
 import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+
 import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
 import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
@@ -33,6 +34,10 @@ import models.ExamQuestion;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
 
+/**
+ * @author Arikz
+ *
+ */
 public class ExamStatisticController implements Initializable {
 
 	@FXML
@@ -155,6 +160,10 @@ public class ExamStatisticController implements Initializable {
 		});
 	}
 
+	/**
+	 * @param executedExamsList
+	 * @return
+	 */
 	private List<ExecutedExam> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
 		List<ExecutedExam> approvedExams = new ArrayList<>();
 		System.out.println(executedExamsList);
