@@ -22,7 +22,14 @@ public class ComputerizedTestReport implements Serializable{
 	
 	public ComputerizedTestReport(String selectedAnswer, String correctAnswer, String points, ImageView correctImg, ExamQuestion question) {
 		super();
-		this.selectedAnswer = selectedAnswer;
+		if (selectedAnswer.equals("9"))
+		{
+			this.selectedAnswer = "NONE";
+		}
+		else
+		{
+			this.selectedAnswer = selectedAnswer;
+		}
 		this.correctAnswer = correctAnswer;
 		this.points = points;
 		this.correctImg = correctImg;

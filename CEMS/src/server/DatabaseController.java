@@ -1103,8 +1103,6 @@ public class DatabaseController {
 			stmt.setString(4, teacherID);
 
 			stmt.executeUpdate();
-			// System.out.println("Student ID: " + studentID + " in examID: " + examID + "
-			// got Alert " + AlertPercent);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

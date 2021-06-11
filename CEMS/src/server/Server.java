@@ -251,6 +251,12 @@ public class Server extends AbstractServer {
 					modelWrapperToClient = new ModelWrapper<>(START_EXAM_FAILD);
 					client.sendToClient(modelWrapperToClient);
 				}
+				if (!studentInExam.containsKey(examProcess.getCode()))
+				{
+					List<StudentInExam> temp = new ArrayList<>();
+					studentInExam.put(examProcess.getCode(), temp);
+				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -268,6 +274,7 @@ public class Server extends AbstractServer {
 
 			if (examsInProcess.get(code).getType().equals(ExamProcess.ExamType.Computerized)) {
 				databaseController.insertStudentAnswers(studentInExam.get(code), code);
+				checkAlert(code, examID);
 			}
 
 			try {
@@ -421,10 +428,6 @@ public class Server extends AbstractServer {
 
 			if (examsInProcess.containsKey(code)) {
 				List<StudentInExam> temp = studentInExam.get(code);
-
-				if (temp == null) {
-					temp = new ArrayList<>();
-				}
 				StudentInExam student = new StudentInExam(studentID, client);
 
 				temp.add(student);
@@ -534,6 +537,15 @@ public class Server extends AbstractServer {
 				if (student.getStudentID().equals(studentID)) {
 					student.setFinished(true);
 					String[] solution = finishedStudent.getSolution();
+					if (solution != null)
+					{
+						for (int i=0; i < solution.length; i++)
+						{
+							if (solution[i] == null)
+								solution[i] = "9";
+						}
+					}
+					
 					student.setSolution(solution);
 				}
 			}
@@ -669,6 +681,11 @@ public class Server extends AbstractServer {
 	 */
 	public void checkAlert(String code, String examID) {
 		int numOfStudents = studentInExam.get(code).size();
+		if (numOfStudents == 0)
+		{
+			return;
+		}
+			
 		int numOfQuestions = studentInExam.get(code).get(0).getSolution().length;
 
 		List<StudentInExam> studentsList = studentInExam.get(code);
@@ -677,7 +694,7 @@ public class Server extends AbstractServer {
 		Exam exam = databaseController.GetExamByExamID(examID);
 		System.out.println(exam);
 
-		if (numOfStudents == 0) {
+		if (numOfStudents == 1) {
 			String studentID = studentsList.get(0).getStudentID();
 			String teacherID = exam.getTeacherID();
 			databaseController.updateAlertValue(studentID, examID, teacherID, "0%");
@@ -690,7 +707,7 @@ public class Server extends AbstractServer {
 			Arrays.fill(diff_arr, new Integer(0));
 			for (int k = 0; k < numOfQuestions; k++) {
 				for (int j = 0; j < numOfStudents; j++) {
-					if (j == i)
+					if (j == i || (studentsList.get(i).getSolution())[k].equals("9"))
 						continue;
 
 					if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k)
