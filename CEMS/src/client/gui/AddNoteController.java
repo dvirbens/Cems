@@ -9,17 +9,16 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import models.ExamQuestion;
 import models.Question;
 
@@ -63,34 +62,30 @@ public class AddNoteController implements Initializable {
 
 	@FXML
 	void onClickAddNote(ActionEvent event) {
-		/*
-		 * String note = taNotes.getText(); String points = tfQuestionPoints.getText();
-		 * boolean typeNotPicked = true; NoteType type = NoteType.None;
-		 * messageLabel.setStyle("-fx-text-fill: RED;");
-		 * 
-		 * if (!note.isEmpty() && cbDisplayedFor.getSelectionModel().getSelectedItem()
-		 * == null) { typeNotPicked = false;
-		 * messageLabel.setText("You must choose which group to display"); } else if
-		 * (points.isEmpty() || !isNumeric(points)) {
-		 * messageLabel.setText("Wrong point input, must enter number value"); }
-		 * 
-		 * if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) { type =
-		 * NoteType.None; } else { if
-		 * (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Students"))
-		 * type = NoteType.Students; else type = NoteType.Teachers; }
-		 * 
-		 * if (!points.isEmpty() && isNumeric(points) && typeNotPicked) {
-		 * getTvQuestionPool().getItems().remove(getQuestion());
-		 * 
-		 * 
-		 * String selecteddQuestionID = newQuestion.getQuestionID(); J
-		 * 
-		 * getTvSelectedQuestion().getItems().add(newQuestion);
-		 * CreateExamController.getExamQuestionList().add(newQuestion); Node node =
-		 * (Node) event.getSource(); Stage stage = (Stage) node.getScene().getWindow();
-		 * stage.close(); setWindowOpend(false); }
-		 * 
-		 */
+		String note = taNotes.getText();
+
+		messageLabel.setStyle("-fx-text-fill: RED;");
+
+		if (note.isEmpty()) {
+			messageLabel.setText("Note is empty");
+		} else if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {
+			messageLabel.setText("You need select group type");
+		} else {
+
+			if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Teachers")) {
+				CreateExamController.setTeacherNote(note);
+				CreateExamController.setStudentNote("");
+			} else {
+				CreateExamController.setTeacherNote("");
+				CreateExamController.setStudentNote(note);
+			}
+
+			Node node = (Node) event.getSource();
+			Stage stage = (Stage) node.getScene().getWindow();
+			stage.close();
+
+		}
+
 	}
 
 	public static Question getQuestion() {

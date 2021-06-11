@@ -117,13 +117,15 @@ public class DatabaseController {
 		System.out.println(finalExamID);
 
 		try {
-			prepareStatement = conn.prepareStatement("INSERT INTO Exam VALUES (?,?,?,?,?,?);");
+			prepareStatement = conn.prepareStatement("INSERT INTO Exam VALUES (?,?,?,?,?,?,?,?);");
 			prepareStatement.setString(1, finalExamID);
 			prepareStatement.setString(2, exam.getTeacherID());
 			prepareStatement.setString(3, exam.getTeacherName());
 			prepareStatement.setString(4, exam.getSubject());
 			prepareStatement.setString(5, exam.getCourse());
 			prepareStatement.setString(6, exam.getDuration());
+			prepareStatement.setString(7, exam.getTeacherNote());
+			prepareStatement.setString(8, exam.getStudentNote());
 
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {

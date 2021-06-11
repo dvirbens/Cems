@@ -46,9 +46,6 @@ public class ConfirmExamController implements Initializable {
 	private TableColumn<ExamQuestion, JFXButton> tcDetails;
 
 	@FXML
-	private TableColumn<ExamQuestion, JFXButton> tcNote;
-
-	@FXML
 	private JFXButton btnBack;
 
 	@FXML
@@ -84,7 +81,6 @@ public class ConfirmExamController implements Initializable {
 		ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(exam, CREATE_EXAM);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 		MainGuiController.getMenuHandler().setCreateExamSucceeded();
-
 	}
 
 	private void deletExamButtons() {
@@ -103,11 +99,15 @@ public class ConfirmExamController implements Initializable {
 		tcSubject.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("subject"));
 		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
 		tcPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
-		tcNote.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("noteDetails"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
+		System.out.println("Need to display this notes: ");
+		System.out.println("Student note: " + exam.getStudentNote());
+		System.out.println("Teacher note: " + exam.getTeacherNote());
+
 		ObservableList<ExamQuestion> examQuestions = FXCollections.observableArrayList();
-		examQuestions.addAll(exam.getExamQuestions());
+		List<ExamQuestion> examQuestionsList = exam.getExamQuestions();
+		examQuestions.addAll(examQuestionsList);
 		tvQuestions.setItems(examQuestions);
 
 	}

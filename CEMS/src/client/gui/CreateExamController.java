@@ -95,6 +95,9 @@ public class CreateExamController implements Initializable {
 	@FXML
 	private JFXComboBox<String> cbExamSubject;
 
+	private static String teacherNote;
+	private static String studentNote;
+
 	enum Operation {
 		REMOVE, ADD
 	}
@@ -134,6 +137,7 @@ public class CreateExamController implements Initializable {
 			});
 
 			question.setDetailsButton(detailsButton);
+			
 			JFXButton addButton = new JFXButton();
 			addButton.setPrefSize(70, 15);
 			addButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
@@ -183,9 +187,10 @@ public class CreateExamController implements Initializable {
 				&& isNumeric(duration)) {
 			examQuestions = addAllPoints(examQuestions);
 			String teacherID = Client.getUser().getUserID();
-			Exam newExam = new Exam(subject, teacherID, course, duration, examQuestions);
+			String teacherNote = getTeacherNote();
+			String studentNote = getStudentNote();
+			Exam newExam = new Exam(subject, teacherID, course, duration, teacherNote, studentNote, examQuestions);
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
-
 			ConfirmExamController confirmPage = new ConfirmExamController(newExam);
 			confirmPage.start();
 
@@ -244,6 +249,8 @@ public class CreateExamController implements Initializable {
 		tcRemove.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("addRemoveButton"));
 		tcDetailsSelected.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
+		setStudentNote("");
+		setTeacherNote("");
 	}
 
 	public static boolean isNumeric(String strNum) {
@@ -307,6 +314,22 @@ public class CreateExamController implements Initializable {
 
 		}
 
+	}
+
+	public static String getTeacherNote() {
+		return teacherNote;
+	}
+
+	public static void setTeacherNote(String teacherNote) {
+		CreateExamController.teacherNote = teacherNote;
+	}
+
+	public static String getStudentNote() {
+		return studentNote;
+	}
+
+	public static void setStudentNote(String studentNote) {
+		CreateExamController.studentNote = studentNote;
 	}
 
 }

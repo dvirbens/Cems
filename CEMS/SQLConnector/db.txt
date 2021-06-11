@@ -5,6 +5,8 @@ CREATE TABLE Exam (
     Subject varchar(255),
     Course varchar(255),
     Duration varchar(255),
+    TeacherNote varchar(255),
+    StudentNote varchar(255),
     PRIMARY KEY(examID)
 );
 

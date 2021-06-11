@@ -21,6 +21,8 @@ public class Exam implements Serializable {
 	private String course;
 	private String duration;
 	private String teacherName;
+	private String studentNote;
+	private String teacherNote;
 	private List<ExamQuestion> examQuestions;
 	private JFXButton questionListButton;
 
@@ -46,12 +48,15 @@ public class Exam implements Serializable {
 		this.questionListButton = questionListButton;
 	}
 
-	public Exam(String subject, String teacherID, String course, String duration, List<ExamQuestion> examQuestions) {
+	public Exam(String subject, String teacherID, String course, String duration, String teacherNote,
+			String studentNote, List<ExamQuestion> examQuestions) {
 		super();
 		this.teacherID = teacherID;
 		this.subject = subject;
 		this.course = course;
 		this.duration = duration;
+		this.studentNote = studentNote;
+		this.teacherNote = teacherNote;
 		this.examQuestions = examQuestions;
 	}
 
@@ -126,4 +131,21 @@ public class Exam implements Serializable {
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
 	}
+
+	public String getStudentNote() {
+		return studentNote;
+	}
+
+	public void setStudentNote(String studentNote) {
+		this.studentNote = studentNote;
+	}
+
+	public String getTeacherNote() {
+		return teacherNote;
+	}
+
+	public void setTeacherNote(String teacherNote) {
+		this.teacherNote = teacherNote;
+	}
+
 }
