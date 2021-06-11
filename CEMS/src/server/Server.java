@@ -680,18 +680,21 @@ public class Server extends AbstractServer {
 	 * @return
 	 */
 	public void checkAlert(String code, String examID) {
+		System.out.println("ENTER");
 		int numOfStudents = studentInExam.get(code).size();
+		System.out.println("ENTER2");
 		if (numOfStudents == 0)
 		{
 			return;
 		}
-			
-		int numOfQuestions = studentInExam.get(code).get(0).getSolution().length;
+		System.out.println("TEST");
 
 		List<StudentInExam> studentsList = studentInExam.get(code);
+		System.out.println(studentsList);
 		int wrong_match = 0;
 		Integer AlertPercent = 0;
 		Exam exam = databaseController.GetExamByExamID(examID);
+		int numOfQuestions = exam.getExamQuestions().size();
 		System.out.println(exam);
 
 		if (numOfStudents == 1) {
@@ -701,7 +704,7 @@ public class Server extends AbstractServer {
 			studentsList.get(0).setFinished(true);
 			return;
 		}
-
+		System.out.println("TEST1");
 		for (int i = 0; i < numOfStudents; i++) {
 			Integer[] diff_arr = new Integer[numOfStudents];
 			Arrays.fill(diff_arr, new Integer(0));
@@ -723,7 +726,7 @@ public class Server extends AbstractServer {
 			String studentID = studentsList.get(i).getStudentID();
 			String alert = AlertPercent.toString() + "%";
 			String teacherID = exam.getTeacherID();
-
+			System.out.println("TEST2");
 			databaseController.updateAlertValue(studentID, examID, teacherID, alert);
 			studentsList.get(i).setFinished(true);
 		}
