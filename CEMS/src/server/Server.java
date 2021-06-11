@@ -429,13 +429,25 @@ public class Server extends AbstractServer {
 			if (examsInProcess.containsKey(code)) {
 				List<StudentInExam> temp = studentInExam.get(code);
 				StudentInExam student = new StudentInExam(studentID, client);
-
+	
 				temp.add(student);
 				studentInExam.put(code, temp);
 
 				examProcessTemp = examsInProcess.get(code);
 				databaseController.insertToExecutedExamByStudent(studentID, examProcessTemp);
 
+				String[] solution = examProcessTemp.ge
+				if (solution != null)
+				{
+					for (int i=0; i < solution.length; i++)
+					{
+						if (solution[i] == null)
+							solution[i] = "9";
+					}
+				}
+				
+				student.setSolution(solution);
+				
 				teacherClient = examProcessTemp.getTeacherClient();
 				examProcessTemp.setTeacherClient(null);
 				modelWrapperToClient = new ModelWrapper<>(examProcessTemp, INSERT_STUDENT_TO_EXAM);
