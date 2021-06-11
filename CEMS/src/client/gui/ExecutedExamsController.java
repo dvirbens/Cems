@@ -86,6 +86,7 @@ public class ExecutedExamsController implements Initializable {
 			exams.addAll(studentList);
 			tvExExams.setItems(exams);
 		}
+		
 	}
 
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
@@ -107,38 +108,36 @@ public class ExecutedExamsController implements Initializable {
 			modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			
-			System.out.println("Subject: " + studentExam.getSubject());
-			System.out.println("Course: " + studentExam.getCourse());
-			System.out.println("Selected Answers: " + Client.getSelectedAnswers().split(""));
-			System.out.println("Questions: " + Client.getExamQuestions());
 			List<ComputerizedTestReport> questionsReport = new ArrayList<>();
 			int numOfQuestions = Client.getExamQuestions().size();
-			for (int i=0; i < numOfQuestions; i++)
+			if (Client.getSelectedAnswers() != null)
 			{
-				ComputerizedTestReport questionReport;
-				System.out.println(Client.getSelectedAnswers().split("")[i]
-				+ " " + Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()));
-				if (Client.getSelectedAnswers().split("")[i].equals(Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer())))
+				for (int i=0; i < numOfQuestions; i++)
 				{
-							final ImageView imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
-							imageview_correct.setFitHeight(30);
-							imageview_correct.setFitWidth(30);
-							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
-							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
-							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct, Client.getExamQuestions().get(i));
+					ComputerizedTestReport questionReport;
+					System.out.println(Client.getSelectedAnswers().split("")[i]
+					+ " " + Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()));
+					if (Client.getSelectedAnswers().split("")[i].equals(Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer())))
+					{
+								final ImageView imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
+								imageview_correct.setFitHeight(30);
+								imageview_correct.setFitWidth(30);
+								questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
+								Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
+								Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct, Client.getExamQuestions().get(i));
+					}
+					else
+					{
+								final ImageView imageview_wrong = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
+								imageview_wrong.setFitHeight(30);
+								imageview_wrong.setFitWidth(30);
+								questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
+								Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
+								Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong, Client.getExamQuestions().get(i));
+					}
+					questionsReport.add(questionReport);
 				}
-				else
-				{
-							final ImageView imageview_wrong = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
-							imageview_wrong.setFitHeight(30);
-							imageview_wrong.setFitWidth(30);
-							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
-							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
-							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong, Client.getExamQuestions().get(i));
-				}
-				questionsReport.add(questionReport);
 			}
-			
 			
 
 			/*
