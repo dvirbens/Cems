@@ -17,13 +17,15 @@ public class ComputerizedTestReport implements Serializable{
 	private String correctAnswer;
 	private String points;
 	private ImageView correctImg;
+	private ExamQuestion question;
 	
-	public ComputerizedTestReport(String selectedAnswer, String correctAnswer, String points, ImageView correctImg) {
+	public ComputerizedTestReport(String selectedAnswer, String correctAnswer, String points, ImageView correctImg, ExamQuestion question) {
 		super();
 		this.selectedAnswer = selectedAnswer;
 		this.correctAnswer = correctAnswer;
 		this.points = points;
 		this.correctImg = correctImg;
+		this.question = question;
 	}
 	public String getSelectedAnswer() {
 		return selectedAnswer;
@@ -48,6 +50,12 @@ public class ComputerizedTestReport implements Serializable{
 	}
 	public void setCorrectImg(ImageView correctImg) {
 		this.correctImg = correctImg;
+	}
+	public ExamQuestion getQuestion() {
+		return question;
+	}
+	public void setQuestion(ExamQuestion question) {
+		this.question = question;
 	}
 
 

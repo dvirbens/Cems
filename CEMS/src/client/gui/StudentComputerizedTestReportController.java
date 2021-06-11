@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import models.ComputerizedTestReport;
@@ -150,6 +151,50 @@ public class StudentComputerizedTestReportController implements Initializable{
 			tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, String>("points"));
 			tcCorrect.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, ImageView>("correctImg"));
 			
+			
+			// Loading answers for first question
+			onRowClick();
+
+			// Loading answers on click
+			tvQuestions.setOnMouseClicked((MouseEvent event) -> {
+				if (event.getClickCount() > 0) {
+					onRowClick();
+				}
+			});
+			
+		}
+		
+		public void onRowClick() {
+			// check the table's selected item and get selected item
+			if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
+				ComputerizedTestReport selectedRow = tvQuestions.getSelectionModel().getSelectedItem();
+				int selectedRowIndex = tvQuestions.getSelectionModel().getSelectedIndex();
+				taSelectedQuestion.setText(selectedRow.getQuestion().getDetails());
+				Integer currentSelectedAnswer = null;
+				if (selectedRow.getSelectedAnswer() != null)
+					currentSelectedAnswer = Integer.parseInt(selectedRow.getSelectedAnswer());
+				if (currentSelectedAnswer != null) {
+					switch (currentSelectedAnswer) {
+					case 1:
+						AnswersGroup.selectToggle(radio1);
+						break;
+					case 2:
+						AnswersGroup.selectToggle(radio2);
+						break;
+					case 3:
+						AnswersGroup.selectToggle(radio3);
+						break;
+					case 4:
+						AnswersGroup.selectToggle(radio4);
+						break;
+					}
+				}
+				radio1.setText(selectedRow.getQuestion().getAnswer1());
+				radio2.setText(selectedRow.getQuestion().getAnswer2());
+				radio3.setText(selectedRow.getQuestion().getAnswer3());
+				radio4.setText(selectedRow.getQuestion().getAnswer4());
+
+			}
 		}
 		
 		public void set_Subject_Course()

@@ -265,9 +265,11 @@ public class Server extends AbstractServer {
 			/*
 			 * if (!studentInExam.get(code).isEmpty()) checkAlert(code, examID);
 			 */
-			
+			/*if (examsInProcess.get(code).getType().equals(ExamProcess.ExamType.Computerized))
+			{
+				
+			}*/
 			databaseController.insertStudentAnswers(studentInExam.get(code), code);
-
 			try {
 				ExamProcess examInProcessTemp = examsInProcess.get(code);
 				List<StudentInExam> studentList = studentInExam.get(code);

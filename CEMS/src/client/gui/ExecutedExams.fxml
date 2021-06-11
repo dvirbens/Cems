@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ExecutedExamsController">
    <children>
-      <TableView fx:id="tvExExams" editable="true" layoutX="41.0" layoutY="73.0" prefHeight="504.0" prefWidth="672.0" stylesheets="@style.css">
+      <TableView fx:id="tvExExams" editable="true" layoutX="38.0" layoutY="143.0" prefHeight="504.0" prefWidth="672.0" stylesheets="@style.css">
         <columns>
             <TableColumn fx:id="tcExamID" prefWidth="75.0" style="-fx-alignment: center;" text="ExamID" />
           <TableColumn fx:id="tcSubject" prefWidth="75.0" style="-fx-alignment: center;" text="Subject" />
@@ -17,5 +19,10 @@
             <TableColumn fx:id="tcGetTest" prefWidth="137.0" style="-fx-alignment: center;" text="Get Test" />
         </columns>
       </TableView>
+      <Label fx:id="lbTitle" layoutX="275.0" layoutY="47.0" text="Executed Exams">
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

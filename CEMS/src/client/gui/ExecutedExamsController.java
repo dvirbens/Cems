@@ -121,7 +121,7 @@ public class ExecutedExamsController implements Initializable {
 							imageview_correct.setFitWidth(30);
 							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
 							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
-							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct);
+							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct, Client.getExamQuestions().get(i));
 				}
 				else
 				{
@@ -130,7 +130,7 @@ public class ExecutedExamsController implements Initializable {
 							imageview_wrong.setFitWidth(30);
 							questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
 							Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
-							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong);
+							Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong, Client.getExamQuestions().get(i));
 				}
 				questionsReport.add(questionReport);
 			}

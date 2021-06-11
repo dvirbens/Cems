@@ -168,7 +168,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 		exam = Client.getExam();
 		int duration = Integer.parseInt(exam.getDuration());
 		tfNote.setText(exam.getStudentNote());
-
 		String examID = exam.getId();
 		String userID = Client.getUser().getUserID();
 		String teacherID = exam.getTeacherID();
@@ -253,6 +252,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 				onRowClick();
 			}
 		});
+		
+		taSelectedQuestion.setEditable(false);
+		tfNote.setEditable(false);
 
 	}
 
