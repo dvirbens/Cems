@@ -7,12 +7,16 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 
+import client.Client;
+import client.gui.CreateExamController.AddRemoveEvenetHandler;
+import client.gui.CreateExamController.Operation;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +35,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import models.ComputerizedTestReport;
 import models.ExamQuestion;
+import models.Question;
 import models.StudentExecutedExam;
 
 public class StudentComputerizedTestReportController implements Initializable{
@@ -53,6 +58,9 @@ public class StudentComputerizedTestReportController implements Initializable{
 
     @FXML
     private TableColumn<ComputerizedTestReport, ImageView> tcCorrect;
+    
+    @FXML
+    private TableColumn<ComputerizedTestReport, JFXButton> tcDetails;
 
     @FXML
     private Label lblQuestions;
@@ -151,6 +159,29 @@ public class StudentComputerizedTestReportController implements Initializable{
 			tcQuestionPoints.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, String>("points"));
 			tcCorrect.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, ImageView>("correctImg"));
 			
+			for (ComputerizedTestReport report : exam) {
+				JFXButton detailsButton = new JFXButton();
+				detailsButton.setPrefSize(90, 15);
+				detailsButton
+						.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				detailsButton.setText("Details");
+				detailsButton.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						if (!QuestionDetailsController.isWindowOpend()) {
+							QuestionDetailsController questionDetailsController = new QuestionDetailsController();
+							QuestionDetailsController.setQuestion(report.getQuestion());
+							questionDetailsController.start();
+						}
+					}
+
+				});
+
+				report.setDetailsBtn(detailsButton);		
+			}
+			
+			tcDetails.setCellValueFactory(new PropertyValueFactory<ComputerizedTestReport, JFXButton>("detailsBtn"));
 			
 			// Loading answers for first question
 			onRowClick();

@@ -96,7 +96,7 @@ public class ExecutedExamsController implements Initializable {
 			getCopyButton.setPrefSize(90, 15);
 			getCopyButton
 					.setStyle("-fx-background-color:#3399FF;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			getCopyButton.setText("Get Copy");
+			getCopyButton.setText("Get Results");
 
 			ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(), GET_QUESTION_LIST_BY_EXAM_ID);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
@@ -139,13 +139,6 @@ public class ExecutedExamsController implements Initializable {
 				}
 			}
 			
-
-			/*
-			report.setSubject(studentExam.getSubject());
-			report.setCourse(studentExam.getCourse());
-			report.setSelectedAnswers(Client.getSelectedAnswers().split(""));
-			report.setQuestions(Client.getExamQuestions());
-			*/
 			
 			getCopyButton.setOnAction(new EventHandler<ActionEvent>() {			
 				@Override

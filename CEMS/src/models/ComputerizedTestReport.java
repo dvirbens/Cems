@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +18,7 @@ public class ComputerizedTestReport implements Serializable{
 	private String points;
 	private ImageView correctImg;
 	private ExamQuestion question;
+	private JFXButton detailsBtn;
 	
 	public ComputerizedTestReport(String selectedAnswer, String correctAnswer, String points, ImageView correctImg, ExamQuestion question) {
 		super();
@@ -57,7 +58,14 @@ public class ComputerizedTestReport implements Serializable{
 	public void setQuestion(ExamQuestion question) {
 		this.question = question;
 	}
+	public JFXButton getDetailsBtn() {
+		return detailsBtn;
+	}
+	public void setDetailsBtn(JFXButton detailsBtn) {
+		this.detailsBtn = detailsBtn;
+	}
 
+	
 
 	
 }
