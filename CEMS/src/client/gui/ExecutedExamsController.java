@@ -79,10 +79,13 @@ public class ExecutedExamsController implements Initializable {
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-		ObservableList<StudentExecutedExam> exams = FXCollections.observableArrayList();
-		List<StudentExecutedExam> studentList = addCopyButtons(Client.getExecutedExamStudentList());
-		exams.addAll(studentList);
-		tvExExams.setItems(exams);
+		if (!Client.getExecutedExamStudentList().isEmpty())
+		{
+			ObservableList<StudentExecutedExam> exams = FXCollections.observableArrayList();
+			List<StudentExecutedExam> studentList = addCopyButtons(Client.getExecutedExamStudentList());
+			exams.addAll(studentList);
+			tvExExams.setItems(exams);
+		}
 	}
 
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
@@ -91,7 +94,7 @@ public class ExecutedExamsController implements Initializable {
 			JFXButton getCopyButton = new JFXButton();
 			getCopyButton.setPrefSize(90, 15);
 			getCopyButton
-					.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+					.setStyle("-fx-background-color:#3399FF;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 			getCopyButton.setText("Get Copy");
 
 			ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(), GET_QUESTION_LIST_BY_EXAM_ID);

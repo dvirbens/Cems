@@ -117,6 +117,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	@FXML
 	private Label timeLabel;
+	
+    @FXML
+    private Label lblTimeExtension;
 
 	private StudentStopwatch sw;
 
@@ -407,6 +410,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 					long timeExtension = Client.getTimeExtension();
 					if (StudentMenuController.isClosed()) {
+						StudentMenuController.setLocked(false);
 						timer.cancel();
 						shutdown = true;
 						StudentMenuController.setClosed(false);
@@ -420,10 +424,15 @@ public class ExecuteComputerizedExamController implements Initializable {
 						return;
 					} else if (timeExtension != 0) {
 						min += (int) timeExtension;
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								lblTimeExtension.setText("*Time extended by "+timeExtension);
+							}
+						});
 						Client.setTimeExtension(0);
 					}
 					Platform.runLater(new Runnable() {
-
 						@Override
 						public void run() {
 							label.setText(String.format("%02d:%02d\n", min, sec));

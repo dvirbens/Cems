@@ -37,11 +37,12 @@
       <JFXRadioButton fx:id="radio4" layoutX="158.0" layoutY="657.0" text="d" toggleGroup="$AnswersGroup" />
       <TextField fx:id="tfNote" layoutX="153.0" layoutY="468.0" prefHeight="46.0" prefWidth="568.0" />
       <Label fx:id="lblNote" layoutX="66.0" layoutY="470.0" text="Note:" />
-      <Label fx:id="timeLabel" layoutX="623.0" layoutY="23.0">
+      <Label fx:id="timeLabel" layoutX="622.0" layoutY="10.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
+      <Label fx:id="lblTimeExtension" layoutX="609.0" layoutY="58.0" />
       <Label fx:id="lbTitle" layoutX="263.0" layoutY="23.0" prefHeight="53.0" prefWidth="222.0" text="Computerized Test">
          <font>
             <Font name="System Bold Italic" size="24.0" />
