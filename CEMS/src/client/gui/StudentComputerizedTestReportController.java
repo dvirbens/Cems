@@ -116,15 +116,20 @@ public class StudentComputerizedTestReportController implements Initializable{
     
     private static String course = "";
 	    
+    private static String grade;
+    
+    private static String note;
     
     
 	    public StudentComputerizedTestReportController() {
 	    }
 
-		public StudentComputerizedTestReportController(List<ComputerizedTestReport> exam, String subject, String course) {
+		public StudentComputerizedTestReportController(List<ComputerizedTestReport> exam, String subject, String course, String grade, String note) {
 			this.exam = exam;
 			this.subject = subject;
 			this.course = course;
+			this.grade = grade;
+			this.note = note;
 		}
 
 		public void start() {
@@ -140,7 +145,7 @@ public class StudentComputerizedTestReportController implements Initializable{
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
 			
-			set_Subject_Course();
+			set_labels();
 			
 			// Setting the table
 			ObservableList<ComputerizedTestReport> questions = FXCollections.observableArrayList();
@@ -228,12 +233,13 @@ public class StudentComputerizedTestReportController implements Initializable{
 			}
 		}
 		
-		public void set_Subject_Course()
+		public void set_labels()
 		{
 
 				lbl_Subject.setText(subject);
 				lbl_Course.setText(course);	
-				//System.out.println("Course: " + course);
+				lbl_grade.setText(grade);
+				tfNote.setText(note);
 		}
 		
 		

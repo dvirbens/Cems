@@ -115,8 +115,6 @@ public class ExecutedExamsController implements Initializable {
 				for (int i=0; i < numOfQuestions; i++)
 				{
 					ComputerizedTestReport questionReport;
-					System.out.println(Client.getSelectedAnswers().split("")[i]
-					+ " " + Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()));
 					if (Client.getSelectedAnswers().split("")[i].equals(Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer())))
 					{
 								final ImageView imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
@@ -144,7 +142,7 @@ public class ExecutedExamsController implements Initializable {
 				@Override
 				public void handle(ActionEvent event) {
 					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen(questionsReport, studentExam.getSubject(),
-							studentExam.getCourse());
+							studentExam.getCourse(), studentExam.getGrade(), studentExam.getComment());
 				}
 
 			});

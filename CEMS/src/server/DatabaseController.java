@@ -1157,7 +1157,6 @@ public class DatabaseController {
 			LocalDateTime now = LocalDateTime.now();
 			for (StudentInExam student : studentList) {
 				if (student.getSolution() != null) {
-					System.out.println(student.getStudentID());
 					prepareStatement = conn
 							.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
 					prepareStatement.setString(1, student.getStudentID());
@@ -1168,7 +1167,6 @@ public class DatabaseController {
 						stringBuilder.append(student.getSolution()[i]);
 					}
 					prepareStatement.setString(4, stringBuilder.toString());
-					System.out.println(stringBuilder.toString());
 					int resultSet = prepareStatement.executeUpdate();
 					if (resultSet == 1) {
 						System.out.print(student.getStudentID() + " Answers Saved Succuessfully");

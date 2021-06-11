@@ -307,7 +307,6 @@ public class Server extends AbstractServer {
 			String studentID = (String) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> testArray = databaseController.getExecutedExamListByStudentID(studentID);
 			modelWrapperToClient = new ModelWrapper<StudentExecutedExam>(testArray, EXAM_EXECUTE);
-			System.out.println(testArray);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -597,7 +596,6 @@ public class Server extends AbstractServer {
 			date = (String) userInfo.get(2);
 			String selectedAnswers = databaseController.getSelectedAnswers(studentID, examID, date);
 			modelWrapperToClient = new ModelWrapper<>(selectedAnswers, GET_SELECTED_ANSWERS);
-			System.out.println(selectedAnswers);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {

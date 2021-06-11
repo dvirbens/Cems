@@ -191,10 +191,10 @@ public class MenuHandler {
 
 	}
 	
-	public void setStudentComputerizedTestReportScreen(List<ComputerizedTestReport> exam, String subject, String course)
+	public void setStudentComputerizedTestReportScreen(List<ComputerizedTestReport> exam, String subject, String course, String grade, String note)
 	{
 		StudentComputerizedTestReportController studentComputerizedTestReportController =
-				new StudentComputerizedTestReportController(exam, subject, course);
+				new StudentComputerizedTestReportController(exam, subject, course, grade, note);
 		studentComputerizedTestReportController.start();
 	}
 	
