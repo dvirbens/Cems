@@ -145,7 +145,8 @@ public class CreateExamController implements Initializable {
 
 	@FXML
 	void onClickAddNote(ActionEvent event) {
-
+		AddNoteController addNoteWindow = new AddNoteController();
+		addNoteWindow.start();
 	}
 
 	@FXML

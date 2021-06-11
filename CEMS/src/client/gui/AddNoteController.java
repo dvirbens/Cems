@@ -23,10 +23,10 @@ import javafx.stage.WindowEvent;
 import models.ExamQuestion;
 import models.Question;
 
-public class AddNoteController implements EventHandler<WindowEvent>, Initializable {
+public class AddNoteController implements Initializable {
 
 	@FXML
-	private JFXButton btnAddQuestion;
+	private JFXButton btnAddNote;
 
 	@FXML
 	private JFXTextField tfQuestionPoints;
@@ -46,20 +46,15 @@ public class AddNoteController implements EventHandler<WindowEvent>, Initializab
 
 	private static TableView<ExamQuestion> tvSelectedQuestion;
 
-	private static boolean isWindowOpend;
-
 	public void start() {
-		System.out.println(tvQuestionPool.getItems());
 		Stage stage = new Stage();
 		Pane mainPane;
 		try {
-			mainPane = (Pane) FXMLLoader.load(getClass().getResource("AddQuestion.fxml"));
-			Scene scene = new Scene(mainPane, 370, 310);
+			mainPane = (Pane) FXMLLoader.load(getClass().getResource("AddNote.fxml"));
+			Scene scene = new Scene(mainPane, 370, 280);
 			stage.setScene(scene);
 			stage.setTitle("Add Question");
 			stage.show();
-			stage.setOnHidden(this);
-			setWindowOpend(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -67,46 +62,35 @@ public class AddNoteController implements EventHandler<WindowEvent>, Initializab
 	}
 
 	@FXML
-	void onClickAddQuestion(ActionEvent event) {
+	void onClickAddNote(ActionEvent event) {
 		/*
-		String note = taNotes.getText();
-		String points = tfQuestionPoints.getText();
-		boolean typeNotPicked = true;
-		NoteType type = NoteType.None;
-		messageLabel.setStyle("-fx-text-fill: RED;");
-
-		if (!note.isEmpty() && cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {
-			typeNotPicked = false;
-			messageLabel.setText("You must choose which group to display");
-		} else if (points.isEmpty() || !isNumeric(points)) {
-			messageLabel.setText("Wrong point input, must enter number value");
-		}
-
-		if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {
-			type = NoteType.None;
-		} else {
-			if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Students"))
-				type = NoteType.Students;
-			else
-				type = NoteType.Teachers;
-		}
-
-		if (!points.isEmpty() && isNumeric(points) && typeNotPicked) {
-			getTvQuestionPool().getItems().remove(getQuestion());
-
-			
-			String selecteddQuestionID = newQuestion.getQuestionID();
-			J
-			
-			getTvSelectedQuestion().getItems().add(newQuestion);
-			CreateExamController.getExamQuestionList().add(newQuestion);
-			Node node = (Node) event.getSource();
-			Stage stage = (Stage) node.getScene().getWindow();
-			stage.close();
-			setWindowOpend(false);
-		}
-
-*/
+		 * String note = taNotes.getText(); String points = tfQuestionPoints.getText();
+		 * boolean typeNotPicked = true; NoteType type = NoteType.None;
+		 * messageLabel.setStyle("-fx-text-fill: RED;");
+		 * 
+		 * if (!note.isEmpty() && cbDisplayedFor.getSelectionModel().getSelectedItem()
+		 * == null) { typeNotPicked = false;
+		 * messageLabel.setText("You must choose which group to display"); } else if
+		 * (points.isEmpty() || !isNumeric(points)) {
+		 * messageLabel.setText("Wrong point input, must enter number value"); }
+		 * 
+		 * if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) { type =
+		 * NoteType.None; } else { if
+		 * (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Students"))
+		 * type = NoteType.Students; else type = NoteType.Teachers; }
+		 * 
+		 * if (!points.isEmpty() && isNumeric(points) && typeNotPicked) {
+		 * getTvQuestionPool().getItems().remove(getQuestion());
+		 * 
+		 * 
+		 * String selecteddQuestionID = newQuestion.getQuestionID(); J
+		 * 
+		 * getTvSelectedQuestion().getItems().add(newQuestion);
+		 * CreateExamController.getExamQuestionList().add(newQuestion); Node node =
+		 * (Node) event.getSource(); Stage stage = (Stage) node.getScene().getWindow();
+		 * stage.close(); setWindowOpend(false); }
+		 * 
+		 */
 	}
 
 	public static Question getQuestion() {
@@ -133,25 +117,10 @@ public class AddNoteController implements EventHandler<WindowEvent>, Initializab
 		AddNoteController.tvSelectedQuestion = tvSelectedQuestion;
 	}
 
-	public static boolean isWindowOpend() {
-		return isWindowOpend;
-	}
-
-	public static void setWindowOpend(boolean isWindowOpend) {
-		AddNoteController.isWindowOpend = isWindowOpend;
-	}
-
-	@Override
-	public void handle(WindowEvent arg0) {
-		setWindowOpend(false);
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		cbDisplayedFor.getItems().add("Students");
 		cbDisplayedFor.getItems().add("Teachers");
 	}
-
-	
 
 }
