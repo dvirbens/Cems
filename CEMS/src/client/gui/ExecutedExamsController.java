@@ -103,6 +103,7 @@ public class ExecutedExamsController implements Initializable {
 			elements.add(studentExam.getExecDate());
 			modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+			
 			System.out.println("Subject: " + studentExam.getSubject());
 			System.out.println("Course: " + studentExam.getCourse());
 			System.out.println("Selected Answers: " + Client.getSelectedAnswers().split(""));
