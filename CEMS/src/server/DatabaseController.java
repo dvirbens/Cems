@@ -972,8 +972,9 @@ public class DatabaseController {
 				boolean approved = rsExecutedExam.getBoolean("Approved");
 
 				if (approved) {
+
 					ExecutedExam executedExam = new ExecutedExam(examID, subject, course, executeTeacherID, teacherName,
-							executeDate, executeTime, finishedStudentsCount, type, avg, median);
+							executeDate, executeTime, finishedStudentsCount, type, avg, median, approved);
 
 					examList.add(executedExam);
 				}
@@ -1093,15 +1094,16 @@ public class DatabaseController {
 	 *                 percent.
 	 * @return
 	 */
-	public void updateAlertValue(String studentID, String examID, String teacherID, String AlertPercent) {
-		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ? AND teacherID = ?;";
+	public void updateAlertValue(String studentID, String examID, String AlertPercent) {
+		String sql = "UPDATE ExecutedExamByStudent SET Alert = ? WHERE studentID = ? AND examID = ? AND ExecDate = ?;";
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime now = LocalDateTime.now();
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, AlertPercent);
 			stmt.setString(2, studentID);
 			stmt.setString(3, examID);
-			stmt.setString(4, teacherID);
-
+			stmt.setString(4, dtf.format(now));
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

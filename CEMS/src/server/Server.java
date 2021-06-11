@@ -1,9 +1,39 @@
 package server;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.ERROR_EXAM_NOT_EXIST;
+import static common.ModelWrapper.Operation.ERROR_INSERT_STUDENT_TO_EXAM;
+import static common.ModelWrapper.Operation.ERROR_STUDENT_ALREADY_IN_EXAM;
+import static common.ModelWrapper.Operation.EXAM_EXECUTE;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
+import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_CODE;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXAM_IN_PROCESS;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_COURSE;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_EXECUTOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_STUDENT;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_TEACHER;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
+import static common.ModelWrapper.Operation.GET_EXTENSION_REQUESTS;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_CODE;
+import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_SELECTED_ANSWERS;
+import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
+import static common.ModelWrapper.Operation.GET_USER;
+import static common.ModelWrapper.Operation.INSERT_FINISHED_STUDENT;
+import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
+import static common.ModelWrapper.Operation.START_EXAM_FAILD;
+import static common.ModelWrapper.Operation.START_EXAM_SUCCESS;
+import static common.ModelWrapper.Operation.STUDENT_TIME_EXTENSION;
+import static common.ModelWrapper.Operation.SUCCESSFUL_INSERT_CHECK;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -251,12 +281,6 @@ public class Server extends AbstractServer {
 					modelWrapperToClient = new ModelWrapper<>(START_EXAM_FAILD);
 					client.sendToClient(modelWrapperToClient);
 				}
-				if (!studentInExam.containsKey(examProcess.getCode()))
-				{
-					List<StudentInExam> temp = new ArrayList<>();
-					studentInExam.put(examProcess.getCode(), temp);
-				}
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -266,15 +290,10 @@ public class Server extends AbstractServer {
 			String code = (String) modelWrapperFromClient.getElement();
 			examID = examsInProcess.get(code).getExamId();
 
-			// TODO NEED TO CHECK IF THE EXAM IS EMPTY, HAVE NO STUDENT !!!
-
-			/*
-			 * if (!studentInExam.get(code).isEmpty()) checkAlert(code, examID);
-			 */
+			checkAlert(code, examID);
 
 			if (examsInProcess.get(code).getType().equals(ExamProcess.ExamType.Computerized)) {
 				databaseController.insertStudentAnswers(studentInExam.get(code), code);
-				checkAlert(code, examID);
 			}
 
 			try {
@@ -288,9 +307,12 @@ public class Server extends AbstractServer {
 
 					ConnectionToClient studentClient = student.getClient();
 					studentClient.sendToClient(modelWrapperToClient);
+
 				}
 				examInProcessTemp.setFinishedStudentsCount(String.valueOf(finishedStudent));
 				databaseController.saveExecutedExam(examInProcessTemp);
+
+				studentList.clear();
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -314,6 +336,7 @@ public class Server extends AbstractServer {
 			String studentID = (String) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> testArray = databaseController.getExecutedExamListByStudentID(studentID);
 			modelWrapperToClient = new ModelWrapper<StudentExecutedExam>(testArray, EXAM_EXECUTE);
+			System.out.println(testArray);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -420,7 +443,8 @@ public class Server extends AbstractServer {
 
 		case INSERT_STUDENT_TO_EXAM:
 			// Get code and check if examID exist, if so insert student to exam in DB
-			StudentExecutedExam newStudent = (StudentExecutedExam) modelWrapperFromClient.getElement();
+			StudentInExam newStudent = (StudentInExam) modelWrapperFromClient.getElement();
+
 			code = newStudent.getCode();
 			studentID = newStudent.getStudentID();
 			ExamProcess examProcessTemp = null;
@@ -428,26 +452,18 @@ public class Server extends AbstractServer {
 
 			if (examsInProcess.containsKey(code)) {
 				List<StudentInExam> temp = studentInExam.get(code);
-				StudentInExam student = new StudentInExam(studentID, client);
-	
-				temp.add(student);
+
+				if (temp == null) {
+					temp = new ArrayList<>();
+				}
+
+				newStudent.setClient(client);
+				temp.add(newStudent);
 				studentInExam.put(code, temp);
 
 				examProcessTemp = examsInProcess.get(code);
 				databaseController.insertToExecutedExamByStudent(studentID, examProcessTemp);
 
-				String[] solution = examProcessTemp.ge
-				if (solution != null)
-				{
-					for (int i=0; i < solution.length; i++)
-					{
-						if (solution[i] == null)
-							solution[i] = "9";
-					}
-				}
-				
-				student.setSolution(solution);
-				
 				teacherClient = examProcessTemp.getTeacherClient();
 				examProcessTemp.setTeacherClient(null);
 				modelWrapperToClient = new ModelWrapper<>(examProcessTemp, INSERT_STUDENT_TO_EXAM);
@@ -549,15 +565,6 @@ public class Server extends AbstractServer {
 				if (student.getStudentID().equals(studentID)) {
 					student.setFinished(true);
 					String[] solution = finishedStudent.getSolution();
-					if (solution != null)
-					{
-						for (int i=0; i < solution.length; i++)
-						{
-							if (solution[i] == null)
-								solution[i] = "9";
-						}
-					}
-					
 					student.setSolution(solution);
 				}
 			}
@@ -620,6 +627,7 @@ public class Server extends AbstractServer {
 			date = (String) userInfo.get(2);
 			String selectedAnswers = databaseController.getSelectedAnswers(studentID, examID, date);
 			modelWrapperToClient = new ModelWrapper<>(selectedAnswers, GET_SELECTED_ANSWERS);
+			System.out.println(selectedAnswers);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -692,31 +700,23 @@ public class Server extends AbstractServer {
 	 * @return
 	 */
 	public void checkAlert(String code, String examID) {
-		System.out.println("ENTER");
 		int numOfStudents = studentInExam.get(code).size();
-		System.out.println("ENTER2");
-		if (numOfStudents == 0)
-		{
+		if (numOfStudents == 0) {
 			return;
 		}
-		System.out.println("TEST");
 
 		List<StudentInExam> studentsList = studentInExam.get(code);
-		System.out.println(studentsList);
 		int wrong_match = 0;
 		Integer AlertPercent = 0;
 		Exam exam = databaseController.GetExamByExamID(examID);
 		int numOfQuestions = exam.getExamQuestions().size();
-		System.out.println(exam);
 
 		if (numOfStudents == 1) {
 			String studentID = studentsList.get(0).getStudentID();
-			String teacherID = exam.getTeacherID();
-			databaseController.updateAlertValue(studentID, examID, teacherID, "0%");
+			databaseController.updateAlertValue(studentID, examID, "0%");
 			studentsList.get(0).setFinished(true);
 			return;
 		}
-		System.out.println("TEST1");
 		for (int i = 0; i < numOfStudents; i++) {
 			Integer[] diff_arr = new Integer[numOfStudents];
 			Arrays.fill(diff_arr, new Integer(0));
@@ -737,9 +737,7 @@ public class Server extends AbstractServer {
 			AlertPercent = (wrong_match * 100) / (numOfQuestions);
 			String studentID = studentsList.get(i).getStudentID();
 			String alert = AlertPercent.toString() + "%";
-			String teacherID = exam.getTeacherID();
-			System.out.println("TEST2");
-			databaseController.updateAlertValue(studentID, examID, teacherID, alert);
+			databaseController.updateAlertValue(studentID, examID, alert);
 			studentsList.get(i).setFinished(true);
 		}
 

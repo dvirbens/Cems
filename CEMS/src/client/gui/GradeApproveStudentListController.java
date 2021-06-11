@@ -107,7 +107,7 @@ public class GradeApproveStudentListController implements Initializable {
 			double median = avgAndMedian[1];
 
 			ExecutedExam executedExam = new ExecutedExam(examID, subject, course, teacherID, execDate, testType, avg,
-					median);
+					median, true);
 
 			ModelWrapper<ExecutedExam> modelWrapper1 = new ModelWrapper<>(executedExam, UPDATE_EXAM_STATISTIC);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper1);
@@ -190,7 +190,6 @@ public class GradeApproveStudentListController implements Initializable {
 	}
 
 	private List<StudentExecutedExam> addApproveButton(List<StudentExecutedExam> executedExamStudentList) {
-
 		for (StudentExecutedExam executedStudentExam : executedExamStudentList) {
 			TextField tfGrade = new TextField(executedStudentExam.getGrade());
 			TextField tfComment = new TextField();

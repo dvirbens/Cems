@@ -3,6 +3,7 @@ package client.gui;
 import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_EXECUTOR;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -67,23 +68,27 @@ public class GradeApprovalController implements Initializable {
 	}
 
 	private List<ExecutedExam> setExecutedExamsListButtons(List<ExecutedExam> executedExamsList) {
+		List<ExecutedExam> notApprovedExams = new ArrayList<>();
 		for (ExecutedExam executedExam : executedExamsList) {
-			JFXButton gradeApprovalButton = new JFXButton();
-			gradeApprovalButton.setPrefSize(90, 15);
-			gradeApprovalButton
-					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			gradeApprovalButton.setText("Students");
-			gradeApprovalButton.setOnAction(new EventHandler<ActionEvent>() {
+			if (!executedExam.isApproved()) {
+				JFXButton gradeApprovalButton = new JFXButton();
+				gradeApprovalButton.setPrefSize(90, 15);
+				gradeApprovalButton.setStyle(
+						"-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				gradeApprovalButton.setText("Students");
+				gradeApprovalButton.setOnAction(new EventHandler<ActionEvent>() {
 
-				@Override
-				public void handle(ActionEvent event) {
-					MainGuiController.getMenuHandler().setStudentListsScreen(executedExam);
-				}
-			});
-			executedExam.setGradeApproval(gradeApprovalButton);
+					@Override
+					public void handle(ActionEvent event) {
+						MainGuiController.getMenuHandler().setStudentListsScreen(executedExam);
+					}
+				});
+				executedExam.setGradeApproval(gradeApprovalButton);
+				notApprovedExams.add(executedExam);
+			}
 		}
 
-		return executedExamsList;
+		return notApprovedExams;
 	}
 
 }

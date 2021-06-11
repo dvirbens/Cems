@@ -5,6 +5,7 @@ import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
 import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -155,28 +156,36 @@ public class ExamStatisticController implements Initializable {
 	}
 
 	private List<ExecutedExam> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
+		List<ExecutedExam> approvedExams = new ArrayList<>();
+		System.out.println(executedExamsList);
 		for (ExecutedExam executedExam : executedExamsList) {
-			JFXButton questionListButton = new JFXButton();
-			questionListButton.setPrefSize(90, 15);
-			questionListButton
-					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			questionListButton.setText("List");
-			questionListButton.setOnAction(new EventHandler<ActionEvent>() {
+			if (executedExam.isApproved()) {
+				JFXButton questionListButton = new JFXButton();
+				questionListButton.setPrefSize(90, 15);
+				questionListButton.setStyle(
+						"-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				questionListButton.setText("List");
+				questionListButton.setOnAction(new EventHandler<ActionEvent>() {
 
-				@Override
-				public void handle(ActionEvent event) {
-					ModelWrapper<String> modelWrapper = new ModelWrapper<>(executedExam.getId(),
-							GET_QUESTION_LIST_BY_EXAM_ID);
-					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-					List<ExamQuestion> questionList = Client.getExamQuestions();
-					MainGuiController.getMenuHandler().setQuestionListScreen(questionList, "ExamStatisticController");
+					@Override
+					public void handle(ActionEvent event) {
+						ModelWrapper<String> modelWrapper = new ModelWrapper<>(executedExam.getId(),
+								GET_QUESTION_LIST_BY_EXAM_ID);
+						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+						List<ExamQuestion> questionList = Client.getExamQuestions();
+						MainGuiController.getMenuHandler().setQuestionListScreen(questionList,
+								"ExamStatisticController");
 
-				}
-			});
-			executedExam.setQuestionList(questionListButton);
+					}
+				});
+				executedExam.setQuestionList(questionListButton);
+				approvedExams.add(executedExam);
+			}
+
 		}
+		System.out.println(approvedExams);
 
-		return executedExamsList;
+		return approvedExams;
 	}
 
 }

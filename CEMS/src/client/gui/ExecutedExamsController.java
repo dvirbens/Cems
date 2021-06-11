@@ -62,10 +62,9 @@ public class ExecutedExamsController implements Initializable {
 
 	@FXML
 	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
-	
 
 	public void initialize(URL location, ResourceBundle resources) {
-					
+
 		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
 		tcSubject.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("course"));
@@ -79,80 +78,81 @@ public class ExecutedExamsController implements Initializable {
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-		if (!Client.getExecutedExamStudentList().isEmpty())
-		{
+		if (!Client.getExecutedExamStudentList().isEmpty()) {
 			ObservableList<StudentExecutedExam> exams = FXCollections.observableArrayList();
 			List<StudentExecutedExam> studentList = addCopyButtons(Client.getExecutedExamStudentList());
 			exams.addAll(studentList);
 			tvExExams.setItems(exams);
 		}
-		
+
 	}
 
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
-	
+		List<StudentExecutedExam> approvedStudentList = new ArrayList<>();
 		for (StudentExecutedExam studentExam : executedExamStudentList) {
-			JFXButton getCopyButton = new JFXButton();
-			getCopyButton.setPrefSize(90, 15);
-			getCopyButton
-					.setStyle("-fx-background-color:#3399FF;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			getCopyButton.setText("Get Results");
+			if (studentExam.isApproved()) {
+				JFXButton getCopyButton = new JFXButton();
+				getCopyButton.setPrefSize(90, 15);
+				getCopyButton.setStyle(
+						"-fx-background-color:#3399FF;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+				getCopyButton.setText("Get Results");
+				getCopyButton.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(),
+								GET_QUESTION_LIST_BY_EXAM_ID);
+						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
-			ModelWrapper<String> modelWrapper = new ModelWrapper<>(studentExam.getExamID(), GET_QUESTION_LIST_BY_EXAM_ID);
-			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-			
-			List<String> elements = new ArrayList<>();
-			elements.add(studentExam.getStudentID());
-			elements.add(studentExam.getExamID());
-			elements.add(studentExam.getExecDate());
-			modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
-			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-			
-			List<ComputerizedTestReport> questionsReport = new ArrayList<>();
-			int numOfQuestions = Client.getExamQuestions().size();
-			if (Client.getSelectedAnswers() != null)
-			{
-				for (int i=0; i < numOfQuestions; i++)
-				{
-					ComputerizedTestReport questionReport;
-					if (Client.getSelectedAnswers().split("")[i].equals(Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer())))
-					{
-								final ImageView imageview_correct = new ImageView(new Image(getClass().getResource("correct.png").toExternalForm()));
-								imageview_correct.setFitHeight(30);
-								imageview_correct.setFitWidth(30);
-								questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
-								Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
-								Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_correct, Client.getExamQuestions().get(i));
+						List<String> elements = new ArrayList<>();
+						elements.add(studentExam.getStudentID());
+						elements.add(studentExam.getExamID());
+						elements.add(studentExam.getExecDate());
+
+						modelWrapper = new ModelWrapper<>(elements, GET_SELECTED_ANSWERS);
+						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+
+						List<ComputerizedTestReport> questionsReport = new ArrayList<>();
+						int numOfQuestions = Client.getExamQuestions().size();
+						if (Client.getSelectedAnswers() != null) {
+							for (int i = 0; i < numOfQuestions; i++) {
+								ComputerizedTestReport questionReport;
+								if (Client.getSelectedAnswers().split("")[i].equals(
+										Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()))) {
+									final ImageView imageview_correct = new ImageView(
+											new Image(getClass().getResource("correct.png").toExternalForm()));
+									imageview_correct.setFitHeight(30);
+									imageview_correct.setFitWidth(30);
+									questionReport = new ComputerizedTestReport(
+											Client.getSelectedAnswers().split("")[i],
+											Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
+											Integer.toString(Client.getExamQuestions().get(i).getPoints()),
+											imageview_correct, Client.getExamQuestions().get(i));
+								} else {
+									final ImageView imageview_wrong = new ImageView(
+											new Image(getClass().getResource("wrong.png").toExternalForm()));
+									imageview_wrong.setFitHeight(30);
+									imageview_wrong.setFitWidth(30);
+									questionReport = new ComputerizedTestReport(
+											Client.getSelectedAnswers().split("")[i],
+											Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
+											Integer.toString(Client.getExamQuestions().get(i).getPoints()),
+											imageview_wrong, Client.getExamQuestions().get(i));
+								}
+								questionsReport.add(questionReport);
+							}
+						}
+						MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen(questionsReport,
+								studentExam.getSubject(), studentExam.getCourse(), studentExam.getGrade(),
+								studentExam.getComment());
 					}
-					else
-					{
-								final ImageView imageview_wrong = new ImageView(new Image(getClass().getResource("wrong.png").toExternalForm()));
-								imageview_wrong.setFitHeight(30);
-								imageview_wrong.setFitWidth(30);
-								questionReport = new ComputerizedTestReport(Client.getSelectedAnswers().split("")[i],
-								Integer.toString(Client.getExamQuestions().get(i).getCorrectAnswer()),
-								Integer.toString(Client.getExamQuestions().get(i).getPoints()), imageview_wrong, Client.getExamQuestions().get(i));
-					}
-					questionsReport.add(questionReport);
-				}
+
+				});
+				studentExam.setGetCopy(getCopyButton);
+				approvedStudentList.add(studentExam);
 			}
-			
-			
-			getCopyButton.setOnAction(new EventHandler<ActionEvent>() {			
-				@Override
-				public void handle(ActionEvent event) {
-					MainGuiController.getMenuHandler().setStudentComputerizedTestReportScreen(questionsReport, studentExam.getSubject(),
-							studentExam.getCourse(), studentExam.getGrade(), studentExam.getComment());
-				}
-
-			});
-			studentExam.setGetCopy(getCopyButton);
-
-			if (!studentExam.isApproved())
-				studentExam.setGrade("Not Checked");
-
 		}
-		return executedExamStudentList;
+
+		return approvedStudentList;
 	}
 
 }

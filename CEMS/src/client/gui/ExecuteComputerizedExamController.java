@@ -10,6 +10,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -117,9 +118,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	@FXML
 	private Label timeLabel;
-	
-    @FXML
-    private Label lblTimeExtension;
+
+	@FXML
+	private Label lblTimeExtension;
 
 	private StudentStopwatch sw;
 
@@ -175,12 +176,16 @@ public class ExecuteComputerizedExamController implements Initializable {
 		String userID = Client.getUser().getUserID();
 		String teacherID = exam.getTeacherID();
 
-		StudentExecutedExam newStudent = new StudentExecutedExam(examID, userID, code, teacherID);
-		ModelWrapper<StudentExecutedExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent,
-				INSERT_STUDENT_TO_EXAM);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapperInsertStudent);
-
 		answersArr = new String[exam.getExamQuestions().size()];
+
+		for (int i = 0; i < answersArr.length; i++)
+			answersArr[i] = "9";
+
+		StudentInExam newStudent = new StudentInExam(userID, code, "0", "0", answersArr);
+
+		ModelWrapper<StudentInExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent, INSERT_STUDENT_TO_EXAM);
+
+		ClientUI.getClientController().sendClientUIRequest(modelWrapperInsertStudent);
 
 		String teacherTime = Client.getExamProcess().getTime();
 		Date date = new Date();
@@ -255,7 +260,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 				onRowClick();
 			}
 		});
-		
+
 		taSelectedQuestion.setEditable(false);
 		tfNote.setEditable(false);
 
@@ -421,13 +426,14 @@ public class ExecuteComputerizedExamController implements Initializable {
 						setFreezePopup();
 						shutdown = true;
 						timer.cancel();
+						Client.setTimeExtension(0);
 						return;
 					} else if (timeExtension != 0) {
 						min += (int) timeExtension;
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
-								lblTimeExtension.setText("*Time extended by "+timeExtension);
+								lblTimeExtension.setText("*Time extended by " + timeExtension);
 							}
 						});
 						Client.setTimeExtension(0);
