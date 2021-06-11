@@ -68,7 +68,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	@FXML
 	private Label lblRemainingTime;
-	
+
 	@FXML
 	private Label timeLabel;
 
@@ -83,7 +83,7 @@ public class ExecuteManualExamController implements Initializable {
 	private ExamProcess examProcess;
 
 	private static String code;
-	
+
 	private volatile boolean shutdown = false;
 
 	public ExecuteManualExamController() {
@@ -117,11 +117,13 @@ public class ExecuteManualExamController implements Initializable {
 
 		examProcess = Client.getExamProcess();
 
-		StudentExecutedExam newStudent = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(), code, examProcess.getTeacherID());
+		StudentExecutedExam newStudent = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(),
+				code, examProcess.getTeacherID());
 		ModelWrapper<StudentExecutedExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent,
 				INSERT_STUDENT_TO_EXAM);
+
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperInsertStudent);
-		
+
 		String teacherTime = Client.getExamProcess().getTime();
 		Date date = new Date();
 		SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
@@ -160,9 +162,10 @@ public class ExecuteManualExamController implements Initializable {
 			file.initArray(mybytearray.length);
 			file.setSize(mybytearray.length);
 			bufferIn.read(file.getMybytearray(), 0, mybytearray.length);
-			
-			StudentExecutedExam student = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(), code, examProcess.getDate());
-			ModelWrapper<StudentExecutedExam> modelWrapper = new ModelWrapper<>(file,student, UPLOAD_FILE);
+
+			StudentExecutedExam student = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(),
+					code, examProcess.getDate());
+			ModelWrapper<StudentExecutedExam> modelWrapper = new ModelWrapper<>(file, student, UPLOAD_FILE);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			bufferIn.close();
 		} catch (FileNotFoundException e) {
@@ -172,7 +175,7 @@ public class ExecuteManualExamController implements Initializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		shutdown = true;
 		MainGuiController.getMenuHandler().setStudentlMenu();
 		StudentMenuController.setLocked(false);
@@ -211,59 +214,56 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	public void set2MinutesLeft()
-	{
+	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
-				if (sw.getMin() == 2 && sw.getSec() == 0)
-				{
+				if (sw.getMin() == 2 && sw.getSec() == 0) {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-						      //Creating a dialog
-						      Dialog<String> dialog = new Dialog<String>();
-						      //Setting the title
-						      dialog.setTitle("Warning");
-						      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-						      //Setting the content of the dialog
-						      dialog.setContentText("Warning: You have 2 minutes left!");
-						      //Adding buttons to the dialog pane
-						      dialog.getDialogPane().getButtonTypes().add(type);
-						      
-						      dialog.showAndWait();
+							// Creating a dialog
+							Dialog<String> dialog = new Dialog<String>();
+							// Setting the title
+							dialog.setTitle("Warning");
+							ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+							// Setting the content of the dialog
+							dialog.setContentText("Warning: You have 2 minutes left!");
+							// Adding buttons to the dialog pane
+							dialog.getDialogPane().getButtonTypes().add(type);
+
+							dialog.showAndWait();
 						}
 					});
 
-			      break;
+					break;
 				}
 			}
-			});
+		});
 		timerThread.start();
 	}
-	
-	public void setFreezePopup()
-	{
+
+	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
-			  MainGuiController.getMenuHandler().setMainScreen();
-		      //Creating a dialog
-		      Dialog<String> dialog = new Dialog<String>();
-		      //Setting the title
-		      dialog.setTitle("Exam closed");
-		      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-		      //Setting the content of the dialog
-		      dialog.setContentText("The exam has been closed by your teacher");
-		      //Adding buttons to the dialog pane
-		      dialog.getDialogPane().getButtonTypes().add(type);
-		      
-		      dialog.showAndWait();
+				MainGuiController.getMenuHandler().setMainScreen();
+				// Creating a dialog
+				Dialog<String> dialog = new Dialog<String>();
+				// Setting the title
+				dialog.setTitle("Exam closed");
+				ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+				// Setting the content of the dialog
+				dialog.setContentText("The exam has been closed by your teacher");
+				// Adding buttons to the dialog pane
+				dialog.getDialogPane().getButtonTypes().add(type);
+
+				dialog.showAndWait();
 			}
 		});
 
 	}
-	
+
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
@@ -324,8 +324,6 @@ public class ExecuteManualExamController implements Initializable {
 				}
 			}, delay, period);
 		}
-		
-		
 
 		public int getMin() {
 			return min;
@@ -335,11 +333,10 @@ public class ExecuteManualExamController implements Initializable {
 			return sec;
 		}
 
-
 		public void stopTime() {
 			timer.cancel();
 		}
-		
+
 	}
 
 }

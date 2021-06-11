@@ -265,6 +265,7 @@ public class Server extends AbstractServer {
 			/*
 			 * if (!studentInExam.get(code).isEmpty()) checkAlert(code, examID);
 			 */
+			
 			databaseController.insertStudentAnswers(studentInExam.get(code), code);
 
 			try {
@@ -424,6 +425,7 @@ public class Server extends AbstractServer {
 					temp = new ArrayList<>();
 				}
 				StudentInExam student = new StudentInExam(studentID, client);
+				
 				temp.add(student);
 				studentInExam.put(code, temp);
 
@@ -507,7 +509,6 @@ public class Server extends AbstractServer {
 			code = (String) modelWrapperFromClient.getElement();
 			ExamProcess examProcess = examsInProcess.get(code);
 			exam = databaseController.GetExamByExamID(examProcess.getExamId());
-			System.out.println(exam);
 			modelWrapperToClient = new ModelWrapper<>(exam, GET_EXAM_BY_CODE);
 			try {
 				client.sendToClient(modelWrapperToClient);
@@ -551,7 +552,8 @@ public class Server extends AbstractServer {
 			code = (String) modelWrapperFromClient.getElement();
 
 			ExamProcess examInPorcess = examsInProcess.get(code);
-			modelWrapperToClient = new ModelWrapper<>(examInPorcess, GET_EXAM_IN_PROCESS);
+			ExamProcess newExamInPorcess = new ExamProcess(examInPorcess);
+			modelWrapperToClient = new ModelWrapper<>(newExamInPorcess, GET_EXAM_IN_PROCESS);
 
 			try {
 				client.sendToClient(modelWrapperToClient);

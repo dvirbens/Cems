@@ -58,6 +58,20 @@ public class ExamProcess implements Serializable {
 		this.type = ExamType.Manual;
 	}
 
+	public ExamProcess(ExamProcess examProcess) {
+		super();
+		this.examId = examProcess.getExamId();
+		this.date = examProcess.getDate();
+		this.time = examProcess.getTime();
+		this.teacherID = examProcess.getTeacherID();
+		this.code = examProcess.getCode();
+		this.subject = examProcess.getSubject();
+		this.course = examProcess.getCourse();
+		this.duration = examProcess.getDuration();
+		this.manualFile = examProcess.getManualFile();
+		this.type = examProcess.getType();
+	}
+
 	public String getTeacherID() {
 		return teacherID;
 	}

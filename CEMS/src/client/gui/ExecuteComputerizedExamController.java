@@ -167,6 +167,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 		exam = Client.getExam();
 		int duration = Integer.parseInt(exam.getDuration());
+		tfNote.setText(exam.getStudentNote());
 
 		String examID = exam.getId();
 		String userID = Client.getUser().getUserID();

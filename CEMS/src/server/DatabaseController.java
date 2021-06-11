@@ -460,8 +460,9 @@ public class DatabaseController {
 				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String course = rsQuestionOfCourse.getString("Course");
 				String duration = rsQuestionOfCourse.getString("Duration");
+				String note = rsQuestionOfCourse.getString("StudentNote");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
 				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
@@ -494,8 +495,9 @@ public class DatabaseController {
 				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
+				String note = rsQuestionOfCourse.getString("StudentNote");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
 				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
@@ -574,8 +576,9 @@ public class DatabaseController {
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
 				String course = rsQuestionOfCourse.getString("Course");
+				String note = rsQuestionOfCourse.getString("StudentNote");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
 				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
@@ -807,9 +810,9 @@ public class DatabaseController {
 				String course = rs.getString("Course");
 				String duration = rs.getString("Duration");
 				String teacherName = rs.getString("teacherName");
+				String note = rs.getString("StudentNote");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				System.out.println(questionsList);
-				exam = new Exam(examID, teacherID, subject, course, duration, questionsList);
+				exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
 				exam.setTeacherName(teacherName);
 				return exam;
 			}
@@ -1153,21 +1156,23 @@ public class DatabaseController {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			LocalDateTime now = LocalDateTime.now();
 			for (StudentInExam student : studentList) {
-				System.out.println(student.getStudentID());
-				prepareStatement = conn.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
-				prepareStatement.setString(1, student.getStudentID());
-				prepareStatement.setString(2, Server.getExamsInProcess().get(code).getExamId());
-				prepareStatement.setString(3, dtf.format(now));
-				StringBuilder stringBuilder = new StringBuilder();
-				for (int i = 0; i < student.getSolution().length; i++) {
-					stringBuilder.append(student.getSolution()[i]);
-				}
-				prepareStatement.setString(4, stringBuilder.toString());
-				System.out.println(stringBuilder.toString());
-				int resultSet = prepareStatement.executeUpdate();
-				if (resultSet == 1) {
-					System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
-
+				if (student.getSolution() != null) {
+					System.out.println(student.getStudentID());
+					prepareStatement = conn
+							.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
+					prepareStatement.setString(1, student.getStudentID());
+					prepareStatement.setString(2, Server.getExamsInProcess().get(code).getExamId());
+					prepareStatement.setString(3, dtf.format(now));
+					StringBuilder stringBuilder = new StringBuilder();
+					for (int i = 0; i < student.getSolution().length; i++) {
+						stringBuilder.append(student.getSolution()[i]);
+					}
+					prepareStatement.setString(4, stringBuilder.toString());
+					System.out.println(stringBuilder.toString());
+					int resultSet = prepareStatement.executeUpdate();
+					if (resultSet == 1) {
+						System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
+					}
 				}
 			}
 

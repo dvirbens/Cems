@@ -122,39 +122,6 @@ public class OverallStatistic implements Initializable {
 		courseSelect.setVisible(false);
 	}
 
-	private double[] getAvarageAndMedian(List<StudentExecutedExam> list) {
-		List<Integer> studentsGrade = new ArrayList<>();
-		int sum = 0;
-
-		for (StudentExecutedExam student : list) {
-			int studentGrade = Integer.valueOf(student.getGrade());
-			studentsGrade.add(studentGrade);
-			sum += studentGrade;
-		}
-
-		studentsGrade.sort(new Comparator<Integer>() {
-
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return o1 - o2;
-			}
-		});
-
-		double avg = sum / studentsGrade.size();
-		double median;
-
-		int n = studentsGrade.size();
-		if (n % 2 == 0) {
-			int firstStudentGrade = studentsGrade.get((n / 2) - 1);
-			int secondStudentGrade = studentsGrade.get((n / 2));
-			median = (firstStudentGrade + secondStudentGrade) / 2;
-		} else {
-			median = studentsGrade.get(((n + 1) / 2) - 1);
-		}
-		double[] avgAndMedian = { avg, median };
-		return avgAndMedian;
-	}
-
 	@SuppressWarnings("unchecked")
 	@FXML
 	void diplayGrapgh(ActionEvent event) {
@@ -235,16 +202,6 @@ public class OverallStatistic implements Initializable {
 						}
 
 					}
-
-//					int half = (int)statisticList.size();
-//					int sum_avg = half/2;
-//					Collections.sort(statisticList);
-//					System.out.println(statisticList);
-//					if(half%2 != 0) 	
-//						median.setText(statisticList.get(half/2+1).getGrade());
-//					else 
-//						median.setText(Double.toString((statisticList.get(half/2+1).getAvg() + statisticList.get(half/2+1).getAvg()) / 2 ));		
-//					avg.setText(Integer.toString(sum_avg));
 					graph.getData().addAll(series);
 				}
 			});
@@ -306,12 +263,30 @@ public class OverallStatistic implements Initializable {
 		op = Operation.TEACHER;
 	}
 
-	class StatisticByCourseComparator implements Comparator<ExecutedExam> {
-
-		@Override
-		public int compare(ExecutedExam o1, ExecutedExam o2) {
-//	        return o1.getAvg().compareTo(o2.getAvg());
-			return 0;
-		}
+	private double[] getAvarageAndMedian(List<?> examList) {
+		/*
+		 * List<Integer> examsGrade = new ArrayList<>(); int sum = 0;
+		 * 
+		 * for (Object exam : examList) { int examGrade; if (exam instanceof
+		 * ExecutedExam) { double avg = ((ExecutedExam) exam).getAvg(); examGrade =
+		 * (int) avg; } else {
+		 * 
+		 * } = Integer.valueOf(student.getGrade()); examsGrade.add(studentGrade); sum +=
+		 * studentGrade; }
+		 * 
+		 * studentsGrade.sort(new Comparator<Integer>() {
+		 * 
+		 * @Override public int compare(Integer o1, Integer o2) { return o1 - o2; } });
+		 * 
+		 * double avg = sum / studentsGrade.size(); double median;
+		 * 
+		 * int n = studentsGrade.size(); if (n % 2 == 0) { int firstStudentGrade =
+		 * studentsGrade.get((n / 2) - 1); int secondStudentGrade = studentsGrade.get((n
+		 * / 2)); median = (firstStudentGrade + secondStudentGrade) / 2; } else { median
+		 * = studentsGrade.get(((n + 1) / 2) - 1); } double[] avgAndMedian = { avg,
+		 * median }; return avgAndMedian;
+		 */
+		return null;
 	}
+
 }
