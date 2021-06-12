@@ -843,7 +843,6 @@ public class DatabaseController {
 			prepareStatement.setString(13, exam.getType().toString());
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
-				System.out.print("Exam Saved Succuessfully");
 				return true;
 			}
 
@@ -1026,9 +1025,9 @@ public class DatabaseController {
 				String testType = rs.getString("TestType");
 				String grade = rs.getString("Grade");
 				String comment = rs.getString("comment");
-				//Blob blob = rs.getBlob("Copy");
+				// Blob blob = rs.getBlob("Copy");
 				// InputStream inputStream = blob.getBinaryStream();
-				//WordFile copy = new WordFile();
+				// WordFile copy = new WordFile();
 				boolean approved = rs.getBoolean("Approved");
 				String alert = rs.getString("Alert");
 				String studentName = getUserName(studentID);
@@ -1111,37 +1110,39 @@ public class DatabaseController {
 	}
 
 	public boolean insertStudentAnswers(List<StudentInExam> studentList, String code) {
-		PreparedStatement prepareStatement;
-
-		try {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			LocalDateTime now = LocalDateTime.now();
-			for (StudentInExam student : studentList) {
-				if (student.getSolution() != null) {
-					prepareStatement = conn
-							.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
-					prepareStatement.setString(1, student.getStudentID());
-					prepareStatement.setString(2, Server.getExamsInProcess().get(code).getExamId());
-					prepareStatement.setString(3, dtf.format(now));
-					StringBuilder stringBuilder = new StringBuilder();
-					for (int i = 0; i < student.getSolution().length; i++) {
-						stringBuilder.append(student.getSolution()[i]);
-					}
-					prepareStatement.setString(4, stringBuilder.toString());
-					int resultSet = prepareStatement.executeUpdate();
-					if (resultSet == 1) {
-						System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
+		if (studentList != null) {
+			PreparedStatement prepareStatement;
+			try {
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDateTime now = LocalDateTime.now();
+				for (StudentInExam student : studentList) {
+					if (student.getSolution() != null) {
+						prepareStatement = conn
+								.prepareStatement("INSERT INTO StudentComputerizedAnswers VALUES (?,?,?,?);");
+						prepareStatement.setString(1, student.getStudentID());
+						prepareStatement.setString(2, Server.getExamsInProcess().get(code).getExamId());
+						prepareStatement.setString(3, dtf.format(now));
+						StringBuilder stringBuilder = new StringBuilder();
+						for (int i = 0; i < student.getSolution().length; i++) {
+							stringBuilder.append(student.getSolution()[i]);
+						}
+						prepareStatement.setString(4, stringBuilder.toString());
+						int resultSet = prepareStatement.executeUpdate();
+						if (resultSet == 1) {
+							System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
+						}
 					}
 				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.print("Error occurred, Answers has not been saved ");
+				return false;
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.print("Error occurred, Answers has not been saved ");
-			return false;
+			return true;
 		}
-
-		return true;
+		return false;
 	}
 
 	public String getSelectedAnswers(String studentID, String examID, String date) {

@@ -3,17 +3,13 @@ package client.gui;
 import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
 import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_COURSE;
 import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
-import static common.ModelWrapper.Operation.START_EXAM;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
 import client.ClientUI;
@@ -24,12 +20,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
-import models.ExamProcess;
 
 public class ExamPoolController implements Initializable {
 

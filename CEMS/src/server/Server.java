@@ -298,34 +298,42 @@ public class Server extends AbstractServer {
 			break;
 
 		case CLOSE_EXAM:
+			System.out.println("Hello1");
 			String code = (String) modelWrapperFromClient.getElement();
+			System.out.println(code);
 			examID = examsInProcess.get(code).getExamId();
+			System.out.println(examID);
 
 			checkAlert(code, examID);
+			System.out.println("check alert done");
 
-			if (examsInProcess.get(code).getType().equals(ExamProcess.ExamType.Computerized)) {
-				databaseController.insertStudentAnswers(studentInExam.get(code), code);
+			ExamProcess examInProcessTemp = examsInProcess.get(code);
+			List<StudentInExam> studenInExamList = studentInExam.get(code);
+
+			if (examInProcessTemp.getType().equals(ExamProcess.ExamType.Computerized)) {
+				databaseController.insertStudentAnswers(studenInExamList, code);
 			}
 
+			System.out.println("insert Student");
+
 			try {
-				ExamProcess examInProcessTemp = examsInProcess.get(code);
-				List<StudentInExam> studentList = studentInExam.get(code);
-				int finishedStudent = 0;
 				modelWrapperToClient = new ModelWrapper<>("-1", STUDENT_TIME_EXTENSION);
-				for (StudentInExam student : studentList) {
-					if (student.isFinished())
-						finishedStudent++;
+				int finishedStudent = 0;
+				if (studenInExamList != null) {
+					for (StudentInExam student : studenInExamList) {
+						if (student.isFinished())
+							finishedStudent++;
 
-					ConnectionToClient studentClient = student.getClient();
+						ConnectionToClient studentClient = student.getClient();
 
-					if (studentClient.isAlive())
-						studentClient.sendToClient(modelWrapperToClient);
-
+						if (studentClient.isAlive())
+							studentClient.sendToClient(modelWrapperToClient);
+					}
+					studenInExamList.clear();
 				}
 				examInProcessTemp.setFinishedStudentsCount(String.valueOf(finishedStudent));
-				databaseController.saveExecutedExam(examInProcessTemp);
 
-				studentList.clear();
+				databaseController.saveExecutedExam(examInProcessTemp);
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -709,47 +717,48 @@ public class Server extends AbstractServer {
 	 * @return
 	 */
 	public void checkAlert(String code, String examID) {
-		int numOfStudents = studentInExam.get(code).size();
-		if (numOfStudents == 0) {
-			return;
-		}
+		if (studentInExam.containsKey(code)) {
+			int numOfStudents = studentInExam.get(code).size();
+			if (numOfStudents == 0) {
+				return;
+			}
 
-		List<StudentInExam> studentsList = studentInExam.get(code);
-		int wrong_match = 0;
-		Integer AlertPercent = 0;
-		Exam exam = databaseController.GetExamByExamID(examID);
-		int numOfQuestions = exam.getExamQuestions().size();
+			List<StudentInExam> studentsList = studentInExam.get(code);
+			int wrong_match = 0;
+			Integer AlertPercent = 0;
+			Exam exam = databaseController.GetExamByExamID(examID);
+			int numOfQuestions = exam.getExamQuestions().size();
 
-		if (numOfStudents == 1) {
-			String studentID = studentsList.get(0).getStudentID();
-			databaseController.updateAlertValue(studentID, examID, "0%");
-			studentsList.get(0).setFinished(true);
-			return;
-		}
-		for (int i = 0; i < numOfStudents; i++) {
-			Integer[] diff_arr = new Integer[numOfStudents];
-			Arrays.fill(diff_arr, new Integer(0));
-			for (int k = 0; k < numOfQuestions; k++) {
-				for (int j = 0; j < numOfStudents; j++) {
-					if (j == i || (studentsList.get(i).getSolution())[k].equals("9"))
-						continue;
+			if (numOfStudents == 1) {
+				String studentID = studentsList.get(0).getStudentID();
+				databaseController.updateAlertValue(studentID, examID, "0%");
+				studentsList.get(0).setFinished(true);
+				return;
+			}
+			for (int i = 0; i < numOfStudents; i++) {
+				Integer[] diff_arr = new Integer[numOfStudents];
+				Arrays.fill(diff_arr, new Integer(0));
+				for (int k = 0; k < numOfQuestions; k++) {
+					for (int j = 0; j < numOfStudents; j++) {
+						if (j == i || (studentsList.get(i).getSolution())[k].equals("9"))
+							continue;
 
-					if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k)
-							.getCorrectAnswer()
-							&& ((studentsList.get(i).getSolution())[k])
-									.equals((studentsList.get(j).getSolution())[k])) {
-						diff_arr[j]++;
+						if ((Integer.parseInt((studentsList.get(i).getSolution())[k])) != exam.getExamQuestions().get(k)
+								.getCorrectAnswer()
+								&& ((studentsList.get(i).getSolution())[k])
+										.equals((studentsList.get(j).getSolution())[k])) {
+							diff_arr[j]++;
+						}
 					}
 				}
+				wrong_match = Collections.max(Arrays.asList(diff_arr));
+				AlertPercent = (wrong_match * 100) / (numOfQuestions);
+				String studentID = studentsList.get(i).getStudentID();
+				String alert = AlertPercent.toString() + "%";
+				databaseController.updateAlertValue(studentID, examID, alert);
+				studentsList.get(i).setFinished(true);
 			}
-			wrong_match = Collections.max(Arrays.asList(diff_arr));
-			AlertPercent = (wrong_match * 100) / (numOfQuestions);
-			String studentID = studentsList.get(i).getStudentID();
-			String alert = AlertPercent.toString() + "%";
-			databaseController.updateAlertValue(studentID, examID, alert);
-			studentsList.get(i).setFinished(true);
 		}
-
 	}
 
 	public static boolean isConnected() {
