@@ -106,22 +106,21 @@ public class ComputerizedExamController implements Initializable {
 	private List<Exam> setExamQuestioListButtons(List<Exam> exams) {
 
 		for (Exam exam : exams) {
-			JFXButton questionListButton = new JFXButton();
-			questionListButton.setPrefSize(90, 15);
-			questionListButton
+			JFXButton examDetailsButton = new JFXButton();
+			examDetailsButton.setPrefSize(90, 15);
+			examDetailsButton
 					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			questionListButton.setText("Details");
-			questionListButton.setOnAction(new EventHandler<ActionEvent>() {
+			examDetailsButton.setText("Details");
+			examDetailsButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent event) {
-					MainGuiController.getMenuHandler().setQuestionListScreen(exam.getExamQuestions(),
-							"ComputerizedExamController");
+					MainGuiController.getMenuHandler().setExamDetailstScreen(exam, "ComputerizedExamController");
 				}
 
 			});
 
-			exam.setQuestionListButton(questionListButton);
+			exam.setQuestionListButton(examDetailsButton);
 		}
 		return exams;
 	}

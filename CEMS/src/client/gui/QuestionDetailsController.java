@@ -20,73 +20,56 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.Question;
 
-public class QuestionDetailsController implements EventHandler<WindowEvent>,Initializable {
+public class QuestionDetailsController implements EventHandler<WindowEvent>, Initializable {
 
-    @FXML
-    private TextArea taQD;
+	@FXML
+	private TextArea taQD;
 
-    @FXML
-    private TextArea taA1;
+	@FXML
+	private TextArea taA1;
 
-    @FXML
-    private TextArea taA2;
+	@FXML
+	private TextArea taA2;
 
-    @FXML
-    private TextArea taA3;
+	@FXML
+	private TextArea taA3;
 
-    @FXML
-    private TextArea taA4;
+	@FXML
+	private TextArea taA4;
 
-    @FXML
-    private Label labelCorrect;
+	@FXML
+	private Label labelCorrect;
 
-    @FXML
-    private JFXButton btnExit;
-    
+	@FXML
+	private JFXButton btnExit;
+
 	private static Question question;
 	private static boolean isWindowOpend;
 
-
-	
 	public static Question getQuestion() {
 		return question;
 	}
-
-
-
 
 	public static void setQuestion(Question question) {
 		QuestionDetailsController.question = question;
 	}
 
-
-
-
 	public static boolean isWindowOpend() {
 		return isWindowOpend;
 	}
-
-
-
 
 	public static void setWindowOpend(boolean isWindowOpend) {
 		QuestionDetailsController.isWindowOpend = isWindowOpend;
 	}
 
-
-
-
 	@FXML
-    void onClickExit(ActionEvent event) {
-		Node n=(Node)event.getSource();
-		Stage s=(Stage) n.getScene().getWindow();
+	void onClickExit(ActionEvent event) {
+		Node n = (Node) event.getSource();
+		Stage s = (Stage) n.getScene().getWindow();
 		setWindowOpend(false);
 		s.close();
 
-    }
-
-
-
+	}
 
 	public void start() {
 		Stage stage = new Stage();
@@ -95,7 +78,7 @@ public class QuestionDetailsController implements EventHandler<WindowEvent>,Init
 			mainPane = (AnchorPane) FXMLLoader.load(getClass().getResource("QuestionDetails.fxml"));
 			Scene scene = new Scene(mainPane, 450, 600);
 			stage.setScene(scene);
-			stage.setTitle("Add Question");
+			stage.setTitle("Question Details");
 			stage.show();
 			stage.setOnHidden(this);
 			setWindowOpend(true);
@@ -105,21 +88,15 @@ public class QuestionDetailsController implements EventHandler<WindowEvent>,Init
 
 	}
 
-
-
-
 	@Override
 	public void handle(WindowEvent arg0) {
 		setWindowOpend(false);
-		
+
 	}
-
-
-
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		taQD.setText(question.getDetails());
 		taQD.setEditable(false);
 		taA1.setText(question.getAnswer1());
@@ -130,8 +107,7 @@ public class QuestionDetailsController implements EventHandler<WindowEvent>,Init
 		taA3.setEditable(false);
 		taA4.setText(question.getAnswer4());
 		taA4.setEditable(false);
-		labelCorrect.setText(question.getCorrectAnswer()+"");
+		labelCorrect.setText(question.getCorrectAnswer() + "");
 	}
 
 }
-

@@ -460,9 +460,12 @@ public class DatabaseController {
 				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String course = rsQuestionOfCourse.getString("Course");
 				String duration = rsQuestionOfCourse.getString("Duration");
-				String note = rsQuestionOfCourse.getString("StudentNote");
+				String studentNote = rsQuestionOfCourse.getString("StudentNote");
+				String teacherNote = rsQuestionOfCourse.getString("TeacherNote");
+
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, studentNote,
+						teacherNote);
 				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
@@ -495,9 +498,12 @@ public class DatabaseController {
 				String teacherName = rsQuestionOfCourse.getString("teacherName");
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
-				String note = rsQuestionOfCourse.getString("StudentNote");
+				String studentNote = rsQuestionOfCourse.getString("StudentNote");
+				String teacherNote = rsQuestionOfCourse.getString("TeacherNote");
+
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, studentNote,
+						teacherNote);
 				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
@@ -576,9 +582,11 @@ public class DatabaseController {
 				String subject = rsQuestionOfCourse.getString("Subject");
 				String duration = rsQuestionOfCourse.getString("Duration");
 				String course = rsQuestionOfCourse.getString("Course");
-				String note = rsQuestionOfCourse.getString("StudentNote");
+				String studentNote = rsQuestionOfCourse.getString("StudentNote");
+				String teacherNote = rsQuestionOfCourse.getString("TeacherNote");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
+				Exam exam = new Exam(examID, teacherID, subject, course, duration, questionsList, studentNote,
+						teacherNote);
 				exam.setTeacherName(teacherName);
 				examList.add(exam);
 			}
@@ -810,9 +818,10 @@ public class DatabaseController {
 				String course = rs.getString("Course");
 				String duration = rs.getString("Duration");
 				String teacherName = rs.getString("teacherName");
-				String note = rs.getString("StudentNote");
+				String studentNote = rs.getString("StudentNote");
+				String teacherNote = rs.getString("TeacherNote");
 				List<ExamQuestion> questionsList = getExamQuestionsList(examID);
-				exam = new Exam(examID, teacherID, subject, course, duration, questionsList, note);
+				exam = new Exam(examID, teacherID, subject, course, duration, questionsList, studentNote, teacherNote);
 				exam.setTeacherName(teacherName);
 				return exam;
 			}

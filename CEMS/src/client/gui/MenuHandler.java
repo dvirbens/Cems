@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import models.ComputerizedTestReport;
-import models.ExamQuestion;
+import models.Exam;
 import models.ExecutedExam;
 
 public class MenuHandler {
@@ -190,15 +190,14 @@ public class MenuHandler {
 		}
 
 	}
-	
-	public void setStudentComputerizedTestReportScreen(List<ComputerizedTestReport> exam, String subject, String course, String grade, String note)
-	{
-		StudentComputerizedTestReportController studentComputerizedTestReportController =
-				new StudentComputerizedTestReportController(exam, subject, course, grade, note);
+
+	public void setStudentComputerizedTestReportScreen(List<ComputerizedTestReport> exam, String subject, String course,
+			String grade, String note) {
+		StudentComputerizedTestReportController studentComputerizedTestReportController = new StudentComputerizedTestReportController(
+				exam, subject, course, grade, note);
 		studentComputerizedTestReportController.start();
 	}
-	
-	
+
 	public void setOverallStatisticsScreen() {
 		try {
 			Pane overallStatisticsPane = (Pane) FXMLLoader.load(getClass().getResource("OverallStatistics.fxml"));
@@ -210,8 +209,7 @@ public class MenuHandler {
 
 	public void setTimeExtensionRequestsScreen() {
 		try {
-			Pane timeExtensionRequestsPane = (Pane) FXMLLoader
-					.load(getClass().getResource("TimeExtension.fxml"));
+			Pane timeExtensionRequestsPane = (Pane) FXMLLoader.load(getClass().getResource("TimeExtension.fxml"));
 			mainFrame.setCenter(timeExtensionRequestsPane);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -227,9 +225,9 @@ public class MenuHandler {
 		}
 	}
 
-	public void setQuestionListScreen(List<ExamQuestion> examQuestions, String backClassName) {
-		QuestionListController questionListController = new QuestionListController(examQuestions, backClassName);
-		questionListController.start();
+	public void setExamDetailstScreen(Exam exam, String backClassName) {
+		ExamDetailsController examDetailsController = new ExamDetailsController(exam, backClassName);
+		examDetailsController.start();
 	}
 
 	public BorderPane getMainFrame() {

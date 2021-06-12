@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,13 +15,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import models.Exam;
 import models.ExamQuestion;
 
-public class QuestionListController implements Initializable {
+public class ExamDetailsController implements Initializable {
 
 	@FXML
 	private TableView<ExamQuestion> tvQuestions;
@@ -43,22 +47,31 @@ public class QuestionListController implements Initializable {
 	@FXML
 	private JFXButton btnBack;
 
-	private static List<ExamQuestion> questions;
+	@FXML
+	private JFXTabPane tpNote;
+
+	@FXML
+	private Tab tabTeacherNote;
+
+	@FXML
+	private Tab tabStudentNote;
+
+	private static Exam exam;
 
 	private static String backClassName;
 
-	public QuestionListController() {
+	public ExamDetailsController() {
 
 	}
 
-	public QuestionListController(List<ExamQuestion> examQuestions, String backClassName) {
-		questions = examQuestions;
-		QuestionListController.backClassName = backClassName;
+	public ExamDetailsController(Exam exam, String backClassName) {
+		ExamDetailsController.exam = exam;
+		ExamDetailsController.backClassName = backClassName;
 	}
 
 	public void start() {
 		try {
-			Pane questionListPane = (Pane) FXMLLoader.load(getClass().getResource("QuestionList.fxml"));
+			Pane questionListPane = (Pane) FXMLLoader.load(getClass().getResource("ExamDetails.fxml"));
 			MainGuiController.getMenuHandler().getMainFrame().setCenter(questionListPane);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -86,12 +99,18 @@ public class QuestionListController implements Initializable {
 		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
 		tcPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
+		
+		TextArea taTeacher = (TextArea) tabTeacherNote.getContent();
+		taTeacher.setText(exam.getTeacherNote());
 
-		setQuestionDetailButtons(questions);
-		setQuestionNoteButtons(questions);
+		TextArea taStudent = (TextArea) tabStudentNote.getContent();
+		taStudent.setText(exam.getStudentNote());
+
+		List<ExamQuestion> examQuestionList = exam.getExamQuestions();
+		setQuestionDetailButtons(examQuestionList);
 
 		ObservableList<ExamQuestion> examQuestions = FXCollections.observableArrayList();
-		examQuestions.addAll(questions);
+		examQuestions.addAll(examQuestionList);
 		tvQuestions.setItems(examQuestions);
 
 	}
@@ -119,23 +138,4 @@ public class QuestionListController implements Initializable {
 		}
 	}
 
-	private void setQuestionNoteButtons(List<ExamQuestion> questions) {
-		/*
-		for (ExamQuestion question : questions) {
-			JFXButton noteButton = new JFXButton();
-			noteButton.setPrefSize(90, 15);
-			noteButton.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			noteButton.setText("Note");
-			noteButton.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-					System.out.println(question.getNote());
-				}
-
-			});
-			question.setNoteDetails(noteButton);
-		}
-		*/
-	}
 }

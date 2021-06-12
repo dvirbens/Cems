@@ -1,9 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
-
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import models.Exam;
 import models.ExamQuestion;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
@@ -178,12 +176,14 @@ public class ExamStatisticController implements Initializable {
 
 					@Override
 					public void handle(ActionEvent event) {
-						ModelWrapper<String> modelWrapper = new ModelWrapper<>(executedExam.getId(),
-								GET_QUESTION_LIST_BY_EXAM_ID);
+
+						String examID = executedExam.getId();
+						ModelWrapper<String> modelWrapper = new ModelWrapper<>(examID, GET_EXAM_BY_EXAM_ID);
 						ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-						List<ExamQuestion> questionList = Client.getExamQuestions();
-						MainGuiController.getMenuHandler().setQuestionListScreen(questionList,
-								"ExamStatisticController");
+
+						Exam exam = Client.getExam();
+
+						MainGuiController.getMenuHandler().setExamDetailstScreen(exam, "ExamStatisticController");
 
 					}
 				});
