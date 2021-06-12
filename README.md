@@ -37,18 +37,18 @@ Computerized exam management system - simple as it's sounds.
   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/PrincapelHomePhoto.jpeg" width="350" height="250" />
 
 
-### Dependencies
+## Dependencies
 
 * JavaFX.
 * OCSF - Object-Oriented Software Engineering.
 * MySQL.
 * JFoenix.
 
-### Installing
+## Installing
 
 * [Click here](https://dvirbens.github.io/) for download. 
 
-### Executing program
+## Executing program
 
 * Make sure to update the DB first.
 * In project check for db.txt at Cems -> SQLConnector.
