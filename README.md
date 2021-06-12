@@ -2,7 +2,7 @@
 ![](CEMS/images/logo.png)
 ## Description
 
-Computerized exam management system - simple is it sounds.
+Computerized exam management system - simple as it's sounds.
 
 ## Functionality
   ### Student
@@ -52,7 +52,7 @@ Computerized exam management system - simple is it sounds.
 
 * Make sure to update the DB first.
 * In project check for db.txt at Cems -> SQLConnector.
-* Make sure to remove the security as in some cases it's blocked.
+* Make sure to remove the security as in some cases it's blocked by the system.
 
 1. Download the jar files. 
 2. Connect to the server. 
