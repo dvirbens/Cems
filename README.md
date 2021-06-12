@@ -10,8 +10,9 @@ Computerized exam management system - simple is it sounds.
   * Execute manual exam.
   * Execute computerize exam.
   * View grades of all the executed exams.
- 
-  ![](CEMS/images/StudnetHomePhoto.png)
+  
+   <p align="center">
+   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/StudnetHomePhoto.png" width="350" height="250" />
   
   ### Teacher
   * Create question.
@@ -23,15 +24,17 @@ Computerized exam management system - simple is it sounds.
   * Review of the exams. 
   * Approve grades. 
   
-   ![](CEMS/images/TeacherHomePhoto.png)
+   <p align="center">
+   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/TeacherHomePhoto.png" width="350" height="250" />
   
   ### Principal
   * Access to the exams data.
   * Access to the questions data.
   * Recieving time extension requests. 
   * Get overall statistics.
-  
-  ![](CEMS/images/PrincapelHomePhoto.jpeg)
+     
+  <p align="center">
+  <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/PrincapelHomePhoto.jpeg" width="350" height="250" />
 
 
 ### Dependencies
@@ -43,11 +46,14 @@ Computerized exam management system - simple is it sounds.
 
 ### Installing
 
-* [Download](https://dvirbens.github.io/) 
+* [Click here](https://dvirbens.github.io/) for download. 
 
 ### Executing program
 
 * Make sure to update the DB first.
+* In project check for db.txt at Cems -> SQLConnector.
+* Make sure to remove the security as in some cases it's blocked.
+
 1. Download the jar files. 
 2. Connect to the server. 
 3. Connect as a user. 
