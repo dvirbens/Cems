@@ -16,7 +16,8 @@ public class Database implements Serializable {
 	private String scheme;
 	private String userName;
 	private String password;
-
+	
+	/****************************** Constructors ************************************/
 	public Database(String ip, String port, String scheme, String userName, String password) {
 		super();
 		this.ip = ip;
@@ -25,7 +26,8 @@ public class Database implements Serializable {
 		this.userName = userName;
 		this.password = password;
 	}
-
+	
+	/***************************** Setters and getters **********************************/
 	public String getIp() {
 		return ip;
 	}

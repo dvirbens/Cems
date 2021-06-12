@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
+/**
+ * Class that  represent all the information after executed an exam 
+ * (happens after the teacher freeze - close the exam or at the end of time given).
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
 public class ExecutedExam implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +29,7 @@ public class ExecutedExam implements Serializable {
 	private JFXButton questionList;
 	private JFXButton gradeApproval;
 
+/****************************** Constructors ************************************/
 	public ExecutedExam(String id, String subject, String course, String teacherID, String executorTeacherName,
 			String execDate, String execTime, String finishedStudentsCount, String testType, double avg, double median,
 			boolean approved) {
@@ -90,6 +98,7 @@ public class ExecutedExam implements Serializable {
 		this.approved = approved;
 	}
 
+/***************************** Setters and getters **********************************/
 	public double getAvg() {
 		return avg;
 	}

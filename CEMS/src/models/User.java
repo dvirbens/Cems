@@ -2,11 +2,15 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * Class that represent the User within our CEMS.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class User implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String userID;
@@ -25,6 +29,7 @@ public class User implements Serializable {
 		Student, Teacher, Principal
 	}
 
+/****************************** Constructors ************************************/
 	public User() {
 
 	}
@@ -43,6 +48,7 @@ public class User implements Serializable {
 		this.type = type;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getUserID() {
 		return userID;
 	}

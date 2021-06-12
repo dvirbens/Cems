@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import ocsf.server.ConnectionToClient;
 
+/**
+ * Class that represent the exam process while a teacher start an exam.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class ExamProcess implements Serializable {
 
 	private String examId;
@@ -23,9 +30,7 @@ public class ExamProcess implements Serializable {
 		Computerized, Manual
 	}
 
-	/**
-	 * 
-	 */
+/****************************** Constructors ***********************************/
 	private static final long serialVersionUID = 1L;
 
 	public ExamProcess(String examId, String date, String time, String teacherID, String code, String subject,
@@ -70,7 +75,8 @@ public class ExamProcess implements Serializable {
 		this.manualFile = examProcess.getManualFile();
 		this.type = examProcess.getType();
 	}
-
+	
+	/***************************** Setters and getters **********************************/
 	public String getTeacherID() {
 		return teacherID;
 	}

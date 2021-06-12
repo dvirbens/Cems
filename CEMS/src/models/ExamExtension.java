@@ -4,11 +4,18 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
+
+/**
+ * Class that represent exam extension while exam has been started by the teacher
+ * of an specific exam.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class ExamExtension implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private String examID;
 	private String code;
@@ -19,6 +26,7 @@ public class ExamExtension implements Serializable {
 	private String casue;
 	private JFXButton confirmButton;
 
+/****************************** Constructors ************************************/
 	public ExamExtension(String examID, String code, String teacherID, String teacherName, String timeExtension,
 			String examDuration, String casue) {
 		super();
@@ -31,6 +39,8 @@ public class ExamExtension implements Serializable {
 		this.casue = casue;
 	}
 
+
+/***************************** Setters and getters **********************************/
 	public String getCode() {
 		return code;
 	}

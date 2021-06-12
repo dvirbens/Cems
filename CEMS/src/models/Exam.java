@@ -26,6 +26,7 @@ public class Exam implements Serializable {
 	private List<ExamQuestion> examQuestions;
 	private JFXButton questionListButton;
 
+/****************************** Constructors ************************************/
 	public Exam(String id, String teacherID, String subject, String course, String duration,
 			List<ExamQuestion> examQuestions, String studentNote, String teacherNote) {
 		super();
@@ -70,6 +71,7 @@ public class Exam implements Serializable {
 		this.duration = duration;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getId() {
 		return id;
 	}

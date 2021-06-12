@@ -6,12 +6,15 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.image.ImageView;
 
-//This class represent one question of Computerized test report
+/**
+ * Class that represent report of one question in an exam that has been already executed
+ * by a student as a Computerized test.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
 public class ComputerizedTestReport implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String selectedAnswer;
 	private String correctAnswer;
@@ -19,7 +22,8 @@ public class ComputerizedTestReport implements Serializable {
 	private ImageView correctImg;
 	private ExamQuestion question;
 	private JFXButton detailsBtn;
-
+	
+/****************************** Constructors ************************************/
 	public ComputerizedTestReport(String selectedAnswer, String correctAnswer, String points, ImageView correctImg,
 			ExamQuestion question) {
 		super();
@@ -34,6 +38,7 @@ public class ComputerizedTestReport implements Serializable {
 		this.question = question;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getSelectedAnswer() {
 		return selectedAnswer;
 	}

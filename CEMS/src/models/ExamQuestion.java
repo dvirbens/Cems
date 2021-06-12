@@ -7,6 +7,13 @@ import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class that extends Question class and represent additional information about
+ * the questions.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
 public class ExamQuestion extends Question implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +25,7 @@ public class ExamQuestion extends Question implements Serializable {
 	private TextField tfPoints;
 	private ImageView checkImage;
 
+/****************************** Constructors ************************************/
 	public ExamQuestion(Question question) {
 		super(question.getQuestionID(), question.getTeacherName(), question.getSubject(), question.getDetails(),
 				question.getAnswer1(), question.getAnswer2(), question.getAnswer3(), question.getAnswer4(),
@@ -31,6 +39,7 @@ public class ExamQuestion extends Question implements Serializable {
 		this.points = points;
 	}
 
+/***************************** Setters and getters **********************************/
 	public int getPoints() {
 		return points;
 	}

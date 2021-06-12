@@ -2,6 +2,13 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * Class that  represent all the statistics of an specific exam / specific teacher.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class Statistics implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -11,6 +18,7 @@ public class Statistics implements Serializable{
 	private String avg = null;
 	private String median = null;
 	
+/****************************** Constructors ************************************/
 	public Statistics(String userID, String FirstName, String LastName, String Grade) {
 		super();
 		this.examID = userID;
@@ -19,6 +27,7 @@ public class Statistics implements Serializable{
 		this.median = Grade;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getExamID() {
 		return examID;
 	}

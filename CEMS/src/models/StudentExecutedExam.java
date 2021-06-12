@@ -6,11 +6,14 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.control.TextField;
 
+/**
+ * Class that  represent a student who's executed an specific exam.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
 public class StudentExecutedExam implements Serializable, Comparable<StudentExecutedExam> {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String examID;
 	private String studentID;
@@ -32,11 +35,12 @@ public class StudentExecutedExam implements Serializable, Comparable<StudentExec
 	private TextField tfComment;
 	private JFXButton getCopy;
 
-	public int compareTo(StudentExecutedExam other) {
-		// comparison by the grade:
+	/*Method that compare by grade.*/
+	public int compareTo(StudentExecutedExam other) { 
 		return Integer.compare(Integer.parseInt(this.grade), Integer.parseInt(other.grade));
 	}
 
+/****************************** Constructors ************************************/
 	public StudentExecutedExam(String course, String grade, String execDate) {
 		super();
 		this.course = course;
@@ -86,6 +90,7 @@ public class StudentExecutedExam implements Serializable, Comparable<StudentExec
 		this.code = code;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getExamID() {
 		return examID;
 	}

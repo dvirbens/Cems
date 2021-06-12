@@ -2,6 +2,13 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * Class that  represent a word - file which we getting within student upload / download word file.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class WordFile implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -9,6 +16,7 @@ public class WordFile implements Serializable {
 	private int size = 0;
 	public byte[] mybytearray;
 
+/****************************** Constructors ************************************/
 	public WordFile() {
 		super();
 	}
@@ -19,6 +27,7 @@ public class WordFile implements Serializable {
 		this.mybytearray = mybytearray;
 	}
 
+/***************************** Setters and getters **********************************/
 	public void initArray(int size) {
 		mybytearray = new byte[size];
 	}

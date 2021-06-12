@@ -4,6 +4,14 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
+/**
+ * Class that  represent Question within all the information about it, happens 
+ * when a teacher decide to create an question.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class Question implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,6 +28,7 @@ public class Question implements Serializable {
 	private JFXButton detailsButton;
 	private JFXButton addRemoveButton;
 
+/****************************** Constructors ************************************/
 	public Question(ExamQuestion question) {
 		super();
 		questionID = question.getQuestionID();
@@ -93,6 +102,7 @@ public class Question implements Serializable {
 		this.correctAnswer = correctAnswer;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getQuestionID() {
 		return questionID;
 	}

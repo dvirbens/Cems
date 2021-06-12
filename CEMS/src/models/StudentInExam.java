@@ -5,11 +5,15 @@ import java.util.Arrays;
 
 import ocsf.server.ConnectionToClient;
 
+/**
+ * Class that  represent a specific Student in a specific exam.
+ * 
+ * @author Shenhav , Aviel
+ *
+ */
+
 public class StudentInExam implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String studentID;
 	private String code;
@@ -19,6 +23,7 @@ public class StudentInExam implements Serializable {
 	private String[] solution;
 	private boolean finished;
 
+/****************************** Constructors ************************************/
 	public StudentInExam(String studentID, String code, String grade, String execDuration, String[] solution) {
 		super();
 		this.studentID = studentID;
@@ -34,6 +39,7 @@ public class StudentInExam implements Serializable {
 		this.client = client;
 	}
 
+/***************************** Setters and getters **********************************/
 	public String getStudentID() {
 		return studentID;
 	}
