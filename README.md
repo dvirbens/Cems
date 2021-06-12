@@ -22,7 +22,6 @@ Computerized exam management system - simple is it sounds.
 2. Connect to the server. 
 3. Connect as a user. 
 4. Enjoy.
-code blocks for commands
 
 ## Authors
 
