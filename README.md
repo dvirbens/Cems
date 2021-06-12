@@ -11,7 +11,7 @@ Computerized exam management system - simple as it's sounds.
   * Execute computerize exam.
   * View grades of all the executed exams.
   
-   <p align="center">
+   <p align="left">
    <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/StudnetHomePhoto.png" width="350" height="250" />
   
   ### Teacher
@@ -24,7 +24,7 @@ Computerized exam management system - simple as it's sounds.
   * Review of the exams. 
   * Approve grades. 
   
-   <p align="center">
+   <p align="left">
    <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/TeacherHomePhoto.png" width="350" height="250" />
   
   ### Principal
@@ -33,7 +33,7 @@ Computerized exam management system - simple as it's sounds.
   * Recieving time extension requests. 
   * Get overall statistics.
      
-  <p align="center">
+  <p align="left">
   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/PrincapelHomePhoto.jpeg" width="350" height="250" />
 
 
