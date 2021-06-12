@@ -138,18 +138,24 @@ public class OverallStatistic implements Initializable {
 					ModelWrapper<String> modelWrapper = new ModelWrapper<>(course_select,
 							GET_EXECUTED_EXAM_LIST_BY_COURSE);
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-					int sum_avg = 0;
-					List<ExecutedExam> statisticList = Client.getExecExams();
+
+					List<ExecutedExam> executedExamList = Client.getExecExams();
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
 
-					for (ExecutedExam exams : statisticList) {
+					for (ExecutedExam exams : executedExamList) {
 						String newData = exams.getExecutorTeacherName() + "\n" + exams.getExecDate() + "\n"
 								+ exams.getExecTime();
-						series.getData().add(
-								new XYChart.Data<String, Double>(newData, Double.valueOf(sum_avg += exams.getAvg())));
+						series.getData().add(new XYChart.Data<String, Double>(newData, Double.valueOf(exams.getAvg())));
 					}
 					graph.getData().addAll(series);
 
+					double[] avgAndMedian = getAvarageAndMedian(executedExamList);
+					if (avgAndMedian != null) {
+						String avarageStr = String.valueOf(avgAndMedian[0]);
+						String medianStr = String.valueOf(avgAndMedian[1]);
+						avg.setText(avarageStr);
+						median.setText(medianStr);
+					}
 				}
 			});
 			break;
@@ -176,6 +182,14 @@ public class OverallStatistic implements Initializable {
 					}
 
 					graph.getData().addAll(series);
+
+					double[] avgAndMedian = getAvarageAndMedian(executedExamsList);
+					if (avgAndMedian != null) {
+						String avarageStr = String.valueOf(avgAndMedian[0]);
+						String medianStr = String.valueOf(avgAndMedian[1]);
+						avg.setText(avarageStr);
+						median.setText(medianStr);
+					}
 				}
 			});
 			break;
@@ -203,6 +217,15 @@ public class OverallStatistic implements Initializable {
 
 					}
 					graph.getData().addAll(series);
+
+					double[] avgAndMedian = getAvarageAndMedian(executedExamList);
+					if (avgAndMedian != null) {
+						String avarageStr = String.valueOf(avgAndMedian[0]);
+						String medianStr = String.valueOf(avgAndMedian[1]);
+						avg.setText(avarageStr);
+						median.setText(medianStr);
+					}
+
 				}
 			});
 			break;
@@ -264,28 +287,47 @@ public class OverallStatistic implements Initializable {
 	}
 
 	private double[] getAvarageAndMedian(List<?> examList) {
-		/*
-		 * List<Integer> examsGrade = new ArrayList<>(); int sum = 0;
-		 * 
-		 * for (Object exam : examList) { int examGrade; if (exam instanceof
-		 * ExecutedExam) { double avg = ((ExecutedExam) exam).getAvg(); examGrade =
-		 * (int) avg; } else {
-		 * 
-		 * } = Integer.valueOf(student.getGrade()); examsGrade.add(studentGrade); sum +=
-		 * studentGrade; }
-		 * 
-		 * studentsGrade.sort(new Comparator<Integer>() {
-		 * 
-		 * @Override public int compare(Integer o1, Integer o2) { return o1 - o2; } });
-		 * 
-		 * double avg = sum / studentsGrade.size(); double median;
-		 * 
-		 * int n = studentsGrade.size(); if (n % 2 == 0) { int firstStudentGrade =
-		 * studentsGrade.get((n / 2) - 1); int secondStudentGrade = studentsGrade.get((n
-		 * / 2)); median = (firstStudentGrade + secondStudentGrade) / 2; } else { median
-		 * = studentsGrade.get(((n + 1) / 2) - 1); } double[] avgAndMedian = { avg,
-		 * median }; return avgAndMedian;
-		 */
+		if (!examList.isEmpty()) {
+
+			List<Double> grades = new ArrayList<>();
+			int sum = 0;
+
+			for (Object exam : examList) {
+				double examGrade = 0;
+
+				if (exam instanceof ExecutedExam)
+					examGrade = ((ExecutedExam) exam).getAvg();
+				else if (exam instanceof StudentExecutedExam)
+					examGrade = Integer.valueOf(((StudentExecutedExam) exam).getGrade());
+
+				sum += examGrade;
+				grades.add(examGrade);
+
+			}
+
+			grades.sort(new Comparator<Double>() {
+
+				@Override
+				public int compare(Double o1, Double o2) {
+					return (int) (o1 - o2);
+				}
+			});
+
+			double avg = sum / grades.size();
+			double median;
+
+			int n = grades.size();
+			if (n % 2 == 0) {
+				double firstGrade = grades.get((n / 2) - 1);
+				double secondGrade = grades.get((n / 2));
+				median = (firstGrade + secondGrade) / 2;
+			} else {
+				median = grades.get(((n + 1) / 2) - 1);
+			}
+			double[] avgAndMedian = { avg, median };
+
+			return avgAndMedian;
+		}
 		return null;
 	}
 

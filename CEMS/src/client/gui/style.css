@@ -6,7 +6,6 @@
     -fx-background-color: transparent;
 }
 
-
 .table-view .column-header-background{
     -fx-background-color: #333333;
 }
@@ -66,8 +65,11 @@
 }
 
 .combo-box .cell:selected {
-	
     -fx-text-fill: white;
 	-fx-background-color:#48a832;
-
 }
+
+.tab-header-background {
+	-fx-background-color: #333333;
+}
+
