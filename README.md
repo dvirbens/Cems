@@ -5,8 +5,7 @@
 Computerized exam management system - simple is it sounds.
 
 ## Functionality
-
-  ## Student
+  ### Student
   * Enter an exam.
   * Execute manual exam.
   * Execute computerize exam.
@@ -14,7 +13,7 @@ Computerized exam management system - simple is it sounds.
  
   ![](CEMS/images/StudnetHomePhoto.png)
   
-  ## Teacher
+  ### Teacher
   * Create question.
   * Create exam.
   * Start manual exam (Uploading the exam).
@@ -26,7 +25,7 @@ Computerized exam management system - simple is it sounds.
   
    ![](CEMS/images/TeacherHomePhoto.png)
   
-  ## Principal
+  ### Principal
   * Access to the exams data.
   * Access to the questions data.
   * Recieving time extension requests. 
