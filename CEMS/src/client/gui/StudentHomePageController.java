@@ -8,6 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
+/**
+ * FXML controller class for Student homepage in javaFX graphic user interface.
+ * 
+ * @author Shenhav, Aviel
+ *
+ */
+
 public class StudentHomePageController implements Initializable {
 
 

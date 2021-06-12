@@ -41,6 +41,13 @@ import models.ExamProcess;
 import models.StudentExecutedExam;
 import models.WordFile;
 
+/**
+ * FXML controller class for student executing manual test in javaFX graphic user interface.
+ * 
+ * @author Shenhav, Aviel
+ *
+ */
+
 public class ExecuteManualExamController implements Initializable {
 
 	@FXML
@@ -88,6 +95,7 @@ public class ExecuteManualExamController implements Initializable {
 		ExecuteManualExamController.code = code;
 	}
 
+	/*set manual test screen*/
 	public void start() {
 		try {
 			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
@@ -141,6 +149,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
+	/*Upload file on "upload" click */
 	@FXML
 	void onUploadClick(ActionEvent event) {
 		FileInputStream fileIn;
@@ -175,6 +184,7 @@ public class ExecuteManualExamController implements Initializable {
 		StudentMenuController.setLocked(false);
 	}
 
+	/*choose file from directory on "Choose" click*/
 	@FXML
 	void onChooseFileClick(ActionEvent event) {
 		FileChooser fc = new FileChooser();
@@ -188,6 +198,7 @@ public class ExecuteManualExamController implements Initializable {
 		}
 	}
 
+	/*download exam file on "download" click*/
 	@FXML
 	void onDownloadClick(ActionEvent event) {
 		btChooseFile.setVisible(true);
@@ -208,6 +219,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
+	/*Set a alert for a student within 2 minutes left into the exam*/
 	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
@@ -236,6 +248,7 @@ public class ExecuteManualExamController implements Initializable {
 		timerThread.start();
 	}
 
+	/*set an dialog for an exam that has been frozen by the teacher*/
 	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
@@ -258,6 +271,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
+	/*class that define a stop watch for a student into the exam */
 	public class StudentStopwatch {
 		private int min;
 		private int sec;

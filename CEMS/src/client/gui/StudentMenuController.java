@@ -16,6 +16,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * FXML controller class for Student pages in javaFX graphic user interface, 
+ * handle and set the page by what the student clicked. 
+ * 
+ * @author Shenhav, Aviel
+ *
+ */
+
 public class StudentMenuController implements Initializable {
 
 	@FXML
@@ -38,6 +46,7 @@ public class StudentMenuController implements Initializable {
 		EXECUTED_EXAMS, ENTER_EXAM
 	}
 
+	/*Set Executed Exams window on click*/
 	@FXML
 	void onClickExecutedExams(ActionEvent event) {
 		if (locked)
@@ -58,6 +67,7 @@ public class StudentMenuController implements Initializable {
 
 	}
 
+	/*Set EnterExam window on click*/
 	@FXML
 	void onClickEnterExam(ActionEvent event) {
 		if (locked)
@@ -78,6 +88,7 @@ public class StudentMenuController implements Initializable {
 		}
 	}
 
+	/*Set logout window on click*/
 	@FXML
 	void onClickLogout(ActionEvent event) {
 		if (locked)
@@ -95,6 +106,7 @@ public class StudentMenuController implements Initializable {
 		}
 	}
 
+	/**/
 	private void paintSelectedButton(Buttons button) {
 
 		switch (button) {
@@ -111,6 +123,7 @@ public class StudentMenuController implements Initializable {
 
 	}
 	
+	/*Set a alert dialog on click menu*/
 	public boolean setConfirmationPopup()
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);

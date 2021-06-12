@@ -12,6 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+/**
+ * FXML controller class for Enter an exam by the student in javaFX graphic user interface.
+ * 
+ * @author Shenhav, Aviel
+ *
+ */
+
 public class StudentEnterExamController {
 
 	@FXML
@@ -26,6 +33,7 @@ public class StudentEnterExamController {
 	@FXML
 	private Label lbl_Status;
 
+	/*Set a manual exam screen if the code is correct.*/
 	@FXML
 	void OnClickEnterManualExam(ActionEvent event) {
 		String code = tfCode.getText();
@@ -34,6 +42,7 @@ public class StudentEnterExamController {
 			MainGuiController.getMenuHandler().setManualTestScreen(code);
 	}
 
+	/*Set a computerize exam screen if the code is correct.*/
 	@FXML
 	void OnClickEnterComputerizedExam(ActionEvent event) {
 		String code = tfCode.getText();
@@ -42,6 +51,7 @@ public class StudentEnterExamController {
 			MainGuiController.getMenuHandler().setComputerizedTestScreen(code);
 	}
 
+	/*Check if the code is already used by the same student nor it exist.*/
 	int EnterExam() {
 
 		if (!tfCode.getText().equals("")) {
