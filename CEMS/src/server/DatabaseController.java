@@ -622,6 +622,7 @@ public class DatabaseController {
 				String execDate = rsQuestionOfCourse.getString("ExecDate");
 				String testType = rsQuestionOfCourse.getString("TestType");
 				String grade = rsQuestionOfCourse.getString("Grade");
+				String comment = rsQuestionOfCourse.getString("comment");
 				boolean approval = rsQuestionOfCourse.getBoolean("Approved");
 				Blob copy = rsQuestionOfCourse.getBlob("Copy");
 				String alert = rsQuestionOfCourse.getString("Alert");
@@ -652,7 +653,7 @@ public class DatabaseController {
 				}
 				String studentName = getUserName(studentID);
 				StudentExecutedExam exam = new StudentExecutedExam(examID, studentID, studentName, teacherID, subject,
-						course, execDate, testType, grade, alert, approval);
+						course, execDate, testType, grade, alert, approval, comment);
 
 				examList.add(exam);
 			}
@@ -1074,6 +1075,7 @@ public class DatabaseController {
 				String execDate = rs.getString("ExecDate");
 				String testType = rs.getString("TestType");
 				String grade = rs.getString("Grade");
+				String comment = rs.getString("comment");
 				Blob blob = rs.getBlob("Copy");
 				// InputStream inputStream = blob.getBinaryStream();
 				WordFile copy = new WordFile();
@@ -1082,7 +1084,7 @@ public class DatabaseController {
 				String studentName = getUserName(studentID);
 
 				StudentExecutedExam executedStudent = new StudentExecutedExam(examID, studentID, studentName, teacherID,
-						subject, course, execDate, testType, grade, alert, approved);
+						subject, course, execDate, testType, grade, alert, approved, comment);
 
 				studentList.add(executedStudent);
 			}

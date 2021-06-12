@@ -60,8 +60,10 @@ public class StudentExecutedExam implements Serializable, Comparable<StudentExec
 		grade = newGrade;
 	}
 
+
 	public StudentExecutedExam(String examID, String studentID, String studentName, String teacherId, String subject,
-			String course, String execDate, String testType, String grade, String alert, boolean approved) {
+			String course, String execDate, String testType, String grade, String alert, boolean approved,
+			String comment) {
 		super();
 		this.examID = examID;
 		this.studentID = studentID;
@@ -74,6 +76,7 @@ public class StudentExecutedExam implements Serializable, Comparable<StudentExec
 		this.grade = grade;
 		this.approved = approved;
 		this.alert = alert;
+		this.comment = comment;
 	}
 
 	public StudentExecutedExam(String examID, String studentID, String code, String execDate) {
