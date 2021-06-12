@@ -52,7 +52,7 @@ public class AddNoteController implements Initializable {
 			mainPane = (Pane) FXMLLoader.load(getClass().getResource("AddNote.fxml"));
 			Scene scene = new Scene(mainPane, 370, 280);
 			stage.setScene(scene);
-			stage.setTitle("Add Question");
+			stage.setTitle("Add Note");
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -69,7 +69,7 @@ public class AddNoteController implements Initializable {
 		if (note.isEmpty()) {
 			messageLabel.setText("Note is empty");
 		} else if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {
-			messageLabel.setText("You need select group type");
+			messageLabel.setText("You need to select group type");
 		} else {
 
 			if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Teachers")) {

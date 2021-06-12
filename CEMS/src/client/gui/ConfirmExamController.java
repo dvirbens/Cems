@@ -12,6 +12,8 @@ import com.jfoenix.controls.JFXTabPane;
 
 import client.ClientUI;
 import common.ModelWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import models.Exam;
@@ -45,12 +48,21 @@ public class ConfirmExamController implements Initializable {
 
 	@FXML
 	private TableColumn<ExamQuestion, JFXButton> tcDetails;
-	
+
 	@FXML
 	private JFXButton btnBack;
 
 	@FXML
 	private JFXButton btnCreate;
+
+	@FXML
+	private JFXTabPane tpNote;
+
+	@FXML
+	private Tab tabTeacherNote;
+
+	@FXML
+	private Tab tabStudentNote;
 
 	private static Exam exam;
 
@@ -102,9 +114,11 @@ public class ConfirmExamController implements Initializable {
 		tcPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
-		System.out.println("Need to display this notes: ");
-		System.out.println("Student note: " + exam.getStudentNote());
-		System.out.println("Teacher note: " + exam.getTeacherNote());
+		TextArea taTeacher = (TextArea) tabTeacherNote.getContent();
+		taTeacher.setText(exam.getTeacherNote());
+
+		TextArea taStudent = (TextArea) tabStudentNote.getContent();
+		taStudent.setText(exam.getStudentNote());
 
 		ObservableList<ExamQuestion> examQuestions = FXCollections.observableArrayList();
 		List<ExamQuestion> examQuestionsList = exam.getExamQuestions();
@@ -112,6 +126,5 @@ public class ConfirmExamController implements Initializable {
 		tvQuestions.setItems(examQuestions);
 
 	}
-
 
 }

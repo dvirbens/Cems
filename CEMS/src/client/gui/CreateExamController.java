@@ -96,6 +96,7 @@ public class CreateExamController implements Initializable {
 	private JFXComboBox<String> cbExamSubject;
 
 	private static String teacherNote;
+	
 	private static String studentNote;
 
 	enum Operation {
@@ -202,6 +203,7 @@ public class CreateExamController implements Initializable {
 			String teacherID = Client.getUser().getUserID();
 			String teacherNote = getTeacherNote();
 			String studentNote = getStudentNote();
+		
 			Exam newExam = new Exam(subject, teacherID, course, duration, teacherNote, studentNote, examQuestions);
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
 			ConfirmExamController confirmPage = new ConfirmExamController(newExam);

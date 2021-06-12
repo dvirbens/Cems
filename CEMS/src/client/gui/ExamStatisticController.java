@@ -173,7 +173,7 @@ public class ExamStatisticController implements Initializable {
 				questionListButton.setPrefSize(90, 15);
 				questionListButton.setStyle(
 						"-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-				questionListButton.setText("List");
+				questionListButton.setText("Details");
 				questionListButton.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override

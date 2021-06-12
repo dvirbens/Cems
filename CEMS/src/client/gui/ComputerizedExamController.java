@@ -58,7 +58,7 @@ public class ComputerizedExamController implements Initializable {
 	private TableColumn<Exam, String> tcDuration;
 
 	@FXML
-	private TableColumn<Exam, JFXButton> tcQuestionList;
+	private TableColumn<Exam, JFXButton> tcDetails;
 
 	@FXML
 	private JFXTextField tfCodeComputerized;
@@ -110,7 +110,7 @@ public class ComputerizedExamController implements Initializable {
 			questionListButton.setPrefSize(90, 15);
 			questionListButton
 					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
-			questionListButton.setText("List");
+			questionListButton.setText("Details");
 			questionListButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
@@ -168,7 +168,7 @@ public class ComputerizedExamController implements Initializable {
 			String subject = tvExamPool.getFocusModel().getFocusedItem().getSubject();
 			String course = tvExamPool.getFocusModel().getFocusedItem().getCourse();
 			String duration = tvExamPool.getFocusModel().getFocusedItem().getDuration();
-			
+
 			ExamProcess examProcess = new ExamProcess(examID, currentDate, currentTime, loggedInTeacherID, code,
 					subject, course, duration);
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
@@ -197,7 +197,7 @@ public class ComputerizedExamController implements Initializable {
 		tcSubject.setCellValueFactory(new PropertyValueFactory<Exam, String>("subject"));
 		tcCourse.setCellValueFactory(new PropertyValueFactory<Exam, String>("course"));
 		tcDuration.setCellValueFactory(new PropertyValueFactory<Exam, String>("duration"));
-		tcQuestionList.setCellValueFactory(new PropertyValueFactory<Exam, JFXButton>("questionListButton"));
+		tcDetails.setCellValueFactory(new PropertyValueFactory<Exam, JFXButton>("questionListButton"));
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(GET_EXAMS_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);

@@ -41,9 +41,6 @@ public class QuestionListController implements Initializable {
 	private TableColumn<ExamQuestion, JFXButton> tcDetails;
 
 	@FXML
-	private TableColumn<ExamQuestion, JFXButton> tcNote;
-
-	@FXML
 	private JFXButton btnBack;
 
 	private static List<ExamQuestion> questions;
@@ -88,7 +85,6 @@ public class QuestionListController implements Initializable {
 		tcSubject.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("subject"));
 		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
 		tcPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
-		tcNote.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("noteDetails"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
 		setQuestionDetailButtons(questions);

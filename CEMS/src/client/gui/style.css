@@ -47,8 +47,6 @@
 .table-row-cell:selected .text {
       -fx-fill: white;
 	  -fx-font-weight: bold
-	  
-
 }
 
 .table-row-cell .text
