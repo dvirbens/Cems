@@ -114,7 +114,6 @@ public class DatabaseController {
 			examID = Integer.valueOf(examLastID);
 		}
 		String finalExamID = subjectID + courseID + String.format("%02d", ++examID);
-		System.out.println(finalExamID);
 
 		try {
 			prepareStatement = conn.prepareStatement("INSERT INTO Exam VALUES (?,?,?,?,?,?,?,?);");
@@ -130,7 +129,6 @@ public class DatabaseController {
 			int resultSet = prepareStatement.executeUpdate();
 			if (resultSet == 1) {
 				for (ExamQuestion question : exam.getExamQuestions()) {
-					System.out.println(question);
 					saveExamQuestion(question, finalExamID);
 				}
 				System.out.print("Exam Saved Succuessfully");
@@ -665,44 +663,6 @@ public class DatabaseController {
 		return examList;
 	}
 
-	/*
-	 * public void startExam(ExamProcess examProcess) { PreparedStatement
-	 * prepareStatement; try { switch (examProcess.getType()) { case Computerized:
-	 * prepareStatement = conn.prepareStatement(
-	 * "INSERT INTO ExamProcess(examID,code,teacherID,startDate,type) VALUES (?,?,?,?,?);"
-	 * ); prepareStatement.setString(1, examProcess.getComputerizedExamID());
-	 * prepareStatement.setString(2, examProcess.getCode());
-	 * prepareStatement.setString(3, examProcess.getTeacherID());
-	 * prepareStatement.setString(4, examProcess.getDate());
-	 * prepareStatement.setString(5, examProcess.getType().toString()); int
-	 * resultSetComputerized = prepareStatement.executeUpdate(); if
-	 * (resultSetComputerized == 1) {
-	 * System.out.println("Computerized Exam started Succuessfully"); } break;
-	 * 
-	 * case Manual: WordFile wordFile = examProcess.getManualFile(); InputStream
-	 * targetStream = new ByteArrayInputStream(wordFile.getMybytearray());
-	 * prepareStatement = conn.prepareStatement(
-	 * "INSERT INTO ExamProcess(code,type,startDate,manualSubject,manualCourse,manualDuration,teacherID,manualExam) VALUES (?,?,?,?,?,?,?,?);"
-	 * ); prepareStatement.setString(1, examProcess.getCode());
-	 * prepareStatement.setString(2, examProcess.getType().toString());
-	 * prepareStatement.setString(3, examProcess.getDate());
-	 * prepareStatement.setString(4, examProcess.getManualSubject());
-	 * prepareStatement.setString(5, examProcess.getManulCourse());
-	 * prepareStatement.setString(6, examProcess.getManualDuration());
-	 * prepareStatement.setString(7, examProcess.getTeacherID());
-	 * prepareStatement.setBlob(8, targetStream); int resultSetManual =
-	 * prepareStatement.executeUpdate(); if (resultSetManual == 1) {
-	 * System.out.println("Manual Exam started Succuessfully"); }
-	 * 
-	 * break;
-	 * 
-	 * }
-	 * 
-	 * } catch (SQLException e) { e.printStackTrace();
-	 * System.err.println("Error occurred, exam has not been started "); } }
-	 * 
-	 */
-
 	/**
 	 * Saving the word file of specific student who's uploaded word file appropriate
 	 * query by prepared statement.
@@ -721,10 +681,7 @@ public class DatabaseController {
 			stmt.setString(2, studentExam.getStudentID());
 			stmt.setString(3, studentExam.getExamID());
 			stmt.setString(4, studentExam.getExecDate());
-			int resultSet = stmt.executeUpdate();
-			if (resultSet == 1) {
-				System.out.println("Student uploded exam file");
-			}
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -759,12 +716,8 @@ public class DatabaseController {
 			stmt.setBoolean(12, false);
 			stmt.setString(13, null);
 			stmt.setString(14, null);
-			int resultSet = stmt.executeUpdate();
-			if (resultSet == 1) {
-				System.out.println("Student entered exam");
-			}
+			stmt.executeUpdate();
 			return true;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("ERROR #223980 - ERROR INSERTING STUDENT TO EXAM IN DATABASE");
@@ -845,7 +798,6 @@ public class DatabaseController {
 	public void insertFinishedStudent(String studentID, String examID, String teacherID, String grade,
 			String execDuration) {
 		String sql = "UPDATE ExecutedExamByStudent SET Grade = ? , ExecDuration = ? WHERE studentID = ? AND examID = ? AND ExecDate = ?;";
-		System.out.println("EXEC DURATION: " + execDuration);
 		try {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			LocalDateTime now = LocalDateTime.now();
@@ -855,9 +807,7 @@ public class DatabaseController {
 			stmt.setString(3, studentID);
 			stmt.setString(4, examID);
 			stmt.setString(5, dtf.format(now));
-
 			stmt.executeUpdate();
-			System.out.println("Student ID: " + studentID + " in examID: " + examID + " got grade " + grade);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -1076,9 +1026,9 @@ public class DatabaseController {
 				String testType = rs.getString("TestType");
 				String grade = rs.getString("Grade");
 				String comment = rs.getString("comment");
-				Blob blob = rs.getBlob("Copy");
+				//Blob blob = rs.getBlob("Copy");
 				// InputStream inputStream = blob.getBinaryStream();
-				WordFile copy = new WordFile();
+				//WordFile copy = new WordFile();
 				boolean approved = rs.getBoolean("Approved");
 				String alert = rs.getString("Alert");
 				String studentName = getUserName(studentID);

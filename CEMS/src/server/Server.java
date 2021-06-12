@@ -32,8 +32,6 @@ import static common.ModelWrapper.Operation.SUCCESSFUL_INSERT_CHECK;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -172,6 +170,19 @@ public class Server extends AbstractServer {
 				ConnectionToClient teacherClient = examProcess.getTeacherClient();
 				teacherClient.sendToClient(modelWrapperToClient);
 				client.sendToClient(modelWrapperFromClient);
+
+				ExamExtension extensionToRemove = null;
+				List<ExamExtension> extensionList = examsExtensions.get(extension.getCode());
+				for (ExamExtension extensionFromList : extensionList) {
+					if (extensionFromList.getCode().equals(extension.getCode())
+							&& extensionFromList.getExamID().equals(extension.getExamID())) {
+						extensionToRemove = extensionFromList;
+					}
+				}
+
+				if (extensionToRemove != null)
+					extensionList.remove(extensionToRemove);
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -306,7 +317,9 @@ public class Server extends AbstractServer {
 						finishedStudent++;
 
 					ConnectionToClient studentClient = student.getClient();
-					studentClient.sendToClient(modelWrapperToClient);
+
+					if (studentClient.isAlive())
+						studentClient.sendToClient(modelWrapperToClient);
 
 				}
 				examInProcessTemp.setFinishedStudentsCount(String.valueOf(finishedStudent));
@@ -336,7 +349,6 @@ public class Server extends AbstractServer {
 			String studentID = (String) modelWrapperFromClient.getElement();
 			List<StudentExecutedExam> testArray = databaseController.getExecutedExamListByStudentID(studentID);
 			modelWrapperToClient = new ModelWrapper<StudentExecutedExam>(testArray, EXAM_EXECUTE);
-			System.out.println(testArray);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -356,7 +368,6 @@ public class Server extends AbstractServer {
 			examExtensionsList.add(examExtension);
 			examsExtensions.put(examExtension.getCode(), examExtensionsList);
 
-			System.out.println(examsExtensions);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -627,7 +638,6 @@ public class Server extends AbstractServer {
 			date = (String) userInfo.get(2);
 			String selectedAnswers = databaseController.getSelectedAnswers(studentID, examID, date);
 			modelWrapperToClient = new ModelWrapper<>(selectedAnswers, GET_SELECTED_ANSWERS);
-			System.out.println(selectedAnswers);
 			try {
 				client.sendToClient(modelWrapperToClient);
 			} catch (IOException e) {
@@ -659,7 +669,6 @@ public class Server extends AbstractServer {
 				serverListener.printToLog("Disconnected");
 				serverListener.changeButtonStatus(!isConnected);
 			} catch (IOException e) {
-				System.out.println("MEOW");
 				e.printStackTrace();
 			}
 		}

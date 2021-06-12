@@ -1,7 +1,5 @@
 package client;
 
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_TEACHER;
-
 import java.io.IOException;
 import java.util.List;
 

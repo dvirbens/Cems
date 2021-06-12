@@ -93,7 +93,6 @@ public class ManualExamController implements Initializable {
 			String subject = cbSubject.getSelectionModel().getSelectedItem();
 			String course = cbCourse.getSelectionModel().getSelectedItem();
 			WordFile wordFile = getWordFile();
-			System.out.println(currentTime);
 
 			ExamProcess examProcess = new ExamProcess(examID, currentDate, currentTime, teacherID, code, subject,
 					course, duration, wordFile);

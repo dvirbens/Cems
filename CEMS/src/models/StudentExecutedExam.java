@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import com.jfoenix.controls.JFXButton;
 
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 public class StudentExecutedExam implements Serializable, Comparable<StudentExecutedExam> {

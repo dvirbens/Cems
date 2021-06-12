@@ -1,6 +1,8 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +30,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
-import models.ExamQuestion;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
 
@@ -164,7 +165,6 @@ public class ExamStatisticController implements Initializable {
 	 */
 	private List<ExecutedExam> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
 		List<ExecutedExam> approvedExams = new ArrayList<>();
-		System.out.println(executedExamsList);
 		for (ExecutedExam executedExam : executedExamsList) {
 			if (executedExam.isApproved()) {
 				JFXButton questionListButton = new JFXButton();
@@ -192,7 +192,6 @@ public class ExamStatisticController implements Initializable {
 			}
 
 		}
-		System.out.println(approvedExams);
 
 		return approvedExams;
 	}

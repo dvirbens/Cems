@@ -99,7 +99,7 @@ public class ExamDetailsController implements Initializable {
 		tcTeacher.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("teacherName"));
 		tcPoints.setCellValueFactory(new PropertyValueFactory<ExamQuestion, Integer>("points"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
-		
+
 		TextArea taTeacher = (TextArea) tabTeacherNote.getContent();
 		taTeacher.setText(exam.getTeacherNote());
 

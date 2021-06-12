@@ -1,10 +1,11 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_COURSE;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_STUDENT;
+import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_TEACHER;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -106,8 +107,6 @@ public class OverallStatistic implements Initializable {
 
 	private Operation op = Operation.COURSE;
 
-	private Object executedExamStudentList;
-
 	public enum StatisticBy {
 		StatisticByCourse, StatisticByTeacher, StatisticByStudent
 	};
@@ -173,7 +172,6 @@ public class OverallStatistic implements Initializable {
 
 					List<StudentExecutedExam> executedExamsList = Client.getExecutedExamStudentList();
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
-					System.out.println(executedExamsList);
 					for (StudentExecutedExam student_exams : executedExamsList) {
 						String newData = student_exams.getCourse() + "\n" + student_exams.getExecDate() + "\n"
 								+ student_exams.getGrade();
@@ -205,7 +203,6 @@ public class OverallStatistic implements Initializable {
 							GET_EXECUTED_EXAM_LIST_BY_TEACHER);
 					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 					List<ExecutedExam> executedExamList = Client.getExecExams();
-					System.out.println(executedExamList);
 					XYChart.Series<String, Double> series = new XYChart.Series<>();
 
 					for (ExecutedExam executedExam : executedExamList) {

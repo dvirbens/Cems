@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 import client.Client;
 import client.ClientUI;
-import client.gui.ExecuteComputerizedExamController.StudentStopwatch;
 import common.ModelWrapper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,15 +29,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import models.Exam;
 import models.ExamProcess;
 import models.StudentExecutedExam;
 import models.WordFile;
@@ -75,10 +73,6 @@ public class ExecuteManualExamController implements Initializable {
 	private StudentStopwatch sw;
 
 	private File newFile;
-
-	private long startTime;
-
-	private long duration;
 
 	private ExamProcess examProcess;
 
@@ -190,7 +184,7 @@ public class ExecuteManualExamController implements Initializable {
 			tfFileName.setText(newFile.getName());
 		} else {
 			btUpload.setVisible(false);
-			System.out.println("File is not valid");
+			tfFileName.setText("File is not valid");
 		}
 	}
 

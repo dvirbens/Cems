@@ -28,7 +28,7 @@ import server.ServerEventListener;
  * class handle creating new server instance that's listening for clients
  * requests. every event that occurred on server displayed on server log.
  * 
- * @author Arikz ,Dvir ben simon	
+ * @author Arikz ,Dvir ben simon
  *
  */
 public class ServerGuiController implements Initializable, ServerEventListener {
@@ -174,7 +174,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 				try {
 					Thread.sleep(100);
 				} catch (Exception ex) {
-					System.out.println("Problem Occured");
+					taLogs.appendText("Problem Occured");
 				}
 				Platform.runLater(() -> {
 					if (status)

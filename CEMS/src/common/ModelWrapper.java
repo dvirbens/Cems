@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import models.WordFile;
-import javafx.scene.chart.XYChart.Series;
 
 /**
  * Generic class that wrap all of CEMS Projects model, in order to make

@@ -116,12 +116,11 @@ public class StudentComputerizedTestReportController implements Initializable {
 
 	public StudentComputerizedTestReportController(List<ComputerizedTestReport> exam, String subject, String course,
 			String grade, String comment) {
-		this.exam = exam;
-		this.subject = subject;
-		this.course = course;
-		this.grade = grade;
-		this.comment = comment;
-		System.out.println(comment);
+		StudentComputerizedTestReportController.exam = exam;
+		StudentComputerizedTestReportController.subject = subject;
+		StudentComputerizedTestReportController.course = course;
+		StudentComputerizedTestReportController.grade = grade;
+		StudentComputerizedTestReportController.comment = comment;
 	}
 
 	public void start() {

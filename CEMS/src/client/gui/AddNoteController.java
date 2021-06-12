@@ -65,7 +65,7 @@ public class AddNoteController implements Initializable {
 		String note = taNotes.getText();
 
 		messageLabel.setStyle("-fx-text-fill: RED;");
-
+		
 		if (note.isEmpty()) {
 			messageLabel.setText("Note is empty");
 		} else if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {

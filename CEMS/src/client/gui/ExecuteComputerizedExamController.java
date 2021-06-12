@@ -162,12 +162,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperEaxmDetails);
 
 		exam = Client.getExam();
-		int duration = Integer.parseInt(exam.getDuration());
-		tfNote.setText(exam.getStudentNote());
-		String examID = exam.getId();
-		String userID = Client.getUser().getUserID();
-		String teacherID = exam.getTeacherID();
 
+		tfNote.setText(exam.getStudentNote());
+		String userID = Client.getUser().getUserID();
 		answersArr = new String[exam.getExamQuestions().size()];
 
 		for (int i = 0; i < answersArr.length; i++)
