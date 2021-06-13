@@ -32,6 +32,11 @@ import javafx.scene.layout.Pane;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
 
+/**
+ *	ComputerizedGradeApproveStudentListController class hande the grade approval screen of the Teacher.
+ *	It shows the teacher the grade and alert value and let the teacher change the grade
+ *	and add comment for each student.
+ */
 public class ComputerizedGradeApproveStudentListController implements Initializable {
 
 	@FXML
@@ -68,10 +73,17 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 	public ComputerizedGradeApproveStudentListController() {
 	}
 
+	/**
+	 * Constructor for ComputerizedGradeApproveStudentListController class
+	 * @param executedExam
+	 */
 	public ComputerizedGradeApproveStudentListController(ExecutedExam executedExam) {
 		ComputerizedGradeApproveStudentListController.executedExam = executedExam;
 	}
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane studentListPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedGradeApprovalStudentList.fxml"));
@@ -81,11 +93,20 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 		}
 	}
 
+	/**
+	 * Method for back button: set the previous screen(setGradeApprovalScreen)
+	 * @param event
+	 */
 	@FXML
 	void onClickBack(ActionEvent event) {
 		MainGuiController.getMenuHandler().setGradeApprovalScreen();
 	}
 
+	
+	/**
+	 * Method for save button, save the data and submit to server
+	 * @param event
+	 */
 	@FXML
 	void onClickSave(ActionEvent event) {
 
@@ -131,6 +152,9 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 		messageLabel.setText(serverMessage);
 	}
 
+	/**
+	 * Method that get the input grade value and set it in the object
+	 */
 	private void setNewGradeChanges() {
 		for (StudentExecutedExam student : executedExamStudentList) {
 			String newGrade = student.getTfGrade().getText();
@@ -138,6 +162,9 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 		}
 	}
 
+	/**
+	 * @return average and median
+	 */
 	private double[] getAvarageAndMedian() {
 		List<Integer> studentsGrade = new ArrayList<>();
 		int sum = 0;
@@ -171,6 +198,9 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 		return avgAndMedian;
 	}
 
+	/**
+	 * Set the table and insert data
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -195,6 +225,11 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 
 	}
 
+	/**
+	 * Update student grade
+	 * @param executedExamStudentList list of student executed exams
+	 * @return the list after update
+	 */
 	private List<StudentExecutedExam> addApproveButton(List<StudentExecutedExam> executedExamStudentList) {
 		for (StudentExecutedExam executedStudentExam : executedExamStudentList) {
 			TextField tfGrade = new TextField(executedStudentExam.getGrade());

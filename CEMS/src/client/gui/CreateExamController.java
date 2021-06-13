@@ -30,6 +30,14 @@ import models.Exam;
 import models.ExamQuestion;
 import models.Question;
 
+/**
+ * CreateExamController class handle the screen of create exam by teacher.
+ * The teacher can add questions that already made and watch their details.
+ * In addition, there is option to filter questions by subject.
+ * The teacher need to choose subject, course and exam duration.
+ * Optionally, the teacher can add note to the exam.
+ *
+ */
 public class CreateExamController implements Initializable {
 
 	@FXML
@@ -103,6 +111,10 @@ public class CreateExamController implements Initializable {
 		REMOVE, ADD
 	}
 
+	/**
+	 * Update the questions by subject
+	 * @param event
+	 */
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
@@ -113,6 +125,9 @@ public class CreateExamController implements Initializable {
 
 	}
 
+	/**
+	 * Adding questions to the table
+	 */
 	private void addQuestionList() {
 		ObservableList<Question> questions = FXCollections.observableArrayList();
 		questions.addAll(Client.getQuestions());
@@ -148,12 +163,20 @@ public class CreateExamController implements Initializable {
 		}
 	}
 
+	/**
+	 * Add note to exam
+	 * @param event
+	 */
 	@FXML
 	void onClickAddNote(ActionEvent event) {
 		AddNoteController addNoteWindow = new AddNoteController();
 		addNoteWindow.start();
 	}
 
+	/**
+	 * Continue to the next step in creating exam
+	 * @param event
+	 */
 	@FXML
 	void onClickContinue(ActionEvent event) {
 		String subject, course, duration;
@@ -212,12 +235,22 @@ public class CreateExamController implements Initializable {
 
 	}
 
+	/**
+	 * Add questions to the table
+	 * @param observableList
+	 * @return list of exam questions
+	 */
 	private List<ExamQuestion> createRegularList(ObservableList<ExamQuestion> observableList) {
 		List<ExamQuestion> examQuestions = new ArrayList<>();
 		examQuestions.addAll(observableList);
 		return examQuestions;
 	}
 
+	/**
+	 * The method add points to each question
+	 * @param examQuestions
+	 * @return list of exam questions
+	 */
 	private List<ExamQuestion> addAllPoints(List<ExamQuestion> examQuestions) {
 
 		for (ExamQuestion examQuestion : examQuestions) {
@@ -228,6 +261,10 @@ public class CreateExamController implements Initializable {
 		return examQuestions;
 	}
 
+	/**
+	 * This method filters courses on subject click.
+	 * @param event
+	 */
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
 		String subject = cbExamSubject.getSelectionModel().getSelectedItem();
@@ -267,6 +304,11 @@ public class CreateExamController implements Initializable {
 		setTeacherNote("");
 	}
 
+	/**
+	 * check if the input is numeric or not
+	 * @param strNum
+	 * @return true if numeric else false
+	 */
 	public static boolean isNumeric(String strNum) {
 		if (strNum == null) {
 			return false;
@@ -279,6 +321,10 @@ public class CreateExamController implements Initializable {
 		return true;
 	}
 
+	/**
+	 * This class take care of adding and removing questions from/to table
+	 *
+	 */
 	public class AddRemoveEvenetHandler implements EventHandler<ActionEvent> {
 
 		private Operation operation;
@@ -331,18 +377,32 @@ public class CreateExamController implements Initializable {
 
 	}
 
+	/**
+	 * @return teacher note
+	 */
 	public static String getTeacherNote() {
 		return teacherNote;
 	}
 
+	/**
+	 * set teacher note
+	 * @param teacherNote
+	 */
 	public static void setTeacherNote(String teacherNote) {
 		CreateExamController.teacherNote = teacherNote;
 	}
 
+	/**
+	 * @return student note
+	 */
 	public static String getStudentNote() {
 		return studentNote;
 	}
 
+	/**
+	 * set student note
+	 * @param studentNote
+	 */
 	public static void setStudentNote(String studentNote) {
 		CreateExamController.studentNote = studentNote;
 	}

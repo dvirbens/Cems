@@ -19,9 +19,12 @@ import javafx.scene.control.TextArea;
 import models.Question;
 import models.User;
 
+/**
+ * CreateQuestionController class handle create question by teacher screen
+ * It allows the teacher to add the question, the 4 optional answers and the right answer
+ * In addition, the teacher need to choose subject.
+ */
 public class CreateQuestionController implements Initializable {
-	
-//
 	
 	@FXML
 	private JFXComboBox<String> cbSubject;
@@ -76,6 +79,11 @@ public class CreateQuestionController implements Initializable {
 
 	}
 
+	/**
+	 * Method for create question button, checking the input and if success sending add  question
+	 * request to the server
+	 * @param event
+	 */
 	@FXML
 	void onClickCreateQuestion(ActionEvent event) {
 		User teacherUser = Client.getUser();
@@ -154,6 +162,10 @@ public class CreateQuestionController implements Initializable {
 
 	}
 
+
+	/**
+	 * Adding 4 options combo box on initialize
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		cbSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
