@@ -53,7 +53,8 @@ import models.ExamQuestion;
 import models.StudentInExam;
 
 /**
- * FXML controller class for student executing computerize test in javaFX graphic user interface.
+ * FXML controller class for student executing computerize test in javaFX
+ * graphic user interface.
  * 
  * @author Shenhav, Aviel
  *
@@ -139,7 +140,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	private volatile boolean shutdown = false;
 
-	
 	public ExecuteComputerizedExamController() {
 	}
 
@@ -148,7 +148,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/*set computerize test screen*/
+	/* set computerize test screen */
 	public void start() {
 		try {
 			Pane computerizedTestPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedTest.fxml"));
@@ -264,7 +264,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/*Set the question information within row click from the table */
+	/* Set the question information within row click from the table */
 	public void onRowClick() {
 		// check the table's selected item and get selected item
 		if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
@@ -298,7 +298,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	/*Save the student answer*/
+	/* Save the student answer */
 	@FXML
 	public void onSaveClick(ActionEvent event) {
 		if (AnswersGroup.getSelectedToggle() != null) {
@@ -316,7 +316,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	/*Calculate the student grade by adding the correct answers points for every question*/
+	/*
+	 * Calculate the student grade by adding the correct answers points for every
+	 * question
+	 */
 	@FXML
 	void onClickSubmit(ActionEvent event) {
 		StudentMenuController.setLocked(false);
@@ -344,7 +347,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/*Set a alert for a student within 2 minutes left into the exam*/
+	/* Set a alert for a student within 2 minutes left into the exam */
 	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
@@ -373,7 +376,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		timerThread.start();
 	}
 
-	/*set an dialog for an exam that has been frozen by the teacher*/
+	/* set an dialog for an exam that has been frozen by the teacher */
 	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
@@ -396,7 +399,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/*class that define a stop watch for a student into the exam */
+	/* class that define a stop watch for a student into the exam */
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
@@ -416,51 +419,51 @@ public class ExecuteComputerizedExamController implements Initializable {
 			timer.scheduleAtFixedRate(new TimerTask() {
 
 				public void run() {
-
-					long timeExtension = Client.getTimeExtension();
-					if (StudentMenuController.isClosed()) {
-						StudentMenuController.setLocked(false);
-						timer.cancel();
-						shutdown = true;
-						StudentMenuController.setClosed(false);
-						return;
-					}
-
-					if (timeExtension == -1) {
-						setFreezePopup();
-						shutdown = true;
-						timer.cancel();
-						Client.setTimeExtension(0);
-						return;
-					} else if (timeExtension != 0) {
-						min += (int) timeExtension;
-						Platform.runLater(new Runnable() {
-							@Override
-							public void run() {
-								lblTimeExtension.setText("*Time extended by " + timeExtension);
-							}
-						});
-						Client.setTimeExtension(0);
-					}
 					Platform.runLater(new Runnable() {
+
 						@Override
 						public void run() {
+							long timeExtension = Client.getTimeExtension();
+							if (StudentMenuController.isClosed()) {
+								StudentMenuController.setLocked(false);
+								timer.cancel();
+								shutdown = true;
+								StudentMenuController.setClosed(false);
+								return;
+							}
+
+							if (timeExtension == -1) {
+								setFreezePopup();
+								shutdown = true;
+								timer.cancel();
+								Client.setTimeExtension(0);
+								return;
+							} else if (timeExtension != 0) {
+								min += (int) timeExtension;
+								Platform.runLater(new Runnable() {
+									@Override
+									public void run() {
+										lblTimeExtension.setText("*Time extended by " + timeExtension);
+									}
+								});
+								Client.setTimeExtension(0);
+							}
+
 							label.setText(String.format("%02d:%02d\n", min, sec));
+
+							if (min == 0 && sec == 0) {
+								timer.cancel();
+								shutdown = true;
+								MainGuiController.getMenuHandler().setMainScreen();
+
+							} else if (sec == 0) {
+								min--;
+								sec = 59;
+							} else {
+								sec--;
+							}
 						}
 					});
-
-					if (min == 0 && sec == 0) {
-						timer.cancel();
-						shutdown = true;
-						MainGuiController.getMenuHandler().setMainScreen();
-
-					} else if (sec == 0) {
-						min--;
-						sec = 59;
-					} else {
-						sec--;
-					}
-
 				}
 			}, delay, period);
 		}

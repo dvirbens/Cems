@@ -214,8 +214,7 @@ public class ExamManagementWindow {
 							}
 							label.setText(String.format("%02d:%02d\n", min, sec));
 							if (min == 0 && sec == 0) {
-								MainGuiController.getMenuHandler().setMainScreen();
-								timer.cancel();
+								stopExam();
 							} else if (sec == 0) {
 								min--;
 								sec = 59;

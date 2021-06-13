@@ -45,6 +45,7 @@ import models.Database;
 import models.Exam;
 import models.ExamExtension;
 import models.ExamProcess;
+import models.ExamProcess.ExamType;
 import models.ExamQuestion;
 import models.ExecutedExam;
 import models.Question;
@@ -298,24 +299,21 @@ public class Server extends AbstractServer {
 			break;
 
 		case CLOSE_EXAM:
-			System.out.println("Hello1");
 			String code = (String) modelWrapperFromClient.getElement();
-			System.out.println(code);
 			examID = examsInProcess.get(code).getExamId();
-			System.out.println(examID);
-
-			checkAlert(code, examID);
-			System.out.println("check alert done");
 
 			ExamProcess examInProcessTemp = examsInProcess.get(code);
 			List<StudentInExam> studenInExamList = studentInExam.get(code);
 
-			if (examInProcessTemp.getType().equals(ExamProcess.ExamType.Computerized)) {
-				databaseController.insertStudentAnswers(studenInExamList, code);
+			if (examInProcessTemp.getType().equals(ExamType.Computerized)) {
+
+				checkAlert(code, examID);
+
+				if (examInProcessTemp.getType().equals(ExamProcess.ExamType.Computerized)) {
+					databaseController.insertStudentAnswers(studenInExamList, code);
+				}
+
 			}
-
-			System.out.println("insert Student");
-
 			try {
 				modelWrapperToClient = new ModelWrapper<>("-1", STUDENT_TIME_EXTENSION);
 				int finishedStudent = 0;
@@ -484,7 +482,7 @@ public class Server extends AbstractServer {
 				System.out.println("HEY5");
 
 				examProcessTemp = examsInProcess.get(code);
-				
+
 				System.out.println("HEY6");
 				databaseController.insertToExecutedExamByStudent(studentID, examProcessTemp);
 				System.out.println("HEY7");
