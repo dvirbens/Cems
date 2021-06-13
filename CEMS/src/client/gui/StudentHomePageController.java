@@ -11,8 +11,6 @@ import javafx.scene.control.Label;
 /**
  * FXML controller class for Student homepage in javaFX graphic user interface.
  * 
- * @author Shenhav, Aviel
- *
  */
 
 public class StudentHomePageController implements Initializable {
@@ -21,6 +19,9 @@ public class StudentHomePageController implements Initializable {
     @FXML
     private Label labelName;
 
+	/**
+	 *	This method show the username firstname and lastname on the screen
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

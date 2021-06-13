@@ -19,8 +19,6 @@ import javafx.scene.input.MouseEvent;
 /**
  * FXML controller class for Student pages in javaFX graphic user interface, 
  * handle and set the page by what the student clicked. 
- * 
- * @author Shenhav, Aviel
  *
  */
 
@@ -46,7 +44,10 @@ public class StudentMenuController implements Initializable {
 		EXECUTED_EXAMS, ENTER_EXAM
 	}
 
-	/*Set Executed Exams window on click*/
+	/**
+	 * Set Executed Exams window on click
+	 * @param event
+	 */
 	@FXML
 	void onClickExecutedExams(ActionEvent event) {
 		if (locked)
@@ -67,7 +68,10 @@ public class StudentMenuController implements Initializable {
 
 	}
 
-	/*Set EnterExam window on click*/
+	/**
+	 * Set EnterExam window on click
+	 * @param event
+	 */
 	@FXML
 	void onClickEnterExam(ActionEvent event) {
 		if (locked)
@@ -88,7 +92,10 @@ public class StudentMenuController implements Initializable {
 		}
 	}
 
-	/*Set logout window on click*/
+	/**
+	 * Set logout window on click
+	 * @param event
+	 */
 	@FXML
 	void onClickLogout(ActionEvent event) {
 		if (locked)
@@ -106,7 +113,11 @@ public class StudentMenuController implements Initializable {
 		}
 	}
 
-	/**/
+	
+	/**
+	 * Sets the given button bold by painting
+	 * @param button The button to bold
+	 */
 	private void paintSelectedButton(Buttons button) {
 
 		switch (button) {
@@ -123,7 +134,10 @@ public class StudentMenuController implements Initializable {
 
 	}
 	
-	/*Set a alert dialog on click menu*/
+	/**
+	 * Set a alert dialog on click menu
+	 * @return true if user clicked ok else false
+	 */
 	public boolean setConfirmationPopup()
 	{
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -139,6 +153,9 @@ public class StudentMenuController implements Initializable {
 		}
 	}
 
+	/**
+	 *	set welcome label with username firstname and lastname
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -147,23 +164,43 @@ public class StudentMenuController implements Initializable {
 		labelWelcome.setText(LabelPrint);
 	}
 
+	/**
+	 * Go to student menu on logo click
+	 * @param event
+	 */
 	@FXML
 	void onLogoClicked(MouseEvent event) {
 		MainGuiController.getMenuHandler().setStudentlMenu();
 	}
 
+	
+	/**
+	 * @return true if menu is locked else false
+	 */
 	public static boolean isLocked() {
 		return locked;
 	}
 
+	/**
+	 * set locked menu boolean according to the status
+	 * @param locked
+	 */
 	public static void setLocked(boolean locked) {
 		StudentMenuController.locked = locked;
 	}
 
+	/**
+	 * @return true if test is closed else false
+	 */
 	public static boolean isClosed() {
 		return closed;
 	}
 
+	
+	/**
+	 * Set closed boolean according to the status
+	 * @param closed
+	 */
 	public static void setClosed(boolean closed) {
 		StudentMenuController.closed = closed;
 	}
