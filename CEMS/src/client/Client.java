@@ -17,9 +17,13 @@ import ocsf.client.AbstractClient;
 
 //
 /**
- * Class that's handle server-client communication.
+ * The Client class handle requests from the user and send to the server and vice versa.
+ * Each request operation is classified by the Model Wrapper.
+ * In addition, this class hold the returned data from the server in variables.
  * 
- * @author Arikz ,Dvir ben simon
+ * @author -------Group 9--------
+ *	Arik Zagdon, Dvir ben simon, Aviel Turgeman, Shenhav Hezi, Yaakov Shitrit
+			
  */
 public class Client extends AbstractClient {
 
@@ -29,65 +33,54 @@ public class Client extends AbstractClient {
 	 */
 	public static boolean awaitResponse = false;
 
+	/** hold the student selected answers of specific test */
 	private static String SelectedAnswers;
 
-	/**
-	 * Value the holds the list of test that will be shown on table user interface.
-	 */
+	/** Value that hold the list of test that will be shown on table user interface. */
 	private static List<Exam> exams;
-	/*
-	 * Value that hold the list of the executed tests of the user.
-	 */
+	
+	/** Value that hold the list of executed tests. */
 	private static List<ExecutedExam> execExams;
-
+	
+	/** value that hold the list of student executed exams. */
 	private static List<StudentExecutedExam> executedExamStudentList;
 
-	/**
-	 * value that hold exam id of specific test
-	 */
+	/** value that hold exam id of specific test */
 	private static String examID;
 
-	/**
-	 * value that hold last exam code
-	 */
+	/** value that hold last exam code */
 	private static String examCode;
-	/**
-	 * value that hold current executing exam
-	 */
+	
+	/** value that hold current executing exam */
 	private static Exam exam;
-	/**
-	 * 
-	 * 
-	 * /** Value the holds the list of question that will be shown on table user
+
+	/** Value that hold the list of question that will be shown on table user
 	 * interface.
 	 */
 	private static List<Question> questions;
 
+	/** value that hold the current executing exam. */
 	private static ExamProcess examProcess;
 
+	/** value that hold the current executing exam questions. */
 	private static List<ExamQuestion> examQuestions;
 
+	/** value that hold list of exams with time extension. */
 	private static List<ExamExtension> examExtensions;
 
-	/**
-	 * Value that hold the test the will be shown on editTest user interface.
-	 */
+	/** Value that hold the test the will be shown on editTest user interface. */
 	private static Exam editTest;
-	/**
-	 * Value that hold the messages server side sent.
-	 */
+	
+	/** Value that hold the messages server side sent. */
 	private static String serverMessages;
 
-	/**
-	 * Value that hold the user, use to login and and open appropriate menu
-	 */
+	/** Value that hold the user, use to login and and open appropriate menu */
 	private static User user;
 
+	/** value that represent the time extension to the student exam. */
 	private static long timeExtension = 0;
 
-	/**
-	 * Value that hold the user, use to login and and open appropriate menu
-	 */
+	/** Value that hold the user, use to login and and open appropriate menu. */
 	private static SubjectCourseCollection subjectCollection;
 
 	/**
@@ -321,130 +314,257 @@ public class Client extends AbstractClient {
 		System.exit(0);
 	}
 
+	/**
+	 * @return exam list
+	 */
 	public static List<Exam> getExams() {
 		return exams;
 	}
 
+	
+	/**
+	 * get exam list and set it
+	 * @param exams
+	 */
 	public static void setExams(List<Exam> exams) {
 		Client.exams = exams;
 	}
 
+	/**
+	 * @return current editing exam
+	 */
 	public static Exam getEditTest() {
 		return editTest;
 	}
 
+	/**
+	 * set current editing exam
+	 * @param editTest
+	 */
 	public static void setEditTest(Exam editTest) {
 		Client.editTest = editTest;
 	}
 
+	/**
+	 * @return current user
+	 */
 	public static User getUser() {
 		return user;
 	}
 
+	/**
+	 * set current user
+	 * @param user
+	 */
 	public static void setUser(User user) {
 		Client.user = user;
 	}
 
+	
+	/**
+	 * @return current server message
+	 */
 	public static String getServerMessages() {
 		return serverMessages;
 	}
 
+	/**
+	 * set current server message
+	 * @param serverMessages
+	 */
 	public static void setServerMessages(String serverMessages) {
 		Client.serverMessages = serverMessages;
 	}
 
+	/**
+	 * @return subject and course list
+	 */
 	public static SubjectCourseCollection getSubjectCollection() {
 		return subjectCollection;
 	}
 
+	/**
+	 * set subject and course list
+	 * @param subjectCollection
+	 */
 	public static void setSubjectCollection(SubjectCourseCollection subjectCollection) {
 		Client.subjectCollection = subjectCollection;
 	}
 
+	/**
+	 * @return question list by subject
+	 */
 	public static List<Question> getQuestions() {
 		return questions;
 	}
 
+	
+	/**
+	 * set question list by subject
+	 * @param questions
+	 */
 	public static void setQuestions(List<Question> questions) {
 		Client.questions = questions;
 	}
 
+	
+	/**
+	 * @return list of exectued exams
+	 */
 	public static List<ExecutedExam> getExecExams() {
 		return execExams;
 	}
 
+	
+	/**
+	 * set list of exectued exams
+	 * @param execExams
+	 */
 	public static void setExecExams(List<ExecutedExam> execExams) {
 		Client.execExams = execExams;
 	}
 
+	/**
+	 * @return current exam id
+	 */
 	public static String getExamID() {
 		return examID;
 	}
 
+	/**
+	 * set current exam id
+	 * @param examID
+	 */
 	public static void setExamID(String examID) {
 		Client.examID = examID;
 	}
 
+	/**
+	 * @return current exam code
+	 */
 	public static String getExamCode() {
 		return examCode;
 	}
 
+	/**
+	 * set current exam code
+	 * @param examCode
+	 */
 	public static void setExamCode(String examCode) {
 		Client.examCode = examCode;
 	}
 
+	/**
+	 * @return the requested exam
+	 */
 	public static Exam getExam() {
 		return exam;
 	}
 
+	
+	/**
+	 * set the requested exam
+	 * @param exam
+	 */
 	public static void setExam(Exam exam) {
 		Client.exam = exam;
 	}
 
+	
+	/**
+	 * @return time extension of current exam
+	 */
 	public static long getTimeExtension() {
 		return timeExtension;
 	}
 
+	/**
+	 * set time extension of current exam
+	 * @param timeExtension
+	 */
 	public static void setTimeExtension(long timeExtension) {
 		Client.timeExtension = timeExtension;
 	}
 
+	
+	/**
+	 * @return the requested question list
+	 */
 	public static List<ExamQuestion> getExamQuestions() {
 		return examQuestions;
 	}
 
+	
+	/**
+	 * set the requested question list
+	 * @param examQuestions
+	 */
 	public static void setExamQuestions(List<ExamQuestion> examQuestions) {
 		Client.examQuestions = examQuestions;
 	}
 
+	
+	/**
+	 * @return the requested exam process
+	 */
 	public static ExamProcess getExamProcess() {
 		return examProcess;
 	}
 
+	
+	/**
+	 * @return the list of exams with time extension
+	 */
 	public static List<ExamExtension> getExamExtensions() {
 		return examExtensions;
 	}
 
+	
+	/**
+	 * set the list of exams with time extension
+	 * @param examExtensions
+	 */
 	public static void setExamExtensions(List<ExamExtension> examExtensions) {
 		Client.examExtensions = examExtensions;
 	}
 
+	
+	/**
+	 * set the requested exam process
+	 * @param examProcess
+	 */
 	public static void setExamProcess(ExamProcess examProcess) {
 		Client.examProcess = examProcess;
 	}
+	
+	
 
+	/**
+	 * @return list of exectued exams by request
+	 */
 	public static List<StudentExecutedExam> getExecutedExamStudentList() {
 		return executedExamStudentList;
 	}
 
+	/**
+	 * set list of exectued exams by request
+	 * @param executedExamStudentList
+	 */
 	public static void setExecutedExamStudentList(List<StudentExecutedExam> executedExamStudentList) {
 		Client.executedExamStudentList = executedExamStudentList;
 	}
 
+	/**
+	 * @return selected answers by student of specific exam
+	 */
 	public static String getSelectedAnswers() {
 		return SelectedAnswers;
 	}
 
+	/**
+	 * set selected answers by student of specific exam
+	 * @param selectedAnswers
+	 */
 	public static void setSelectedAnswers(String selectedAnswers) {
 		SelectedAnswers = selectedAnswers;
 	}
