@@ -24,7 +24,7 @@
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="492.0" text="Welcome to CEMS-Teaacher Section" />
             <ImageView fitHeight="457.0" fitWidth="630.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/TeacherHomePhoto.png" />
+                  <Image url="@../../images/TeacherHomePhoto.png" />
                </image>
             </ImageView>
          </children>
