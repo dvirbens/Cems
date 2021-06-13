@@ -57,10 +57,8 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
 /**
- * Server class that's handle server-client communication
- * 
- * @author Arikz ,Dvir ben simon
- *
+ * The Server class handle all the server-client communication
+ * and transfer the data to the DatabaseController for saving in DB
  */
 public class Server extends AbstractServer {
 
@@ -76,25 +74,23 @@ public class Server extends AbstractServer {
 	 */
 	private DatabaseController databaseController;
 
-	/**
-	 * Value that hold the user, use to login and and open appropriate menu
-	 */
+	/** Value that hold the user, use to login and and open appropriate menu */
 	private static SubjectCourseCollection subjectCourseCollection;
 
+	/** Map for exams in process */
 	private static Map<String, ExamProcess> examsInProcess;
 
+	/** Map for exam time extensions */
 	private static Map<String, List<ExamExtension>> examsExtensions;
 
+	/** map for students in exam */
 	private static Map<String, List<StudentInExam>> studentInExam;
 
-	/**
-	 * Indicate if the server is connected
-	 */
+	/** Indicate if the server is connected */
 	private static boolean isConnected = false;
 
 	/**
 	 * Creating new server connection with port given by constructor
-	 * 
 	 * @param port number
 	 */
 	public Server(int port) {
@@ -691,9 +687,7 @@ public class Server extends AbstractServer {
 		serverListener.changeButtonStatus(isConnected);
 	}
 
-	/**
-	 * Print to log when new client is entered the server.
-	 */
+	/** Print to log when new client is entered the server. */
 	protected void clientConnected(ConnectionToClient client) {
 		serverListener.printToLog("New client connection, ip address: " + client.getInetAddress());
 
@@ -760,42 +754,75 @@ public class Server extends AbstractServer {
 		}
 	}
 
+	/**
+	 * @return if the server is connected
+	 */
 	public static boolean isConnected() {
 		return isConnected;
 	}
 
+	/** The method print to the log the client disconnected */
 	synchronized protected void clientDisconnected(ConnectionToClient client) {
 		serverListener.printToLog("client ip address: " + client.getInetAddress() + "has disconnected from the server");
 	}
 
+	/**
+	 * @return SubjectCourse object
+	 */
 	public static SubjectCourseCollection getSubjectCollection() {
 		return subjectCourseCollection;
 	}
 
+	/**
+	 * set SubjectCourse object
+	 * @param subjectCourseCollection
+	 */
 	public static void setSubjectCollection(SubjectCourseCollection subjectCourseCollection) {
 		Server.subjectCourseCollection = subjectCourseCollection;
 	}
 
+	/**
+	 * @return exams in process map
+	 */
 	public static Map<String, ExamProcess> getExamsInProcess() {
 		return examsInProcess;
 	}
 
+	/**
+	 * set exams in process map
+	 * @param examsInProcess map code to ExamProcess list
+	 */
 	public static void setExamsInProcess(Map<String, ExamProcess> examsInProcess) {
 		Server.examsInProcess = examsInProcess;
 	}
 
+	/**
+	 * @return exam time extensions map
+	 */
 	public static Map<String, List<ExamExtension>> getExamsExtensions() {
 		return examsExtensions;
 	}
 
+	/**
+	 * set exam time extensions map
+	 * @param examsExtensions map code to ExamExtension list
+	 */
 	public static void setExamsExtensions(Map<String, List<ExamExtension>> examsExtensions) {
 		Server.examsExtensions = examsExtensions;
 	}
 
+	
+	/**
+	 * @return students in exam map
+	 */
 	public static Map<String, List<StudentInExam>> getStudentInExam() {
 		return studentInExam;
 	}
 
+	/**
+	 * set students in exam map
+	 * @param studentInExam map code to StudentInExam list
+	 */
 	public static void setStudentInExam(Map<String, List<StudentInExam>> studentInExam) {
 		Server.studentInExam = studentInExam;
 	}
