@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
+/**
+ * "Administrator" user login screen.
+ */
 public class PrincipalHomePageController implements Initializable{
 	
 

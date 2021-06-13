@@ -12,6 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Sidebar for navigation for "Administrator" user
+ *
+ */
 public class PrincipalMenuController implements Initializable {
 
 	@FXML
