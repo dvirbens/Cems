@@ -18,7 +18,7 @@
             <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
-      <TextArea fx:id="taInstructions" layoutX="90.0" layoutY="133.0" prefHeight="87.0" prefWidth="547.0" text="Please enter your ID  and the exam code you have given by your &#10;teacher and then click on the desired exam type.">
+      <TextArea fx:id="taInstructions" editable="false" layoutX="90.0" layoutY="133.0" prefHeight="87.0" prefWidth="547.0" text="Please enter your ID  and the exam code you have given by your &#10;teacher and then click on the desired exam type.">
          <font>
             <Font size="18.0" />
          </font>

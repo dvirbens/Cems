@@ -82,7 +82,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <JFXTextArea fx:id="statisticNavigation" layoutX="145.0" layoutY="701.0" prefHeight="36.0" prefWidth="466.0" />
+      <JFXTextArea fx:id="statisticNavigation" editable="false" layoutX="145.0" layoutY="701.0" prefHeight="36.0" prefWidth="466.0" />
       <Text fontSmoothingType="LCD" layoutX="122.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="choose your selection:" textAlignment="CENTER" wrappingWidth="134.16666382923722">
          <font>
             <Font name="System Italic" size="12.0" />
