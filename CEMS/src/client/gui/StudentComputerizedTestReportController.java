@@ -30,6 +30,12 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import models.ComputerizedTestReport;
 
+
+/**
+ * This class is used as controller for student computerized test report screen.
+ * The screen show the details of the selected test from the previous screen:
+ * Show selected answer with the correct one, points, teacher comment and final grade.
+ */
 public class StudentComputerizedTestReportController implements Initializable {
 
 	@FXML
@@ -114,6 +120,14 @@ public class StudentComputerizedTestReportController implements Initializable {
 	public StudentComputerizedTestReportController() {
 	}
 
+	/**
+	 * Constructor for StudentComputerizedTestReportController class
+	 * @param exam
+	 * @param subject
+	 * @param course
+	 * @param grade
+	 * @param comment
+	 */
 	public StudentComputerizedTestReportController(List<ComputerizedTestReport> exam, String subject, String course,
 			String grade, String comment) {
 		StudentComputerizedTestReportController.exam = exam;
@@ -123,6 +137,11 @@ public class StudentComputerizedTestReportController implements Initializable {
 		StudentComputerizedTestReportController.comment = comment;
 	}
 
+	
+	
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane studentComputerizedTestReport = (Pane) FXMLLoader
@@ -134,6 +153,10 @@ public class StudentComputerizedTestReportController implements Initializable {
 
 	}
 
+	
+	/**
+	 * This method load the table and set the data
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -184,6 +207,9 @@ public class StudentComputerizedTestReportController implements Initializable {
 
 	}
 
+	/**
+	 * This method set the labels
+	 */
 	public void set_labels() {
 		lbl_Subject.setText(subject);
 		lbl_Course.setText(course);
@@ -191,6 +217,10 @@ public class StudentComputerizedTestReportController implements Initializable {
 		tfComment.setText(comment);
 	}
 
+	/**
+	 * Method for back button: set the previous screen(ExecutedExams)
+	 * @param event
+	 */
 	@FXML
 	void onClickBack(ActionEvent event) {
 		MainGuiController.getMenuHandler().setExecutedExamsScreen();
