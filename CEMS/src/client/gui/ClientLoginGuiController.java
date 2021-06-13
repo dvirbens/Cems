@@ -23,8 +23,6 @@ import javafx.stage.Stage;
  * the user enter the main application displaying main graphic user interface,
  * and store the new client on client controller.
  * 
- * @author Arikz ,Dvir ben simon
- *
  */
 public class ClientLoginGuiController implements Initializable {
 
@@ -78,9 +76,7 @@ public class ClientLoginGuiController implements Initializable {
 
 	}
 
-	/**
-	 * Setting default port to "5555"
-	 */
+	/** Setting default port to "5555" */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfPort.setText("5555");

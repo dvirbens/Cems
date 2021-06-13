@@ -31,6 +31,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamProcess;
 
+/**
+ * ComputerizedExamController class handle the start computerized exam screen of the teacher.
+ * It shows table of the exams ready to start and allow the teacher to choose the code of 
+ * the exam.
+ */
 public class ComputerizedExamController implements Initializable {
 
 	@FXML
@@ -87,6 +92,10 @@ public class ComputerizedExamController implements Initializable {
 	@FXML
 	private Label masgeLabel;
 
+	/**
+	 * Method for select subject
+	 * @param event
+	 */
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
 		String subjectSelected = cbExamSubject.getSelectionModel().getSelectedItem();
@@ -103,6 +112,11 @@ public class ComputerizedExamController implements Initializable {
 
 	}
 
+	/**
+	 * Method that create the details buttons for each row
+	 * @param exams
+	 * @return list of Exam objects with buttons
+	 */
 	private List<Exam> setExamQuestioListButtons(List<Exam> exams) {
 
 		for (Exam exam : exams) {
@@ -125,6 +139,10 @@ public class ComputerizedExamController implements Initializable {
 		return exams;
 	}
 
+	/**
+	 * Method for exam course selection
+	 * @param event
+	 */
 	@FXML
 	void onClickExamCourse(ActionEvent event) {
 		String courseSlected = cbExamCourse.getSelectionModel().getSelectedItem();
@@ -139,6 +157,11 @@ public class ComputerizedExamController implements Initializable {
 
 	}
 
+	
+	/**
+	 * Method for start button
+	 * @param event
+	 */
 	@FXML
 	void onClickStartComputerized(ActionEvent event) {
 		String code = tfCodeComputerized.getText();
