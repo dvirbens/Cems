@@ -466,12 +466,13 @@ public class ExecuteComputerizedExamController implements Initializable {
 								StudentMenuController.setClosed(false);
 								return;
 							}
-
+							
 							if (timeExtension == -1) {
 								setFreezePopup();
 								shutdown = true;
 								timer.cancel();
 								Client.setTimeExtension(0);
+								StudentMenuController.setLocked(false);
 								StudentMenuController.setClosed(true);
 								return;
 							} else if (timeExtension != 0) {
