@@ -10,6 +10,10 @@ import models.ComputerizedTestReport;
 import models.Exam;
 import models.ExecutedExam;
 
+/**
+ * The MenuHandler class handle the JavaFX load of screens and set the screen according to the function.
+ *
+ */
 public class MenuHandler {
 
 	private BorderPane mainFrame;
