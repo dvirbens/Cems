@@ -10,8 +10,6 @@ import javafx.stage.Stage;
  * Main user interface class that's starting the client application, and all of
  * the graphic user interface component.
  * 
- * @author Arikz ,Dvir ben simon
- *A
  */
 public class ClientUI extends Application {
 
@@ -19,6 +17,7 @@ public class ClientUI extends Application {
 	private static boolean serverStatus=false;
 
 	/**
+	 * launch JavaFX
 	 * @param args main arguments
 	 */
 	public static void main(String[] args) {
@@ -43,18 +42,32 @@ public class ClientUI extends Application {
 
 	}
 
+	/**
+	 * @return the client controller
+	 */
 	public static ClientController getClientController() {
 		return clientController;
 	}
 
+	/**
+	 * set the client controller
+	 * @param clientController
+	 */
 	public static void setClientController(ClientController clientController) {
 		ClientUI.clientController = clientController;
 	}
 
+	/**
+	 * @return server status
+	 */
 	public static boolean isServerStatus() {
 		return serverStatus;
 	}
 
+	/**
+	 * set server status
+	 * @param serverStatus
+	 */
 	public static void setServerStatus(boolean serverStatus) {
 		ClientUI.serverStatus = serverStatus;
 	}

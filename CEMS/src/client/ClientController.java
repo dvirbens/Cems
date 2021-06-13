@@ -3,11 +3,7 @@ package client;
 import java.io.IOException;
 
 /**
- * Class that's creating new client-server communication and handle all client
- * user interface requests.
- * 
-  * @author Arikz ,Dvir ben simon
- *
+ * The Client controller handle user interface requests.
  */
 public class ClientController {
 
@@ -36,6 +32,10 @@ public class ClientController {
 		client.handleMessageFromClientUI(msg);
 	}
 
+	
+	/**
+	 * @return the current client
+	 */
 	public Client getClient() {
 		return client;
 	}
