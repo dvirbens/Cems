@@ -57,11 +57,11 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
 /**
- * The Server class handle all the server-client communication
- * and transfer the data to the DatabaseController for saving in DB
+ * The Server class handle all the server-client communication and transfer the
+ * data to the DatabaseController for saving in DB
  * 
- *  * @author -------Group 9--------
- *	Arik Zagdon, Dvir ben simon, Aviel Turgeman, Shenhav Hezi, Yaakov Shitrit
+ * * @author -------Group 9-------- Arik Zagdon, Dvir ben simon, Aviel Turgeman,
+ * Shenhav Hezi, Yaakov Shitrit
  */
 public class Server extends AbstractServer {
 
@@ -94,6 +94,7 @@ public class Server extends AbstractServer {
 
 	/**
 	 * Creating new server connection with port given by constructor
+	 * 
 	 * @param port number
 	 */
 	public Server(int port) {
@@ -343,6 +344,16 @@ public class Server extends AbstractServer {
 		case CREATE_QUESTION:
 			Question question = (Question) modelWrapperFromClient.getElement();
 			databaseController.saveQuestion(question);
+			try {
+				client.sendToClient(modelWrapperFromClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
+		case EDIT_QUESTION:
+			Question editedQuestion = (Question) modelWrapperFromClient.getElement();
+			databaseController.updateQuestion(editedQuestion);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {
@@ -778,6 +789,7 @@ public class Server extends AbstractServer {
 
 	/**
 	 * set SubjectCourse object
+	 * 
 	 * @param subjectCourseCollection
 	 */
 	public static void setSubjectCollection(SubjectCourseCollection subjectCourseCollection) {
@@ -793,6 +805,7 @@ public class Server extends AbstractServer {
 
 	/**
 	 * set exams in process map
+	 * 
 	 * @param examsInProcess map code to ExamProcess list
 	 */
 	public static void setExamsInProcess(Map<String, ExamProcess> examsInProcess) {
@@ -808,13 +821,13 @@ public class Server extends AbstractServer {
 
 	/**
 	 * set exam time extensions map
+	 * 
 	 * @param examsExtensions map code to ExamExtension list
 	 */
 	public static void setExamsExtensions(Map<String, List<ExamExtension>> examsExtensions) {
 		Server.examsExtensions = examsExtensions;
 	}
 
-	
 	/**
 	 * @return students in exam map
 	 */
@@ -824,6 +837,7 @@ public class Server extends AbstractServer {
 
 	/**
 	 * set students in exam map
+	 * 
 	 * @param studentInExam map code to StudentInExam list
 	 */
 	public static void setStudentInExam(Map<String, List<StudentInExam>> studentInExam) {

@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class TeacherMenuController implements Initializable{
+public class TeacherMenuController implements Initializable {
 	//
 
 	@FXML
@@ -32,15 +32,12 @@ public class TeacherMenuController implements Initializable{
 
 	@FXML
 	private JFXButton btnLogout;
-	
-	
-    @FXML
-    private Label labelWelcome;
-    
-    
+
+	@FXML
+	private Label labelWelcome;
 
 	enum Buttons {
-		CREATE_EXAM, CREATE_QUESTION, EXAM_STATISTIC, START_EXAM, GRADE_APPROVAL
+		CREATE_EXAM, QUESTION_MANAGEMENT, EXAM_STATISTIC, START_EXAM, GRADE_APPROVAL
 	}
 
 	@FXML
@@ -52,8 +49,8 @@ public class TeacherMenuController implements Initializable{
 
 	@FXML
 	void onClickCreateQuestion(ActionEvent event) {
-		paintSelectedButton(Buttons.CREATE_QUESTION);
-		MainGuiController.getMenuHandler().setCreateQuestionScreen();
+		paintSelectedButton(Buttons.QUESTION_MANAGEMENT);
+		MainGuiController.getMenuHandler().setQuestionManagementScreen();
 	}
 
 	@FXML
@@ -90,7 +87,7 @@ public class TeacherMenuController implements Initializable{
 			btnGradeApproval.setStyle("-fx-background-color:#333333");
 			break;
 
-		case CREATE_QUESTION:
+		case QUESTION_MANAGEMENT:
 			btnCreateExam.setStyle("-fx-background-color:#333333");
 			btnCreateQuestion.setStyle("-fx-background-color:#48a832");
 			btnStartExam.setStyle("-fx-background-color:#333333");
@@ -123,20 +120,18 @@ public class TeacherMenuController implements Initializable{
 			break;
 		}
 	}
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String name = Client.getUser().getFirstName()+" "+Client.getUser().getLastName();
-		String LabelPrint="Welcome, "+name;
+		String name = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+		String LabelPrint = "Welcome, " + name;
 		labelWelcome.setText(LabelPrint);
 
-	
 	}
-	
-    @FXML
-    void OnclickLogo(MouseEvent event) {
-    	MainGuiController.getMenuHandler().setTeacherMenu();
-    }
+
+	@FXML
+	void OnclickLogo(MouseEvent event) {
+		MainGuiController.getMenuHandler().setTeacherMenu();
+	}
 
 }

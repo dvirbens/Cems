@@ -1070,6 +1070,7 @@ public class DatabaseController {
 
 	/**
 	 * This method update the approved column on list of executed exams
+	 * 
 	 * @param approvedStudents students list to approve
 	 * @return true on success else false
 	 */
@@ -1097,7 +1098,8 @@ public class DatabaseController {
 	}
 
 	/**
-	 * This method update statistic data in the exam row in the DB 
+	 * This method update statistic data in the exam row in the DB
+	 * 
 	 * @param executedExam The exam object
 	 */
 	public void updateStatistic(ExecutedExam executedExam) {
@@ -1119,8 +1121,9 @@ public class DatabaseController {
 
 	/**
 	 * This method insert student exam answers into the DB
+	 * 
 	 * @param studentList The list of students in the exam
-	 * @param code The code of the exam
+	 * @param code        The code of the exam
 	 * @return true on success else false
 	 */
 	public boolean insertStudentAnswers(List<StudentInExam> studentList, String code) {
@@ -1159,9 +1162,10 @@ public class DatabaseController {
 
 	/**
 	 * This method get specific exam questions answers of student
+	 * 
 	 * @param studentID The ID of the student
-	 * @param examID The exam id of the exam
-	 * @param date The date the exam occurred on
+	 * @param examID    The exam id of the exam
+	 * @param date      The date the exam occurred on
 	 * @return selected answers of student exam
 	 */
 	public String getSelectedAnswers(String studentID, String examID, String date) {
@@ -1182,6 +1186,30 @@ public class DatabaseController {
 		}
 
 		return selectedAnswers;
+	}
+
+	/*
+	 * questionID varchar(255), Subject varchar(255), Details varchar(255), Answer1
+	 * varchar(255), Answer2 varchar(255), Answer3 varchar(255), Answer4
+	 * varchar(255), CorrectAnswer int, TeacherName varchar(255), PRIMARY
+	 * KEY(questionID)
+	 */
+
+	public void updateQuestion(Question editedQuestion) {
+		String query = "UPDATE Question SET Details = ? , Answer1 = ? , Answer2 = ? , Answer3 = ? , Answer4 = ? , CorrectAnswer = ? WHERE questionID = ?;";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, editedQuestion.getDetails());
+			stmt.setString(2, editedQuestion.getAnswer1());
+			stmt.setString(3, editedQuestion.getAnswer2());
+			stmt.setString(4, editedQuestion.getAnswer3());
+			stmt.setString(5, editedQuestion.getAnswer4());
+			stmt.setInt(6, editedQuestion.getCorrectAnswer());
+			stmt.setString(7, editedQuestion.getQuestionID());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

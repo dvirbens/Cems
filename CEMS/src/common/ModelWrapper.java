@@ -18,7 +18,9 @@ public class ModelWrapper<E> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** Store class model element, in order to transfer it via client/server */
 	private E element;
-	/** Store list of class model element, in order to transfer it via client/server */
+	/**
+	 * Store list of class model element, in order to transfer it via client/server
+	 */
 	private List<E> elements;
 	/** Store elements array of type E */
 	private E[] elements2;
@@ -38,7 +40,7 @@ public class ModelWrapper<E> implements Serializable {
 		STUDENT_TIME_EXTENSION, INSERT_FINISHED_STUDENT, GET_EXECUTED_EXAM_LIST_BY_EXECUTOR, GET_EXAM_IN_PROCESS,
 		GET_EXECUTED_EXAM_STUDENT_LIST, SAVE_APPROVED_STUDENTS, UPDATE_EXAM_STATISTIC, GET_QUESTION_LIST_BY_CODE,
 		GET_EXAM_BY_CODE, SUCCESSFUL_INSERT_CHECK, ERROR_STUDENT_ALREADY_IN_EXAM, ERROR_EXAM_NOT_EXIST,
-		CHECK_CODE_BEFORE_INSERTION, GET_EXTENSION_REQUESTS, EXTENSION_CONFIRM, GET_SELECTED_ANSWERS,
+		CHECK_CODE_BEFORE_INSERTION, GET_EXTENSION_REQUESTS, EXTENSION_CONFIRM, GET_SELECTED_ANSWERS, EDIT_QUESTION
 	};
 
 	/**
@@ -78,6 +80,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * Constructor of the class ModelWrapper with list and array
+	 * 
 	 * @param elements1 list of E elements
 	 * @param elements2 array of E elements
 	 * @param operation operation that need to be executed
@@ -91,6 +94,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * Constructor of the class ModelWrapper with WordFile and E element
+	 * 
 	 * @param elements1 WordFile file
 	 * @param elements2 E element
 	 * @param operation operation that need to be executed
@@ -111,6 +115,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * set the element
+	 * 
 	 * @param element
 	 */
 	public void setElement(E element) {
@@ -126,6 +131,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * set the operation
+	 * 
 	 * @param operation
 	 */
 	public void setOperation(Operation operation) {
@@ -148,6 +154,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * set list of E elements
+	 * 
 	 * @param elements
 	 */
 	public void setElements(List<E> elements) {
@@ -163,6 +170,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * set Array of E elements
+	 * 
 	 * @param elements2
 	 */
 	public void setElements2(E[] elements2) {
@@ -178,6 +186,7 @@ public class ModelWrapper<E> implements Serializable {
 
 	/**
 	 * set WordFile file
+	 * 
 	 * @param file
 	 */
 	public void setFile(WordFile file) {

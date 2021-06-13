@@ -27,7 +27,7 @@
 						</ImageView>
 					</graphic>
 				</JFXButton>
-				<JFXButton fx:id="btnCreateQuestion" onAction="#onClickCreateQuestion" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Question" textFill="WHITE">
+				<JFXButton fx:id="btnCreateQuestion" onAction="#onClickCreateQuestion" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Question Management" textFill="WHITE">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
 							<image>

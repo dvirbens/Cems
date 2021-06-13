@@ -17,13 +17,13 @@ import ocsf.client.AbstractClient;
 
 //
 /**
- * The Client class handle requests from the user and send to the server and vice versa.
- * Each request operation is classified by the Model Wrapper.
- * In addition, this class hold the returned data from the server in variables.
+ * The Client class handle requests from the user and send to the server and
+ * vice versa. Each request operation is classified by the Model Wrapper. In
+ * addition, this class hold the returned data from the server in variables.
  * 
- * @author -------Group 9--------
- *	Arik Zagdon, Dvir ben simon, Aviel Turgeman, Shenhav Hezi, Yaakov Shitrit
-			
+ * @author -------Group 9-------- Arik Zagdon, Dvir ben simon, Aviel Turgeman,
+ *         Shenhav Hezi, Yaakov Shitrit
+ * 
  */
 public class Client extends AbstractClient {
 
@@ -36,12 +36,14 @@ public class Client extends AbstractClient {
 	/** hold the student selected answers of specific test */
 	private static String SelectedAnswers;
 
-	/** Value that hold the list of test that will be shown on table user interface. */
+	/**
+	 * Value that hold the list of test that will be shown on table user interface.
+	 */
 	private static List<Exam> exams;
-	
+
 	/** Value that hold the list of executed tests. */
 	private static List<ExecutedExam> execExams;
-	
+
 	/** value that hold the list of student executed exams. */
 	private static List<StudentExecutedExam> executedExamStudentList;
 
@@ -50,11 +52,12 @@ public class Client extends AbstractClient {
 
 	/** value that hold last exam code */
 	private static String examCode;
-	
+
 	/** value that hold current executing exam */
 	private static Exam exam;
 
-	/** Value that hold the list of question that will be shown on table user
+	/**
+	 * Value that hold the list of question that will be shown on table user
 	 * interface.
 	 */
 	private static List<Question> questions;
@@ -70,7 +73,7 @@ public class Client extends AbstractClient {
 
 	/** Value that hold the test the will be shown on editTest user interface. */
 	private static Exam editTest;
-	
+
 	/** Value that hold the messages server side sent. */
 	private static String serverMessages;
 
@@ -155,6 +158,10 @@ public class Client extends AbstractClient {
 
 			case CREATE_QUESTION:
 				setServerMessages("Question has been saved suucessfully");
+				break;
+
+			case EDIT_QUESTION:
+				setServerMessages("Question has been updated suucessfully");
 				break;
 
 			case EXAM_EXECUTE:
@@ -321,9 +328,9 @@ public class Client extends AbstractClient {
 		return exams;
 	}
 
-	
 	/**
 	 * get exam list and set it
+	 * 
 	 * @param exams
 	 */
 	public static void setExams(List<Exam> exams) {
@@ -339,6 +346,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set current editing exam
+	 * 
 	 * @param editTest
 	 */
 	public static void setEditTest(Exam editTest) {
@@ -354,13 +362,13 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set current user
+	 * 
 	 * @param user
 	 */
 	public static void setUser(User user) {
 		Client.user = user;
 	}
 
-	
 	/**
 	 * @return current server message
 	 */
@@ -370,6 +378,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set current server message
+	 * 
 	 * @param serverMessages
 	 */
 	public static void setServerMessages(String serverMessages) {
@@ -385,6 +394,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set subject and course list
+	 * 
 	 * @param subjectCollection
 	 */
 	public static void setSubjectCollection(SubjectCourseCollection subjectCollection) {
@@ -398,16 +408,15 @@ public class Client extends AbstractClient {
 		return questions;
 	}
 
-	
 	/**
 	 * set question list by subject
+	 * 
 	 * @param questions
 	 */
 	public static void setQuestions(List<Question> questions) {
 		Client.questions = questions;
 	}
 
-	
 	/**
 	 * @return list of exectued exams
 	 */
@@ -415,9 +424,9 @@ public class Client extends AbstractClient {
 		return execExams;
 	}
 
-	
 	/**
 	 * set list of exectued exams
+	 * 
 	 * @param execExams
 	 */
 	public static void setExecExams(List<ExecutedExam> execExams) {
@@ -433,6 +442,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set current exam id
+	 * 
 	 * @param examID
 	 */
 	public static void setExamID(String examID) {
@@ -448,6 +458,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set current exam code
+	 * 
 	 * @param examCode
 	 */
 	public static void setExamCode(String examCode) {
@@ -461,16 +472,15 @@ public class Client extends AbstractClient {
 		return exam;
 	}
 
-	
 	/**
 	 * set the requested exam
+	 * 
 	 * @param exam
 	 */
 	public static void setExam(Exam exam) {
 		Client.exam = exam;
 	}
 
-	
 	/**
 	 * @return time extension of current exam
 	 */
@@ -480,13 +490,13 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set time extension of current exam
+	 * 
 	 * @param timeExtension
 	 */
 	public static void setTimeExtension(long timeExtension) {
 		Client.timeExtension = timeExtension;
 	}
 
-	
 	/**
 	 * @return the requested question list
 	 */
@@ -494,16 +504,15 @@ public class Client extends AbstractClient {
 		return examQuestions;
 	}
 
-	
 	/**
 	 * set the requested question list
+	 * 
 	 * @param examQuestions
 	 */
 	public static void setExamQuestions(List<ExamQuestion> examQuestions) {
 		Client.examQuestions = examQuestions;
 	}
 
-	
 	/**
 	 * @return the requested exam process
 	 */
@@ -511,7 +520,6 @@ public class Client extends AbstractClient {
 		return examProcess;
 	}
 
-	
 	/**
 	 * @return the list of exams with time extension
 	 */
@@ -519,25 +527,23 @@ public class Client extends AbstractClient {
 		return examExtensions;
 	}
 
-	
 	/**
 	 * set the list of exams with time extension
+	 * 
 	 * @param examExtensions
 	 */
 	public static void setExamExtensions(List<ExamExtension> examExtensions) {
 		Client.examExtensions = examExtensions;
 	}
 
-	
 	/**
 	 * set the requested exam process
+	 * 
 	 * @param examProcess
 	 */
 	public static void setExamProcess(ExamProcess examProcess) {
 		Client.examProcess = examProcess;
 	}
-	
-	
 
 	/**
 	 * @return list of exectued exams by request
@@ -548,6 +554,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set list of exectued exams by request
+	 * 
 	 * @param executedExamStudentList
 	 */
 	public static void setExecutedExamStudentList(List<StudentExecutedExam> executedExamStudentList) {
@@ -563,6 +570,7 @@ public class Client extends AbstractClient {
 
 	/**
 	 * set selected answers by student of specific exam
+	 * 
 	 * @param selectedAnswers
 	 */
 	public static void setSelectedAnswers(String selectedAnswers) {

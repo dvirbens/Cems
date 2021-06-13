@@ -242,4 +242,22 @@ public class MenuHandler {
 		this.mainFrame = mainFrame;
 	}
 
+	public void setEditQuestionScreen() {
+		try {
+			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("EditQuestion.fxml"));
+			mainFrame.setCenter(enterExamPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void setQuestionManagementScreen() {
+		try {
+			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("QuestionManagement.fxml"));
+			mainFrame.setCenter(enterExamPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
