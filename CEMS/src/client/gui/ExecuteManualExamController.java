@@ -20,6 +20,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import com.jfoenix.controls.JFXButton;
+
 import client.Client;
 import client.ClientUI;
 import common.ModelWrapper;
@@ -28,7 +30,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -53,13 +54,13 @@ import models.WordFile;
 public class ExecuteManualExamController implements Initializable {
 
 	@FXML
-	private Button btDownload;
+	private JFXButton btDownload;
 
 	@FXML
-	private Button btUpload;
+	private JFXButton btUpload;
 
 	@FXML
-	private Button btChooseFile;
+	private JFXButton btChooseFile;
 
 	@FXML
 	private Label lbTitle;

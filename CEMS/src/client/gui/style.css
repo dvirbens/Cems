@@ -73,3 +73,15 @@
 	-fx-background-color: #333333;
 }
 
+
+.text-field{
+    -fx-focus-color: #24aa2e;
+
+}
+
+
+.text-area{
+	 -fx-focus-color: #24aa2e;
+	
+}
+

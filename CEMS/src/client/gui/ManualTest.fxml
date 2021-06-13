@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -9,24 +9,12 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ExecuteManualExamController">
    <children>
-      <Button fx:id="btDownload" layoutX="318.0" layoutY="319.0" mnemonicParsing="false" onAction="#onDownloadClick" prefHeight="53.0" prefWidth="118.0" style="-fx-background-radius: 10;" text="Download">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-      <Button fx:id="btUpload" layoutX="318.0" layoutY="469.0" mnemonicParsing="false" onAction="#onUploadClick" prefHeight="53.0" prefWidth="118.0" style="-fx-background-radius: 10;" text="Upload">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-      <Button fx:id="btChooseFile" layoutX="318.0" layoutY="395.0" mnemonicParsing="false" onAction="#onChooseFileClick" prefHeight="53.0" prefWidth="118.0" style="-fx-background-radius: 10;" text="Choose File">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
       <Label fx:id="lbTitle" layoutX="305.0" layoutY="49.0" prefHeight="53.0" prefWidth="168.0" text="Manual Test">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="taInstructions" layoutX="153.0" layoutY="230.0" prefHeight="72.0" prefWidth="436.0" text="Download the test, write your solutions on the file&#10;and when you finish upload the file.">
+      <TextArea fx:id="taInstructions" layoutX="153.0" layoutY="148.0" prefHeight="154.0" prefWidth="436.0" text="Download the test, write your solutions on the file&#10;and when you finish upload the file.&#10;&#10;*the file will be downloaded to your desktop ">
          <font>
             <Font size="18.0" />
          </font>
@@ -36,5 +24,8 @@
          <font>
             <Font size="36.0" />
          </font></Label>
+      <JFXButton fx:id="btDownload" layoutX="310.0" layoutY="320.0" onAction="#onDownloadClick" prefHeight="53.0" prefWidth="135.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Download" textFill="WHITE" />
+      <JFXButton fx:id="btChooseFile" layoutX="310.0" layoutY="398.0" onAction="#onChooseFileClick" prefHeight="53.0" prefWidth="135.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Choose File" textFill="WHITE" />
+      <JFXButton fx:id="btUpload" layoutX="310.0" layoutY="476.0" onAction="#onUploadClick" prefHeight="53.0" prefWidth="135.0" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Upload" textFill="WHITE" />
    </children>
 </Pane>
