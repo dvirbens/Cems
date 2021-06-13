@@ -20,7 +20,7 @@
          </font>
       </TextArea>
       <TextField fx:id="tfFileName" layoutX="454.0" layoutY="409.0" />
-      <Label fx:id="timeLabel" layoutX="345.0" layoutY="78.0" prefHeight="53.0" prefWidth="65.0">
+      <Label fx:id="timeLabel" layoutX="345.0" layoutY="78.0">
          <font>
             <Font size="36.0" />
          </font></Label>

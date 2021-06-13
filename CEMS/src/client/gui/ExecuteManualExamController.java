@@ -20,6 +20,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JFileChooser;
+
 import com.jfoenix.controls.JFXButton;
 
 import client.Client;
