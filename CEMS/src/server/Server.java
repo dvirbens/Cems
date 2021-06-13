@@ -59,6 +59,9 @@ import ocsf.server.ConnectionToClient;
 /**
  * The Server class handle all the server-client communication
  * and transfer the data to the DatabaseController for saving in DB
+ * 
+ *  * @author -------Group 9--------
+ *	Arik Zagdon, Dvir ben simon, Aviel Turgeman, Shenhav Hezi, Yaakov Shitrit
  */
 public class Server extends AbstractServer {
 
