@@ -437,15 +437,11 @@ public class ExecuteComputerizedExamController implements Initializable {
 								shutdown = true;
 								timer.cancel();
 								Client.setTimeExtension(0);
+								StudentMenuController.setClosed(true);
 								return;
 							} else if (timeExtension != 0) {
 								min += (int) timeExtension;
-								Platform.runLater(new Runnable() {
-									@Override
-									public void run() {
-										lblTimeExtension.setText("*Time extended by " + timeExtension);
-									}
-								});
+								lblTimeExtension.setText("*Time extended by " + timeExtension);
 								Client.setTimeExtension(0);
 							}
 
@@ -455,6 +451,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 								timer.cancel();
 								shutdown = true;
 								MainGuiController.getMenuHandler().setMainScreen();
+								StudentMenuController.setClosed(true);
 
 							} else if (sec == 0) {
 								min--;

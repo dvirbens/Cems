@@ -1127,10 +1127,7 @@ public class DatabaseController {
 							stringBuilder.append(student.getSolution()[i]);
 						}
 						prepareStatement.setString(4, stringBuilder.toString());
-						int resultSet = prepareStatement.executeUpdate();
-						if (resultSet == 1) {
-							System.out.print(student.getStudentID() + " Answers Saved Succuessfully");
-						}
+						prepareStatement.executeUpdate();
 					}
 				}
 
@@ -1142,6 +1139,7 @@ public class DatabaseController {
 
 			return true;
 		}
+
 		return false;
 	}
 

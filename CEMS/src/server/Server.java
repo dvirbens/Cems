@@ -469,23 +469,18 @@ public class Server extends AbstractServer {
 
 			if (examsInProcess.containsKey(code)) {
 				List<StudentInExam> temp = studentInExam.get(code);
-				System.out.println("HEY3");
 
 				if (temp == null) {
 					temp = new ArrayList<>();
 				}
-				System.out.println("HEY4");
 
 				newStudent.setClient(client);
 				temp.add(newStudent);
 				studentInExam.put(code, temp);
-				System.out.println("HEY5");
 
 				examProcessTemp = examsInProcess.get(code);
 
-				System.out.println("HEY6");
 				databaseController.insertToExecutedExamByStudent(studentID, examProcessTemp);
-				System.out.println("HEY7");
 
 				teacherClient = examProcessTemp.getTeacherClient();
 				examProcessTemp.setTeacherClient(null);
