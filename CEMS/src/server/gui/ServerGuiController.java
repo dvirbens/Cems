@@ -27,8 +27,6 @@ import server.ServerEventListener;
  * the user start new server by enter correct server and database details, this
  * class handle creating new server instance that's listening for clients
  * requests. every event that occurred on server displayed on server log.
- * 
- * @author Arikz ,Dvir ben simon
  *
  */
 public class ServerGuiController implements Initializable, ServerEventListener {
@@ -57,9 +55,7 @@ public class ServerGuiController implements Initializable, ServerEventListener {
 	@FXML
 	private TextArea taLogs;
 
-	/**
-	 * Server instance for client-server communication
-	 */
+	/** Server instance for client-server communication */
 	private Server server;
 
 	/**

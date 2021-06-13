@@ -10,12 +10,11 @@ import server.gui.ServerGuiController;
  * Main user interface class that's starting the server application, and all of
  * the graphic user interface component.
  * 
- * @author Arikz ,Dvir ben simon
- *
  */
 public class ServerUI extends Application {
 
 	/**
+	 * launch JavaFX
 	 * @param args main arguments
 	 */
 	public static void main(String[] args) {
