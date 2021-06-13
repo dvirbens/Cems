@@ -10,31 +10,21 @@ import models.WordFile;
  * transfers between client and server available and indicate which operation
  * has been made.
  * 
- * @author Arikz ,Dvir ben simon
- *
  * @param <E> can be any class model in project {Test,Question,Teacher,...etc}
  */
 public class ModelWrapper<E> implements Serializable {
 
-	/**
-	 * 
-	 */
+	/** Serial version */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * Store class model element, in order to transfer it via client/server
-	 */
+	/** Store class model element, in order to transfer it via client/server */
 	private E element;
-	/**
-	 * Store list of class model element, in order to transfer it via client/server
-	 */
+	/** Store list of class model element, in order to transfer it via client/server */
 	private List<E> elements;
-
+	/** Store elements array of type E */
 	private E[] elements2;
-
+	/** Store WordFile file */
 	private WordFile file;
-	/**
-	 * Which operation should be executed in server/client
-	 */
+	/** Which operation should be executed in server/client */
 	private Operation operation;
 
 	public enum Operation {
@@ -86,6 +76,12 @@ public class ModelWrapper<E> implements Serializable {
 		this.operation = operation;
 	}
 
+	/**
+	 * Constructor of the class ModelWrapper with list and array
+	 * @param elements1 list of E elements
+	 * @param elements2 array of E elements
+	 * @param operation operation that need to be executed
+	 */
 	public ModelWrapper(List<E> elements1, E[] elements2, Operation operation) {
 		super();
 		this.elements = elements1;
@@ -93,6 +89,12 @@ public class ModelWrapper<E> implements Serializable {
 		this.operation = operation;
 	}
 
+	/**
+	 * Constructor of the class ModelWrapper with WordFile and E element
+	 * @param elements1 WordFile file
+	 * @param elements2 E element
+	 * @param operation operation that need to be executed
+	 */
 	public ModelWrapper(WordFile elements1, E elements2, Operation operation) {
 		super();
 		this.file = elements1;
@@ -100,53 +102,86 @@ public class ModelWrapper<E> implements Serializable {
 		this.operation = operation;
 	}
 
+	/**
+	 * @return the element transferred by the class
+	 */
 	public E getElement() {
 		return element;
 	}
 
+	/**
+	 * set the element
+	 * @param element
+	 */
 	public void setElement(E element) {
 		this.element = element;
 	}
 
+	/**
+	 * @return the operation transferred by the class
+	 */
 	public Operation getOperation() {
 		return operation;
 	}
 
+	/**
+	 * set the operation
+	 * @param operation
+	 */
 	public void setOperation(Operation operation) {
 		this.operation = operation;
 	}
 
+	/**
+	 * @return list of E elements
+	 */
 	public List<E> getElements() {
 		return elements;
 	}
 
+	/**
+	 * @return E element
+	 */
 	public E getAdditonalElement() {
 		return element;
 	}
 
+	/**
+	 * set list of E elements
+	 * @param elements
+	 */
 	public void setElements(List<E> elements) {
 		this.elements = elements;
 	}
 
+	/**
+	 * @return Array of E elements
+	 */
 	public E[] getElements2() {
 		return elements2;
 	}
 
+	/**
+	 * set Array of E elements
+	 * @param elements2
+	 */
 	public void setElements2(E[] elements2) {
 		this.elements2 = elements2;
 	}
 
+	/**
+	 * @return WordFile file
+	 */
 	public WordFile getFile() {
 		return file;
 	}
 
+	/**
+	 * set WordFile file
+	 * @param file
+	 */
 	public void setFile(WordFile file) {
 		this.file = file;
-	}
-
-	@Override
-	public String toString() {
-		return "ModelWrapper [element=" + element + ", elements=" + elements + ", operation=" + operation + "]";
 	}
 
 }
