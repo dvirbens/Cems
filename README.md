@@ -12,7 +12,7 @@ Computerized exam management system - simple as it's sounds.
   * View grades of all the executed exams.
   
    <p align="left">
-   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/StudnetHomePhoto.png" width="350" height="250" />
+   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/src/photos/StudnetHomePhoto.png" width="350" height="250" />
   
   ### Teacher
   * Create question.
@@ -23,9 +23,10 @@ Computerized exam management system - simple as it's sounds.
     * ask principal for time extension.
   * Review of the exams. 
   * Approve grades. 
+  * Get statistics.
   
    <p align="left">
-   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/TeacherHomePhoto.png" width="350" height="250" />
+   <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/src/photos/TeacherHomePhoto.png" width="350" height="250" />
   
   ### Principal
   * Access to the exams data.
@@ -34,7 +35,7 @@ Computerized exam management system - simple as it's sounds.
   * Get overall statistics.
      
   <p align="left">
-  <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/images/PrincapelHomePhoto.jpeg" width="350" height="250" />
+  <img src="https://github.com/arikz-tech/CEMS/blob/master/CEMS/src/photos/PrincapelHomePhoto.jpeg" height="250" />
 
 
 ## Dependencies
