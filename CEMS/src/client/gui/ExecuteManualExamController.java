@@ -39,10 +39,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import models.ExamProcess;
 import models.StudentExecutedExam;
+import models.StudentInExam;
 import models.WordFile;
 
 /**
- * FXML controller class for student executing manual test in javaFX graphic user interface.
+ * FXML controller class for student executing manual test in javaFX graphic
+ * user interface.
  * 
  * @author Shenhav, Aviel
  *
@@ -95,7 +97,7 @@ public class ExecuteManualExamController implements Initializable {
 		ExecuteManualExamController.code = code;
 	}
 
-	/*set manual test screen*/
+	/* set manual test screen */
 	public void start() {
 		try {
 			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
@@ -119,10 +121,14 @@ public class ExecuteManualExamController implements Initializable {
 
 		examProcess = Client.getExamProcess();
 
-		StudentExecutedExam newStudent = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(),
-				code, examProcess.getTeacherID());
-		ModelWrapper<StudentExecutedExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent,
-				INSERT_STUDENT_TO_EXAM);
+		String studentID = Client.getUser().getUserID();
+		String code = examProcess.getCode();
+		String[] solutions = new String[1];
+		solutions[0] = "9";
+
+		StudentInExam newStudent = new StudentInExam(studentID, code, "0", "0", solutions);
+
+		ModelWrapper<StudentInExam> modelWrapperInsertStudent = new ModelWrapper<>(newStudent, INSERT_STUDENT_TO_EXAM);
 
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperInsertStudent);
 
@@ -149,7 +155,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	/*Upload file on "upload" click */
+	/* Upload file on "upload" click */
 	@FXML
 	void onUploadClick(ActionEvent event) {
 		FileInputStream fileIn;
@@ -184,7 +190,7 @@ public class ExecuteManualExamController implements Initializable {
 		StudentMenuController.setLocked(false);
 	}
 
-	/*choose file from directory on "Choose" click*/
+	/* choose file from directory on "Choose" click */
 	@FXML
 	void onChooseFileClick(ActionEvent event) {
 		FileChooser fc = new FileChooser();
@@ -198,7 +204,7 @@ public class ExecuteManualExamController implements Initializable {
 		}
 	}
 
-	/*download exam file on "download" click*/
+	/* download exam file on "download" click */
 	@FXML
 	void onDownloadClick(ActionEvent event) {
 		btChooseFile.setVisible(true);
@@ -219,7 +225,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	/*Set a alert for a student within 2 minutes left into the exam*/
+	/* Set a alert for a student within 2 minutes left into the exam */
 	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
@@ -248,7 +254,7 @@ public class ExecuteManualExamController implements Initializable {
 		timerThread.start();
 	}
 
-	/*set an dialog for an exam that has been frozen by the teacher*/
+	/* set an dialog for an exam that has been frozen by the teacher */
 	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
@@ -271,7 +277,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	/*class that define a stop watch for a student into the exam */
+	/* class that define a stop watch for a student into the exam */
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
