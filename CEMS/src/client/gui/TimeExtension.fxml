@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane prefHeight="768.0" prefWidth="754.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.TimeExtentionController">
    <children>
@@ -16,5 +18,10 @@
             <TableColumn fx:id="tcConfirm" minWidth="0.0" prefWidth="161.0" style="-fx-alignment: center;" text="Confirm" />
          </columns>
       </TableView>
+      <Label layoutX="249.0" layoutY="31.0" text="Time Extention" textFill="#3d9a26">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

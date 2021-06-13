@@ -11,6 +11,7 @@ import common.ModelWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * FXML controller class for Enter an exam by the student in javaFX graphic user interface.
@@ -19,8 +20,11 @@ import javafx.scene.control.Label;
 
 public class StudentEnterExamController {
 
-	@FXML
-	private JFXTextField tfCode;
+    @FXML
+    private TextField tfUserID;
+
+    @FXML
+    private TextField tfCode;
 
 	@FXML
 	private JFXButton btComputerizedExam;
@@ -31,8 +35,6 @@ public class StudentEnterExamController {
 	@FXML
 	private Label lbl_Status;
 	
-    @FXML
-    private JFXTextField tfUserID;
 
 	/**
 	 * Set a manual exam screen if the code is correct.

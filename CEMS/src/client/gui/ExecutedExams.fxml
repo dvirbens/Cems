@@ -19,9 +19,9 @@
             <TableColumn fx:id="tcGetTest" prefWidth="137.0" style="-fx-alignment: center;" text="Get Test" />
         </columns>
       </TableView>
-      <Label fx:id="lbTitle" layoutX="275.0" layoutY="47.0" text="Executed Exams">
+      <Label fx:id="lbTitle" layoutX="243.0" layoutY="46.0" text="Executed Exams" textFill="#3d9a26">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
    </children>
