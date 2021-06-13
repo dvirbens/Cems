@@ -28,6 +28,11 @@ import javafx.scene.image.ImageView;
 import models.ComputerizedTestReport;
 import models.StudentExecutedExam;
 
+/**
+ * This class is used as controller for Executed Exams screen.
+ * The screen show the exectued exams by the student and his grades if the grade approved
+ * All the details are inserted into the table and showed to the client
+ */
 public class ExecutedExamsController implements Initializable {
 
 	@FXML
@@ -63,6 +68,10 @@ public class ExecutedExamsController implements Initializable {
 	@FXML
 	private TableColumn<StudentExecutedExam, JFXButton> tcGetTest;
 
+	/**
+	 * This method get the data and insert into the table
+	 * Also it creates the details buttons which include StudentComputerizedTestReportController instance 
+	 */
 	public void initialize(URL location, ResourceBundle resources) {
 
 		tcExamID.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("examID"));
@@ -87,6 +96,12 @@ public class ExecutedExamsController implements Initializable {
 
 	}
 
+	/**
+	 * This method creates the list to insert into the table.
+	 * It filters  the exams and return only the approved grades exams
+	 * @param executedExamStudentList list of executued exams by student
+	 * @return approved grades exams
+	 */
 	private List<StudentExecutedExam> addCopyButtons(List<StudentExecutedExam> executedExamStudentList) {
 		List<StudentExecutedExam> approvedStudentList = new ArrayList<>();
 		for (StudentExecutedExam studentExam : executedExamStudentList) {

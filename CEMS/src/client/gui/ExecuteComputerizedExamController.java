@@ -53,11 +53,11 @@ import models.ExamQuestion;
 import models.StudentInExam;
 
 /**
- * FXML controller class for student executing computerize test in javaFX
- * graphic user interface.
- * 
- * @author Shenhav, Aviel
- *
+ * This class is used as controller for Execute Computerized Test screen.
+ * The screen show the test to the student so he could answer the questions and in
+ * the end sumbit the test and get grade.
+ * The test is limited by time which showed on the screen.
+ * In addition, there is 2 min alert and locking of the menu while doing the exam.
  */
 
 public class ExecuteComputerizedExamController implements Initializable {
@@ -140,15 +140,21 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	private volatile boolean shutdown = false;
 
+
 	public ExecuteComputerizedExamController() {
 	}
 
+	/**
+	 * Constructor for ExecuteComputerizedExamController 
+	 */
 	public ExecuteComputerizedExamController(String code) {
 		ExecuteComputerizedExamController.code = code;
 
 	}
 
-	/* set computerize test screen */
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane computerizedTestPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedTest.fxml"));
@@ -158,6 +164,11 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
+	
+	/**
+	 * This method get the questions and the exam details and insert it into the table.
+	 * It also set the timer, toggle listener and table click function.
+	 */
 	public void initialize(URL location, ResourceBundle resources) {
 
 		StudentMenuController.setLocked(true);
@@ -264,7 +275,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/* Set the question information within row click from the table */
+	/**
+	 * Set the question information within row click from the table
+	 */
 	public void onRowClick() {
 		// check the table's selected item and get selected item
 		if (tvQuestions.getSelectionModel().getSelectedItem() != null) {
@@ -298,7 +311,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	/* Save the student answer */
+	/**
+	 * Save the student answer
+	 * @param event
+	 */
 	@FXML
 	public void onSaveClick(ActionEvent event) {
 		if (AnswersGroup.getSelectedToggle() != null) {
@@ -316,9 +332,11 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	/*
+	
+	/**
 	 * Calculate the student grade by adding the correct answers points for every
 	 * question
+	 * @param event
 	 */
 	@FXML
 	void onClickSubmit(ActionEvent event) {
@@ -347,7 +365,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/* Set a alert for a student within 2 minutes left into the exam */
+	/**
+	 * Set a alert for a student within 2 minutes left into the exam
+	 */
 	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
@@ -376,7 +396,9 @@ public class ExecuteComputerizedExamController implements Initializable {
 		timerThread.start();
 	}
 
-	/* set an dialog for an exam that has been frozen by the teacher */
+	/**
+	 * set an dialog for an exam that has been frozen by the teacher 
+	 */
 	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
@@ -399,19 +421,31 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-	/* class that define a stop watch for a student into the exam */
+
+	/**
+	 * class that define a stop watch for a student into the exam
+	 */
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
 		private Timer timer;
 		private Label label;
 
+		/**
+		 * Constructor for StudentStopwatch class
+		 * @param min
+		 * @param sec
+		 * @param label
+		 */
 		public StudentStopwatch(int min, int sec, Label label) {
 			this.min = min;
 			this.sec = sec;
 			this.label = label;
 		}
 
+		/**
+		 * Method for starting the timer thread
+		 */
 		public void startTime() {
 			int delay = 1000;
 			int period = 1000;
@@ -465,14 +499,23 @@ public class ExecuteComputerizedExamController implements Initializable {
 			}, delay, period);
 		}
 
+		/**
+		 * @return Timer minutes
+		 */
 		public int getMin() {
 			return min;
 		}
 
+		/**
+		 * @return Timer seconds
+		 */
 		public int getSec() {
 			return sec;
 		}
 
+		/**
+		 * Method for stopping the timer
+		 */
 		public void stopTime() {
 			timer.cancel();
 		}
