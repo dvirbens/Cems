@@ -33,10 +33,8 @@ import models.User.UserType;
 import models.WordFile;
 
 /**
- * Class that handles all of operation sent by client, database controller
- * communicate with server side, and send queries to SQL database.
- * 
- * @author Arikz ,Dvir ben simon
+ * The DatabaseController Class handle all the operations sent by client, it
+ * communicates with server side, and send queries to SQL database.
  *
  */
 public class DatabaseController {
@@ -1070,6 +1068,11 @@ public class DatabaseController {
 		}
 	}
 
+	/**
+	 * This method update the approved column on list of executed exams
+	 * @param approvedStudents students list to approve
+	 * @return true on success else false
+	 */
 	public boolean saveApprovedStudents(List<StudentExecutedExam> approvedStudents) {
 
 		String query = "UPDATE executedexambystudent SET Approved = ?, Grade = ? ,comment = ? WHERE studentID = ? AND examID = ? AND ExecDate= ?;";
@@ -1087,11 +1090,16 @@ public class DatabaseController {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 		return true;
 	}
 
+	/**
+	 * This method update statistic data in the exam row in the DB 
+	 * @param executedExam The exam object
+	 */
 	public void updateStatistic(ExecutedExam executedExam) {
 		String query = "UPDATE executedexam SET avg = ?, median = ? , Approved = ? WHERE examID = ? AND executeDate = ? AND executeTeacherID= ?;";
 		try {
@@ -1109,6 +1117,12 @@ public class DatabaseController {
 
 	}
 
+	/**
+	 * This method insert student exam answers into the DB
+	 * @param studentList The list of students in the exam
+	 * @param code The code of the exam
+	 * @return true on success else false
+	 */
 	public boolean insertStudentAnswers(List<StudentInExam> studentList, String code) {
 		if (studentList != null) {
 			PreparedStatement prepareStatement;
@@ -1143,6 +1157,13 @@ public class DatabaseController {
 		return false;
 	}
 
+	/**
+	 * This method get specific exam questions answers of student
+	 * @param studentID The ID of the student
+	 * @param examID The exam id of the exam
+	 * @param date The date the exam occurred on
+	 * @return selected answers of student exam
+	 */
 	public String getSelectedAnswers(String studentID, String examID, String date) {
 		String selectedAnswers = null;
 		try {
