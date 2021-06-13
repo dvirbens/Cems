@@ -111,7 +111,7 @@ INSERT INTO  User VALUES ("3","1234","Ash","Ketchum","Ash_Ketchum@gmail.com",'St
 INSERT INTO  User VALUES ("4","1234","Naruto","Uzumaki","Naruto_Uzumaki@gmail.com",'Student');
 INSERT INTO  User VALUES ("5","1234","Mushrambo","Mushrambo","Mushrambo@gmail.com",'Student');
 
-///////////////////////Subjects//////////////////////////
+///////////////////////Subjects///////////////////////////
 
 INSERT INTO  Subject VALUES ("01","Art");
 INSERT INTO  Subject VALUES ("02","Arithmetic");
