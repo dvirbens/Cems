@@ -30,6 +30,9 @@ public class StudentEnterExamController {
 
 	@FXML
 	private Label lbl_Status;
+	
+    @FXML
+    private JFXTextField tfUserID;
 
 	/**
 	 * Set a manual exam screen if the code is correct.
@@ -63,6 +66,13 @@ public class StudentEnterExamController {
 
 		if (!tfCode.getText().equals("")) {
 			String userID = Client.getUser().getUserID();
+			
+			if (!userID.equals(tfUserID.getText()))
+			{
+				lbl_Status.setText("Invalid user ID.");
+				return -1;
+			}
+			
 			ArrayList<String> elements = new ArrayList<>();
 			elements.add(tfCode.getText());
 			elements.add(userID);
