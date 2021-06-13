@@ -28,7 +28,7 @@
                </padding></Label>
             <ImageView fitHeight="285.0" fitWidth="551.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../images/StudnetHomePhoto.png" />
+                  <Image url="@../../photos/StudnetHomePhoto.png" />
                </image>
             </ImageView>
          </children>

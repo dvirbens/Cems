@@ -13,7 +13,7 @@
 	<children>
 		<ImageView fitHeight="85.0" fitWidth="200.0" layoutX="96.0" layoutY="30.0" onMouseClicked="#OnclickLogo" pickOnBounds="true" preserveRatio="true">
 			<image>
-				<Image url="@../../images/logo3.jpeg" />
+				<Image url="@../../photos/logo3.jpeg" />
 			</image>
 		</ImageView>
 		<VBox layoutY="150.0" prefHeight="582.0" prefWidth="270.0" style="-fx-background-color: #333333;">
@@ -22,7 +22,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../images/test.png" />
+								<Image url="@../../photos/test.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -31,7 +31,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../images/question.png" />
+								<Image url="@../../photos/question.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -40,7 +40,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../images/start.png" />
+								<Image url="@../../photos/start.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -49,7 +49,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/approval.png" />
+                        <Image url="@../../photos/approval.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -58,7 +58,7 @@
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="@../../images/statistic.png" />
+								<Image url="@../../photos/statistic.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -67,7 +67,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/logout.png" />
+                        <Image url="@../../photos/logout.png" />
                      </image>
                   </ImageView>
                </graphic>
