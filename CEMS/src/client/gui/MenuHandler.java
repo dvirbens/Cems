@@ -137,7 +137,7 @@ public class MenuHandler {
 	}
 
 	public void setStudentListsScreen(ExecutedExam executedExam) {
-		GradeApproveStudentListController studentListController = new GradeApproveStudentListController(executedExam);
+		ComputerizedGradeApproveStudentListController studentListController = new ComputerizedGradeApproveStudentListController(executedExam);
 		studentListController.start();
 	}
 

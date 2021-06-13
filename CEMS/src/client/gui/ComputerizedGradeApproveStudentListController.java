@@ -32,7 +32,7 @@ import javafx.scene.layout.Pane;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
 
-public class GradeApproveStudentListController implements Initializable {
+public class ComputerizedGradeApproveStudentListController implements Initializable {
 
 	@FXML
 	private TableView<StudentExecutedExam> tvSutdents;
@@ -65,16 +65,16 @@ public class GradeApproveStudentListController implements Initializable {
 
 	private static List<StudentExecutedExam> executedExamStudentList;
 
-	public GradeApproveStudentListController() {
+	public ComputerizedGradeApproveStudentListController() {
 	}
 
-	public GradeApproveStudentListController(ExecutedExam executedExam) {
-		GradeApproveStudentListController.executedExam = executedExam;
+	public ComputerizedGradeApproveStudentListController(ExecutedExam executedExam) {
+		ComputerizedGradeApproveStudentListController.executedExam = executedExam;
 	}
 
 	public void start() {
 		try {
-			Pane studentListPane = (Pane) FXMLLoader.load(getClass().getResource("StudentList.fxml"));
+			Pane studentListPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedGradeApprovalStudentList.fxml"));
 			MainGuiController.getMenuHandler().getMainFrame().setCenter(studentListPane);
 		} catch (IOException e) {
 			e.printStackTrace();
