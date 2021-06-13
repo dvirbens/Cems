@@ -91,6 +91,8 @@ public class GradeApproveStudentListController implements Initializable {
 
 		if (executedExamStudentList.size() != 0) {
 
+			setNewGradeChanges();
+
 			double[] avgAndMedian = getAvarageAndMedian();
 			StudentExecutedExam sampleExecutedExamStudent = executedExamStudentList.get(0);
 			String examID = sampleExecutedExamStudent.getExamID();
@@ -127,6 +129,13 @@ public class GradeApproveStudentListController implements Initializable {
 		String serverMessage = Client.getServerMessages();
 		messageLabel.setStyle("-fx-text-fill: GREEN;");
 		messageLabel.setText(serverMessage);
+	}
+
+	private void setNewGradeChanges() {
+		for (StudentExecutedExam student : executedExamStudentList) {
+			String newGrade = student.getTfGrade().getText();
+			student.setGrade(newGrade);
+		}
 	}
 
 	private double[] getAvarageAndMedian() {
