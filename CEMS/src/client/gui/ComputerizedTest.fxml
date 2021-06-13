@@ -43,9 +43,9 @@
          </font>
       </Label>
       <Label fx:id="lblTimeExtension" layoutX="609.0" layoutY="58.0" />
-      <Label fx:id="lbTitle" layoutX="263.0" layoutY="23.0" prefHeight="53.0" prefWidth="222.0" text="Computerized Test">
+      <Label fx:id="lbTitle" layoutX="220.0" layoutY="23.0" prefHeight="53.0" prefWidth="329.0" text="Computerized Test" textFill="#3d9a26">
          <font>
-            <Font name="System Bold Italic" size="24.0" />
+            <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
    </children>
