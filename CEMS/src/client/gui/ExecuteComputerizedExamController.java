@@ -145,7 +145,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 	}
 
 	/**
-	 * Constructor for ExecuteComputerizedExamController 
+	 * Constructor for ExecuteComputerizedExamController class
 	 */
 	public ExecuteComputerizedExamController(String code) {
 		ExecuteComputerizedExamController.code = code;
@@ -166,7 +166,8 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	
 	/**
-	 * This method get the questions and the exam details and insert it into the table.
+	 * This method get the questions and the exam details and insert it into the table,
+	 * and then insert the student into the exam.
 	 * It also set the timer, toggle listener and table click function.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {

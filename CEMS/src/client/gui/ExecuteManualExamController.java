@@ -43,12 +43,13 @@ import models.StudentExecutedExam;
 import models.StudentInExam;
 import models.WordFile;
 
+
 /**
- * FXML controller class for student executing manual test in javaFX graphic
- * user interface.
- * 
- * @author Shenhav, Aviel
- *
+ * This class is used as controller for Execute Manual Test screen.
+ * The screen show the download test button so the student download the test
+ * and then upload it by the select file button and upload button.
+ * The test is limited by time which showed on the screen.
+ * In addition, there is 2 min alert and locking of the menu while doing the exam.
  */
 
 public class ExecuteManualExamController implements Initializable {
@@ -94,11 +95,16 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
+	/**
+	 * Constructor for ExecuteManualExamController class 
+	 */
 	public ExecuteManualExamController(String code) {
 		ExecuteManualExamController.code = code;
 	}
 
-	/* set manual test screen */
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane manualTestPane = (Pane) FXMLLoader.load(getClass().getResource("ManualTest.fxml"));
@@ -109,6 +115,11 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
+	/**
+	 * This method get the exam details and insert the student into the exam.
+	 * It also set the timer.
+	 */
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		shutdown = false;
@@ -156,7 +167,10 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	/* Upload file on "upload" click */
+	/**
+	 * Upload file on "upload" click 
+	 * @param event
+	 */
 	@FXML
 	void onUploadClick(ActionEvent event) {
 		FileInputStream fileIn;
@@ -191,7 +205,10 @@ public class ExecuteManualExamController implements Initializable {
 		StudentMenuController.setLocked(false);
 	}
 
-	/* choose file from directory on "Choose" click */
+	/**
+	 * choose file from directory on "Choose" click
+	 * @param event
+	 */
 	@FXML
 	void onChooseFileClick(ActionEvent event) {
 		FileChooser fc = new FileChooser();
@@ -205,7 +222,10 @@ public class ExecuteManualExamController implements Initializable {
 		}
 	}
 
-	/* download exam file on "download" click */
+	/**
+	 * download exam file on "download" click
+	 * @param event
+	 */
 	@FXML
 	void onDownloadClick(ActionEvent event) {
 		btChooseFile.setVisible(true);
@@ -226,7 +246,9 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	/* Set a alert for a student within 2 minutes left into the exam */
+	/**
+	 * Set a alert for a student within 2 minutes left into the exam
+	 */
 	public void set2MinutesLeft() {
 		Thread timerThread = new Thread(() -> {
 			while (!shutdown) {
@@ -255,7 +277,9 @@ public class ExecuteManualExamController implements Initializable {
 		timerThread.start();
 	}
 
-	/* set an dialog for an exam that has been frozen by the teacher */
+	/**
+	 * set an dialog for an exam that has been frozen by the teacher
+	 */
 	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
 
@@ -278,19 +302,32 @@ public class ExecuteManualExamController implements Initializable {
 
 	}
 
-	/* class that define a stop watch for a student into the exam */
+	/**
+	 * class that define a stop watch for a student into the exam
+	 */
 	public class StudentStopwatch {
 		private int min;
 		private int sec;
 		private Timer timer;
 		private Label label;
 
+		
+		/**
+		 * Constructor for StudentStopwatch class
+		 * @param min
+		 * @param sec
+		 * @param label
+		 */
 		public StudentStopwatch(int min, int sec, Label label) {
 			this.min = min;
 			this.sec = sec;
 			this.label = label;
 		}
 
+		/**
+		 * Method for starting the timer thread
+		 */
+		
 		public void startTime() {
 			int delay = 1000;
 			int period = 1000;
@@ -341,14 +378,24 @@ public class ExecuteManualExamController implements Initializable {
 			}, delay, period);
 		}
 
+
+		/**
+		 * @return Timer minutes
+		 */
 		public int getMin() {
 			return min;
 		}
-
+		
+		/**
+		 * @return Timer seconds
+		 */
 		public int getSec() {
 			return sec;
 		}
 
+		/**
+		 * Method for stopping the timer
+		 */
 		public void stopTime() {
 			timer.cancel();
 		}
