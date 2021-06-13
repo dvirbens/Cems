@@ -35,6 +35,10 @@ import javafx.scene.layout.VBox;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
 
+/**
+ * The OverallStatistic class is designed to display the actions
+ *  on the statistics screen by various filters
+ */
 public class OverallStatistic implements Initializable {
 
 	@FXML
@@ -101,18 +105,18 @@ public class OverallStatistic implements Initializable {
 	@FXML
 	private VBox VboxGraph;
 
+	/**
+	 * Operation is an enum variable that holds the various options for filtering graph data
+	 */
 	public enum Operation {
 		COURSE, STUDENT, TEACHER
 	};
 
-	private Operation op = Operation.COURSE;
+	private Operation op = null;
 
-	public enum StatisticBy {
-		StatisticByCourse, StatisticByTeacher, StatisticByStudent
-	};
 
-	/* 
-	 * This method contains prompts for existing actions on the screen: Accept the possible courses
+	/**
+	 *This method contains prompts for existing actions on the screen: Accept the possible courses
 	 *  for the combobox of filtering by courses and a blank screen from filters before clicking on the filter type
 	 */
 	@Override
@@ -125,10 +129,8 @@ public class OverallStatistic implements Initializable {
 		courseSelect.setVisible(false);
 	}
 
-	/*
-	 * This method displays the data of the scores on the graph according to the requested filtering
-	 */
 	/**
+	 *  This method displays the data of the scores on the graph according to the requested filtering: COURSE,STUDENT or TEACHER
 	 * @param event
 	 */
 	@SuppressWarnings("unchecked")
@@ -246,16 +248,19 @@ public class OverallStatistic implements Initializable {
 		}
 	}
 
-	@FXML
-	void additional_filterByCourse(ActionEvent event) {
+	/**
+	 * This method displays on the screen an explanation message to the user about the filtering performed
+	 * @param event
+	 */
+	@FXML	void StatisticNoteNavigation(ActionEvent event) {
 
 	}
 
-	@FXML
-	void StatisticNoteNavigation(ActionEvent event) {
-
-	}
-
+	/**
+	 * Is done after filtering by 'course'. It hides the student and teacher-related fill boxes and displays
+	 *  a combobox to select a course to filter for grades to be displayed on the graph
+	 * @param event
+	 */
 	@FXML
 	void statisticByCourse(ActionEvent event) {
 
@@ -269,6 +274,13 @@ public class OverallStatistic implements Initializable {
 		op = Operation.COURSE;
 	}
 
+	/**
+	 * Is done after filtering by 'Student'. It hides the fill boxes associated with the course 
+	 * and teacher and displays a fill label for the student to choose according to his or her ID card.
+	 *  After selecting a student, the grades of the courses
+	 *  in which the student will be examined will be filtered and they will be displayed on the graph.
+	 * @param event
+	 */
 	@FXML
 	void statisticByStudent(ActionEvent event) {
 		studentFiltter.setVisible(true);
@@ -284,7 +296,12 @@ public class OverallStatistic implements Initializable {
 
 		op = Operation.STUDENT;
 	}
-
+	/**
+	 * Is done after filtering by 'teacher'. It hides the fill boxes associated with the course and student and displays
+	 *  a fill label to select from the teacher's ID card. After selecting a teacher,
+	 *  the scores of the tests that the teacher has examined will be filtered and displayed on the graph
+	 * @param event
+	 */
 	@FXML
 	void statisticByTeacher(ActionEvent event) {
 		teacherFiltter.setVisible(true);
@@ -298,6 +315,11 @@ public class OverallStatistic implements Initializable {
 		op = Operation.TEACHER;
 	}
 
+	/**
+	 * The method receives a list of tests performed and returns a 2-cell array.
+	 *  One for the average score and one for the median score of the test list
+	 * @param event
+	 */
 	private double[] getAvarageAndMedian(List<?> examList) {
 		if (!examList.isEmpty()) {
 
