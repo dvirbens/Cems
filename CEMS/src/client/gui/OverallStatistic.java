@@ -111,6 +111,10 @@ public class OverallStatistic implements Initializable {
 		StatisticByCourse, StatisticByTeacher, StatisticByStudent
 	};
 
+	/* 
+	 * This method contains prompts for existing actions on the screen: Accept the possible courses
+	 *  for the combobox of filtering by courses and a blank screen from filters before clicking on the filter type
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -121,8 +125,15 @@ public class OverallStatistic implements Initializable {
 		courseSelect.setVisible(false);
 	}
 
+	/*
+	 * This method displays the data of the scores on the graph according to the requested filtering
+	 */
+	/**
+	 * @param event
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
+	
 	void diplayGrapgh(ActionEvent event) {
 		switch (op) {
 		case COURSE:
@@ -158,7 +169,11 @@ public class OverallStatistic implements Initializable {
 				}
 			});
 			break;
-
+/*
+ * 
+ * 
+ */
+			
 		case STUDENT:
 			Platform.runLater(new Runnable() {
 				@Override
