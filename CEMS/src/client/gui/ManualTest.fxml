@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="754.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ExecuteManualExamController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="754.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.ExecuteManualExamController">
    <children>
-      <Label fx:id="lbTitle" layoutX="305.0" layoutY="49.0" prefHeight="53.0" prefWidth="168.0" text="Manual Test">
+      <Label fx:id="lbTitle" layoutX="294.0" layoutY="25.0" prefHeight="53.0" prefWidth="168.0" text="Manual Exam">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <TextArea fx:id="taInstructions" layoutX="153.0" layoutY="148.0" prefHeight="154.0" prefWidth="436.0" text="Download the test, write your solutions on the file&#10;and when you finish upload the file.&#10;&#10;*the file will be downloaded to your desktop ">
+      <TextArea fx:id="taInstructions" layoutX="153.0" layoutY="148.0" prefHeight="154.0" prefWidth="436.0" text="Download the test, write your solutions on the file&#10;and when you finish upload the file.&#10;Good Luck!&#10;&#10;*The file will be downloaded to your desktop ">
          <font>
             <Font size="18.0" />
          </font>
       </TextArea>
       <TextField fx:id="tfFileName" layoutX="454.0" layoutY="409.0" />
-      <Label fx:id="timeLabel" layoutX="328.0" layoutY="136.0">
+      <Label fx:id="timeLabel" layoutX="345.0" layoutY="78.0" prefHeight="53.0" prefWidth="65.0">
          <font>
             <Font size="36.0" />
          </font></Label>
