@@ -587,6 +587,9 @@ public class Client extends AbstractClient {
 		SelectedAnswers = selectedAnswers;
 	}
 
+	/**
+	 * Send request to the server in order to remove the user from the connected user list
+	 */
 	public static void logOutClient() {
 		String userID = Client.getUser().getUserID();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, LOG_OUT);

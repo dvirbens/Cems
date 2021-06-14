@@ -61,6 +61,9 @@ public class Server extends AbstractServer {
 	/** map for students in exam */
 	private static Map<String, List<StudentInExam>> studentInExam;
 
+	/**
+	 * Variable that hold all the connected users in the system
+	 */
 	private static List<String> connectedUsers;
 
 	/** Indicate if the server is connected */
@@ -386,6 +389,7 @@ public class Server extends AbstractServer {
 			String userID = userInfo.get(0);
 			String password = userInfo.get(1);
 
+			//Check if exist in the connected user list
 			for (String loggedInUser : connectedUsers) {
 				if (loggedInUser.equals(userID)) {
 					loogednIn = true;
