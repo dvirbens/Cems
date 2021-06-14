@@ -12,8 +12,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * TeacherMenuController class handle the menu of the teacher
+ *
+ */
 public class TeacherMenuController implements Initializable {
-	//
 
 	@FXML
 	private JFXButton btnCreateExam;
@@ -76,6 +79,10 @@ public class TeacherMenuController implements Initializable {
 		MainGuiController.getMenuHandler().setLoginMenu();
 	}
 
+	/**
+	 * Painting selected button
+	 * @param button
+	 */
 	private void paintSelectedButton(Buttons button) {
 
 		switch (button) {
@@ -121,6 +128,9 @@ public class TeacherMenuController implements Initializable {
 		}
 	}
 
+	/**
+	 * Setting name label on init
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String name = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
@@ -129,6 +139,10 @@ public class TeacherMenuController implements Initializable {
 
 	}
 
+	/**
+	 * Click on logo show teacher menu
+	 * @param event
+	 */
 	@FXML
 	void OnclickLogo(MouseEvent event) {
 		MainGuiController.getMenuHandler().setTeacherMenu();
