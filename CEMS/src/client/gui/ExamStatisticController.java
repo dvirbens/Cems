@@ -34,7 +34,7 @@ import models.ExecutedExam;
 import models.StudentExecutedExam;
 
 /**
- * @author Arikz
+ * ExamStatisticController class handle exam statistic screen in the teacher menu
  *
  */
 public class ExamStatisticController implements Initializable {
@@ -94,6 +94,9 @@ public class ExamStatisticController implements Initializable {
 
 	}
 
+	/**
+	 * Setting the table and insert data
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String loggendInTeacherID = Client.getUser().getUserID();
@@ -160,8 +163,9 @@ public class ExamStatisticController implements Initializable {
 	}
 
 	/**
+	 * Adding buttons to objects
 	 * @param executedExamsList
-	 * @return
+	 * @return list of ExecutedExam with buttons
 	 */
 	private List<ExecutedExam> setExecutedExamsListUI(List<ExecutedExam> executedExamsList) {
 		List<ExecutedExam> approvedExams = new ArrayList<>();
