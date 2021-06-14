@@ -426,8 +426,11 @@ public class Server extends AbstractServer {
 			break;
 
 		case EDIT_EXAM:
-			Exam EditedNewExam = (Exam) modelWrapperFromClient.getElement();
-			databaseController.updateExam(EditedNewExam);
+			List<Exam> oldNewExams = (List<Exam>) modelWrapperFromClient.getElements();
+			System.out.println(oldNewExams);
+			Exam oldExam = oldNewExams.get(0);
+			Exam updatedExam = oldNewExams.get(1);
+			databaseController.updateExam(oldExam, updatedExam);
 			try {
 				client.sendToClient(modelWrapperFromClient);
 			} catch (IOException e) {

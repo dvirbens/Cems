@@ -108,13 +108,19 @@ public class EditExamController implements Initializable {
 	private JFXButton btnBack;
 
 	@FXML
+	private JFXButton btnStudentNote;
+
+	@FXML
+	private JFXButton btnTeacherNote;
+
+	@FXML
 	private JFXComboBox<String> cbExamSubject;
 
 	private static String teacherNote;
 
 	private static String studentNote;
 
-	private static Exam exam;
+	private static Exam oldExam;
 
 	enum Operation {
 		REMOVE, ADD
@@ -124,8 +130,8 @@ public class EditExamController implements Initializable {
 
 	}
 
-	public EditExamController(Exam exam) {
-		EditExamController.exam = exam;
+	public EditExamController(Exam oldExam) {
+		EditExamController.oldExam = oldExam;
 	}
 
 	/**
@@ -138,14 +144,26 @@ public class EditExamController implements Initializable {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST_BY_SUBJECT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
 		addQuestionList();
-
 	}
 
 	@FXML
 	void onClickBack(ActionEvent event) {
 		MainGuiController.getMenuHandler().setTeacherExamPoolScreen();
+	}
+
+	@FXML
+	void onClickEditStudentNote(ActionEvent event) {
+		String editNote = getStudentNote();
+		AddNoteController addNoteController = new AddNoteController(editNote, "Students");
+		addNoteController.start();
+	}
+
+	@FXML
+	void onClickEditTeacherNote(ActionEvent event) {
+		String editNote = getTeacherNote();
+		AddNoteController addNoteController = new AddNoteController(editNote, "Teachers");
+		addNoteController.start();
 	}
 
 	/**
@@ -236,11 +254,16 @@ public class EditExamController implements Initializable {
 			String teacherID = Client.getUser().getUserID();
 			String teacherNote = getTeacherNote();
 			String studentNote = getStudentNote();
+			String examID = oldExam.getId();
+			String subject = oldExam.getSubject();
+			String course = oldExam.getCourse();
 
-			Exam newExam = new Exam(exam.getId(), exam.getSubject(), teacherID, exam.getCourse(), duration, teacherNote,
-					studentNote, examQuestions);
+			Exam newExam = new Exam(examID, subject, teacherID, course, duration, teacherNote, studentNote,
+					examQuestions);
 			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
-			ConfirmExamController confirmPage = new ConfirmExamController(newExam, "Edit");
+
+			ConfirmExamController confirmPage = new ConfirmExamController(oldExam, newExam, "Edit");
+
 			confirmPage.start();
 		}
 
@@ -298,6 +321,7 @@ public class EditExamController implements Initializable {
 		addQuestionList();
 
 		tvSelectedQuestion.setPlaceholder(new Label("No question were added to the list"));
+		cbQuestionSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
 
 		tcIdPool.setCellValueFactory(new PropertyValueFactory<Question, String>("questionID"));
 		tcSubjectPool.setCellValueFactory(new PropertyValueFactory<Question, String>("subject"));
@@ -314,19 +338,19 @@ public class EditExamController implements Initializable {
 
 		ObservableList<ExamQuestion> examQuestions = FXCollections.observableArrayList();
 		InitializeSelectedQuestionPool();
-		examQuestions.addAll(exam.getExamQuestions());
+		examQuestions.addAll(oldExam.getExamQuestions());
 		tvSelectedQuestion.setItems(examQuestions);
 
-		setStudentNote(exam.getStudentNote());
-		setTeacherNote(exam.getTeacherNote());
+		setStudentNote(oldExam.getStudentNote());
+		setTeacherNote(oldExam.getTeacherNote());
 
-		tfDuration.setText(exam.getDuration());
+		tfDuration.setText(oldExam.getDuration());
 
 	}
 
 	private void InitializeSelectedQuestionPool() {
 
-		for (ExamQuestion examQuestion : exam.getExamQuestions()) {
+		for (ExamQuestion examQuestion : oldExam.getExamQuestions()) {
 			JFXButton detailsButton = new JFXButton();
 			detailsButton.setPrefSize(90, 15);
 			detailsButton

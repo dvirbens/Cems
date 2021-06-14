@@ -51,8 +51,8 @@
                         <Insets />
                      </HBox.margin>
                   </JFXTextField>
-                  <JFXButton fx:id="btnNote" onAction="#onClickAddNote" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Student Note" textFill="WHITE" />
-                  <JFXButton fx:id="btnNote1" onAction="#onClickAddNote" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Teacher Note" textFill="WHITE" />
+                  <JFXButton fx:id="btnStudentNote" onAction="#onClickEditStudentNote" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Student Note" textFill="WHITE" />
+                  <JFXButton fx:id="btnTeacherNote" onAction="#onClickEditTeacherNote" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Edit Teacher Note" textFill="WHITE" />
             		<JFXButton fx:id="btnContinue" onAction="#onClickContinue" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Continute" textFill="WHITE" />
                </children>
             </HBox>

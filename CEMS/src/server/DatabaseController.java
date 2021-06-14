@@ -1213,37 +1213,41 @@ public class DatabaseController {
 		}
 	}
 
-	public void updateExam(Exam editedNewExam) {
+	public void updateExam(Exam oldExam, Exam newExam) {
+
 		String query = "UPDATE Exam SET Duration = ? , TeacherNote = ? , StudentNote = ? WHERE examID = ?;";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, editedNewExam.getDuration());
-			stmt.setString(2, editedNewExam.getTeacherNote());
-			stmt.setString(3, editedNewExam.getStudentNote());
-			stmt.setString(4, editedNewExam.getId());
+			stmt.setString(1, newExam.getDuration());
+			stmt.setString(2, newExam.getTeacherNote());
+			stmt.setString(3, newExam.getStudentNote());
+			stmt.setString(4, newExam.getId());
 			stmt.executeUpdate();
 
-			updateExamQuestionList(editedNewExam);
+			updateExamQuestionList(oldExam, newExam);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void updateExamQuestionList(Exam editedNewExam) {
-		String query = "DELETE FROM ExamQuestion WHERE AND examID = ? ;";
-		PreparedStatement stmt;
+	private void updateExamQuestionList(Exam oldExam, Exam newExam) {
+		String query = "DELETE FROM ExamQuestion WHERE examID = ? AND questionID = ?;";
 		try {
-			stmt = conn.prepareStatement(query);
-			stmt.setString(1, editedNewExam.getId());
+			PreparedStatement stmt;
+			for (ExamQuestion question : oldExam.getExamQuestions()) {
+				stmt = conn.prepareStatement(query);
+				stmt.setString(1, oldExam.getId());
+				stmt.setString(2, question.getQuestionID());
+				stmt.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		for (ExamQuestion question : editedNewExam.getExamQuestions()) {
-			saveExamQuestion(question, editedNewExam.getId());
+		for (ExamQuestion question : newExam.getExamQuestions()) {
+			saveExamQuestion(question, newExam.getId());
 		}
-
 	}
 
 }

@@ -1,9 +1,11 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.CREATE_EXAM;
+import static common.ModelWrapper.Operation.EDIT_EXAM;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -62,15 +64,23 @@ public class ConfirmExamController implements Initializable {
 	@FXML
 	private Tab tabStudentNote;
 
-	private static Exam exam;
+	private static Exam newExam;
+
+	private static Exam oldExam;
 
 	private static String operation;
 
 	public ConfirmExamController() {
 	}
 
-	public ConfirmExamController(Exam exam, String operation) {
-		ConfirmExamController.exam = exam;
+	public ConfirmExamController(Exam newExam, String operation) {
+		ConfirmExamController.newExam = newExam;
+		ConfirmExamController.operation = operation;
+	}
+
+	public ConfirmExamController(Exam oldExam, Exam newExam, String operation) {
+		ConfirmExamController.newExam = newExam;
+		ConfirmExamController.oldExam = oldExam;
 		ConfirmExamController.operation = operation;
 	}
 
@@ -96,13 +106,17 @@ public class ConfirmExamController implements Initializable {
 		switch (operation) {
 
 		case "Create":
-			ModelWrapper<Exam> CreateModelWrapper = new ModelWrapper<>(exam, CREATE_EXAM);
+			ModelWrapper<Exam> CreateModelWrapper = new ModelWrapper<>(newExam, CREATE_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(CreateModelWrapper);
 			MainGuiController.getMenuHandler().setCreateExamSucceeded();
 			break;
 
 		case "Edit":
-			ModelWrapper<Exam> EditModelWrapper = new ModelWrapper<>(exam, EDIT_EXAM);
+			List<Exam> newOldExams = new ArrayList<>();
+			newOldExams.add(oldExam);
+			newOldExams.add(newExam);
+			System.out.println(newOldExams);
+			ModelWrapper<Exam> EditModelWrapper = new ModelWrapper<>(newOldExams, EDIT_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(EditModelWrapper);
 			MainGuiController.getMenuHandler().setCreateExamSucceeded();
 			break;
@@ -111,12 +125,26 @@ public class ConfirmExamController implements Initializable {
 	}
 
 	private void deletExamButtons() {
-		exam.setQuestionListButton(null);
-		for (ExamQuestion question : exam.getExamQuestions()) {
+		newExam.setQuestionListButton(null);
+		newExam.setEditExamButton(null);
+		for (ExamQuestion question : newExam.getExamQuestions()) {
+			question.setEditButton(null);
 			question.setAddRemoveButton(null);
 			question.setDetailsButton(null);
 			question.setNoteDetails(null);
 			question.setTfPoints(null);
+		}
+
+		if (oldExam != null) {
+			oldExam.setEditExamButton(null);
+			oldExam.setQuestionListButton(null);
+			for (ExamQuestion question : oldExam.getExamQuestions()) {
+				question.setEditButton(null);
+				question.setAddRemoveButton(null);
+				question.setDetailsButton(null);
+				question.setNoteDetails(null);
+				question.setTfPoints(null);
+			}
 		}
 	}
 
@@ -129,13 +157,13 @@ public class ConfirmExamController implements Initializable {
 		tcDetails.setCellValueFactory(new PropertyValueFactory<ExamQuestion, JFXButton>("detailsButton"));
 
 		TextArea taTeacher = (TextArea) tabTeacherNote.getContent();
-		taTeacher.setText(exam.getTeacherNote());
+		taTeacher.setText(newExam.getTeacherNote());
 
 		TextArea taStudent = (TextArea) tabStudentNote.getContent();
-		taStudent.setText(exam.getStudentNote());
+		taStudent.setText(newExam.getStudentNote());
 
 		ObservableList<ExamQuestion> examQuestions = FXCollections.observableArrayList();
-		List<ExamQuestion> examQuestionsList = exam.getExamQuestions();
+		List<ExamQuestion> examQuestionsList = newExam.getExamQuestions();
 		examQuestions.addAll(examQuestionsList);
 		tvQuestions.setItems(examQuestions);
 

@@ -125,9 +125,7 @@ public class CreateExamController implements Initializable {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(subjectSelected, GET_QUESTION_LIST_BY_SUBJECT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
 		addQuestionList();
-
 	}
 
 	@FXML
@@ -180,7 +178,7 @@ public class CreateExamController implements Initializable {
 	 */
 	@FXML
 	void onClickAddNote(ActionEvent event) {
-		AddNoteController addNoteWindow = new AddNoteController();
+		AddNoteController addNoteWindow = new AddNoteController(false);
 		addNoteWindow.start();
 	}
 

@@ -45,14 +45,40 @@ public class AddNoteController implements Initializable {
 
 	private static TableView<ExamQuestion> tvSelectedQuestion;
 
+	private static String editNote;
+
+	private static boolean edit;
+
+	private static String editType;
+
+	public AddNoteController() {
+	}
+
+	public AddNoteController(boolean edit) {
+		AddNoteController.edit = edit;
+	}
+
+	public AddNoteController(String editNote, String editType) {
+		AddNoteController.editNote = editNote;
+		AddNoteController.edit = true;
+		AddNoteController.editType = editType;
+	}
+
 	public void start() {
 		Stage stage = new Stage();
 		Pane mainPane;
 		try {
+			String windowType;
+
+			if (edit)
+				windowType = "Edit note";
+			else
+				windowType = "Add note";
+
 			mainPane = (Pane) FXMLLoader.load(getClass().getResource("AddNote.fxml"));
 			Scene scene = new Scene(mainPane, 370, 280);
 			stage.setScene(scene);
-			stage.setTitle("Add Note");
+			stage.setTitle(windowType);
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,23 +91,37 @@ public class AddNoteController implements Initializable {
 		String note = taNotes.getText();
 
 		messageLabel.setStyle("-fx-text-fill: RED;");
-		
-		if (note.isEmpty()) {
-			messageLabel.setText("Note is empty");
-		} else if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {
-			messageLabel.setText("You need to select group type");
-		} else {
 
-			if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Teachers")) {
-				CreateExamController.setTeacherNote(note);
+		if (edit) {
+
+			if (note.isEmpty()) {
+				messageLabel.setText("Note is empty");
 			} else {
-				CreateExamController.setStudentNote(note);
+				if (editType == "Teachers") {
+					EditExamController.setTeacherNote(note);
+				} else {
+					EditExamController.setStudentNote(note);
+				}
+				Node node = (Node) event.getSource();
+				Stage stage = (Stage) node.getScene().getWindow();
+				stage.close();
 			}
+		} else {
+			if (note.isEmpty()) {
+				messageLabel.setText("Note is empty");
+			} else if (cbDisplayedFor.getSelectionModel().getSelectedItem() == null) {
+				messageLabel.setText("You need to select group type");
+			} else {
+				if (cbDisplayedFor.getSelectionModel().getSelectedItem().equals("Teachers")) {
+					CreateExamController.setTeacherNote(note);
+				} else {
+					CreateExamController.setStudentNote(note);
+				}
 
-			Node node = (Node) event.getSource();
-			Stage stage = (Stage) node.getScene().getWindow();
-			stage.close();
-
+				Node node = (Node) event.getSource();
+				Stage stage = (Stage) node.getScene().getWindow();
+				stage.close();
+			}
 		}
 
 	}
@@ -114,6 +154,13 @@ public class AddNoteController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		cbDisplayedFor.getItems().add("Students");
 		cbDisplayedFor.getItems().add("Teachers");
+
+		if (edit) {
+			taNotes.setText(editNote);
+			cbDisplayedFor.setVisible(false);
+			btnAddNote.setText("Edit");
+		}
+
 	}
 
 }
