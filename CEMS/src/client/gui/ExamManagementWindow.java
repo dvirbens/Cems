@@ -28,6 +28,10 @@ import javafx.stage.WindowEvent;
 import models.ExamExtension;
 import models.ExamProcess;
 
+/**
+ * ExamManagementWindow class handle exam management screen for a teacher that started an exam.
+ *
+ */
 public class ExamManagementWindow {
 
 	private Stopwatch sw;
@@ -45,6 +49,9 @@ public class ExamManagementWindow {
 		ExamManagementWindow.examProcess = examProcess;
 	}
 
+	/**
+	 * open the window
+	 */
 	public void open() {
 		try {
 			VBox examManagement = new VBox();
@@ -67,6 +74,10 @@ public class ExamManagementWindow {
 
 	}
 
+	/**
+	 * Setting components of the screen
+	 * @param examManagement
+	 */
 	private void setVBoxComponents(VBox examManagement) {
 		String duration = examProcess.getDuration();
 		String code = examProcess.getCode();
@@ -171,6 +182,9 @@ public class ExamManagementWindow {
 
 	}
 
+	/**
+	 * Stopping the exam
+	 */
 	public void stopExam() {
 		if (!isClosed) {
 			String code = examProcess.getCode();
@@ -185,17 +199,29 @@ public class ExamManagementWindow {
 		}
 	}
 
+	/**
+	 * class that define a stop watch for a student into the exam
+	 */
 	public class Stopwatch {
 		private int min;
 		private int sec;
 		private Timer timer;
 		private Label label;
 
+		
+		/**
+		 * Constructor for Stopwatch
+		 * @param min
+		 * @param label
+		 */
 		public Stopwatch(int min, Label label) {
 			this.min = min;
 			this.label = label;
 		}
 
+		/**
+		 * Method for starting the timer thread
+		 */
 		public void startTime() {
 			int delay = 1000;
 			int period = 1000;
@@ -227,6 +253,9 @@ public class ExamManagementWindow {
 			}, delay, period);
 		}
 
+		/**
+		 * Method for stopping the timer
+		 */
 		public void stopTime() {
 			timer.cancel();
 		}
