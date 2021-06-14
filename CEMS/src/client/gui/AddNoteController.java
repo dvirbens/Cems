@@ -22,6 +22,10 @@ import javafx.stage.Stage;
 import models.ExamQuestion;
 import models.Question;
 
+/**
+ * AddNoteController class handle add note screen
+ *
+ */
 public class AddNoteController implements Initializable {
 
 	@FXML
@@ -45,6 +49,9 @@ public class AddNoteController implements Initializable {
 
 	private static TableView<ExamQuestion> tvSelectedQuestion;
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		Stage stage = new Stage();
 		Pane mainPane;
@@ -60,6 +67,10 @@ public class AddNoteController implements Initializable {
 
 	}
 
+	/**
+	 * Adding note on click
+	 * @param event
+	 */
 	@FXML
 	void onClickAddNote(ActionEvent event) {
 		String note = taNotes.getText();
@@ -86,30 +97,54 @@ public class AddNoteController implements Initializable {
 
 	}
 
+	/**
+	 * @return question
+	 */
 	public static Question getQuestion() {
 		return question;
 	}
 
+	/**
+	 * set question
+	 * @param question
+	 */
 	public static void setQuestion(Question question) {
 		AddNoteController.question = question;
 	}
 
+	/**
+	 * @return tableview of question pool
+	 */
 	public static TableView<Question> getTvQuestionPool() {
 		return tvQuestionPool;
 	}
 
+	/**
+	 * set tableview of question pool
+	 * @param tvQuestionPull
+	 */
 	public static void setTvQuestionPull(TableView<Question> tvQuestionPull) {
 		AddNoteController.tvQuestionPool = tvQuestionPull;
 	}
 
+	/**
+	 * @return selected question
+	 */
 	public static TableView<ExamQuestion> getTvSelectedQuestion() {
 		return tvSelectedQuestion;
 	}
 
+	/**
+	 * set selected question
+	 * @param tvSelectedQuestion
+	 */
 	public static void setTvSelectedQuestion(TableView<ExamQuestion> tvSelectedQuestion) {
 		AddNoteController.tvSelectedQuestion = tvSelectedQuestion;
 	}
 
+	/**
+	 * combobox adding 2 options
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		cbDisplayedFor.getItems().add("Students");
