@@ -24,6 +24,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Question;
 
+/**
+ * QuestionPoolController class handle screen of question pool on principal menu
+ *
+ */
 public class QuestionPoolController implements Initializable {
 
 	@FXML
@@ -44,6 +48,10 @@ public class QuestionPoolController implements Initializable {
 	@FXML
 	private JFXComboBox<String> cbQuestionSubject;
 
+	/**
+	 * Filter by subject
+	 * @param event
+	 */
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
@@ -58,6 +66,10 @@ public class QuestionPoolController implements Initializable {
 
 	}
 
+	/**
+	 * Adding details button to objects
+	 * @param questionList
+	 */
 	private void addDetailButtons(List<Question> questionList) {
 
 		for (Question question : questionList) {
@@ -83,6 +95,10 @@ public class QuestionPoolController implements Initializable {
 		}
 	}
 
+	/**
+	 * open add note screen
+	 * @param event
+	 */
 	@FXML
 	void onClickAddNote(ActionEvent event) {
 		AddNoteController addNoteWindow = new AddNoteController();
@@ -114,6 +130,10 @@ public class QuestionPoolController implements Initializable {
 
 	}
 
+	/**
+	 * @param strNum
+	 * @return if is numeric or not
+	 */
 	public static boolean isNumeric(String strNum) {
 		if (strNum == null) {
 			return false;
