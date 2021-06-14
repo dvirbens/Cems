@@ -11,7 +11,8 @@ import models.Exam;
 import models.ExecutedExam;
 
 /**
- * The MenuHandler class handle the JavaFX load of screens and set the screen according to the function.
+ * The MenuHandler class handle the JavaFX load of screens and set the screen
+ * according to the function.
  *
  */
 public class MenuHandler {
@@ -141,7 +142,8 @@ public class MenuHandler {
 	}
 
 	public void setStudentListsScreen(ExecutedExam executedExam) {
-		ComputerizedGradeApproveStudentListController studentListController = new ComputerizedGradeApproveStudentListController(executedExam);
+		ComputerizedGradeApproveStudentListController studentListController = new ComputerizedGradeApproveStudentListController(
+				executedExam);
 		studentListController.start();
 	}
 
@@ -250,10 +252,19 @@ public class MenuHandler {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setTeacherQuestionPoolScreen() {
 		try {
 			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherQuestionPool.fxml"));
+			mainFrame.setCenter(enterExamPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setTeacherExamPoolScreen() {
+		try {
+			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherExamPool.fxml"));
 			mainFrame.setCenter(enterExamPane);
 		} catch (IOException e) {
 			e.printStackTrace();

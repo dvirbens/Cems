@@ -28,9 +28,9 @@
 				<TableColumn fx:id="tcIdSelected" prefWidth="94.0" style="-fx-alignment: center;" text="ID" />
 				<TableColumn fx:id="tcSubjectSelected" prefWidth="136.0" style="-fx-alignment: center;" text="Subject" />
 				<TableColumn fx:id="tcTeacherSelected" prefWidth="138.0" style="-fx-alignment: center;" text="Teacher" />
-            <TableColumn fx:id="tcPointsSelected" prefWidth="65.0" style="-fx-alignment: center;" text="Points" />
-				<TableColumn fx:id="tcDetailsSelected" prefWidth="154.0" style="-fx-alignment: center;" text="Details" />
-            <TableColumn fx:id="tcRemove" prefWidth="110.0" style="-fx-alignment: center;" text="Remove" />
+            <TableColumn fx:id="tcPointsSelected" prefWidth="57.0" style="-fx-alignment: center;" text="Points" />
+				<TableColumn fx:id="tcDetailsSelected" prefWidth="130.0" style="-fx-alignment: center;" text="Details" />
+            <TableColumn fx:id="tcRemove" prefWidth="143.0" style="-fx-alignment: center;" text="Remove" />
 			</columns>
 		</TableView>
 		<Label layoutX="27.0" layoutY="81.0" text="Question pool:" textFill="#333333">
@@ -73,5 +73,6 @@
             <Font size="39.0" />
          </font>
       </Label>
+      <JFXButton fx:id="btnBack" layoutX="28.0" layoutY="13.0" onAction="#onClickBack" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back" textFill="WHITE" />
 	</children>
 </Pane>

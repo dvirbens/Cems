@@ -29,13 +29,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamQuestion;
 import models.Question;
+import sun.applet.Main;
 
 /**
- * CreateExamController class handle the screen of create exam by teacher.
- * The teacher can add questions that already made and watch their details.
- * In addition, there is option to filter questions by subject.
- * The teacher need to choose subject, course and exam duration.
- * Optionally, the teacher can add note to the exam.
+ * CreateExamController class handle the screen of create exam by teacher. The
+ * teacher can add questions that already made and watch their details. In
+ * addition, there is option to filter questions by subject. The teacher need to
+ * choose subject, course and exam duration. Optionally, the teacher can add
+ * note to the exam.
  *
  */
 public class CreateExamController implements Initializable {
@@ -101,6 +102,9 @@ public class CreateExamController implements Initializable {
 	private Label messageLabel;
 
 	@FXML
+	private JFXButton btnBack;
+
+	@FXML
 	private JFXComboBox<String> cbExamSubject;
 
 	private static String teacherNote;
@@ -113,6 +117,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * Update the questions by subject
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -123,6 +128,11 @@ public class CreateExamController implements Initializable {
 
 		addQuestionList();
 
+	}
+
+	@FXML
+	void onClickBack(ActionEvent event) {
+		MainGuiController.getMenuHandler().setTeacherExamPoolScreen();
 	}
 
 	/**
@@ -165,6 +175,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * Add note to exam
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -175,6 +186,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * Continue to the next step in creating exam
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -237,6 +249,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * Add questions to the table
+	 * 
 	 * @param observableList
 	 * @return list of exam questions
 	 */
@@ -248,6 +261,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * The method add points to each question
+	 * 
 	 * @param examQuestions
 	 * @return list of exam questions
 	 */
@@ -263,6 +277,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * This method filters courses on subject click.
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -306,6 +321,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * check if the input is numeric or not
+	 * 
 	 * @param strNum
 	 * @return true if numeric else false
 	 */
@@ -350,7 +366,7 @@ public class CreateExamController implements Initializable {
 				tvQuestionPool.getItems().remove(question);
 				examQuestion = new ExamQuestion(question);
 				JFXButton remove = new JFXButton();
-				remove.setPrefSize(70, 15);
+				remove.setPrefSize(90, 15);
 				remove.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
 				remove.setText("Remove");
 				remove.setOnAction(new AddRemoveEvenetHandler(Operation.REMOVE, examQuestion));
@@ -386,6 +402,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * set teacher note
+	 * 
 	 * @param teacherNote
 	 */
 	public static void setTeacherNote(String teacherNote) {
@@ -401,6 +418,7 @@ public class CreateExamController implements Initializable {
 
 	/**
 	 * set student note
+	 * 
 	 * @param studentNote
 	 */
 	public static void setStudentNote(String studentNote) {

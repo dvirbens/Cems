@@ -18,7 +18,7 @@
 		</ImageView>
 		<VBox layoutY="150.0" prefHeight="582.0" prefWidth="270.0" style="-fx-background-color: #333333;">
 			<children>
-				<JFXButton fx:id="btnCreateExam" onAction="#onClickCreateExam" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Create Exam" textFill="WHITE">
+				<JFXButton fx:id="btnCreateExam" onAction="#onClickCreateExam" prefHeight="300.0" prefWidth="270.0" ripplerFill="#48a832" style="-fx-background-color: #333333;" text="Exam Pool" textFill="WHITE">
 					<graphic>
 						<ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 							<image>

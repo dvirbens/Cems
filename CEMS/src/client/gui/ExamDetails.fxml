@@ -17,7 +17,7 @@
             <Font size="39.0" />
          </font>
       </Label>
-      <TableView fx:id="tvQuestions" layoutX="49.0" layoutY="86.0" prefHeight="380.0" prefWidth="650.0">
+      <TableView fx:id="tvQuestions" layoutX="49.0" layoutY="107.0" prefHeight="380.0" prefWidth="650.0">
         <columns>
           <TableColumn fx:id="tcID" prefWidth="77.0" style="-fx-alignment: center;" text="ID" />
           <TableColumn fx:id="tcSubject" prefWidth="153.0" style="-fx-alignment: center;" text="Subject" />
@@ -26,8 +26,8 @@
             <TableColumn fx:id="tcDetails" prefWidth="121.0" style="-fx-alignment: center;" text="Details" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnBack" layoutX="39.0" layoutY="31.0" onAction="#onClickBack" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back" textFill="WHITE" />
-      <JFXTabPane fx:id="tpNote" layoutX="49.0" layoutY="489.0" prefHeight="180.0" prefWidth="650.0">
+      <JFXButton fx:id="btnBack" layoutX="49.0" layoutY="32.0" onAction="#onClickBack" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back" textFill="WHITE" />
+      <JFXTabPane fx:id="tpNote" layoutX="49.0" layoutY="533.0" prefHeight="180.0" prefWidth="650.0">
          <tabs>
             <Tab fx:id="tabTeacherNote" text="Teacher note">
                <content>
@@ -41,5 +41,10 @@
             </Tab>
          </tabs>
       </JFXTabPane>
+      <Label layoutX="49.0" layoutY="86.0" text="Question List:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

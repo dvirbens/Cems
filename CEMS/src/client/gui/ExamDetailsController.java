@@ -88,6 +88,10 @@ public class ExamDetailsController implements Initializable {
 		case "ComputerizedExamController":
 			MainGuiController.getMenuHandler().setComputerizedScreen();
 			break;
+
+		case "TeacherExamPoolController":
+			MainGuiController.getMenuHandler().setTeacherExamPoolScreen();
+			break;
 		}
 
 	}
