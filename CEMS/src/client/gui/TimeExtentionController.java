@@ -23,6 +23,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExamExtension;
 
+/**
+ * TimeExtentionController class handle confirmation of time extensions by the principal screen. 
+ *
+ */
 public class TimeExtentionController implements Initializable {
 
 	@FXML
@@ -46,6 +50,9 @@ public class TimeExtentionController implements Initializable {
 	@FXML
 	private TableColumn<ExamExtension, JFXButton> tcConfirm;
 
+	/**
+	 * Setting the table and inserting data
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		tcExamID.setCellValueFactory(new PropertyValueFactory<ExamExtension, String>("examID"));
@@ -66,6 +73,12 @@ public class TimeExtentionController implements Initializable {
 
 	}
 
+	/**
+	 * adding buttons to the objects for confirmation of time extension
+	 * @param examExtensionList list of exams with time extension requests
+	 * @param examExtensions 
+	 * @return
+	 */
 	private List<ExamExtension> addButtons(List<ExamExtension> examExtensionList,
 			ObservableList<ExamExtension> examExtensions) {
 
@@ -82,6 +95,10 @@ public class TimeExtentionController implements Initializable {
 		return examExtensionList;
 	}
 
+	/**
+	 * Handler for confirm button
+	 *
+	 */
 	private class OnClickConfirm implements EventHandler<ActionEvent> {
 
 		private ExamExtension extension;
