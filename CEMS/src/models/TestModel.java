@@ -11,31 +11,56 @@ public class TestModel implements Serializable {
 	private String secondName;
 	private JFXButton button;
 	
-/****************************** Constructors ************************************/
+	
+	/**
+	 * Constructor
+	 * @param firstName
+	 * @param secondName
+	 */
 	public TestModel(String firstName, String secondName) {
 		super();
 		this.firstName = firstName;
 		this.secondName = secondName;
 	}
-	
-/***************************** Setters and getters **********************************/
+
+	/**
+	 * @return firstName
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
+	/**
+	 * set firstName
+	 * @param firstName
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	/**
+	 * @return secondName
+	 */
 	public String getSecondName() {
 		return secondName;
 	}
+	/**
+	 * set second name
+	 * @param secondName
+	 */
 	public void setSecondName(String secondName) {
 		this.secondName = secondName;
 	}
 
+	/**
+	 * @return button
+	 */
 	public JFXButton getButton() {
 		return button;
 	}
 
+	/**
+	 * set setButton
+	 * @param button
+	 */
 	public void setButton(JFXButton button) {
 		this.button = button;
 	}
