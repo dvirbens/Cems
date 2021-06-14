@@ -29,10 +29,6 @@ import javafx.scene.layout.Pane;
 import models.Exam;
 import models.ExamQuestion;
 
-/**
- * ConfirmExamController class handle screen of exam confirmation in the teacher menu
- *
- */
 public class ConfirmExamController implements Initializable {
 
 	@FXML
@@ -77,7 +73,6 @@ public class ConfirmExamController implements Initializable {
 	public ConfirmExamController() {
 	}
 
-<<<<<<< HEAD
 	public ConfirmExamController(Exam newExam, String operation) {
 		ConfirmExamController.newExam = newExam;
 		ConfirmExamController.operation = operation;
@@ -86,21 +81,9 @@ public class ConfirmExamController implements Initializable {
 	public ConfirmExamController(Exam oldExam, Exam newExam, String operation) {
 		ConfirmExamController.newExam = newExam;
 		ConfirmExamController.oldExam = oldExam;
-=======
-	/**
-	 * Constructor for ConfirmExamController
-	 * @param exam
-	 * @param operation
-	 */
-	public ConfirmExamController(Exam exam, String operation) {
-		ConfirmExamController.exam = exam;
->>>>>>> branch 'master' of https://github.com/arikz-tech/CEMS
 		ConfirmExamController.operation = operation;
 	}
 
-	/**
-	 * This method load the fxml and display to the screen
-	 */
 	public void start() {
 		try {
 			Pane questionListPane = (Pane) FXMLLoader.load(getClass().getResource("ConfirmNewExamPage.fxml"));
@@ -110,20 +93,12 @@ public class ConfirmExamController implements Initializable {
 		}
 	}
 
-	/**
-	 * Method for back button: set the previous screen
-	 * @param event
-	 */
 	@FXML
 	void onClickBack(ActionEvent event) {
 		MainGuiController.getMenuHandler().setCreateExamScreen();
 
 	}
 
-	/**
-	 * Create exam on click
-	 * @param event
-	 */
 	@FXML
 	void onClickCreate(ActionEvent event) {
 		deletExamButtons();
@@ -149,9 +124,6 @@ public class ConfirmExamController implements Initializable {
 
 	}
 
-	/**
-	 * Reset question buttons
-	 */
 	private void deletExamButtons() {
 		newExam.setQuestionListButton(null);
 		newExam.setEditExamButton(null);
@@ -176,9 +148,6 @@ public class ConfirmExamController implements Initializable {
 		}
 	}
 
-	/**
-	 * Setting the table and insert data
-	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		tcID.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));
