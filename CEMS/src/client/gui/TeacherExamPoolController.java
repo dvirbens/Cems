@@ -25,6 +25,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 
+/**
+ * TeacherExamPoolController class handle teacher exam pool screen in the teacher menu
+ *
+ */
 public class TeacherExamPoolController implements Initializable {
 
 	@FXML
@@ -60,6 +64,10 @@ public class TeacherExamPoolController implements Initializable {
 	@FXML
 	private JFXButton btnCreateEaxm;
 
+	/**
+	 * Filter by subject
+	 * @param event
+	 */
 	@FXML
 	void onClickExamSubject(ActionEvent event) {
 		String subjectSelected = cbExamSubject.getSelectionModel().getSelectedItem();
@@ -76,6 +84,11 @@ public class TeacherExamPoolController implements Initializable {
 
 	}
 
+	/**
+	 * Adding buttons to objects
+	 * @param exams
+	 * @return list of Exam with buttons
+	 */
 	private List<Exam> setExamQuestioListButtons(List<Exam> exams) {
 
 		for (Exam exam : exams) {
@@ -115,6 +128,11 @@ public class TeacherExamPoolController implements Initializable {
 		return exams;
 	}
 
+	
+	/**
+	 * Filter by course
+	 * @param event
+	 */
 	@FXML
 	void onClickExamCourse(ActionEvent event) {
 		String courseSlected = cbExamCourse.getSelectionModel().getSelectedItem();
@@ -129,6 +147,10 @@ public class TeacherExamPoolController implements Initializable {
 
 	}
 
+	/**
+	 * Showing create exam screen
+	 * @param event
+	 */
 	@FXML
 	void onClickCreateExam(ActionEvent event) {
 		MainGuiController.getMenuHandler().setCreateExamScreen();
