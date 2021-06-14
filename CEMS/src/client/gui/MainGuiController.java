@@ -15,9 +15,6 @@ import javafx.stage.WindowEvent;
 /**
  * FXML controller class for main screen in javaFX graphic user interface, let
  * the user interact with the main application graphic user interface.
- * 
- * @author Arikz ,Dvir ben simon
- *
  */
 public class MainGuiController {
 
@@ -65,10 +62,17 @@ public class MainGuiController {
 		}
 	}
 
+	/**
+	 * @return menu handler
+	 */
 	public static MenuHandler getMenuHandler() {
 		return menuHandler;
 	}
 
+	/**
+	 * set menu handler
+	 * @param menuHandler
+	 */
 	public static void setMenuHandler(MenuHandler menuHandler) {
 		MainGuiController.menuHandler = menuHandler;
 	}
