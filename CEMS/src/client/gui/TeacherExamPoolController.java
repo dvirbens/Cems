@@ -55,6 +55,9 @@ public class TeacherExamPoolController implements Initializable {
 	private TableColumn<Exam, JFXButton> tcDetails;
 
 	@FXML
+	private TableColumn<Exam, JFXButton> tcEdit;
+
+	@FXML
 	private JFXButton btnCreateEaxm;
 
 	@FXML
@@ -91,6 +94,23 @@ public class TeacherExamPoolController implements Initializable {
 			});
 
 			exam.setQuestionListButton(examDetailsButton);
+
+			JFXButton editExamButton = new JFXButton();
+			editExamButton.setPrefSize(90, 15);
+			editExamButton
+					.setStyle("-fx-background-color:#616161;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+			editExamButton.setText("Edit");
+			editExamButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					MainGuiController.getMenuHandler().setEditExamScreen(exam);
+				}
+
+			});
+
+			exam.setEditExamButton(editExamButton);
+
 		}
 		return exams;
 	}
@@ -128,6 +148,7 @@ public class TeacherExamPoolController implements Initializable {
 		tcCourse.setCellValueFactory(new PropertyValueFactory<Exam, String>("course"));
 		tcDuration.setCellValueFactory(new PropertyValueFactory<Exam, String>("duration"));
 		tcDetails.setCellValueFactory(new PropertyValueFactory<Exam, JFXButton>("questionListButton"));
+		tcEdit.setCellValueFactory(new PropertyValueFactory<Exam, JFXButton>("editExamButton"));
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(GET_EXAMS_LIST);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);

@@ -25,8 +25,11 @@ public class Exam implements Serializable {
 	private String teacherNote;
 	private List<ExamQuestion> examQuestions;
 	private JFXButton questionListButton;
+	private JFXButton editExamButton;
 
-/****************************** Constructors ************************************/
+	/******************************
+	 * Constructors
+	 ************************************/
 	public Exam(String id, String teacherID, String subject, String course, String duration,
 			List<ExamQuestion> examQuestions, String studentNote, String teacherNote) {
 		super();
@@ -63,6 +66,19 @@ public class Exam implements Serializable {
 		this.examQuestions = examQuestions;
 	}
 
+	public Exam(String examID, String subject, String teacherID, String course, String duration, String teacherNote,
+			String studentNote, List<ExamQuestion> examQuestions) {
+		super();
+		this.id = examID;
+		this.teacherID = teacherID;
+		this.subject = subject;
+		this.course = course;
+		this.duration = duration;
+		this.studentNote = studentNote;
+		this.teacherNote = teacherNote;
+		this.examQuestions = examQuestions;
+	}
+
 	public Exam(String id, String subject, String course, String duration) {
 		super();
 		this.id = id;
@@ -71,7 +87,9 @@ public class Exam implements Serializable {
 		this.duration = duration;
 	}
 
-/***************************** Setters and getters **********************************/
+	/*****************************
+	 * Setters and getters
+	 **********************************/
 	public String getId() {
 		return id;
 	}
@@ -150,6 +168,14 @@ public class Exam implements Serializable {
 
 	public void setTeacherNote(String teacherNote) {
 		this.teacherNote = teacherNote;
+	}
+
+	public JFXButton getEditExamButton() {
+		return editExamButton;
+	}
+
+	public void setEditExamButton(JFXButton editExamButton) {
+		this.editExamButton = editExamButton;
 	}
 
 }

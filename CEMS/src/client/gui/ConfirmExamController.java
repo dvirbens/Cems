@@ -1,6 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.CREATE_EXAM;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,11 +64,14 @@ public class ConfirmExamController implements Initializable {
 
 	private static Exam exam;
 
+	private static String operation;
+
 	public ConfirmExamController() {
 	}
 
-	public ConfirmExamController(Exam exam) {
+	public ConfirmExamController(Exam exam, String operation) {
 		ConfirmExamController.exam = exam;
+		ConfirmExamController.operation = operation;
 	}
 
 	public void start() {
@@ -89,9 +92,22 @@ public class ConfirmExamController implements Initializable {
 	@FXML
 	void onClickCreate(ActionEvent event) {
 		deletExamButtons();
-		ModelWrapper<Exam> modelWrapper = new ModelWrapper<>(exam, CREATE_EXAM);
-		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-		MainGuiController.getMenuHandler().setCreateExamSucceeded();
+
+		switch (operation) {
+
+		case "Create":
+			ModelWrapper<Exam> CreateModelWrapper = new ModelWrapper<>(exam, CREATE_EXAM);
+			ClientUI.getClientController().sendClientUIRequest(CreateModelWrapper);
+			MainGuiController.getMenuHandler().setCreateExamSucceeded();
+			break;
+
+		case "Edit":
+			ModelWrapper<Exam> EditModelWrapper = new ModelWrapper<>(exam, EDIT_EXAM);
+			ClientUI.getClientController().sendClientUIRequest(EditModelWrapper);
+			MainGuiController.getMenuHandler().setCreateExamSucceeded();
+			break;
+		}
+
 	}
 
 	private void deletExamButtons() {

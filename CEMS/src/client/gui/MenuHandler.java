@@ -271,4 +271,11 @@ public class MenuHandler {
 		}
 	}
 
+	public void setEditExamScreen(Exam exam) {
+		EditExamController editExamController = new EditExamController(exam);
+		editExamController.start();
+		
+		
+	}
+
 }
