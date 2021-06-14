@@ -32,6 +32,10 @@ import javafx.scene.layout.Pane;
 import models.ExecutedExam;
 import models.StudentExecutedExam;
 
+/**
+ * ManualGradeApproveStudentListController class handle manual grade approval screen
+ *
+ */
 public class ManualGradeApproveStudentListController implements Initializable {
 
 	@FXML
@@ -68,10 +72,17 @@ public class ManualGradeApproveStudentListController implements Initializable {
 	public ManualGradeApproveStudentListController() {
 	}
 
+	/**
+	 * Constructor for ManualGradeApproveStudentListController class
+	 * @param executedExam
+	 */
 	public ManualGradeApproveStudentListController(ExecutedExam executedExam) {
 		ManualGradeApproveStudentListController.executedExam = executedExam;
 	}
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane studentListPane = (Pane) FXMLLoader.load(getClass().getResource("ManualGradeApprovalStudentList.fxml"));
@@ -81,11 +92,19 @@ public class ManualGradeApproveStudentListController implements Initializable {
 		}
 	}
 
+	/**
+	 * Method for back button: set the previous screen(ExecutedExams)
+	 * @param event
+	 */
 	@FXML
 	void onClickBack(ActionEvent event) {
 		MainGuiController.getMenuHandler().setGradeApprovalScreen();
 	}
 
+	/**
+	 * handle saving of grades after click
+	 * @param event
+	 */
 	@FXML
 	void onClickSave(ActionEvent event) {
 
@@ -131,6 +150,9 @@ public class ManualGradeApproveStudentListController implements Initializable {
 		messageLabel.setText(serverMessage);
 	}
 
+	/**
+	 * set new grade into object
+	 */
 	private void setNewGradeChanges() {
 		for (StudentExecutedExam student : executedExamStudentList) {
 			String newGrade = student.getTfGrade().getText();
@@ -138,6 +160,9 @@ public class ManualGradeApproveStudentListController implements Initializable {
 		}
 	}
 
+	/**
+	 * @return average and median
+	 */
 	private double[] getAvarageAndMedian() {
 		List<Integer> studentsGrade = new ArrayList<>();
 		int sum = 0;
@@ -171,6 +196,9 @@ public class ManualGradeApproveStudentListController implements Initializable {
 		return avgAndMedian;
 	}
 
+	/**
+	 *Setting the table and inserting data
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -195,6 +223,11 @@ public class ManualGradeApproveStudentListController implements Initializable {
 
 	}
 
+	/**
+	 * Adding buttons to objects
+	 * @param executedExamStudentList
+	 * @return list of StudentExecutedExam with buttons
+	 */
 	private List<StudentExecutedExam> addApproveButton(List<StudentExecutedExam> executedExamStudentList) {
 		for (StudentExecutedExam executedStudentExam : executedExamStudentList) {
 			TextField tfGrade = new TextField(executedStudentExam.getGrade());

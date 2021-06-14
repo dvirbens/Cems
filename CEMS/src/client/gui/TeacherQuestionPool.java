@@ -24,6 +24,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Question;
 
+/**
+ * TeacherQuestionPool class handle question pool screen in teacher menu
+ *
+ */
 public class TeacherQuestionPool implements Initializable {
 
 	@FXML
@@ -47,6 +51,10 @@ public class TeacherQuestionPool implements Initializable {
 	@FXML
 	private JFXButton btnCreateQuestion;
 
+	/**
+	 * Filter by subject
+	 * @param event
+	 */
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
 		String subjectSelected = cbQuestionSubject.getSelectionModel().getSelectedItem();
@@ -61,6 +69,10 @@ public class TeacherQuestionPool implements Initializable {
 
 	}
 
+	/**
+	 * Adding details button to objects
+	 * @param questionList
+	 */
 	private void addDetailButtons(List<Question> questionList) {
 
 		for (Question question : questionList) {
@@ -85,6 +97,10 @@ public class TeacherQuestionPool implements Initializable {
 		}
 	}
 
+	/**
+	 * open add note screen
+	 * @param event
+	 */
 	@FXML
 	void onClickAddNote(ActionEvent event) {
 		AddNoteController addNoteWindow = new AddNoteController();
@@ -116,11 +132,19 @@ public class TeacherQuestionPool implements Initializable {
 
 	}
 
+	/**
+	 * Click on create question show create question screen
+	 * @param event
+	 */
 	@FXML
 	void onClickCreateQuestion(ActionEvent event) {
 		MainGuiController.getMenuHandler().setCreateQuestionScreen();
 	}
 
+	/**
+	 * @param strNum
+	 * @return if is numeric or not
+	 */
 	public static boolean isNumeric(String strNum) {
 		if (strNum == null) {
 			return false;

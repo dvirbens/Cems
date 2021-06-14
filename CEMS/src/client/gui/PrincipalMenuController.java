@@ -40,35 +40,59 @@ public class PrincipalMenuController implements Initializable {
 		OVERALL_STATISTICS, TIME_EXTENSION_REQUEST, EXAM_POOL, QUESTION_POOL
 	}
 
+	/**
+	 * This method show the screen Exam Pool
+	 * @param event
+	 */
 	@FXML
 	void onClickExamPool(ActionEvent event) {
 		paintSelectedButton(Buttons.EXAM_POOL);
 		MainGuiController.getMenuHandler().setExamPoolScreen();
 	}
 
+	/**
+	 * This method show the screen Question Pool
+	 * @param event
+	 */
 	@FXML
 	void onClickQuestionPool(ActionEvent event) {
 		paintSelectedButton(Buttons.QUESTION_POOL);
 		MainGuiController.getMenuHandler().setQuestionPoolScreen();
 	}
 
+	/**
+	 * This method show the screen Overall Statistics
+	 * @param event
+	 */
 	@FXML
 	void onClickOverallStatistics(ActionEvent event) {
 		paintSelectedButton(Buttons.OVERALL_STATISTICS);
 		MainGuiController.getMenuHandler().setOverallStatisticsScreen();
 	}
 
+	/**
+	 * This method show the screen Time Extension Requests
+	 * @param event
+	 */
 	@FXML
 	void onClickTimeExtensionRequest(ActionEvent event) {
 		paintSelectedButton(Buttons.TIME_EXTENSION_REQUEST);
 		MainGuiController.getMenuHandler().setTimeExtensionRequestsScreen();
 	}
 
+	/**
+	 * This method show the screen Login
+	 * @param event
+	 */
 	@FXML
 	void onClickLogout(ActionEvent event) {
 		MainGuiController.getMenuHandler().setLoginMenu();
 	}
 
+	/**
+	 * painting the selected button
+	 * @param button
+	 */
 	private void paintSelectedButton(Buttons button) {
 
 		switch (button) {
@@ -105,6 +129,9 @@ public class PrincipalMenuController implements Initializable {
 
 	}
 
+	/**
+	 *Set the name label
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String name = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
@@ -115,6 +142,10 @@ public class PrincipalMenuController implements Initializable {
 	
 	
 
+    /**
+     * Click on logo show menu
+     * @param event
+     */
     @FXML
     void onLogoClicked(MouseEvent event) {
 

@@ -23,6 +23,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExecutedExam;
 
+/**
+ * GradeApprovalController class handle grade approval screen in the teacher menu
+ *
+ */
 public class GradeApprovalController implements Initializable {
 
 	@FXML
@@ -46,6 +50,9 @@ public class GradeApprovalController implements Initializable {
 	@FXML
 	private TableColumn<ExecutedExam, JFXButton> tcStudentList;
 
+	/**
+	 * Setting the table and inserting data
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -67,6 +74,11 @@ public class GradeApprovalController implements Initializable {
 
 	}
 
+	/**
+	 * Adding buttons to objects
+	 * @param executedExamsList
+	 * @return list of ExecutedExam with buttons
+	 */
 	private List<ExecutedExam> setExecutedExamsListButtons(List<ExecutedExam> executedExamsList) {
 		List<ExecutedExam> notApprovedExams = new ArrayList<>();
 		for (ExecutedExam executedExam : executedExamsList) {

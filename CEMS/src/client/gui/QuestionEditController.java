@@ -27,6 +27,10 @@ import javafx.stage.WindowEvent;
 import models.Question;
 import models.User;
 
+/**
+ * QuestionEditController class handle question edit screen in the teacher menu
+ *
+ */
 public class QuestionEditController implements EventHandler<WindowEvent>, Initializable {
 
 	@FXML
@@ -62,22 +66,40 @@ public class QuestionEditController implements EventHandler<WindowEvent>, Initia
 	private static Question question;
 	private static boolean isWindowOpend;
 
+	/**
+	 * @return question
+	 */
 	public static Question getQuestion() {
 		return question;
 	}
 
+	/**
+	 * set question
+	 * @param question
+	 */
 	public static void setQuestion(Question question) {
 		QuestionEditController.question = question;
 	}
 
+	/**
+	 * @return if window is open or not
+	 */
 	public static boolean isWindowOpend() {
 		return isWindowOpend;
 	}
 
+	/**
+	 * set if window is open or not
+	 * @param isWindowOpend
+	 */
 	public static void setWindowOpend(boolean isWindowOpend) {
 		QuestionEditController.isWindowOpend = isWindowOpend;
 	}
 
+	/**
+	 * exit on click
+	 * @param event
+	 */
 	@FXML
 	void onClickExit(ActionEvent event) {
 		Node n = (Node) event.getSource();
@@ -87,6 +109,9 @@ public class QuestionEditController implements EventHandler<WindowEvent>, Initia
 
 	}
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		Stage stage = new Stage();
 		AnchorPane mainPane;
@@ -110,6 +135,10 @@ public class QuestionEditController implements EventHandler<WindowEvent>, Initia
 
 	}
 
+	/**
+	 * Update the edited data and send to server
+	 * @param event
+	 */
 	@FXML
 	void onClickUpdate(ActionEvent event) {
 		User teacherUser = Client.getUser();
@@ -180,6 +209,9 @@ public class QuestionEditController implements EventHandler<WindowEvent>, Initia
 
 	}
 
+	/**
+	 * Set question data on init
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

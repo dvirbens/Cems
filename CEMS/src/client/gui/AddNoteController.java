@@ -64,6 +64,9 @@ public class AddNoteController implements Initializable {
 		AddNoteController.editType = editType;
 	}
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		Stage stage = new Stage();
 		Pane mainPane;

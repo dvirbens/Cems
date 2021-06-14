@@ -8,6 +8,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
+/**
+ * TeacherLoginHomePageController class handle teacher homepage screen
+ *
+ */
 public class TeacherLoginHomePageController  implements Initializable{
 	
 
@@ -16,6 +20,9 @@ public class TeacherLoginHomePageController  implements Initializable{
 
 
 
+	/**
+	 * Setting name label on init
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

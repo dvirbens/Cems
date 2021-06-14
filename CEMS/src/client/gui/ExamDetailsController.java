@@ -24,6 +24,10 @@ import javafx.scene.layout.Pane;
 import models.Exam;
 import models.ExamQuestion;
 
+/**
+ * ExamDetailsController class handle the screen of exam details that used in teacher and principal
+ *
+ */
 public class ExamDetailsController implements Initializable {
 
 	@FXML
@@ -64,11 +68,19 @@ public class ExamDetailsController implements Initializable {
 
 	}
 
+	/**
+	 * Constructor for ExamDetailsController
+	 * @param exam
+	 * @param backClassName
+	 */
 	public ExamDetailsController(Exam exam, String backClassName) {
 		ExamDetailsController.exam = exam;
 		ExamDetailsController.backClassName = backClassName;
 	}
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane questionListPane = (Pane) FXMLLoader.load(getClass().getResource("ExamDetails.fxml"));
@@ -78,6 +90,10 @@ public class ExamDetailsController implements Initializable {
 		}
 	}
 
+	/**
+	 * Method for back button: set the previous screen
+	 * @param event
+	 */
 	@FXML
 	void onClickBack(ActionEvent event) {
 		switch (backClassName) {
@@ -96,6 +112,9 @@ public class ExamDetailsController implements Initializable {
 
 	}
 
+	/**
+	 * Setting the table and insert data
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tcID.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));
@@ -119,6 +138,10 @@ public class ExamDetailsController implements Initializable {
 
 	}
 
+	/**
+	 * Adding buttons to objects
+	 * @param questions
+	 */
 	public void setQuestionDetailButtons(List<ExamQuestion> questions) {
 		for (ExamQuestion question : questions) {
 			JFXButton detailsButton = new JFXButton();

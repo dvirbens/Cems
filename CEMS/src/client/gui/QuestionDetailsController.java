@@ -20,6 +20,10 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.Question;
 
+/**
+ * QuestionDetailsController class handle screen with question details
+ *
+ */
 public class QuestionDetailsController implements EventHandler<WindowEvent>, Initializable {
 
 	@FXML
@@ -46,22 +50,40 @@ public class QuestionDetailsController implements EventHandler<WindowEvent>, Ini
 	private static Question question;
 	private static boolean isWindowOpend;
 
+	/**
+	 * @return question
+	 */
 	public static Question getQuestion() {
 		return question;
 	}
 
+	/**
+	 * set question
+	 * @param question
+	 */
 	public static void setQuestion(Question question) {
 		QuestionDetailsController.question = question;
 	}
 
+	/**
+	 * @return if the window is open or not
+	 */
 	public static boolean isWindowOpend() {
 		return isWindowOpend;
 	}
 
+	/**
+	 * set if the window is open or not
+	 * @param isWindowOpend
+	 */
 	public static void setWindowOpend(boolean isWindowOpend) {
 		QuestionDetailsController.isWindowOpend = isWindowOpend;
 	}
 
+	/**
+	 * closing window on click exit
+	 * @param event
+	 */
 	@FXML
 	void onClickExit(ActionEvent event) {
 		Node n = (Node) event.getSource();
@@ -71,6 +93,9 @@ public class QuestionDetailsController implements EventHandler<WindowEvent>, Ini
 
 	}
 
+	/**
+	 * opening the screen in javaFX
+	 */
 	public void start() {
 		Stage stage = new Stage();
 		AnchorPane mainPane;
@@ -94,6 +119,9 @@ public class QuestionDetailsController implements EventHandler<WindowEvent>, Ini
 
 	}
 
+	/**
+	 * set data in labels
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

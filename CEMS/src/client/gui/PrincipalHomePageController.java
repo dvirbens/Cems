@@ -18,6 +18,9 @@ public class PrincipalHomePageController implements Initializable{
     private Label labelName;
 
 
+	/**
+	 *	Set name label
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		

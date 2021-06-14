@@ -21,6 +21,10 @@ import javafx.scene.control.Label;
 import models.User;
 import models.User.ErrorType;
 
+/**
+ * LoginMenuController class handle the login menu screen.
+ *
+ */
 public class LoginMenuController implements Initializable {
 
 	@FXML
@@ -41,6 +45,10 @@ public class LoginMenuController implements Initializable {
 	@FXML
 	private Label labelStatus;
 
+	/**
+	 * On click try to login
+	 * @param event
+	 */
 	@FXML
 	void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
@@ -99,6 +107,9 @@ public class LoginMenuController implements Initializable {
 
 	}
 
+	/**
+	 * Setting default login input
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfUserName.setText("204459093");
