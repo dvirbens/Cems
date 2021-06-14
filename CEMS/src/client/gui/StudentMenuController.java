@@ -103,6 +103,7 @@ public class StudentMenuController implements Initializable {
 			if (setConfirmationPopup())
 			{
 				MainGuiController.getMenuHandler().setLoginMenu();
+				Client.logOutClient();
 				locked = false;
 				closed = true;
 			}
@@ -110,6 +111,7 @@ public class StudentMenuController implements Initializable {
 		
 		if (!locked) {
 			MainGuiController.getMenuHandler().setLoginMenu();
+			Client.logOutClient();
 		}
 	}
 

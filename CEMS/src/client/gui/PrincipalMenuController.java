@@ -42,6 +42,7 @@ public class PrincipalMenuController implements Initializable {
 
 	/**
 	 * This method show the screen Exam Pool
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -52,6 +53,7 @@ public class PrincipalMenuController implements Initializable {
 
 	/**
 	 * This method show the screen Question Pool
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -62,6 +64,7 @@ public class PrincipalMenuController implements Initializable {
 
 	/**
 	 * This method show the screen Overall Statistics
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -72,6 +75,7 @@ public class PrincipalMenuController implements Initializable {
 
 	/**
 	 * This method show the screen Time Extension Requests
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -82,15 +86,18 @@ public class PrincipalMenuController implements Initializable {
 
 	/**
 	 * This method show the screen Login
+	 * 
 	 * @param event
 	 */
 	@FXML
 	void onClickLogout(ActionEvent event) {
 		MainGuiController.getMenuHandler().setLoginMenu();
+		Client.logOutClient();
 	}
 
 	/**
 	 * painting the selected button
+	 * 
 	 * @param button
 	 */
 	private void paintSelectedButton(Buttons button) {
@@ -130,7 +137,7 @@ public class PrincipalMenuController implements Initializable {
 	}
 
 	/**
-	 *Set the name label
+	 * Set the name label
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -139,18 +146,17 @@ public class PrincipalMenuController implements Initializable {
 		labelWelcome.setText(LabelPrint);
 
 	}
-	
-	
 
-    /**
-     * Click on logo show menu
-     * @param event
-     */
-    @FXML
-    void onLogoClicked(MouseEvent event) {
+	/**
+	 * Click on logo show menu
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void onLogoClicked(MouseEvent event) {
 
-    	MainGuiController.getMenuHandler().setPrincipalMenu();
+		MainGuiController.getMenuHandler().setPrincipalMenu();
 
-    }
+	}
 
 }

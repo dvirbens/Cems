@@ -1,5 +1,7 @@
+
 package client.gui;
 
+import client.Client;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,6 +46,7 @@ public class MainGuiController {
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
+				Client.logOutClient();
 				System.exit(0);
 			}
 		});
@@ -71,12 +74,11 @@ public class MainGuiController {
 
 	/**
 	 * set menu handler
+	 * 
 	 * @param menuHandler
 	 */
 	public static void setMenuHandler(MenuHandler menuHandler) {
 		MainGuiController.menuHandler = menuHandler;
 	}
-	
-	
 
 }

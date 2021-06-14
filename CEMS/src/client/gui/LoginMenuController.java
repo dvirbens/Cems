@@ -1,6 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.GET_USER;
+import static common.ModelWrapper.Operation.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,6 +47,7 @@ public class LoginMenuController implements Initializable {
 
 	/**
 	 * On click try to login
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -68,7 +69,8 @@ public class LoginMenuController implements Initializable {
 				List<String> userInfo = new ArrayList<>();
 				userInfo.add(userID);
 				userInfo.add(password);
-				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, GET_USER);
+
+				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, LOG_IN);
 				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
 				User user = Client.getUser();
@@ -99,7 +101,7 @@ public class LoginMenuController implements Initializable {
 						}
 					}
 				} else {
-					lWrongInput.setText("User not found");
+					lWrongInput.setText("User not found or already connected");
 					lWrongInput.setVisible(true);
 				}
 			}

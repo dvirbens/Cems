@@ -77,6 +77,7 @@ public class TeacherMenuController implements Initializable {
 	@FXML
 	void onClickLogout(ActionEvent event) {
 		MainGuiController.getMenuHandler().setLoginMenu();
+		Client.logOutClient();
 	}
 
 	/**

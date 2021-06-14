@@ -1,34 +1,6 @@
 package server;
 
-import static common.ModelWrapper.Operation.ERROR_EXAM_NOT_EXIST;
-import static common.ModelWrapper.Operation.ERROR_INSERT_STUDENT_TO_EXAM;
-import static common.ModelWrapper.Operation.ERROR_STUDENT_ALREADY_IN_EXAM;
-import static common.ModelWrapper.Operation.EXAM_EXECUTE;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST;
-import static common.ModelWrapper.Operation.GET_EXAMS_LIST_BY_SUBJECT;
-import static common.ModelWrapper.Operation.GET_EXAM_BY_CODE;
-import static common.ModelWrapper.Operation.GET_EXAM_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_EXAM_IN_PROCESS;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_COURSE;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_CREATOR;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_EXECUTOR;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_STUDENT;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_LIST_BY_TEACHER;
-import static common.ModelWrapper.Operation.GET_EXECUTED_EXAM_STUDENT_LIST;
-import static common.ModelWrapper.Operation.GET_EXTENSION_REQUESTS;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_CODE;
-import static common.ModelWrapper.Operation.GET_QUESTION_LIST_BY_EXAM_ID;
-import static common.ModelWrapper.Operation.GET_SELECTED_ANSWERS;
-import static common.ModelWrapper.Operation.GET_SUBJECT_COURSE_LIST;
-import static common.ModelWrapper.Operation.GET_USER;
-import static common.ModelWrapper.Operation.INSERT_FINISHED_STUDENT;
-import static common.ModelWrapper.Operation.INSERT_STUDENT_TO_EXAM;
-import static common.ModelWrapper.Operation.START_EXAM_FAILD;
-import static common.ModelWrapper.Operation.START_EXAM_SUCCESS;
-import static common.ModelWrapper.Operation.STUDENT_TIME_EXTENSION;
-import static common.ModelWrapper.Operation.SUCCESSFUL_INSERT_CHECK;
+import static common.ModelWrapper.Operation.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -89,6 +61,8 @@ public class Server extends AbstractServer {
 	/** map for students in exam */
 	private static Map<String, List<StudentInExam>> studentInExam;
 
+	private static List<String> connectedUsers;
+
 	/** Indicate if the server is connected */
 	private static boolean isConnected = false;
 
@@ -114,6 +88,7 @@ public class Server extends AbstractServer {
 		examsInProcess = new HashMap<>();
 		studentInExam = new HashMap<>();
 		examsExtensions = new HashMap<>();
+		connectedUsers = new ArrayList<>();
 	}
 
 	/**
@@ -405,6 +380,49 @@ public class Server extends AbstractServer {
 			}
 			break;
 
+		case LOG_IN:
+			userInfo = (List<String>) modelWrapperFromClient.getElements();
+			boolean loogednIn = false;
+			String userID = userInfo.get(0);
+			String password = userInfo.get(1);
+
+			for (String loggedInUser : connectedUsers) {
+				if (loggedInUser.equals(userID)) {
+					loogednIn = true;
+				}
+			}
+
+			if (!loogednIn) {
+				user = databaseController.getUser(userID, password);
+				modelWrapperToClient = new ModelWrapper<>(user, LOG_IN);
+				connectedUsers.add(userID);
+				try {
+					client.sendToClient(modelWrapperToClient);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				modelWrapperToClient = new ModelWrapper<>(LOG_IN);
+				try {
+					client.sendToClient(modelWrapperToClient);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			break;
+
+		case LOG_OUT:
+			userID = (String) modelWrapperFromClient.getElement();
+			connectedUsers.remove(userID);
+			modelWrapperToClient = new ModelWrapper<>(LOG_OUT);
+			try {
+				client.sendToClient(modelWrapperToClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+
 		case GET_QUESTION_LIST_BY_SUBJECT:
 			String subjcet = (String) modelWrapperFromClient.getElement();
 			List<Question> questionListBySubject = databaseController.getQuestionList(subjcet);
@@ -427,7 +445,6 @@ public class Server extends AbstractServer {
 
 		case EDIT_EXAM:
 			List<Exam> oldNewExams = (List<Exam>) modelWrapperFromClient.getElements();
-			System.out.println(oldNewExams);
 			Exam oldExam = oldNewExams.get(0);
 			Exam updatedExam = oldNewExams.get(1);
 			databaseController.updateExam(oldExam, updatedExam);

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import common.ModelWrapper;
+import static common.ModelWrapper.Operation.*;
 import common.SubjectCourseCollection;
 import models.Exam;
 import models.ExamExtension;
@@ -178,6 +179,15 @@ public class Client extends AbstractClient {
 			case GET_USER:
 				User user = (User) modelWrapperFromServer.getElement();
 				setUser(user);
+				break;
+
+			case LOG_IN:
+				user = (User) modelWrapperFromServer.getElement();
+				setUser(user);
+				break;
+
+			case LOG_OUT:
+				setServerMessages("Logged out..");
 				break;
 
 			case GET_SUBJECT_COURSE_LIST:
@@ -575,6 +585,12 @@ public class Client extends AbstractClient {
 	 */
 	public static void setSelectedAnswers(String selectedAnswers) {
 		SelectedAnswers = selectedAnswers;
+	}
+
+	public static void logOutClient() {
+		String userID = Client.getUser().getUserID();
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, LOG_OUT);
+		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 	}
 
 }
