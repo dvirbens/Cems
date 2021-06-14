@@ -4,6 +4,7 @@ import static common.ModelWrapper.Operation.CREATE_EXAM;
 import static common.ModelWrapper.Operation.EDIT_EXAM;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,11 @@ import javafx.scene.layout.Pane;
 import models.Exam;
 import models.ExamQuestion;
 
+/**
+ * Control Screen when adding new exam or editing, display all of the question
+ * and the notes before completing the process
+ *
+ */
 public class ConfirmExamController implements Initializable {
 
 	@FXML
@@ -73,17 +79,33 @@ public class ConfirmExamController implements Initializable {
 	public ConfirmExamController() {
 	}
 
+	/**
+	 * Constructor for adding new exam
+	 * 
+	 * @param newExam
+	 * @param operation
+	 */
 	public ConfirmExamController(Exam newExam, String operation) {
 		ConfirmExamController.newExam = newExam;
 		ConfirmExamController.operation = operation;
 	}
 
+	/**
+	 * Constructor for edit exams
+	 * 
+	 * @param oldExam
+	 * @param newExam
+	 * @param operation
+	 */
 	public ConfirmExamController(Exam oldExam, Exam newExam, String operation) {
 		ConfirmExamController.newExam = newExam;
 		ConfirmExamController.oldExam = oldExam;
 		ConfirmExamController.operation = operation;
 	}
 
+	/**
+	 * This method load the fxml and display to the screen
+	 */
 	public void start() {
 		try {
 			Pane questionListPane = (Pane) FXMLLoader.load(getClass().getResource("ConfirmNewExamPage.fxml"));
@@ -93,12 +115,22 @@ public class ConfirmExamController implements Initializable {
 		}
 	}
 
+	/**
+	 * Handle back button, go into the create exam screen
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onClickBack(ActionEvent event) {
 		MainGuiController.getMenuHandler().setCreateExamScreen();
-
 	}
 
+	/**
+	 * Handle button "Create", Process all the variables and send request to server
+	 * in order to save or edit new exam in the database
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void onClickCreate(ActionEvent event) {
 		deletExamButtons();
@@ -124,6 +156,10 @@ public class ConfirmExamController implements Initializable {
 
 	}
 
+	/**
+	 * Deleting all of the exam button in order to handle "Not Serializable" Problem
+	 * when sending model to database
+	 */
 	private void deletExamButtons() {
 		newExam.setQuestionListButton(null);
 		newExam.setEditExamButton(null);
@@ -148,6 +184,9 @@ public class ConfirmExamController implements Initializable {
 		}
 	}
 
+	/**
+	 * This method load the table and set the data
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		tcID.setCellValueFactory(new PropertyValueFactory<ExamQuestion, String>("questionID"));

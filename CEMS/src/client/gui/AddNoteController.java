@@ -22,6 +22,10 @@ import javafx.stage.Stage;
 import models.ExamQuestion;
 import models.Question;
 
+/**
+ * AddNoteController class handle the screen of adding note by teacher. The
+ * teacher can add note to the student or to other teachers.
+ */
 public class AddNoteController implements Initializable {
 
 	@FXML
@@ -89,6 +93,12 @@ public class AddNoteController implements Initializable {
 
 	}
 
+	/**
+	 * Function that handle clicking "Add Note" button, adding the note into the
+	 * EditExamController or CreateExamController.
+	 * 
+	 * @param event handler
+	 */
 	@FXML
 	void onClickAddNote(ActionEvent event) {
 		String note = taNotes.getText();
@@ -153,6 +163,10 @@ public class AddNoteController implements Initializable {
 		AddNoteController.tvSelectedQuestion = tvSelectedQuestion;
 	}
 
+	/**
+	 * Setting ComboBox and text area of editable note
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		cbDisplayedFor.getItems().add("Students");

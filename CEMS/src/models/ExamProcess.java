@@ -20,6 +20,7 @@ public class ExamProcess implements Serializable {
 	private String course;
 	private String duration;
 	private String finishedStudentsCount;
+	private String teacherNote;
 	private ConnectionToClient teacherClient;
 	private WordFile manualFile;
 	private ExamType type;
@@ -32,6 +33,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * Constructor for ExamProcess
+	 * 
 	 * @param examId
 	 * @param date
 	 * @param time
@@ -41,10 +43,11 @@ public class ExamProcess implements Serializable {
 	 * @param course
 	 * @param duration
 	 */
-	public ExamProcess(String examId, String date, String time, String teacherID, String code, String subject,
-			String course, String duration) {
+	public ExamProcess(String examId, String teacherNote, String date, String time, String teacherID, String code,
+			String subject, String course, String duration) {
 		super();
 		this.examId = examId;
+		this.teacherNote = teacherNote;
 		this.date = date;
 		this.time = time;
 		this.teacherID = teacherID;
@@ -57,6 +60,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * Constructor2 for ExamProcess
+	 * 
 	 * @param examId
 	 * @param date
 	 * @param time
@@ -84,6 +88,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * Constructor3 for ExamProcess
+	 * 
 	 * @param examProcess
 	 */
 	public ExamProcess(ExamProcess examProcess) {
@@ -99,8 +104,7 @@ public class ExamProcess implements Serializable {
 		this.manualFile = examProcess.getManualFile();
 		this.type = examProcess.getType();
 	}
-	
-	
+
 	/**
 	 * @return teacher id
 	 */
@@ -110,6 +114,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set teacher id
+	 * 
 	 * @param teacherID
 	 */
 	public void setTeacherID(String teacherID) {
@@ -132,6 +137,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set date
+	 * 
 	 * @param date
 	 */
 	public void setDate(String date) {
@@ -147,6 +153,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set exam code
+	 * 
 	 * @param code
 	 */
 	public void setCode(String code) {
@@ -155,6 +162,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set exam id
+	 * 
 	 * @param examId
 	 */
 	public void setexamId(String examId) {
@@ -170,6 +178,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set exam type
+	 * 
 	 * @param type
 	 */
 	public void setType(ExamType type) {
@@ -185,6 +194,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set manual test file
+	 * 
 	 * @param manualFile
 	 */
 	public void setManualFile(WordFile manualFile) {
@@ -200,6 +210,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set time
+	 * 
 	 * @param time
 	 */
 	public void setTime(String time) {
@@ -215,6 +226,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set exam id
+	 * 
 	 * @param examId
 	 */
 	public void setExamId(String examId) {
@@ -230,6 +242,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set subject
+	 * 
 	 * @param subject
 	 */
 	public void setSubject(String subject) {
@@ -245,6 +258,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set course
+	 * 
 	 * @param course
 	 */
 	public void setCourse(String course) {
@@ -260,6 +274,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set duration
+	 * 
 	 * @param duration
 	 */
 	public void setDuration(String duration) {
@@ -275,6 +290,7 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set teacher client
+	 * 
 	 * @param teacherClient
 	 */
 	public void setTeacherClient(ConnectionToClient teacherClient) {
@@ -290,10 +306,19 @@ public class ExamProcess implements Serializable {
 
 	/**
 	 * set count of finished students
+	 * 
 	 * @param finishedStudentsCount
 	 */
 	public void setFinishedStudentsCount(String finishedStudentsCount) {
 		this.finishedStudentsCount = finishedStudentsCount;
+	}
+	
+	public String getTeacherNote() {
+		return teacherNote;
+	}
+
+	public void setTeacherNote(String teacherNote) {
+		this.teacherNote = teacherNote;
 	}
 
 	/**

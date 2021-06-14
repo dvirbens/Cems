@@ -29,7 +29,8 @@ import models.ExamExtension;
 import models.ExamProcess;
 
 /**
- * ExamManagementWindow class handle exam management screen for a teacher that started an exam.
+ * ExamManagementWindow class handle exam management screen for a teacher that
+ * started an exam.
  *
  */
 public class ExamManagementWindow {
@@ -37,6 +38,7 @@ public class ExamManagementWindow {
 	private Stopwatch sw;
 	private JFXButton freezeExam;
 	private JFXButton askForExstension;
+	private JFXButton teacherNoteButton;
 	private TextArea taCause;
 	private Label codeLabel;
 	private Label timerLabel;
@@ -76,6 +78,7 @@ public class ExamManagementWindow {
 
 	/**
 	 * Setting components of the screen
+	 * 
 	 * @param examManagement
 	 */
 	private void setVBoxComponents(VBox examManagement) {
@@ -106,6 +109,7 @@ public class ExamManagementWindow {
 
 				if (requestFlag)
 					requestSection.setVisible(false);
+
 			}
 
 		});
@@ -131,11 +135,40 @@ public class ExamManagementWindow {
 
 		});
 
+		teacherNoteButton = new JFXButton();
+		teacherNoteButton.setPrefSize(200, 30);
+		teacherNoteButton
+				.setStyle("-fx-background-color:#48a832;" + "-fx-background-radius:10;" + "-fx-text-fill:white;");
+		teacherNoteButton.setText("Teacher's note");
+		teacherNoteButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				String note = examProcess.getTeacherNote();
+
+				try {
+					VBox noteWindow = new VBox();
+					TextArea taNote = new TextArea(note);
+					noteWindow.getChildren().add(taNote);
+					Scene scene = new Scene(noteWindow, 300, 300);
+					Stage stage = new Stage();
+					stage.setScene(scene);
+					stage.setTitle("Teacher note");
+					stage.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		});
+
 		taCause = new TextArea();
 		VBox.setVgrow(taCause, Priority.NEVER);
-		taCause.setMaxSize(250, 250);
+		taCause.setMaxSize(250, 125);
 		taCause.setVisible(false);
 		taCause.setPromptText("Cause");
+
 		JFXTextField tfTime = new JFXTextField();
 		tfTime.setPromptText("time");
 		JFXButton sendRequest = new JFXButton("Send");
@@ -173,6 +206,7 @@ public class ExamManagementWindow {
 		examManagement.getChildren().add(codeLabel);
 		examManagement.getChildren().add(timerLabel);
 		examManagement.getChildren().add(freezeExam);
+		examManagement.getChildren().add(teacherNoteButton);
 		examManagement.getChildren().add(askForExstension);
 		examManagement.getChildren().add(taCause);
 		examManagement.getChildren().add(requestSection);
@@ -195,6 +229,8 @@ public class ExamManagementWindow {
 			askForExstension.setVisible(false);
 			timerLabel.setFont(new Font(50));
 			timerLabel.setText("Exam Finished");
+			teacherNoteButton.setVisible(false);
+			taCause.setVisible(false);
 			isClosed = true;
 		}
 	}
@@ -208,9 +244,9 @@ public class ExamManagementWindow {
 		private Timer timer;
 		private Label label;
 
-		
 		/**
 		 * Constructor for Stopwatch
+		 * 
 		 * @param min
 		 * @param label
 		 */
@@ -241,6 +277,10 @@ public class ExamManagementWindow {
 							label.setText(String.format("%02d:%02d\n", min, sec));
 							if (min == 0 && sec == 0) {
 								stopExam();
+
+								if (requestFlag)
+									requestSection.setVisible(false);
+
 							} else if (sec == 0) {
 								min--;
 								sec = 59;

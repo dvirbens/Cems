@@ -24,7 +24,6 @@ public class StartExamController {
 	@FXML
 	void onClickComputerized(ActionEvent event) {
 		MainGuiController.getMenuHandler().setComputerizedScreen();
-
 	}
 	/**
 	 * Set click manual screen

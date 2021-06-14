@@ -32,9 +32,9 @@ import models.Exam;
 import models.ExamProcess;
 
 /**
- * ComputerizedExamController class handle the start computerized exam screen of the teacher.
- * It shows table of the exams ready to start and allow the teacher to choose the code of 
- * the exam.
+ * ComputerizedExamController class handle the start computerized exam screen of
+ * the teacher. It shows table of the exams ready to start and allow the teacher
+ * to choose the code of the exam.
  */
 public class ComputerizedExamController implements Initializable {
 
@@ -94,6 +94,7 @@ public class ComputerizedExamController implements Initializable {
 
 	/**
 	 * Method for select subject
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -114,6 +115,7 @@ public class ComputerizedExamController implements Initializable {
 
 	/**
 	 * Method that create the details buttons for each row
+	 * 
 	 * @param exams
 	 * @return list of Exam objects with buttons
 	 */
@@ -141,6 +143,7 @@ public class ComputerizedExamController implements Initializable {
 
 	/**
 	 * Method for exam course selection
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -157,9 +160,9 @@ public class ComputerizedExamController implements Initializable {
 
 	}
 
-	
 	/**
 	 * Method for start button
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -190,9 +193,10 @@ public class ComputerizedExamController implements Initializable {
 			String subject = tvExamPool.getFocusModel().getFocusedItem().getSubject();
 			String course = tvExamPool.getFocusModel().getFocusedItem().getCourse();
 			String duration = tvExamPool.getFocusModel().getFocusedItem().getDuration();
+			String teacherNote = tvExamPool.getFocusModel().getFocusedItem().getTeacherNote();
 
-			ExamProcess examProcess = new ExamProcess(examID, currentDate, currentTime, loggedInTeacherID, code,
-					subject, course, duration);
+			ExamProcess examProcess = new ExamProcess(examID, teacherNote, currentDate, currentTime, loggedInTeacherID,
+					code, subject, course, duration);
 			ModelWrapper<ExamProcess> modelWrapper = new ModelWrapper<>(examProcess, START_EXAM);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
