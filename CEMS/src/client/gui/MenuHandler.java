@@ -251,9 +251,9 @@ public class MenuHandler {
 		}
 	}
 	
-	public void setQuestionManagementScreen() {
+	public void setTeacherQuestionPoolScreen() {
 		try {
-			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("QuestionManagement.fxml"));
+			Pane enterExamPane = (Pane) FXMLLoader.load(getClass().getResource("TeacherQuestionPool.fxml"));
 			mainFrame.setCenter(enterExamPane);
 		} catch (IOException e) {
 			e.printStackTrace();

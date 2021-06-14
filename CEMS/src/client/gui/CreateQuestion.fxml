@@ -24,7 +24,7 @@
                   <Label fx:id="subjectError" textFill="RED" />
                </children>
             </VBox>
-            <VBox alignment="TOP_RIGHT" prefHeight="600.0" prefWidth="600.0">
+            <VBox alignment="TOP_RIGHT" prefHeight="590.0" prefWidth="600.0">
                <children>
                   <TextArea fx:id="taQuestion" prefHeight="300.0" promptText="Question description" />
                   <Label fx:id="descriptionError" alignment="TOP_RIGHT" contentDisplay="RIGHT" textFill="RED" />
@@ -55,5 +55,6 @@
             </VBox>
          </children>
       </VBox>
+      <JFXButton fx:id="btnBack" layoutX="26.0" layoutY="14.0" onAction="#onClickBack" style="-fx-background-color: #48a832; -fx-background-radius: 10;" text="Back" textFill="WHITE" />
    </children>
 </Pane>

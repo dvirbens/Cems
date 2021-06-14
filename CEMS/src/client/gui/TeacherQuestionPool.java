@@ -24,7 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Question;
 
-public class EditQuestionController implements Initializable {
+public class TeacherQuestionPool implements Initializable {
 
 	@FXML
 	public TableView<Question> tvQuestionPool;
@@ -43,6 +43,9 @@ public class EditQuestionController implements Initializable {
 
 	@FXML
 	private JFXComboBox<String> cbQuestionSubject;
+
+	@FXML
+	private JFXButton btnCreateQuestion;
 
 	@FXML
 	void onSubjectSelected(ActionEvent event) {
@@ -111,6 +114,11 @@ public class EditQuestionController implements Initializable {
 		tcTeacherPool.setCellValueFactory(new PropertyValueFactory<Question, String>("teacherName"));
 		tcEdit.setCellValueFactory(new PropertyValueFactory<Question, JFXButton>("editButton"));
 
+	}
+
+	@FXML
+	void onClickCreateQuestion(ActionEvent event) {
+		MainGuiController.getMenuHandler().setCreateQuestionScreen();
 	}
 
 	public static boolean isNumeric(String strNum) {

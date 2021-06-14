@@ -37,7 +37,7 @@ public class TeacherMenuController implements Initializable {
 	private Label labelWelcome;
 
 	enum Buttons {
-		CREATE_EXAM, QUESTION_MANAGEMENT, EXAM_STATISTIC, START_EXAM, GRADE_APPROVAL
+		CREATE_EXAM, QUESTION_POOL, EXAM_STATISTIC, START_EXAM, GRADE_APPROVAL
 	}
 
 	@FXML
@@ -49,8 +49,8 @@ public class TeacherMenuController implements Initializable {
 
 	@FXML
 	void onClickCreateQuestion(ActionEvent event) {
-		paintSelectedButton(Buttons.QUESTION_MANAGEMENT);
-		MainGuiController.getMenuHandler().setQuestionManagementScreen();
+		paintSelectedButton(Buttons.QUESTION_POOL);
+		MainGuiController.getMenuHandler().setTeacherQuestionPoolScreen();
 	}
 
 	@FXML
@@ -87,7 +87,7 @@ public class TeacherMenuController implements Initializable {
 			btnGradeApproval.setStyle("-fx-background-color:#333333");
 			break;
 
-		case QUESTION_MANAGEMENT:
+		case QUESTION_POOL:
 			btnCreateExam.setStyle("-fx-background-color:#333333");
 			btnCreateQuestion.setStyle("-fx-background-color:#48a832");
 			btnStartExam.setStyle("-fx-background-color:#333333");

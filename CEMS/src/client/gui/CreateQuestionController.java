@@ -20,12 +20,12 @@ import models.Question;
 import models.User;
 
 /**
- * CreateQuestionController class handle create question by teacher screen
- * It allows the teacher to add the question, the 4 optional answers and the right answer
- * In addition, the teacher need to choose subject.
+ * CreateQuestionController class handle create question by teacher screen It
+ * allows the teacher to add the question, the 4 optional answers and the right
+ * answer In addition, the teacher need to choose subject.
  */
 public class CreateQuestionController implements Initializable {
-	
+
 	@FXML
 	private JFXComboBox<String> cbSubject;
 
@@ -75,13 +75,17 @@ public class CreateQuestionController implements Initializable {
 	private Label message;
 
 	@FXML
+	private JFXButton btnBack;
+
+	@FXML
 	void cbCorrect(ActionEvent event) {
 
 	}
 
 	/**
-	 * Method for create question button, checking the input and if success sending add  question
-	 * request to the server
+	 * Method for create question button, checking the input and if success sending
+	 * add question request to the server
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -162,6 +166,10 @@ public class CreateQuestionController implements Initializable {
 
 	}
 
+	@FXML
+	void onClickBack(ActionEvent event) {
+		MainGuiController.getMenuHandler().setTeacherQuestionPoolScreen();
+	}
 
 	/**
 	 * Adding 4 options combo box on initialize
