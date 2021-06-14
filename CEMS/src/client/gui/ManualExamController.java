@@ -28,6 +28,10 @@ import javafx.stage.FileChooser;
 import models.ExamProcess;
 import models.WordFile;
 
+/**
+ * ManualExamController class handle the screen of starting manual exam in teacher menu
+ *
+ */
 public class ManualExamController implements Initializable {
 
 	@FXML
@@ -56,6 +60,10 @@ public class ManualExamController implements Initializable {
 
 	private File file;
 
+	/**
+	 * Combo box for subject
+	 * @param event
+	 */
 	@FXML
 	void onClickSubject(ActionEvent event) {
 		String subjectSelected = cbSubject.getSelectionModel().getSelectedItem();
@@ -63,6 +71,10 @@ public class ManualExamController implements Initializable {
 		cbCourse.getItems().addAll(Client.getSubjectCollection().getCourseListBySubject(subjectSelected));
 	}
 
+	/**
+	 * Starting manual exam on click
+	 * @param event
+	 */
 	@FXML
 	void onClickStartExam(ActionEvent event) {
 		Random rand = new Random();
@@ -107,6 +119,10 @@ public class ManualExamController implements Initializable {
 
 	}
 
+	/**
+	 * Upload file on click
+	 * @param event
+	 */
 	@FXML
 	void onClickUpload(ActionEvent event) {
 		FileChooser fc = new FileChooser();
@@ -118,6 +134,9 @@ public class ManualExamController implements Initializable {
 		}
 	}
 
+	/**
+	 * @return WordFile instance with file from user
+	 */
 	private WordFile getWordFile() {
 		FileInputStream fileIn;
 		WordFile wordFile = new WordFile();
@@ -144,6 +163,9 @@ public class ManualExamController implements Initializable {
 		return null;
 	}
 
+	/**
+	 * combobox init
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		cbSubject.getItems().addAll(Client.getSubjectCollection().getSubjects());
