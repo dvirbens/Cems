@@ -1,10 +1,11 @@
 package client;
 
+import static common.ModelWrapper.Operation.LOG_OUT;
+
 import java.io.IOException;
 import java.util.List;
 
 import common.ModelWrapper;
-import static common.ModelWrapper.Operation.*;
 import common.SubjectCourseCollection;
 import models.Exam;
 import models.ExamExtension;
@@ -300,6 +301,7 @@ public class Client extends AbstractClient {
 	 * @param msg: object that client send to server in order to get message back.
 	 */
 	public void handleMessageFromClientUI(Object msg) {
+
 		try {
 			openConnection();
 			awaitResponse = true;
@@ -588,7 +590,8 @@ public class Client extends AbstractClient {
 	}
 
 	/**
-	 * Send request to the server in order to remove the user from the connected user list
+	 * Send request to the server in order to remove the user from the connected
+	 * user list
 	 */
 	public static void logOutClient() {
 		String userID = Client.getUser().getUserID();
