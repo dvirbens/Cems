@@ -1,11 +1,7 @@
-import models.User;
+package client;
 
 public interface IClient {
 
 	void handleMessageFromClientUI(Object msg);
-
-	User getUser();
-
-	void setUser(User user);
 
 }
