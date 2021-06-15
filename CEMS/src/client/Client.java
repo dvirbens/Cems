@@ -27,7 +27,7 @@ import ocsf.client.AbstractClient;
  *         Shenhav Hezi, Yaakov Shitrit
  * 
  */
-public class Client extends AbstractClient implements IClient {
+public class Client extends AbstractClient {
 
 	/**
 	 * Value that's indicating if the server answer back to client, in order to stop

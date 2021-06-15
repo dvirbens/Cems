@@ -1,26 +1,31 @@
 package client;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
+import client.gui.LoginMenuController;
+import javafx.event.ActionEvent;
 import models.Database;
 import models.User;
 import models.User.ErrorType;
+import models.User.UserType;
 import server.DatabaseController;
 import server.ServerEventListener;
+import static org.mockito.Mockito.*;
 
 class LoginTest {
 
 	private Database database;
 	private DatabaseController dbController;
+	private Client client;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -37,16 +42,14 @@ class LoginTest {
 				System.out.println(status);
 			}
 		});
+		client = mock(Client.class);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 	}
 
-	@Test
-	void onClickLoginTestClientUI() {
-
-	}
+	////////////////////// SERVER SIDE/////////////////////////////
 
 	@Test
 	void databaseControllerGetUserSuccessTest() {
@@ -97,6 +100,28 @@ class LoginTest {
 			assertFalse(true);
 			e.printStackTrace();
 		}
+	}
+
+	////////////////////// CLIENT SIDE/////////////////////////////
+
+	@Test
+	void onClickLoginTestClientUI() {
+		Client client = mock(Client.class);
+		String userID = "204459093";
+		String password = "1234";
+		String firstName = "Arik";
+		String lastName = "Zagdon";
+		String email = "arikz15@gmail.com";
+		UserType type = UserType.Teacher;
+		User user = new User(userID, password, firstName, lastName, email, type);
+		when(Client.getUser()).thenReturn(user);
+
+		LoginMenuController loginMenuController = new LoginMenuController();
+		loginMenuController.onClickLogin(new ActionEvent());
+
+		User loggedInUser = Client.getUser();
+		System.out.println(loggedInUser);
+
 	}
 
 }

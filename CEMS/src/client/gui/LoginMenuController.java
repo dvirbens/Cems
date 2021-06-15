@@ -51,7 +51,7 @@ public class LoginMenuController implements Initializable {
 	 * @param event
 	 */
 	@FXML
-	void onClickLogin(ActionEvent event) {
+	public void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
 		String password = tfPassword.getText();
 
@@ -70,9 +70,11 @@ public class LoginMenuController implements Initializable {
 				userInfo.add(userID);
 				userInfo.add(password);
 
+				//Sending request to the server via ClientUI
 				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, LOG_IN);
 				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
+				//Getting user from Client
 				User user = Client.getUser();
 				if (user != null) {
 					if (user.getUserID() != null) {
