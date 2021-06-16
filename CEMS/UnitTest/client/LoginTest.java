@@ -121,7 +121,6 @@ class LoginTest {
 
 		User loggedInUser = Client.getUser();
 		System.out.println(loggedInUser);
-
 	}
 
 }
