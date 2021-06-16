@@ -33,7 +33,8 @@ import models.ExecutedExam;
 import models.StudentExecutedExam;
 
 /**
- * ManualGradeApproveStudentListController class handle manual grade approval screen
+ * ManualGradeApproveStudentListController class handle manual grade approval
+ * screen
  *
  */
 public class ManualGradeApproveStudentListController implements Initializable {
@@ -74,6 +75,7 @@ public class ManualGradeApproveStudentListController implements Initializable {
 
 	/**
 	 * Constructor for ManualGradeApproveStudentListController class
+	 * 
 	 * @param executedExam
 	 */
 	public ManualGradeApproveStudentListController(ExecutedExam executedExam) {
@@ -85,7 +87,8 @@ public class ManualGradeApproveStudentListController implements Initializable {
 	 */
 	public void start() {
 		try {
-			Pane studentListPane = (Pane) FXMLLoader.load(getClass().getResource("ManualGradeApprovalStudentList.fxml"));
+			Pane studentListPane = (Pane) FXMLLoader
+					.load(getClass().getResource("ManualGradeApprovalStudentList.fxml"));
 			MainGuiController.getMenuHandler().getMainFrame().setCenter(studentListPane);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -94,6 +97,7 @@ public class ManualGradeApproveStudentListController implements Initializable {
 
 	/**
 	 * Method for back button: set the previous screen(ExecutedExams)
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -103,6 +107,7 @@ public class ManualGradeApproveStudentListController implements Initializable {
 
 	/**
 	 * handle saving of grades after click
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -112,7 +117,7 @@ public class ManualGradeApproveStudentListController implements Initializable {
 
 			setNewGradeChanges();
 
-			double[] avgAndMedian = getAvarageAndMedian();
+			double[] avgAndMedian = getAvarageAndMedian(executedExamStudentList);
 			StudentExecutedExam sampleExecutedExamStudent = executedExamStudentList.get(0);
 			String examID = sampleExecutedExamStudent.getExamID();
 			String subject = sampleExecutedExamStudent.getSubject();
@@ -138,7 +143,6 @@ public class ManualGradeApproveStudentListController implements Initializable {
 			executedExamStudent.setGetCopy(null);
 			executedExamStudent.setTfGrade(null);
 			executedExamStudent.setTfComment(null);
-
 		}
 
 		ModelWrapper<StudentExecutedExam> modelWrapper2 = new ModelWrapper<>(executedExamStudentList,
@@ -163,11 +167,11 @@ public class ManualGradeApproveStudentListController implements Initializable {
 	/**
 	 * @return average and median
 	 */
-	private double[] getAvarageAndMedian() {
+	public double[] getAvarageAndMedian(List<StudentExecutedExam> studentList) {
 		List<Integer> studentsGrade = new ArrayList<>();
 		int sum = 0;
 
-		for (StudentExecutedExam student : executedExamStudentList) {
+		for (StudentExecutedExam student : studentList) {
 			int studentGrade = Integer.valueOf(student.getGrade());
 			studentsGrade.add(studentGrade);
 			sum += studentGrade;
@@ -197,7 +201,7 @@ public class ManualGradeApproveStudentListController implements Initializable {
 	}
 
 	/**
-	 *Setting the table and inserting data
+	 * Setting the table and inserting data
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -225,6 +229,7 @@ public class ManualGradeApproveStudentListController implements Initializable {
 
 	/**
 	 * Adding buttons to objects
+	 * 
 	 * @param executedExamStudentList
 	 * @return list of StudentExecutedExam with buttons
 	 */

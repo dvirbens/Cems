@@ -33,9 +33,9 @@ import models.ExecutedExam;
 import models.StudentExecutedExam;
 
 /**
- *	ComputerizedGradeApproveStudentListController class hande the grade approval screen of the Teacher.
- *	It shows the teacher the grade and alert value and let the teacher change the grade
- *	and add comment for each student.
+ * ComputerizedGradeApproveStudentListController class hande the grade approval
+ * screen of the Teacher. It shows the teacher the grade and alert value and let
+ * the teacher change the grade and add comment for each student.
  */
 public class ComputerizedGradeApproveStudentListController implements Initializable {
 
@@ -75,6 +75,7 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 
 	/**
 	 * Constructor for ComputerizedGradeApproveStudentListController class
+	 * 
 	 * @param executedExam
 	 */
 	public ComputerizedGradeApproveStudentListController(ExecutedExam executedExam) {
@@ -86,7 +87,8 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 	 */
 	public void start() {
 		try {
-			Pane studentListPane = (Pane) FXMLLoader.load(getClass().getResource("ComputerizedGradeApprovalStudentList.fxml"));
+			Pane studentListPane = (Pane) FXMLLoader
+					.load(getClass().getResource("ComputerizedGradeApprovalStudentList.fxml"));
 			MainGuiController.getMenuHandler().getMainFrame().setCenter(studentListPane);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -95,6 +97,7 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 
 	/**
 	 * Method for back button: set the previous screen(setGradeApprovalScreen)
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -102,9 +105,9 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 		MainGuiController.getMenuHandler().setGradeApprovalScreen();
 	}
 
-	
 	/**
 	 * Method for save button, save the data and submit to server
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -114,7 +117,7 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 
 			setNewGradeChanges();
 
-			double[] avgAndMedian = getAvarageAndMedian();
+			double[] avgAndMedian = getAvarageAndMedian(executedExamStudentList);
 			StudentExecutedExam sampleExecutedExamStudent = executedExamStudentList.get(0);
 			String examID = sampleExecutedExamStudent.getExamID();
 			String subject = sampleExecutedExamStudent.getSubject();
@@ -165,11 +168,11 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 	/**
 	 * @return average and median
 	 */
-	private double[] getAvarageAndMedian() {
+	public double[] getAvarageAndMedian(List<StudentExecutedExam> studentList) {
 		List<Integer> studentsGrade = new ArrayList<>();
 		int sum = 0;
 
-		for (StudentExecutedExam student : executedExamStudentList) {
+		for (StudentExecutedExam student : studentList) {
 			int studentGrade = Integer.valueOf(student.getGrade());
 			studentsGrade.add(studentGrade);
 			sum += studentGrade;
@@ -183,6 +186,11 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 			}
 		});
 
+		if (studentsGrade.isEmpty()) {
+			double[] avgAndMedian = { 0.0, 0.0 };
+			return avgAndMedian;
+		}
+
 		double avg = sum / studentsGrade.size();
 		double median;
 
@@ -190,7 +198,8 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 		if (n % 2 == 0) {
 			int firstStudentGrade = studentsGrade.get((n / 2) - 1);
 			int secondStudentGrade = studentsGrade.get((n / 2));
-			median = (firstStudentGrade + secondStudentGrade) / 2;
+			median = firstStudentGrade + secondStudentGrade;
+			median /= 2;
 		} else {
 			median = studentsGrade.get(((n + 1) / 2) - 1);
 		}
@@ -227,6 +236,7 @@ public class ComputerizedGradeApproveStudentListController implements Initializa
 
 	/**
 	 * Update student grade
+	 * 
 	 * @param executedExamStudentList list of student executed exams
 	 * @return the list after update
 	 */

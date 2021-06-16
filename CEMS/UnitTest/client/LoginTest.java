@@ -25,7 +25,6 @@ class LoginTest {
 
 	private Database database;
 	private DatabaseController dbController;
-	private Client client;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -42,7 +41,6 @@ class LoginTest {
 				System.out.println(status);
 			}
 		});
-		client = mock(Client.class);
 	}
 
 	@AfterEach
@@ -107,6 +105,7 @@ class LoginTest {
 	@Test
 	void onClickLoginTestClientUI() {
 		Client client = mock(Client.class);
+		
 		String userID = "204459093";
 		String password = "1234";
 		String firstName = "Arik";
@@ -114,6 +113,7 @@ class LoginTest {
 		String email = "arikz15@gmail.com";
 		UserType type = UserType.Teacher;
 		User user = new User(userID, password, firstName, lastName, email, type);
+		
 		when(Client.getUser()).thenReturn(user);
 
 		LoginMenuController loginMenuController = new LoginMenuController();
