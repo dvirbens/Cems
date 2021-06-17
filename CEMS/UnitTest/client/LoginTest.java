@@ -47,12 +47,15 @@ class LoginTest {
 	void tearDown() throws Exception {
 	}
 
-	////////////////////// SERVER SIDE/////////////////////////////
+	
+	
+	///////////////////////////////////////////////// SERVER SIDE ////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Connect to database, testing if the user pull from database input: userID =
-	 * 204459093 , password = 1234 Expected: user = {userID = 204459093 , firstName
-	 * = Arik , lastName = Zagdon , Email = Arikz15@gmail.com}
+	 * method under testing: GetUser 
+	 * Connect to database, testing if the user pull from database 
+	 * input: userID = 204459093 , password = 1234 
+	 * Expected: user = {userID = 204459093 , firstName = Arik , lastName = Zagdon , Email = Arikz15@gmail.com}
 	 */
 	@Test
 	void databaseControllerGetUserSuccessTest() {
@@ -70,9 +73,10 @@ class LoginTest {
 	}
 
 	/**
-	 * Connect to database, testing if user ins't exist. input: userID = 1234 ,
-	 * password = 0000 // user ID isn't exist in database Expected:
-	 * ErrorType.WRONG_ID // indicating that entered id isn't exist
+	 * method under testing: GetUser 
+	 * Connect to database, testing if user ins't exist. 
+	 * input: userID = 1234 , password = 0000 // user ID isn't exist in database 
+	 * Expected: ErrorType.WRONG_ID // indicating that entered id isn't exist
 	 */
 	@Test
 	void databaseControllerUserNotExist() {
@@ -87,10 +91,10 @@ class LoginTest {
 	}
 
 	/**
-	 * Connect to database, testing if user enter wrong password input: userID =
-	 * 204459093 , password = 0000 // userID and password isn't match Expected:
-	 * ErrorType.WRONG_PASSWORD // indicating that entered id and password doesn't
-	 * match.
+	 * method under testing: GetUser 
+	 * Connect to database, testing if user enter wrong password 
+	 * input: userID = 204459093 , password = 0000 // userID and password isn't match 
+	 * Expected: ErrorType.WRONG_PASSWORD // indicating that entered id and password doesn't match.
 	 */
 	@Test
 	void databaseControllerWrongPassword() {
@@ -105,8 +109,10 @@ class LoginTest {
 	}
 
 	/**
-	 * Connect to database, testing if user enter null on the id and password input:
-	 * userID = null , password = null Expected: throw exception
+	 * method under testing: GetUser 
+	 * Connect to database, testing if user enter null on the id and password 
+	 * input: userID = null , password = null 
+	 * Expected: throw exception
 	 */
 	@Test
 	void databaseControllerNullUser() {
@@ -119,14 +125,17 @@ class LoginTest {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
-	////////////////////// CLIENT SIDE/////////////////////////////
+	////////////////////////////////////////////////////////// CLIENT SIDE //////////////////////////////////////////////////////////////
 
 	/**
-	 * method under testing: loginUser Test for login process, separate server side
-	 * operations by handling method "handleMessageFromClientUI" input: userID =
-	 * 204459093, password = 1234 expected: user {userID = 204459093, password =
-	 * 1234, firstName = Arik, lastName = Zagdon, email = arikz15@gmail.com}
+	 * method under testing: loginUser 
+	 * Test for login process, separate server side
+	 * operations by handling method "handleMessageFromClientUI" 
+	 * input: userID = 204459093, password = 1234 
+	 * expected: user {userID = 204459093, password = 1234, firstName = Arik, lastName = Zagdon, email = arikz15@gmail.com}
 	 */
 	@Test
 	void loginTestSuccess() {
@@ -162,9 +171,11 @@ class LoginTest {
 	}
 
 	/**
-	 * method under testing: loginUser Test for login process, when the server is
-	 * offline, input: userID = 308315035, password = 1234 expected: null (the
-	 * method print to the UI server is offline)
+	 * method under testing: loginUser 
+	 * Test for login process, when the server is
+	 * offline, 
+	 * input: userID = 308315035, password = 1234 
+	 * expected: null (the method print to the UI server is offline)
 	 */
 	@Test
 	void loginTestServerIsNotConnected() {
@@ -185,9 +196,10 @@ class LoginTest {
 	}
 
 	/**
-	 * method under testing: loginUser Test for login process, when the entered user
-	 * is empty input: userID = "" (empty), password = 1234 expected: null (the
-	 * method print to the UI wrong user id)
+	 * method under testing: loginUser 
+	 * Test for login process, when the entered user is empty 
+	 * input: userID = "" (empty), password = 1234 
+	 * expected: null (the method print to the UI wrong user id)
 	 */
 	@Test
 	void loginTestUserIDisEmpty() {
@@ -209,9 +221,10 @@ class LoginTest {
 	}
 
 	/**
-	 * method under testing: loginUser Test for login process , when the entered
-	 * password is empty input: userID = 204459093 , password = "" (empty) expected:
-	 * null (the method print to the UI wrong password)
+	 * method under testing: loginUser 
+	 * Test for login process , when the entered password is empty 
+	 * input: userID = 204459093 , password = "" (empty) 
+	 * expected: null (the method print to the UI wrong password)
 	 */
 	@Test
 	void loginTestPasswordisEmpty() {
@@ -232,9 +245,10 @@ class LoginTest {
 	}
 
 	/**
-	 * method under testing: onClickLogin Test for click button "login" , when the
-	 * entered password is wrong input: userID = 204459093 , password = "5555"
-	 * (worng password) expected: user error type = wrong password
+	 * method under testing: onClickLogin
+	 * Test for click button "login" , when the entered password is wrong 
+	 * input: userID = 204459093 , password = "5555" (worng password) 
+	 * expected: user error type = wrong password
 	 */
 	@Test
 	void loginTestWrongPassword() {
@@ -264,9 +278,10 @@ class LoginTest {
 	}
 	
 	/**
-	 * method under testing: onClickLogin Test for click button "login" , when the
-	 * entered id is wrong input: userID = 313131435(worng id) , password = "1234"
-	 *  expected: user error type = wrong ID
+	 * method under testing: onClickLogin
+	 * Test for click button "login" , when the entered id is wrong 
+	 * input: userID = 313131435(worng id) , password = "1234"
+	 * expected: user error type = wrong ID
 	 */
 	@Test
 	void loginTestId() {
