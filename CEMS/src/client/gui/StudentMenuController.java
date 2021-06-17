@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import client.Client;
+import client.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -161,7 +162,7 @@ public class StudentMenuController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		String name = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+		String name = ClientController.getClientUI().getUser().getFirstName() + " " + ClientController.getClientUI().getUser().getLastName();
 		String LabelPrint = "Welcome, " + name;
 		labelWelcome.setText(LabelPrint);
 	}

@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
@@ -90,7 +91,9 @@ public class CreateQuestionController implements Initializable {
 	 */
 	@FXML
 	void onClickCreateQuestion(ActionEvent event) {
-		User teacherUser = Client.getUser();
+		
+		
+		User teacherUser = ClientController.getClientUI().getUser();
 		String details = taQuestion.getText();
 		String answer1 = taAnswer1.getText();
 		String answer2 = taAnswer2.getText();

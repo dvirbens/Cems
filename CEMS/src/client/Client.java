@@ -15,7 +15,6 @@ import models.ExecutedExam;
 import models.Question;
 import models.StudentExecutedExam;
 import models.User;
-import models.User.UserType;
 import ocsf.client.AbstractClient;
 
 //
@@ -80,16 +79,11 @@ public class Client extends AbstractClient {
 	/** Value that hold the messages server side sent. */
 	private static String serverMessages;
 
-	/** Value that hold the user, use to login and and open appropriate menu */
-	private static User user;
-
 	/** value that represent the time extension to the student exam. */
 	private static long timeExtension = 0;
 
 	/** Value that hold the user, use to login and and open appropriate menu. */
 	private static SubjectCourseCollection subjectCollection;
-
-	private static boolean stub;
 
 	/**
 	 * Constructor creating new client connection.
@@ -182,12 +176,12 @@ public class Client extends AbstractClient {
 
 			case GET_USER:
 				User user = (User) modelWrapperFromServer.getElement();
-				setUser(user);
+				ClientController.getClientUI().setUser(user);
 				break;
 
 			case LOG_IN:
 				user = (User) modelWrapperFromServer.getElement();
-				setUser(user);
+				ClientController.getClientUI().setUser(user);
 				break;
 
 			case LOG_OUT:
@@ -366,33 +360,6 @@ public class Client extends AbstractClient {
 	 */
 	public static void setEditTest(Exam editTest) {
 		Client.editTest = editTest;
-	}
-
-	/**
-	 * @return current user
-	 */
-	public static User getUser() {
-		if (isStub()) {
-			String userID = "204459093";
-			String password = "1234";
-			String firstName = "Arik";
-			String lastName = "Zagdon";
-			String email = "arikz15@gmail.com";
-			UserType type = UserType.Teacher;
-			User stubUser = new User(userID, password, firstName, lastName, email, type);
-			return stubUser;
-		} else {
-			return user;
-		}
-	}
-
-	/**
-	 * set current user
-	 * 
-	 * @param user
-	 */
-	public static void setUser(User user) {
-		Client.user = user;
 	}
 
 	/**
@@ -603,20 +570,13 @@ public class Client extends AbstractClient {
 		SelectedAnswers = selectedAnswers;
 	}
 
-	public static boolean isStub() {
-		return stub;
-	}
-
-	public static void setStub(boolean stub) {
-		Client.stub = stub;
-	}
-
 	/**
 	 * Send request to the server in order to remove the user from the connected
 	 * user list
 	 */
 	public static void logOutClient() {
-		String userID = Client.getUser().getUserID();
+		ClientUI clientUI = ClientController.getClientUI();
+		String userID = clientUI.getUser().getUserID();
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, LOG_OUT);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 	}

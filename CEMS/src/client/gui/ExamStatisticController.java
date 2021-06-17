@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
@@ -99,7 +100,7 @@ public class ExamStatisticController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String loggendInTeacherID = Client.getUser().getUserID();
+		String loggendInTeacherID = ClientController.getClientUI().getUser().getUserID();
 		ModelWrapper<String> modelWrapperExecutedExams = new ModelWrapper<>(loggendInTeacherID,
 				GET_EXECUTED_EXAM_LIST_BY_CREATOR);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapperExecutedExams);

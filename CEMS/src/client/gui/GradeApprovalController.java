@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.collections.FXCollections;
@@ -24,7 +25,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import models.ExecutedExam;
 
 /**
- * GradeApprovalController class handle grade approval screen in the teacher menu
+ * GradeApprovalController class handle grade approval screen in the teacher
+ * menu
  *
  */
 public class GradeApprovalController implements Initializable {
@@ -63,7 +65,7 @@ public class GradeApprovalController implements Initializable {
 		tcType.setCellValueFactory(new PropertyValueFactory<ExecutedExam, String>("testType"));
 		tcStudentList.setCellValueFactory(new PropertyValueFactory<ExecutedExam, JFXButton>("gradeApproval"));
 
-		ModelWrapper<String> modelWrapper = new ModelWrapper<>(Client.getUser().getUserID(),
+		ModelWrapper<String> modelWrapper = new ModelWrapper<>(ClientController.getClientUI().getUser().getUserID(),
 				GET_EXECUTED_EXAM_LIST_BY_EXECUTOR);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 
@@ -76,6 +78,7 @@ public class GradeApprovalController implements Initializable {
 
 	/**
 	 * Adding buttons to objects
+	 * 
 	 * @param executedExamsList
 	 * @return list of ExecutedExam with buttons
 	 */

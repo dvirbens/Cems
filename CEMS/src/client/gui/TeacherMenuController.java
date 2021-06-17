@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import client.Client;
+import client.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -82,6 +83,7 @@ public class TeacherMenuController implements Initializable {
 
 	/**
 	 * Painting selected button
+	 * 
 	 * @param button
 	 */
 	private void paintSelectedButton(Buttons button) {
@@ -134,7 +136,8 @@ public class TeacherMenuController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String name = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+		String name = ClientController.getClientUI().getUser().getFirstName() + " "
+				+ ClientController.getClientUI().getUser().getLastName();
 		String LabelPrint = "Welcome, " + name;
 		labelWelcome.setText(LabelPrint);
 
@@ -142,6 +145,7 @@ public class TeacherMenuController implements Initializable {
 
 	/**
 	 * Click on logo show teacher menu
+	 * 
 	 * @param event
 	 */
 	@FXML

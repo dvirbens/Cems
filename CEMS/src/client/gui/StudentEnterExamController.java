@@ -1,11 +1,13 @@
 package client.gui;
 
+import static common.ModelWrapper.Operation.CHECK_CODE_BEFORE_INSERTION;
+
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
-import static common.ModelWrapper.Operation.*;
+
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
@@ -67,7 +69,7 @@ public class StudentEnterExamController {
 	int EnterExam() {
 
 		if (!tfCode.getText().equals("")) {
-			String userID = Client.getUser().getUserID();
+			String userID = ClientController.getClientUI().getUser().getUserID();
 			
 			if (!userID.equals(tfUserID.getText()))
 			{

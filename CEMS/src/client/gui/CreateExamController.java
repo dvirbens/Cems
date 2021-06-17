@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.collections.FXCollections;
@@ -29,6 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamQuestion;
 import models.Question;
+import models.User;
 import sun.applet.Main;
 
 /**
@@ -230,15 +232,18 @@ public class CreateExamController implements Initializable {
 			messageLabel.setText("Please insert numric points for every question");
 		}
 
+		ClientUI clientUI = ClientController.getClientUI();
+		User user = clientUI.getUser();
+
 		if (!subject.isEmpty() && !course.isEmpty() && !duration.isEmpty() && examQuestions != null
 				&& isNumeric(duration) && !examQuestions.isEmpty() && !wrongInput) {
 			examQuestions = addAllPoints(examQuestions);
-			String teacherID = Client.getUser().getUserID();
+			String teacherID = user.getUserID();
 			String teacherNote = getTeacherNote();
 			String studentNote = getStudentNote();
 
 			Exam newExam = new Exam(subject, teacherID, course, duration, teacherNote, studentNote, examQuestions);
-			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
+			newExam.setTeacherName(user.getFirstName() + " " + user.getLastName());
 			ConfirmExamController confirmPage = new ConfirmExamController(newExam, "Create");
 			confirmPage.start();
 		}

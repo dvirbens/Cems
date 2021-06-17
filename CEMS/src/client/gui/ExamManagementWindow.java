@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
@@ -182,8 +183,9 @@ public class ExamManagementWindow {
 			public void handle(ActionEvent event) {
 				String examID = examProcess.getExamId();
 				String code = examProcess.getCode();
-				String teacherID = Client.getUser().getUserID();
-				String teacherName = Client.getUser().getFirstName() + " " + Client.getUser().getLastName();
+				String teacherID = ClientController.getClientUI().getUser().getUserID();
+				String teacherName = ClientController.getClientUI().getUser().getFirstName() + " "
+						+ ClientController.getClientUI().getUser().getLastName();
 				String timeExtension = ((JFXTextField) requestSection.getChildren().get(0)).getText();
 				String examDuration = examProcess.getDuration();
 				String cause = taCause.getText();

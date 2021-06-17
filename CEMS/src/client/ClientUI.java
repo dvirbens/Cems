@@ -5,6 +5,7 @@ import java.io.IOException;
 import client.gui.MainGuiController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import models.User;
 
 /**
  * Main user interface class that's starting the client application, and all of
@@ -14,10 +15,14 @@ import javafx.stage.Stage;
 public class ClientUI extends Application {
 
 	private static ClientController clientController;
-	private static boolean serverStatus=false;
+	private static boolean serverStatus = false;
+
+	/** Value that hold the user, use to login and and open appropriate menu */
+	private User user;
 
 	/**
 	 * launch JavaFX
+	 * 
 	 * @param args main arguments
 	 */
 	public static void main(String[] args) {
@@ -30,9 +35,8 @@ public class ClientUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-
 		try {
-			setClientController(new ClientController("localhost", 5555));
+			setClientController(new ClientController("localhost", 5555, this));
 			setServerStatus(true);
 		} catch (IOException e1) {
 		}
@@ -51,6 +55,7 @@ public class ClientUI extends Application {
 
 	/**
 	 * set the client controller
+	 * 
 	 * @param clientController
 	 */
 	public static void setClientController(ClientController clientController) {
@@ -66,11 +71,19 @@ public class ClientUI extends Application {
 
 	/**
 	 * set server status
+	 * 
 	 * @param serverStatus
 	 */
 	public static void setServerStatus(boolean serverStatus) {
 		ClientUI.serverStatus = serverStatus;
 	}
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }

@@ -1,6 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.EDIT_QUESTION;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
@@ -141,7 +142,7 @@ public class QuestionEditController implements EventHandler<WindowEvent>, Initia
 	 */
 	@FXML
 	void onClickUpdate(ActionEvent event) {
-		User teacherUser = Client.getUser();
+		User teacherUser = ClientController.getClientUI().getUser();
 		String details = taQD.getText();
 		String answer1 = taA1.getText();
 		String answer2 = taA2.getText();

@@ -16,6 +16,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.collections.FXCollections;
@@ -30,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Exam;
 import models.ExamProcess;
+import models.User;
 
 /**
  * ComputerizedExamController class handle the start computerized exam screen of
@@ -184,12 +186,15 @@ public class ComputerizedExamController implements Initializable {
 			masgeLabel.setText("");
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
+			
+			ClientUI clientUI = ClientController.getClientUI();
+			User user = clientUI.getUser();
 
 			String currentDate = formatter.format(date).toString();
 			SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
 			String currentTime = timeformat.format(date).toString();
 			String examID = tvExamPool.getFocusModel().getFocusedItem().getId();
-			String loggedInTeacherID = Client.getUser().getUserID();
+			String loggedInTeacherID = user.getUserID();
 			String subject = tvExamPool.getFocusModel().getFocusedItem().getSubject();
 			String course = tvExamPool.getFocusModel().getFocusedItem().getCourse();
 			String duration = tvExamPool.getFocusModel().getFocusedItem().getDuration();

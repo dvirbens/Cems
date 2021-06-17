@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.collections.FXCollections;
@@ -251,7 +252,7 @@ public class EditExamController implements Initializable {
 		if (!duration.isEmpty() && examQuestions != null && isNumeric(duration) && !examQuestions.isEmpty()
 				&& !wrongInput) {
 			examQuestions = addAllPoints(examQuestions);
-			String teacherID = Client.getUser().getUserID();
+			String teacherID = ClientController.getClientUI().getUser().getUserID();
 			String teacherNote = getTeacherNote();
 			String studentNote = getStudentNote();
 			String examID = oldExam.getId();
@@ -260,7 +261,8 @@ public class EditExamController implements Initializable {
 
 			Exam newExam = new Exam(examID, subject, teacherID, course, duration, teacherNote, studentNote,
 					examQuestions);
-			newExam.setTeacherName(Client.getUser().getFirstName() + " " + Client.getUser().getLastName());
+			newExam.setTeacherName(ClientController.getClientUI().getUser().getFirstName() + " "
+					+ ClientController.getClientUI().getUser().getLastName());
 
 			ConfirmExamController confirmPage = new ConfirmExamController(oldExam, newExam, "Edit");
 

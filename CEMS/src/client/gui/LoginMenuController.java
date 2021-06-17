@@ -1,6 +1,6 @@
 package client.gui;
 
-import static common.ModelWrapper.Operation.*;
+import static common.ModelWrapper.Operation.LOG_IN;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
-import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
@@ -76,45 +76,36 @@ public class LoginMenuController implements Initializable {
 				}
 			} else {
 				if (user.getError() == ErrorType.WRONG_ID) {
-					lWrongInput.setText("User not found");
-					lWrongInput.setVisible(true);
+					showErrorMessage("User not found", true);
 				}
 
 				if (user.getError() == ErrorType.WRONG_PASSWORD) {
-					lWrongInput.setText("Wrong password");
-					lWrongInput.setVisible(true);
+					showErrorMessage("Wrong password", true);
 				}
 			}
 		} else {
-			lWrongInput.setText("User not found or already connected");
-			lWrongInput.setVisible(true);
+			showErrorMessage("User not found or already connected", true);
 		}
 	}
 
 	public User loginUser(String userID, String password) {
 		if (!ClientUI.isServerStatus()) {
-			if (!Client.isStub()) {
-				lWrongInput.setText("Cant connect to server");
-				lWrongInput.setVisible(true);
-			}
+			showErrorMessage("Cant connect to server", true);
 		} else {
 			if (userID.isEmpty() || password.isEmpty()) {
-				if (!Client.isStub()) {
-					lWrongInput.setText("Empty fields");
-					lWrongInput.setVisible(true);
-				}
+				showErrorMessage("Empty fields", true);
 			} else {
-				if (!Client.isStub()) {
-					lWrongInput.setVisible(false);
-					List<String> userInfo = new ArrayList<>();
-					userInfo.add(userID);
-					userInfo.add(password);
-					// Sending request to the server via ClientUI
-					ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, LOG_IN);
-					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-				}
+				List<String> userInfo = new ArrayList<>();
+				userInfo.add(userID);
+				userInfo.add(password);
+
+				// Sending request to the server via ClientUI
+				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, LOG_IN);
+				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+
 				// Getting user from Client
-				User user = Client.getUser();
+				ClientUI clientUI = ClientController.getClientUI();
+				User user = clientUI.getUser();
 				return user;
 			}
 		}
@@ -136,6 +127,21 @@ public class LoginMenuController implements Initializable {
 			labelStatus.setStyle("-fx-text-fill: RED;");
 			labelStatus.setText("Offline");
 		}
+	}
+
+	public void showErrorMessage(String message, boolean visibale) {
+		if (lWrongInput != null) {
+			lWrongInput.setText(message);
+			lWrongInput.setVisible(visibale);
+		}
+	}
+
+	public Label getlWrongInput() {
+		return lWrongInput;
+	}
+
+	public void setlWrongInput(Label lWrongInput) {
+		this.lWrongInput = lWrongInput;
 	}
 
 }

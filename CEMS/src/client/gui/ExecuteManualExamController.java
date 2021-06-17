@@ -20,11 +20,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JFileChooser;
-
 import com.jfoenix.controls.JFXButton;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
@@ -45,13 +44,12 @@ import models.StudentExecutedExam;
 import models.StudentInExam;
 import models.WordFile;
 
-
 /**
- * This class is used as controller for Execute Manual Test screen.
- * The screen show the download test button so the student download the test
- * and then upload it by the select file button and upload button.
- * The test is limited by time which showed on the screen.
- * In addition, there is 2 min alert and locking of the menu while doing the exam.
+ * This class is used as controller for Execute Manual Test screen. The screen
+ * show the download test button so the student download the test and then
+ * upload it by the select file button and upload button. The test is limited by
+ * time which showed on the screen. In addition, there is 2 min alert and
+ * locking of the menu while doing the exam.
  */
 
 public class ExecuteManualExamController implements Initializable {
@@ -98,7 +96,7 @@ public class ExecuteManualExamController implements Initializable {
 	}
 
 	/**
-	 * Constructor for ExecuteManualExamController class 
+	 * Constructor for ExecuteManualExamController class
 	 */
 	public ExecuteManualExamController(String code) {
 		ExecuteManualExamController.code = code;
@@ -118,10 +116,10 @@ public class ExecuteManualExamController implements Initializable {
 	}
 
 	/**
-	 * This method get the exam details and insert the student into the exam.
-	 * It also set the timer.
+	 * This method get the exam details and insert the student into the exam. It
+	 * also set the timer.
 	 */
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		shutdown = false;
@@ -135,7 +133,7 @@ public class ExecuteManualExamController implements Initializable {
 
 		examProcess = Client.getExamProcess();
 
-		String studentID = Client.getUser().getUserID();
+		String studentID = ClientController.getClientUI().getUser().getUserID();
 		String code = examProcess.getCode();
 		String[] solutions = new String[1];
 		solutions[0] = "9";
@@ -170,7 +168,8 @@ public class ExecuteManualExamController implements Initializable {
 	}
 
 	/**
-	 * Upload file on "upload" click 
+	 * Upload file on "upload" click
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -189,8 +188,8 @@ public class ExecuteManualExamController implements Initializable {
 			file.setSize(mybytearray.length);
 			bufferIn.read(file.getMybytearray(), 0, mybytearray.length);
 
-			StudentExecutedExam student = new StudentExecutedExam(examProcess.getExamId(), Client.getUser().getUserID(),
-					code, examProcess.getDate());
+			StudentExecutedExam student = new StudentExecutedExam(examProcess.getExamId(),
+					ClientController.getClientUI().getUser().getUserID(), code, examProcess.getDate());
 			ModelWrapper<StudentExecutedExam> modelWrapper = new ModelWrapper<>(file, student, UPLOAD_FILE);
 			ClientUI.getClientController().sendClientUIRequest(modelWrapper);
 			bufferIn.close();
@@ -209,6 +208,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	/**
 	 * choose file from directory on "Choose" click
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -226,6 +226,7 @@ public class ExecuteManualExamController implements Initializable {
 
 	/**
 	 * download exam file on "download" click
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -313,9 +314,9 @@ public class ExecuteManualExamController implements Initializable {
 		private Timer timer;
 		private Label label;
 
-		
 		/**
 		 * Constructor for StudentStopwatch class
+		 * 
 		 * @param min
 		 * @param sec
 		 * @param label
@@ -329,7 +330,7 @@ public class ExecuteManualExamController implements Initializable {
 		/**
 		 * Method for starting the timer thread
 		 */
-		
+
 		public void startTime() {
 			int delay = 1000;
 			int period = 1000;
@@ -380,14 +381,13 @@ public class ExecuteManualExamController implements Initializable {
 			}, delay, period);
 		}
 
-
 		/**
 		 * @return Timer minutes
 		 */
 		public int getMin() {
 			return min;
 		}
-		
+
 		/**
 		 * @return Timer seconds
 		 */

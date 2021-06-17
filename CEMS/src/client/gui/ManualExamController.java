@@ -18,6 +18,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.event.ActionEvent;
@@ -29,7 +30,8 @@ import models.ExamProcess;
 import models.WordFile;
 
 /**
- * ManualExamController class handle the screen of starting manual exam in teacher menu
+ * ManualExamController class handle the screen of starting manual exam in
+ * teacher menu
  *
  */
 public class ManualExamController implements Initializable {
@@ -62,6 +64,7 @@ public class ManualExamController implements Initializable {
 
 	/**
 	 * Combo box for subject
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -73,6 +76,7 @@ public class ManualExamController implements Initializable {
 
 	/**
 	 * Starting manual exam on click
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -100,7 +104,7 @@ public class ManualExamController implements Initializable {
 			SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
 			String currentTime = timeformat.format(date).toString();
 			String examID = String.valueOf(rand.nextInt(9999));
-			String teacherID = Client.getUser().getUserID();
+			String teacherID = ClientController.getClientUI().getUser().getUserID();
 			String duration = tfDuration.getText();
 			String subject = cbSubject.getSelectionModel().getSelectedItem();
 			String course = cbCourse.getSelectionModel().getSelectedItem();
@@ -121,6 +125,7 @@ public class ManualExamController implements Initializable {
 
 	/**
 	 * Upload file on click
+	 * 
 	 * @param event
 	 */
 	@FXML

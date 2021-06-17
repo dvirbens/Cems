@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.collections.FXCollections;
@@ -82,7 +83,7 @@ public class ExecutedExamsController implements Initializable {
 		tcGrade.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, String>("grade"));
 		tcGetTest.setCellValueFactory(new PropertyValueFactory<StudentExecutedExam, JFXButton>("getCopy"));
 
-		String userID = Client.getUser().getUserID();
+		String userID = ClientController.getClientUI().getUser().getUserID();
 
 		ModelWrapper<String> modelWrapper = new ModelWrapper<>(userID, EXAM_EXECUTE);
 		ClientUI.getClientController().sendClientUIRequest(modelWrapper);

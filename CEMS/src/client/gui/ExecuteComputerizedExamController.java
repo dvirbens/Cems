@@ -19,6 +19,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 
 import client.Client;
+import client.ClientController;
 import client.ClientUI;
 import common.ModelWrapper;
 import javafx.application.Platform;
@@ -53,11 +54,11 @@ import models.ExamQuestion;
 import models.StudentInExam;
 
 /**
- * This class is used as controller for Execute Computerized Test screen.
- * The screen show the test to the student so he could answer the questions and in
- * the end sumbit the test and get grade.
- * The test is limited by time which showed on the screen.
- * In addition, there is 2 min alert and locking of the menu while doing the exam.
+ * This class is used as controller for Execute Computerized Test screen. The
+ * screen show the test to the student so he could answer the questions and in
+ * the end sumbit the test and get grade. The test is limited by time which
+ * showed on the screen. In addition, there is 2 min alert and locking of the
+ * menu while doing the exam.
  */
 
 public class ExecuteComputerizedExamController implements Initializable {
@@ -140,7 +141,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	private volatile boolean shutdown = false;
 
-
 	public ExecuteComputerizedExamController() {
 	}
 
@@ -164,11 +164,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	
 	/**
-	 * This method get the questions and the exam details and insert it into the table,
-	 * and then insert the student into the exam.
-	 * It also set the timer, toggle listener and table click function.
+	 * This method get the questions and the exam details and insert it into the
+	 * table, and then insert the student into the exam. It also set the timer,
+	 * toggle listener and table click function.
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -185,7 +184,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 		exam = Client.getExam();
 
 		tfNote.setText(exam.getStudentNote());
-		String userID = Client.getUser().getUserID();
+		String userID = ClientController.getClientUI().getUser().getUserID();
 		answersArr = new String[exam.getExamQuestions().size()];
 
 		for (int i = 0; i < answersArr.length; i++)
@@ -314,6 +313,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	/**
 	 * Save the student answer
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -333,10 +333,10 @@ public class ExecuteComputerizedExamController implements Initializable {
 		}
 	}
 
-	
 	/**
 	 * Calculate the student grade by adding the correct answers points for every
 	 * question
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -353,7 +353,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 			}
 		}
 
-		String userID = Client.getUser().getUserID();
+		String userID = ClientController.getClientUI().getUser().getUserID();
 		String finalGrade = grade.toString();
 		int examDuration = Integer.parseInt(Client.getExam().getDuration());
 		int minutes = sw.getMin();
@@ -398,7 +398,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 	}
 
 	/**
-	 * set an dialog for an exam that has been frozen by the teacher 
+	 * set an dialog for an exam that has been frozen by the teacher
 	 */
 	public void setFreezePopup() {
 		Platform.runLater(new Runnable() {
@@ -422,7 +422,6 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 	}
 
-
 	/**
 	 * class that define a stop watch for a student into the exam
 	 */
@@ -434,6 +433,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 
 		/**
 		 * Constructor for StudentStopwatch class
+		 * 
 		 * @param min
 		 * @param sec
 		 * @param label
@@ -466,7 +466,7 @@ public class ExecuteComputerizedExamController implements Initializable {
 								StudentMenuController.setClosed(false);
 								return;
 							}
-							
+
 							if (timeExtension == -1) {
 								setFreezePopup();
 								shutdown = true;
