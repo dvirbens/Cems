@@ -31,7 +31,6 @@ class StatisticsCalculationTest {
 		executedExamStudentList.add(student3);
 		executedExamStudentList.add(student4);
 		executedExamStudentList.add(student5);
-
 	}
 
 	@AfterEach
@@ -39,6 +38,11 @@ class StatisticsCalculationTest {
 
 	}
 	
+	/**
+	 * Test getAvarageAndMedian function average calculation
+	 * input: Student exam list with grades : [80,75,56,50,94]
+	 * expected: average = 71.0
+	 */
 	@Test
 	void getAvarageAndMedianSuccessAvarageTest() {
 		ComputerizedGradeApproveStudentListController controller = new ComputerizedGradeApproveStudentListController();
@@ -47,6 +51,11 @@ class StatisticsCalculationTest {
 		assertEquals(avarage, 71.0);
 	}
 
+	/**
+	 * Test getAvarageAndMedian function odd median calculation
+	 * input: Student exam list with grades : [80,75,56,50,94]
+	 * expected: median = 75
+	 */
 	@Test
 	void getAvarageAndMedianSuccessOddMedianTest() {
 		ComputerizedGradeApproveStudentListController controller = new ComputerizedGradeApproveStudentListController();
@@ -55,18 +64,26 @@ class StatisticsCalculationTest {
 		assertEquals(median, 75);
 	}
 
+	/**
+	 * Test getAvarageAndMedian function even median calculation
+	 * input: Student exam list with grades : [80,75,56,50,94,100]
+	 * expected: median = 77.5
+	 */
 	@Test
 	void getAvarageAndMedianSuccessEvenMedianTest() {
 		StudentExecutedExam student6 = new StudentExecutedExam("Algebra II", "100", "16/06/2021");
 		executedExamStudentList.add(student6);
 		ComputerizedGradeApproveStudentListController controller = new ComputerizedGradeApproveStudentListController();
 		double[] avgAndMedian = controller.getAvarageAndMedian(executedExamStudentList);
-		double avarage = avgAndMedian[0];
 		double median = avgAndMedian[1];
-		System.out.println(median);
 		assertEquals(median, 77.5);
 	}
 
+	/**
+	 * Test getAvarageAndMedian function calculation with null grade
+	 * input: Student exam list with grades : [80,75,56,50,94,null]
+	 * expected: throw Exception
+	 */
 	@Test
 	void getAvarageAndMedianNullGradeStudentTest() {
 		StudentExecutedExam nullStudent = new StudentExecutedExam("Algebra II", null, "16/06/2021");
@@ -79,7 +96,12 @@ class StatisticsCalculationTest {
 			assertTrue(true);
 		}
 	}
-
+	
+	/**
+	 * Test getAvarageAndMedian function average median calculation, when the list is empty
+	 * input: empty student list
+	 * expected: average = 0 median = 0
+	 */
 	@Test
 	void getAvarageAndMedianNoStudentsTest() {
 		ComputerizedGradeApproveStudentListController controller = new ComputerizedGradeApproveStudentListController();

@@ -3,13 +3,14 @@ package client;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import client.gui.LoginMenuController;
 import javafx.event.ActionEvent;
@@ -19,7 +20,6 @@ import models.User.ErrorType;
 import models.User.UserType;
 import server.DatabaseController;
 import server.ServerEventListener;
-import static org.mockito.Mockito.*;
 
 class LoginTest {
 
@@ -49,6 +49,13 @@ class LoginTest {
 
 	////////////////////// SERVER SIDE/////////////////////////////
 
+	
+	 
+	/**
+	 * Connect to database, testing if the user pull from database
+	 * input: userID = 204459093 , password = 1234
+	 * Expected: user = {userID = 204459093 , firstName = Arik , lastName = Zagdon , Email = Arikz15@gmail.com}
+	 */
 	@Test
 	void databaseControllerGetUserSuccessTest() {
 		try {
@@ -64,6 +71,11 @@ class LoginTest {
 		}
 	}
 
+	/**
+	 * Connect to database, testing if user ins't exist.
+	 * input: userID = 1234 , password = 0000 // user ID isn't exist in database
+	 * Expected: ErrorType.WRONG_ID // indicating that entered id isn't exist
+	 */
 	@Test
 	void databaseControllerUserNotExist() {
 		try {
@@ -76,6 +88,11 @@ class LoginTest {
 		}
 	}
 
+	/**
+	 * Connect to database, testing if user enter wrong password
+	 * input: userID = 204459093 , password = 0000 // userID and password isn't match 
+	 * Expected: ErrorType.WRONG_PASSWORD // indicating that entered id and password doesn't match.
+	 */
 	@Test
 	void databaseControllerWrongPassword() {
 		try {
@@ -87,7 +104,13 @@ class LoginTest {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	/**
+	 * Connect to database, testing if user enter null on the id and password
+	 * input: userID = null , password = null 
+	 * Expected: throw exception
+	 */
 	@Test
 	void databaseControllerNullUser() {
 		try {
@@ -102,25 +125,44 @@ class LoginTest {
 
 	////////////////////// CLIENT SIDE/////////////////////////////
 
+	/*
+	 * @Test void onClickLoginTestClientUI() {
+	 * 
+	 * Client client = mock(Client.class);
+	 * 
+	 * String userID = "204459093"; String password = "1234"; String firstName =
+	 * "Arik"; String lastName = "Zagdon"; String email = "arikz15@gmail.com";
+	 * UserType type = UserType.Teacher; User user = new User(userID, password,
+	 * firstName, lastName, email, type);
+	 * 
+	 * when(Client.getUser()).thenReturn(user);
+	 * 
+	 * LoginMenuController loginMenuController = new LoginMenuController();
+	 * loginMenuController.onClickLogin(new ActionEvent());
+	 * 
+	 * User loggedInUser = Client.getUser(); System.out.println(loggedInUser);
+	 * 
+	 * }
+	 */
+
+	//
 	@Test
-	void onClickLoginTestClientUI() {
-		Client client = mock(Client.class);
-		
+	void loggedInSuccussfully() {
 		String userID = "204459093";
 		String password = "1234";
 		String firstName = "Arik";
 		String lastName = "Zagdon";
 		String email = "arikz15@gmail.com";
 		UserType type = UserType.Teacher;
-		User user = new User(userID, password, firstName, lastName, email, type);
-		
-		when(Client.getUser()).thenReturn(user);
-
+		User stubUser = new User(userID, password, firstName, lastName, email, type);
+		Client.setStub(true);
+		ClientUI.setServerStatus(true);
 		LoginMenuController loginMenuController = new LoginMenuController();
-		loginMenuController.onClickLogin(new ActionEvent());
-
-		User loggedInUser = Client.getUser();
-		System.out.println(loggedInUser);
+		User loggedInUser = loginMenuController.loginUser(userID, password);
+		assertEquals(loggedInUser.getUserID(), stubUser.getUserID());
+		assertEquals(loggedInUser.getFirstName(), stubUser.getFirstName());
+		assertEquals(loggedInUser.getLastName(), stubUser.getLastName());
+		assertEquals(loggedInUser.getEmail(), stubUser.getEmail());
 	}
 
 }

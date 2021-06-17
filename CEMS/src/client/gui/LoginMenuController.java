@@ -54,61 +54,71 @@ public class LoginMenuController implements Initializable {
 	public void onClickLogin(ActionEvent event) {
 		String userID = tfUserName.getText();
 		String password = tfPassword.getText();
+		User loggedInUser = loginUser(userID, password);
+		switchScreenByUserType(loggedInUser);
+	}
 
-		if (!ClientUI.isServerStatus()) {
-			lWrongInput.setText("Cant connect to server");
-			lWrongInput.setVisible(true);
+	public void switchScreenByUserType(User user) {
+		if (user != null) {
+			if (user.getUserID() != null) {
+				switch (user.getType()) {
+				case Student:
+					MainGuiController.getMenuHandler().setStudentlMenu();
+					break;
 
-		} else {
+				case Teacher:
+					MainGuiController.getMenuHandler().setTeacherMenu();
+					break;
 
-			if (userID.isEmpty() || password.isEmpty()) {
-				lWrongInput.setText("Empty fields");
-				lWrongInput.setVisible(true);
+				case Principal:
+					MainGuiController.getMenuHandler().setPrincipalMenu();
+					break;
+				}
 			} else {
-				lWrongInput.setVisible(false);
-				List<String> userInfo = new ArrayList<>();
-				userInfo.add(userID);
-				userInfo.add(password);
+				if (user.getError() == ErrorType.WRONG_ID) {
+					lWrongInput.setText("User not found");
+					lWrongInput.setVisible(true);
+				}
 
-				//Sending request to the server via ClientUI
-				ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, LOG_IN);
-				ClientUI.getClientController().sendClientUIRequest(modelWrapper);
-
-				//Getting user from Client
-				User user = Client.getUser();
-				if (user != null) {
-					if (user.getUserID() != null) {
-						switch (user.getType()) {
-						case Student:
-							MainGuiController.getMenuHandler().setStudentlMenu();
-							break;
-
-						case Teacher:
-							MainGuiController.getMenuHandler().setTeacherMenu();
-							break;
-
-						case Principal:
-							MainGuiController.getMenuHandler().setPrincipalMenu();
-							break;
-						}
-					} else {
-						if (user.getError() == ErrorType.WRONG_ID) {
-							lWrongInput.setText("User not found");
-							lWrongInput.setVisible(true);
-						}
-
-						if (user.getError() == ErrorType.WRONG_PASSWORD) {
-							lWrongInput.setText("Wrong password");
-							lWrongInput.setVisible(true);
-						}
-					}
-				} else {
-					lWrongInput.setText("User not found or already connected");
+				if (user.getError() == ErrorType.WRONG_PASSWORD) {
+					lWrongInput.setText("Wrong password");
 					lWrongInput.setVisible(true);
 				}
 			}
+		} else {
+			lWrongInput.setText("User not found or already connected");
+			lWrongInput.setVisible(true);
 		}
+	}
 
+	public User loginUser(String userID, String password) {
+		if (!ClientUI.isServerStatus()) {
+			if (!Client.isStub()) {
+				lWrongInput.setText("Cant connect to server");
+				lWrongInput.setVisible(true);
+			}
+		} else {
+			if (userID.isEmpty() || password.isEmpty()) {
+				if (!Client.isStub()) {
+					lWrongInput.setText("Empty fields");
+					lWrongInput.setVisible(true);
+				}
+			} else {
+				if (!Client.isStub()) {
+					lWrongInput.setVisible(false);
+					List<String> userInfo = new ArrayList<>();
+					userInfo.add(userID);
+					userInfo.add(password);
+					// Sending request to the server via ClientUI
+					ModelWrapper<String> modelWrapper = new ModelWrapper<>(userInfo, LOG_IN);
+					ClientUI.getClientController().sendClientUIRequest(modelWrapper);
+				}
+				// Getting user from Client
+				User user = Client.getUser();
+				return user;
+			}
+		}
+		return null;
 	}
 
 	/**

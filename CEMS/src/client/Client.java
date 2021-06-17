@@ -15,6 +15,7 @@ import models.ExecutedExam;
 import models.Question;
 import models.StudentExecutedExam;
 import models.User;
+import models.User.UserType;
 import ocsf.client.AbstractClient;
 
 //
@@ -87,6 +88,8 @@ public class Client extends AbstractClient {
 
 	/** Value that hold the user, use to login and and open appropriate menu. */
 	private static SubjectCourseCollection subjectCollection;
+
+	private static boolean stub;
 
 	/**
 	 * Constructor creating new client connection.
@@ -369,7 +372,18 @@ public class Client extends AbstractClient {
 	 * @return current user
 	 */
 	public static User getUser() {
-		return user;
+		if (isStub()) {
+			String userID = "204459093";
+			String password = "1234";
+			String firstName = "Arik";
+			String lastName = "Zagdon";
+			String email = "arikz15@gmail.com";
+			UserType type = UserType.Teacher;
+			User stubUser = new User(userID, password, firstName, lastName, email, type);
+			return stubUser;
+		} else {
+			return user;
+		}
 	}
 
 	/**
@@ -587,6 +601,14 @@ public class Client extends AbstractClient {
 	 */
 	public static void setSelectedAnswers(String selectedAnswers) {
 		SelectedAnswers = selectedAnswers;
+	}
+
+	public static boolean isStub() {
+		return stub;
+	}
+
+	public static void setStub(boolean stub) {
+		Client.stub = stub;
 	}
 
 	/**
