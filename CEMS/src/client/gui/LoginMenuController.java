@@ -89,6 +89,7 @@ public class LoginMenuController implements Initializable {
 	}
 
 	public User loginUser(String userID, String password) {
+
 		if (!ClientUI.isServerStatus()) {
 			showErrorMessage("Cant connect to server", true);
 		} else {

@@ -1,4 +1,4 @@
-package client;
+package tests;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -12,13 +12,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import client.gui.ComputerizedGradeApproveStudentListController;
+import junit.framework.TestCase;
 import models.StudentExecutedExam;
 
-class StatisticsCalculationTest {
+class StatisticsCalculationTestClient extends TestCase{
 
 	private static List<StudentExecutedExam> executedExamStudentList;
+	
+	
 
 	@BeforeEach
+	protected
 	void setUp() throws Exception {
 		executedExamStudentList = new ArrayList<>();
 		StudentExecutedExam student1 = new StudentExecutedExam("Algebra II", "80", "16/06/2021");
@@ -34,6 +38,7 @@ class StatisticsCalculationTest {
 	}
 
 	@AfterEach
+	protected
 	void tearDown() throws Exception {
 
 	}
@@ -61,7 +66,7 @@ class StatisticsCalculationTest {
 		assertEquals(5, executedExamStudentList.size());
 		double[] avgAndMedian = controller.getAvarageAndMedian(executedExamStudentList);
 		double median = avgAndMedian[1];
-		assertEquals(median, 75);
+		assertEquals(median, 75.0);
 	}
 
 	/**
@@ -112,5 +117,9 @@ class StatisticsCalculationTest {
 		assertEquals(avarage, 0.0);
 		assertEquals(median, 0.0);
 	}
+	
+	
+	
+	
 
 }
