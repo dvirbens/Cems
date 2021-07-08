@@ -45,7 +45,8 @@ class StatisticsCalculationTestClient extends TestCase{
 
 	/**
 	 * Test getAvarageAndMedian function average calculation input: Student exam
-	 * list with grades : [80,75,56,50,94] expected: average = 71.0
+	 * list with grades : [80,75,56,50,94]
+	 *  expected: average = 71.0
 	 */
 	@Test
 	void getAvarageAndMedianSuccessAvarageTest() {

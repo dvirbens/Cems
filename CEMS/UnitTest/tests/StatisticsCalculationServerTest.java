@@ -65,7 +65,8 @@ class StatisticsCalculationServerTest extends TestCase {
 	/**
 	 * Test getExecutedExamLisyByExecutorTeacherIDSucceedTest method that returns
 	 * all the Exams that executed by TeacherID check if inserted techaerID that not
-	 * existing input: TeacherID : "0000" expected: Empty list of ExecutedExam.
+	 * existing input: TeacherID : "0000" 
+	 * expected: Empty list of ExecutedExam.
 	 */
 	@Test
 	void getExecutedExamLisyByExecutorTeacherIDNotExistingTeacherID() {
